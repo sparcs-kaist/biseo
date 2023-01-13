@@ -6,10 +6,6 @@ RUN apt update && apt install curl git htop make nano openssh-server sudo vim zs
 RUN curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
 RUN chsh -s $(which zsh)
 
-# Install yarn
-RUN corepack enable
-RUN corepack prepare yarn@stable --activate
-
 # === Begin SSH Configuration ===
 
 RUN mkdir /var/run/sshd
