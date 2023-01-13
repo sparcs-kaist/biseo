@@ -1,0 +1,14 @@
+{
+  "name": "biseo",
+  "version": "1.0.0",
+  "repository": "https://github.com/sparcs-kaist/biseo.git",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
+    "husky": "^8.0.3"
+  }
+}

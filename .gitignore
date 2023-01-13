@@ -1,2 +1,3 @@
 *.pub
 .env
+/node_modules
