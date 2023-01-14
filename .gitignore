@@ -1,3 +1,7 @@
 *.pub
 .env
 /node_modules
+
+# IDE Configurations
+.idea
+.vscode
