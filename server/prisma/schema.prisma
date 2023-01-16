@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Agenda {
+  id          Int        @id @default(autoincrement())
+  title       String
+  subtitle    String
+  content     String
+  startAt     DateTime   @map("start_at")
+  endAt       DateTime   @map("end_at")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  deletedAt   DateTime   @map("deleted_at")
+  choices     Choice[]
+  userAgendaVotable      UserAgendaVotable[]
+
+  @@map("agenda")
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  nickname    String    @unique
+  name        String
+  isAdmin     Boolean   @map("is_admin")
+  chats       Chat[]
+  userChoice  UserChoice[]
+  userAgendaVotable     UserAgendaVotable[]
+
+  @@map("user")
+}
+
+model Choice {
+  id          Int       @id @default(autoincrement())
+  agenda      Agenda    @relation(fields: [agendaId], references: [id])
+  agendaId    Int       @map("agenda_id")
+  name        String
+  userChoice  UserChoice[]
+
+  @@map("choice")
+}
+
+model Chat {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       @map("user_id")
+  type        ChatType
+  message     String
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@map("chat")
+}
+
+model UserChoice {
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       @map("user_id")
+  choice      Choice    @relation(fields: [choiceId], references: [id])
+  choiceId    Int       @map("choice_id")
+
+  @@id([userId, choiceId])
+  @@map("user_choice")
+}
+
+model UserAgendaVotable {
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       @map("user_id")
+  agenda      Agenda    @relation(fields: [agendaId], references: [id])
+  agendaId    Int       @map("agenda_id")
+
+  @@id([userId, agendaId])
+  @@map("user_agenda_votable")
+}
+
+enum ChatType {
+  Message
+  Alarm
+
+  @@map("chat_type")
+}
