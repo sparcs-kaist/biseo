@@ -1,15 +1,9 @@
-import { io, type Socket } from "socket.io-client";
-import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { socketState } from "@/store/socket";
 
 /**
- * WIP
+ * Provides a readonly socket.io instance.
+ * Will return `null` when client is not authenticated
+ * since a socket connection requires authentication.
  */
-const useSocket = () => {
-  const [socket, setSocket] = useState<Socket | null>(null);
-
-  useEffect(() => {
-    setSocket(io());
-
-    return () => { socket?.disconnect(); };
-  }, [socket]);
-};
+export const useSocket = () => useRecoilValue(socketState);
