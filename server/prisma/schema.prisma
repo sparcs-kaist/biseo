@@ -12,13 +12,13 @@ model Agenda {
   title       String
   subtitle    String
   content     String
-  startAt     DateTime   @map("start_at")
-  endAt       DateTime   @map("end_at")
+  startAt     DateTime?   @map("start_at")
+  endAt       DateTime?   @map("end_at")
   createdAt   DateTime   @default(now()) @map("created_at")
   updatedAt   DateTime   @updatedAt @map("updated_at")
-  deletedAt   DateTime   @map("deleted_at")
+  deletedAt   DateTime?   @map("deleted_at")
   choices     Choice[]
-  userAgendaVotable      UserAgendaVotable[]
+  voters      UserAgendaVotable[]
 
   @@map("agenda")
 }
@@ -29,8 +29,8 @@ model User {
   name        String
   isAdmin     Boolean   @map("is_admin")
   chats       Chat[]
-  userChoice  UserChoice[]
-  userAgendaVotable     UserAgendaVotable[]
+  choices     UserChoice[]
+  agendas     UserAgendaVotable[]
 
   @@map("user")
 }
@@ -40,7 +40,7 @@ model Choice {
   agenda      Agenda    @relation(fields: [agendaId], references: [id])
   agendaId    Int       @map("agenda_id")
   name        String
-  userChoice  UserChoice[]
+  users       UserChoice[]
 
   @@map("choice")
 }
