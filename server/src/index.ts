@@ -5,7 +5,9 @@ import { adminAgendaListener } from "@/listener/admin.agenda";
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer);
+const io = new Server(httpServer, {
+  cors: { origin: "*" },
+});
 const port = 3000;
 
 app.get("/", (req, res) => {
