@@ -1,12 +1,21 @@
-import express, { Express, Request, Response } from "express";
+import express from "express";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { adminAgendaListener } from "@/listener/admin.agenda";
 
-const app: Express = express();
+const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: { origin: "*" },
+});
 const port = 3000;
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+io.on("connection", (socket) => {
+  adminAgendaListener(io, socket);
 });
+
+httpServer.listen(port);
