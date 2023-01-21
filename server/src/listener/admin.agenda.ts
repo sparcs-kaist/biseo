@@ -1,11 +1,11 @@
-import { type Server, type Socket } from "socket.io";
+import type { BiseoServer, BiseoSocket } from "@/types";
 import { Request } from "../../../socket/io";
 import { type Create } from "../../../socket/admin.agenda";
 import { createRequestSchema } from "@/model/agenda";
 import { agendaCreate } from "@/service/admin.agenda";
 import httpStatus from "http-status";
 
-export const adminAgendaListener = (io: Server, socket: Socket): void => {
+export const adminAgendaListener = (io: BiseoServer, socket: BiseoSocket): void => {
   socket.on(
     "admin/agenda/create",
     async (

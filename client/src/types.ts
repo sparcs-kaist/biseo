@@ -1,4 +1,11 @@
 import type { Socket } from "socket.io-client";
+import type {
+  ClientToServerEvents,
+  ServerToClientEvents
+} from "@socket/types";
 
-/** Shared types from server side code will be configured here globally */
-export type ClientSocket = Socket;
+/** Shared socket from server side code are configured here globally */
+export type BiseoSocket = Socket<
+  ServerToClientEvents,
+  ClientToServerEvents
+>;

@@ -4,7 +4,8 @@
     "useDefineForClassFields": true,
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@socket/*": ["../../socket/*"]
     },
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
@@ -20,6 +21,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"],
+  "include": ["src", "../socket"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

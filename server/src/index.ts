@@ -2,10 +2,11 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { adminAgendaListener } from "@/listener/admin.agenda";
+import type { BiseoServer } from "./types";
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
+const io: BiseoServer = new Server(httpServer, {
   cors: { origin: "*" },
 });
 const port = 3000;
