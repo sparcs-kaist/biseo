@@ -1,9 +1,10 @@
 import { z } from "zod";
 
-import { messageSchema } from "./common";
+import { Message } from "./common";
 import { ServerEvent } from "../helpers";
 
-type Received = z.infer<typeof messageSchema>;
+export const Received = Message;
+export type Received = z.infer<typeof Received>;
 
 export interface ServerToClientEvents {
   received: ServerEvent<Received>;

@@ -1,23 +1,23 @@
 import { z } from "zod";
 import type { ClientEvent } from "../helpers";
-import { messageSchema } from "./common";
+import { Message } from "./common";
 
 // Send
-export const sendSchema = z.object({
+export const Send = z.object({
   message: z.string(),
 });
-type Send = z.infer<typeof sendSchema>;
-export const sendCallbackSchema = messageSchema;
-type SendCallback = z.infer<typeof sendCallbackSchema>;
+type Send = z.infer<typeof Send>;
+export const SendCallback = Message;
+type SendCallback = z.infer<typeof SendCallback>;
 
 // Retrieve
-export const retrieveSchema = z.object({
+export const Retrieve = z.object({
   lastChatId: z.number().nullable(),
   limit: z.number(),
 });
-type Retrieve = z.infer<typeof retrieveSchema>;
-export const retrieveCallbackSchema = z.array(messageSchema);
-type RetrieveCallback = z.infer<typeof retrieveCallbackSchema>;
+type Retrieve = z.infer<typeof Retrieve>;
+export const RetrieveCallback = z.array(Message);
+type RetrieveCallback = z.infer<typeof RetrieveCallback>;
 
 export interface ClientToServerEvents {
   send: ClientEvent<Send, SendCallback>;

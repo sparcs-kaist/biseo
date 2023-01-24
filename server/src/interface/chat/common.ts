@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const messageSchema = z.object({
+export const Message = z.object({
 	id: z.number(),
 	user: z.object({
 		id: z.number(),
@@ -10,5 +10,5 @@ export const messageSchema = z.object({
 	message: z.string(),
 	createdAt: z.string(),
 });
-export type Message = z.infer<typeof messageSchema>;
+export type Message = z.infer<typeof Message>;
 
