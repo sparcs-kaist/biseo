@@ -1,11 +1,11 @@
 import type {
-  ChatClientToServerEvents,
   ChatServerToClientEvents,
-} from "../server/src/model";
+  ChatClientToServerEvents,
+} from "./chat";
+
 
 export type ClientToServerEvents =
   & ChatClientToServerEvents;
 
 export type ServerToClientEvents =
   & ChatServerToClientEvents;
-

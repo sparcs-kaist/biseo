@@ -1,4 +1,4 @@
-import type { Prefix } from "@socket/helpers";
+import type { Prefix } from "../helpers";
 import type { ClientToServerEvents } from "./client";
 import type { ServerToClientEvents } from "./server";
 

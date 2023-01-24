@@ -1,10 +1,9 @@
-import type { Server, Socket } from "socket.io";
-import type {
+import { Server, Socket } from "socket.io";
+import {
   ClientToServerEvents,
   ServerToClientEvents,
-} from "@socket/types";
+} from "@/interface";
 
-/** Strict server type based on model schemas */
 export type BiseoServer = Server<
   ClientToServerEvents,
   ServerToClientEvents
@@ -14,4 +13,3 @@ export type BiseoSocket = Socket<
   ClientToServerEvents,
   ServerToClientEvents
 >;
-
