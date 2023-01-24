@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { ClientEvent } from "@socket/helpers";
+import type { ClientEvent } from "../helpers";
 import { messageSchema } from "./common";
 
 // Send

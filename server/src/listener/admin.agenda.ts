@@ -1,4 +1,4 @@
-import type { BiseoServer, BiseoSocket } from "@/types";
+import type { BiseoServer, BiseoSocket } from "@/types/socket";
 import { Request } from "../../../socket/io";
 import { type Create } from "../../../socket/admin.agenda";
 import { createRequestSchema } from "@/model/agenda";
