@@ -10,5 +10,5 @@ export const messageSchema = z.object({
 	message: z.string(),
 	createdAt: z.string(),
 });
-
+export type Message = z.infer<typeof messageSchema>;
 

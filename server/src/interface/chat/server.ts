@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { messageSchema } from "./common";
-import { ServerEvent } from "@socket/helpers";
+import { ServerEvent } from "../helpers";
 
 type Received = z.infer<typeof messageSchema>;
 

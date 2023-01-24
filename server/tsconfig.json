@@ -5,8 +5,7 @@
     "module": "commonjs",
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"],
-      "@socket/*": ["../../socket/*"],
+      "@/*": ["*"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
