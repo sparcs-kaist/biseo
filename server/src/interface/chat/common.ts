@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+
+/**
+ * Message
+ * some description about message schema goes here
+ */
 export const Message = z.object({
 	id: z.number(),
 	user: z.object({
