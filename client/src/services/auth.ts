@@ -14,6 +14,7 @@ const useAuth = create<AuthState>()(
     login: (token) => {
       set({ token });
       socket.connect();
+      // TODO: handle error when connection fail
     },
     logout: () => {
       set({ token: null });
