@@ -13,5 +13,9 @@ echo "Starting SSH"
 service ssh start
 /usr/sbin/sshd -D
 
+set -a
+source /usr/src/.env
+set +a
+
 echo "Sleeping..."
 sleep infinity
