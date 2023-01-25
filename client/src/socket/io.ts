@@ -4,10 +4,7 @@ import { asyncifyEmit } from "./utils";
 
 const _socket: BiseoSocket = io(
   import.meta.env.VITE_SERVER_URL,
-  {
-    auth: { token: null },
-    autoConnect: false,
-  },
+  { autoConnect: false },
 );
 
 export const socket = Object.assign(_socket,
