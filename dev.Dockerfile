@@ -1,6 +1,6 @@
 FROM node:18.13
 
-RUN apt update && apt install curl git htop make nano openssh-server sudo vim zsh -y
+RUN apt update && apt install curl git htop make nano openssh-server sudo vim zsh less -y
 
 # Install Oh My Zsh & Use Zsh as default
 RUN curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
