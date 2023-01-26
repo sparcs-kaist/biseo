@@ -1,6 +1,8 @@
 import type { Prefix } from "../helpers";
-import type { ClientToServerEvents } from "./client";
-import type { ServerToClientEvents } from "./server";
+import type { ClientEvents } from "./client";
+import type { ServerEvents } from "./server";
 
-export type ChatClientToServerEvents = Prefix<"chat", ClientToServerEvents>;
-export type ChatServerToClientEvents = Prefix<"chat", ServerToClientEvents>;
+export namespace Chat {
+  export type ClientToServerEvents = Prefix<"chat", ClientEvents>;
+  export type ServerToClientEvents = Prefix<"chat", ServerEvents>;
+}

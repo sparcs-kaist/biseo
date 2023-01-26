@@ -1,4 +1,4 @@
-type CallbackResponse<T extends Record<string, any>> = {
+export type CallbackResponse<T extends Record<string, any>> = {
   ok: true;
   data: T;
 } | {

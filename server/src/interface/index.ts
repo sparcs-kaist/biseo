@@ -1,11 +1,7 @@
-import type {
-  ChatServerToClientEvents,
-  ChatClientToServerEvents,
-} from "./chat";
-
+import type { Chat } from "./chat";
 
 export type ClientToServerEvents =
-  & ChatClientToServerEvents;
+  & Chat.ClientToServerEvents;
 
 export type ServerToClientEvents =
-  & ChatServerToClientEvents;
+  & Chat.ServerToClientEvents;
