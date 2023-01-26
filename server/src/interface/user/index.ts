@@ -6,7 +6,7 @@ export * from "./common";
 export * from "./client";
 export * from "./server";
 
-export namespace Chat {
-  export type ClientToServerEvents = Prefix<"chat", ClientEvents>;
-  export type ServerToClientEvents = Prefix<"chat", ServerEvents>;
+export namespace User {
+  export type ClientToServerEvents = Prefix<"user", ClientEvents>;
+  export type ServerToClientEvents = Prefix<"user", ServerEvents>;
 }
