@@ -1,6 +1,12 @@
 import React from "react";
+import { useAuth } from "../services/auth";
 
 export const Login: React.FC = () => {
+  const { login, logout, isLoggedIn } = useAuth(state => ({
+    login: state.login,
+    logout: state.logout,
+    isLoggedIn: !!state.token,
+  }));
 
   return (
     <div>
