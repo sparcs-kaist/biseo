@@ -3,7 +3,10 @@ import * as schema from "@/interface/admin/agenda";
 import { agendaCreate } from "@/service/admin.agenda";
 import { BiseoError, BiseoResponse } from "../utils";
 
-export const adminAgendaListener = (io: BiseoServer, socket: BiseoSocket): void => {
+export const adminAgendaListener = (
+  io: BiseoServer,
+  socket: BiseoSocket
+): void => {
   socket.on("admin.agenda.create", async (req, callback) => {
     try {
       schema.Create.parse(req);
