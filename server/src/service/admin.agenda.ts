@@ -1,30 +1,29 @@
-import { Request, Response } from "../../../socket/io";
-import { type Create } from "../../../socket/admin.agenda";
 import { Prisma, PrismaClient } from "@prisma/client";
+import * as schema from "@/interface/admin/agenda";
 
 const prisma = new PrismaClient();
 
 export const agendaCreate = async ({
   title,
-  subtitle,
+  resolution,
   content,
   choices,
   voters,
-}: Request<Create>): Promise<Response<Create> | null> => {
+}: schema.AdminAgendaCreate): Promise<schema.AdminAgenda | null> => {
   const createAgendaQuery: Prisma.AgendaCreateInput = {
     title: title,
-    subtitle: subtitle,
+    subtitle: resolution,
     content: content,
     choices: {
       create: choices.map((name) => ({ name: name })),
     },
     voters: {
-      create: voters.map((id) => ({ userId: id })),
+      create: voters.total.map((id) => ({ userId: id })),
     },
   };
 
   try {
-    const { id, title, subtitle, content, choices, voters } =
+    const { subtitle, choices, voters, ...agendaProps } =
       await prisma.agenda.create({
         data: createAgendaQuery,
         include: {
@@ -33,21 +32,25 @@ export const agendaCreate = async ({
         },
       });
 
-    const result: Response<Create> = {
-      id,
-      title,
-      subtitle,
-      content,
-      status: "prepare",
+    return {
+      ...agendaProps,
+      resolution: subtitle,
+      status: "preparing",
       choices: choices.map((choice) => ({
         id: choice.id,
         name: choice.name,
         voters: [],
       })),
-      voters: voters.map((voter) => voter.userId),
+      voters: {
+        voted: [],
+        total: voters.map(voter => ({
+          id: voter.userId,
+          name: "",      // TODO
+          nickname: "",  // TODO
+        })),
+      },
     };
 
-    return result;
   } catch (err) {
     // TODO: log
     console.log(err);
