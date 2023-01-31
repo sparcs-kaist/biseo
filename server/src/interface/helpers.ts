@@ -17,16 +17,19 @@ type Explode<T> = T extends Ev<any, any>
   ? { key: "", value: T }
   : {
     [K in keyof T]:
-    K extends string ? Explode<T[K]> extends infer E ? E extends Entry ?
-      {
+    K extends string ? Explode<T[K]> extends infer E ? E extends Entry
+      ? {
         key: `${K}${E["key"] extends "" ? "" : "."}${E["key"]}`,
         value: E["value"],
       }
       : never : never : never
-  }[keyof T]
-type Collapse<T extends Entry> = (
-  { [E in T as E["key"]]: E["value"] }
-  ) extends infer O ? { [K in keyof O]: O[K] } : never
+  }[keyof T];
 
-export type Events<T> = Collapse<Explode<T>>;
+type Collapse<T extends Entry> = {
+  [E in T as E["key"]]: E["value"]
+} extends infer O
+  ? { [K in keyof O]: O[K] }
+  : never;
 
+type EventMap = { [key: string]: Ev<any, any> | EventMap };
+export type Events<T extends EventMap> = Collapse<Explode<T>>;
