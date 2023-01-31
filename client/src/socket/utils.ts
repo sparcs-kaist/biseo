@@ -6,10 +6,10 @@ import type {
 } from "@socket.io/component-emitter";
 
 import type { ClientToServerEvents as EmitEvents } from "@server";
-import type { CallbackResponse } from "@server/helpers";
+import type { Res } from "@server/helpers";
 
 export type ClientEventArgs<I extends Record<string, any>, O extends Record<string, any>>
-  = [I, (output: CallbackResponse<O>) => void];
+  = [I, (output: Res<O>) => void];
 
 type Input<Args extends EventParams<EmitEvents, any>> =
   Args extends ClientEventArgs<infer I, infer O> ? I : never;
@@ -24,7 +24,7 @@ export const asyncifyEmit = (socket: BiseoSocket) => {
     type O = Output<EventParams<EmitEvents, Ev>>
 
     return new Promise<O>((resolve, reject) => {
-      socket.emit<Ev>(event, ...[body, (res: CallbackResponse<O>) => {
+      socket.emit<Ev>(event, ...[body, (res: Res<O>) => {
         if (res.ok) {
           resolve(res.data);
         } else {
