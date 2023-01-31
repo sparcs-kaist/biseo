@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ChatUser } from "../user/common";
+import { ChatUser } from "../user";
 
 /**
  * Message

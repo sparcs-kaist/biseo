@@ -1,5 +1,4 @@
 import { z } from "zod";
-import type { ServerEvent } from "../helpers";
 import { OngoingAgenda, TerminatedAgenda } from "./common";
 
 /**
@@ -38,10 +37,3 @@ export const Reminded = z.object({
   message: z.string(),
 });
 export type Reminded = z.infer<typeof Reminded>;
-
-export interface ServerEvents {
-  started: ServerEvent<Started>;
-  voted: ServerEvent<Voted>;
-  terminated: ServerEvent<Terminated>;
-  reminded: ServerEvent<Reminded>;
-}

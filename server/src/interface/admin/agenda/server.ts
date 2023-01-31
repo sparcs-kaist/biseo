@@ -1,7 +1,6 @@
 import { z } from "zod";
-import type { ServerEvent } from "../../helpers";
 import { AdminAgenda, AdminChoice } from "./common";
-import { User } from "../../user/common";
+import { User } from "../../user";
 
 /**
  * Created
@@ -48,11 +47,3 @@ export const Voted = z.object({
   }),
 });
 export type Voted = z.infer<typeof Voted>;
-
-export interface ServerEvents {
-  created: ServerEvent<Created>;
-  statusUpdated: ServerEvent<StatusUpdated>;
-  updated: ServerEvent<Updated>;
-  deleted: ServerEvent<Deleted>;
-  voted: ServerEvent<Created>;
-}

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import type { ClientEvent } from "../helpers";
 import { Message } from "./common";
 
 /**
@@ -10,8 +9,8 @@ export const Send = z.object({
   message: z.string(),
 });
 export type Send = z.infer<typeof Send>;
-export const SendCallback = z.object({});
-export type SendCallback = z.infer<typeof SendCallback>;
+export const SendCb = z.object({});
+export type SendCb = z.infer<typeof SendCb>;
 
 /**
  * Retrieve
@@ -22,10 +21,5 @@ export const Retrieve = z.object({
   limit: z.number(),
 });
 export type Retrieve = z.infer<typeof Retrieve>;
-export const RetrieveCallback = z.array(Message);
-export type RetrieveCallback = z.infer<typeof RetrieveCallback>;
-
-export interface ClientEvents {
-  send: ClientEvent<Send, SendCallback>;
-  retrieve: ClientEvent<Retrieve, RetrieveCallback>;
-}
+export const RetrieveCb = z.array(Message);
+export type RetrieveCb = z.infer<typeof RetrieveCb>;

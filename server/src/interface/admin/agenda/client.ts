@@ -1,7 +1,10 @@
 import { z } from "zod";
-import type { ClientEvent } from "../../helpers";
-import { AdminAgenda, AdminAgendaCreate, AdminAgendaUpdate } from "./common";
-import { AgendaStatus } from "../../agenda/common";
+import {
+  AdminAgenda,
+  AdminAgendaCreate,
+  AdminAgendaUpdate,
+} from "./common";
+import { AgendaStatus } from "../../agenda";
 
 /**
  * Create
@@ -9,8 +12,8 @@ import { AgendaStatus } from "../../agenda/common";
  */
 export const Create = AdminAgendaCreate;
 export type Create = z.infer<typeof Create>;
-export const CreateCallback = z.object({});
-export type CreateCallback = z.infer<typeof CreateCallback>;
+export const CreateCb = z.object({});
+export type CreateCb = z.infer<typeof CreateCb>;
 
 /**
  * RetrieveAll
@@ -18,8 +21,8 @@ export type CreateCallback = z.infer<typeof CreateCallback>;
  */
 export const RetrieveAll = z.object({});
 export type RetrieveAll = z.infer<typeof RetrieveAll>;
-export const RetrieveAllCallback = z.array(AdminAgenda);
-export type RetrieveAllCallback = z.infer<typeof RetrieveAllCallback>;
+export const RetrieveAllCb = z.array(AdminAgenda);
+export type RetrieveAllCb = z.infer<typeof RetrieveAllCb>;
 
 /**
  * StatusUpdate
@@ -30,8 +33,8 @@ export const StatusUpdate = z.object({
   status: AgendaStatus,
 });
 export type StatusUpdate = z.infer<typeof StatusUpdate>;
-export const StatusUpdateCallback = z.object({});
-export type StatusUpdateCallback = z.infer<typeof StatusUpdateCallback>;
+export const StatusUpdateCb = z.object({});
+export type StatusUpdateCb = z.infer<typeof StatusUpdateCb>;
 
 /**
  * Update
@@ -39,8 +42,8 @@ export type StatusUpdateCallback = z.infer<typeof StatusUpdateCallback>;
  */
 export const Update = AdminAgendaUpdate;
 export type Update = z.infer<typeof Update>;
-export const UpdateCallback = z.object({});
-export type UpdateCallback = z.infer<typeof UpdateCallback>;
+export const UpdateCb = z.object({});
+export type UpdateCb = z.infer<typeof UpdateCb>;
 
 /**
  * Delete
@@ -50,8 +53,8 @@ export const Delete = z.object({
   id: z.number(),
 });
 export type Delete = z.infer<typeof Delete>;
-export const DeleteCallback = z.object({});
-export type DeleteCallback = z.infer<typeof DeleteCallback>;
+export const DeleteCb = z.object({});
+export type DeleteCb = z.infer<typeof DeleteCb>;
 
 /**
  * Remind
@@ -61,14 +64,5 @@ export const Remind = z.object({
   id: z.number(),
 });
 export type Remind = z.infer<typeof Remind>;
-export const RemindCallback = z.object({});
-export type RemindCallback = z.infer<typeof RemindCallback>;
-
-export interface ClientEvents {
-  create: ClientEvent<Create, CreateCallback>;
-  retrieveAll: ClientEvent<RetrieveAll, RetrieveAllCallback>;
-  statusUpdate: ClientEvent<StatusUpdate, StatusUpdateCallback>;
-  update: ClientEvent<Update, UpdateCallback>;
-  delete: ClientEvent<Delete, DeleteCallback>;
-  remind: ClientEvent<Remind, RemindCallback>;
-}
+export const RemindCb = z.object({});
+export type RemindCb = z.infer<typeof RemindCb>;

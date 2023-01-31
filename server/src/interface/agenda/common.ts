@@ -67,9 +67,5 @@ export type TerminatedAgenda = z.infer<typeof TerminatedAgenda>;
  * Agenda
  * some description about agenda type goes here
  */
-enum AgendaType {
-  OngoingAgenda,
-  TerminatedAgenda,
-}
-export const Agenda = z.nativeEnum(AgendaType);
+export const Agenda = z.union([OngoingAgenda, TerminatedAgenda]);
 export type Agenda = z.infer<typeof Agenda>;
