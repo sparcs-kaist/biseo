@@ -1,5 +1,4 @@
 import { z } from "zod";
-import type { ServerEvent } from "../helpers";
 import { User } from "./common";
 
 /**
@@ -17,8 +16,3 @@ export const Left = z.object({
   id: z.number(),
 });
 export type Left = z.infer<typeof Left>;
-
-export interface ServerEvents {
-  entered: ServerEvent<Entered>;
-  left: ServerEvent<Left>;
-}

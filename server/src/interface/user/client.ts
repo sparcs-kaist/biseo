@@ -1,5 +1,4 @@
 import { z } from "zod";
-import type { ClientEvent } from "../helpers";
 
 /**
  * Enter
@@ -7,8 +6,8 @@ import type { ClientEvent } from "../helpers";
  */
 export const Enter = z.object({});
 export type Enter = z.infer<typeof Enter>;
-export const EnterCallback = z.object({});
-export type EnterCallback = z.infer<typeof EnterCallback>;
+export const EnterCb = z.object({});
+export type EnterCb = z.infer<typeof EnterCb>;
 
 /**
  * Leave
@@ -16,10 +15,5 @@ export type EnterCallback = z.infer<typeof EnterCallback>;
  */
 export const Leave = z.object({});
 export type Leave = z.infer<typeof Leave>;
-export const LeaveCallback = z.object({});
-export type LeaveCallback = z.infer<typeof LeaveCallback>;
-
-export interface ClientEvents {
-  enter: ClientEvent<Enter, EnterCallback>;
-  leave: ClientEvent<Leave, LeaveCallback>;
-}
+export const LeaveCb = z.object({});
+export type LeaveCb = z.infer<typeof LeaveCb>;

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import type { ClientEvent } from "../helpers";
 import { Agenda } from "./common";
 
 /**
@@ -8,8 +7,8 @@ import { Agenda } from "./common";
  */
 export const RetrieveAll = z.object({});
 export type RetrieveAll = z.infer<typeof RetrieveAll>;
-export const RetrieveAllCallback = z.array(Agenda);
-export type RetrieveAllCallback = z.infer<typeof RetrieveAllCallback>;
+export const RetrieveAllCb = z.array(Agenda);
+export type RetrieveAllCb = z.infer<typeof RetrieveAllCb>;
 
 /**
  * Vote
@@ -19,10 +18,5 @@ export const Vote = z.object({
   choiceId: z.number(),
 });
 export type Vote = z.infer<typeof Vote>;
-export const VoteCallback = z.object({});
-export type VoteCallback = z.infer<typeof VoteCallback>;
-
-export interface ClientEvents {
-  retrieveAll: ClientEvent<RetrieveAll, RetrieveAllCallback>;
-  vote: ClientEvent<Vote, VoteCallback>;
-}
+export const VoteCb = z.object({});
+export type VoteCb = z.infer<typeof VoteCb>;
