@@ -164,6 +164,18 @@ export const agendaUpdate = async (
   agendaUpdate: schema.AdminAgendaUpdate
 ): Promise<schema.Updated | null> => {
   try {
+    //Delete prior choices and voters
+    await prisma.choice.deleteMany({
+      where: {
+        agendaId: agendaUpdate.id,
+      },
+    });
+    await prisma.userAgendaVotable.deleteMany({
+      where: {
+        agendaId: agendaUpdate.id,
+      },
+    });
+    //Update agenda info, choice DB and voter DB
     await prisma.agenda.update({
       where: {
         id: agendaUpdate.id,
@@ -177,11 +189,13 @@ export const agendaUpdate = async (
             data: agendaUpdate.choices.map((it) => ({ name: it })),
           },
         },
-        // voters: {
-        //   createMany: {
-        //     data: agendaUpdate.voters.total.map((it) => ({ userId: it })),
-        //   },
-        // },
+        voters: {
+          createMany: {
+            data: agendaUpdate.voters.total.map((it) => ({
+              userId: it,
+            })),
+          },
+        },
       },
     });
   } catch (err) {
