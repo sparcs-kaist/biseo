@@ -1,6 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import * as schema from "@/interface/admin/agenda";
-import { Deleted } from "@/interface/admin/agenda";
 
 const prisma = new PrismaClient();
 
@@ -132,7 +131,7 @@ export const agendaStatusUpdate = async ({
 
 export const agendaDelete = async ({
   id,
-}: schema.Delete): Promise<Deleted | null> => {
+}: schema.Delete): Promise<schema.Deleted | null> => {
   try {
     const agenda = await prisma.agenda.findUnique({
       where: {
@@ -155,6 +154,36 @@ export const agendaDelete = async ({
         },
       });
     }
+  } catch (err) {
+    console.log(err);
+  }
+  return null;
+};
+
+export const agendaUpdate = async (
+  agendaUpdate: schema.AdminAgendaUpdate
+): Promise<schema.Updated | null> => {
+  try {
+    await prisma.agenda.update({
+      where: {
+        id: agendaUpdate.id,
+      },
+      data: {
+        title: agendaUpdate.title,
+        subtitle: agendaUpdate.resolution,
+        content: agendaUpdate.content,
+        choices: {
+          createMany: {
+            data: agendaUpdate.choices.map((it) => ({ name: it })),
+          },
+        },
+        // voters: {
+        //   createMany: {
+        //     data: agendaUpdate.voters.total.map((it) => ({ userId: it })),
+        //   },
+        // },
+      },
+    });
   } catch (err) {
     console.log(err);
   }
