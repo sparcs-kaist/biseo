@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import * as schema from "@/interface/admin/agenda";
+import { Deleted } from "@/interface/admin/agenda";
 
 const prisma = new PrismaClient();
 
@@ -99,7 +100,7 @@ export const agendaStatusUpdate = async ({
 
   if (status == "terminated") {
     const updateAgendaQuery: Prisma.AgendaUpdateInput = {
-      deletedAt: new Date(),
+      endAt: new Date(),
     };
 
     try {
@@ -109,6 +110,9 @@ export const agendaStatusUpdate = async ({
           id: id,
           endAt: null,
           deletedAt: null,
+          NOT: {
+            startAt: null,
+          },
         },
         select: {
           id: true,
@@ -123,5 +127,36 @@ export const agendaStatusUpdate = async ({
     }
   }
 
+  return null;
+};
+
+export const agendaDelete = async ({
+  id,
+}: schema.Delete): Promise<Deleted | null> => {
+  try {
+    const agenda = await prisma.agenda.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        startAt: true,
+        endAt: true,
+        deletedAt: true,
+      },
+    });
+    //Only delete agenda if it is not soft deleted yet, not started yet, or already terminated only.
+    if (agenda && !agenda?.deletedAt && (!agenda?.startAt || agenda?.endAt)) {
+      await prisma.agenda.update({
+        where: {
+          id: id,
+        },
+        data: {
+          deletedAt: new Date(),
+        },
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
   return null;
 };
