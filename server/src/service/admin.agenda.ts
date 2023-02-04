@@ -1,5 +1,9 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import * as schema from "@/interface/admin/agenda";
+import { resolve } from "path";
+import { userInfo } from "os";
+import { BiseoError } from "@/utils";
+import { prependListener } from "process";
 
 const prisma = new PrismaClient();
 
@@ -202,4 +206,95 @@ export const agendaUpdate = async (
     console.log(err);
   }
   return null;
+};
+
+export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
+  try {
+    const res = await prisma.agenda.findMany({
+      where: { NOT: [{ deletedAt: null }] },
+
+      select: {
+        id: true,
+        title: true,
+        subtitle: true,
+        content: true,
+        startAt: true,
+        endAt: true,
+        deletedAt: true,
+
+        choices: {
+          select: {
+            id: true,
+            name: true,
+            users: {
+              select: {
+                user: {
+                  select: {
+                    id: true,
+                    name: true,
+                    nickname: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        voters: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                nickname: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    //console.log(res[0].voters);
+    const res2 = res.map((agenda) => {
+      let status: "ongoing" | "preparing" | "terminated" = "ongoing";
+      if (agenda.startAt && !agenda.endAt) status = "ongoing";
+      else if (!agenda.startAt && !agenda.endAt) status = "preparing";
+      else if (agenda.endAt) status = "terminated";
+      let voted: { id: number; name: string; nickname: string }[] = [];
+      return {
+        id: agenda.id,
+        title: agenda.title,
+        content: agenda.content,
+        resolution: agenda.subtitle,
+        status: status,
+        choices: agenda.choices.map((choice) => {
+          return {
+            id: choice.id,
+            name: choice.name,
+            voters: choice.users.map((voter) => {
+              voted = [
+                ...voted,
+                {
+                  id: voter.user.id,
+                  name: voter.user.name,
+                  nickname: voter.user.nickname,
+                },
+              ];
+              return {
+                id: voter.user.id,
+                name: voter.user.name,
+                nickname: voter.user.nickname,
+              };
+            }),
+          };
+        }),
+        voters: {
+          total: agenda.voters.map((user) => user.user),
+          voted: voted,
+        },
+      };
+    });
+    return res2;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
 };
