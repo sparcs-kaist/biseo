@@ -211,7 +211,7 @@ export const agendaUpdate = async (
 export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
   try {
     const res = await prisma.agenda.findMany({
-      where: { NOT: [{ deletedAt: null }] },
+      where: { deletedAt: null },
 
       select: {
         id: true,
@@ -292,6 +292,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
         },
       };
     });
+    console.log(res2);
     return res2;
   } catch (err) {
     console.log(err);
