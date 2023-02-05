@@ -252,7 +252,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
         },
       },
     });
-    //console.log(res[0].voters);
+
     const res2 = res.map((agenda) => {
       let status: "ongoing" | "preparing" | "terminated" = "ongoing";
       if (agenda.startAt && !agenda.endAt) status = "ongoing";
@@ -292,7 +292,6 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
         },
       };
     });
-    console.log(res2);
     return res2;
   } catch (err) {
     console.log(err);
@@ -349,7 +348,6 @@ export const remind = async ({
       votedId = [...votedId, ...user];
     }
     const unvoters = totalId.filter((user) => !votedId.includes(user.id));
-    console.log(unvoters);
     return unvoters;
   } catch (err) {
     return null;
