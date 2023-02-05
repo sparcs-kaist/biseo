@@ -5,6 +5,7 @@ import {
   agendaDelete,
   agendaStatusUpdate,
   agendaUpdate,
+  remind,
   retrieveAll,
 } from "@/service/admin.agenda";
 import { BiseoError, BiseoResponse } from "../utils";
@@ -74,5 +75,14 @@ export const adminAgendaListener = (
     if (!res) return callback(BiseoError("failed to update the agenda"));
 
     callback(BiseoResponse(res));
+  });
+
+  socket.on("admin.agenda.remind", async (req, callback) => {
+    const res = await remind(req);
+    if (!res) return callback(BiseoError("failed to remind about agenda"));
+
+    //Implement unvoters emit
+    //io.to("unvoters").emit("agenda.reminded", ??? );
+    callback(BiseoResponse({}));
   });
 };

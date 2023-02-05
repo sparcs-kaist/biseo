@@ -299,3 +299,59 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
     return null;
   }
 };
+
+export const remind = async ({
+  id,
+}: schema.Remind): Promise<schema.Remind[] | null> => {
+  try {
+    const voteInfo = await prisma.agenda.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        startAt: true,
+        deletedAt: true,
+        endAt: true,
+
+        choices: {
+          select: {
+            users: {
+              select: {
+                user: {
+                  select: {
+                    id: true,
+                    name: true,
+                    nickname: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        voters: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                nickname: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!voteInfo) return null;
+    let votedId: number[] = [];
+    const totalId = voteInfo.voters.map((votableId) => votableId.user);
+    for (const choice of voteInfo.choices) {
+      const user: number[] = choice.users.map((user) => user.user.id);
+      votedId = [...votedId, ...user];
+    }
+    const unvoters = totalId.filter((user) => !votedId.includes(user.id));
+    console.log(unvoters);
+    return unvoters;
+  } catch (err) {
+    return null;
+  }
+};
