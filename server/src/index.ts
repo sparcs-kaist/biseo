@@ -2,7 +2,7 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import { adminAgendaListener } from "@/listener/admin.agenda";
-import type { BiseoServer } from "./types";
+import type { BiseoServer } from "@/types/socket";
 
 const app = express();
 const httpServer = createServer(app);
