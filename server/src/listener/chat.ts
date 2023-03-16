@@ -1,6 +1,6 @@
 import type { BiseoServer, BiseoSocket } from "@/types/socket";
 import * as schema from "@/interface/chat";
-import { send } from "@/service/chat";
+import { send, retrieve } from "@/service/chat";
 import { BiseoError, BiseoResponse } from "../utils";
 
 export const chatListener = (io: BiseoServer, socket: BiseoSocket): void => {
@@ -17,5 +17,18 @@ export const chatListener = (io: BiseoServer, socket: BiseoSocket): void => {
 
     io.emit("chat.received", res);
     callback(BiseoResponse({}));
+  });
+
+  socket.on("chat.retrieve", async (req, callback) => {
+    try {
+      schema.Retrieve.parse(req);
+    } catch (err) {
+      return callback(BiseoError("bad request"));
+    }
+
+    const res = await retrieve(req);
+    if (!res) return callback(BiseoError("failed to retrieve chat"));
+
+    callback(BiseoResponse(res));
   });
 };

@@ -18,7 +18,7 @@ export const send = async ({
   };
 
   try {
-    const { ...chatProps } = await prisma.chat.create({
+    return await prisma.chat.create({
       data: sendQuery,
       select: {
         id: true,
@@ -28,10 +28,38 @@ export const send = async ({
         createdAt: true,
       },
     });
+  } catch (err) {
+    // TODO: log
+    console.log(err);
+    return null;
+  }
+};
 
-    return {
-      ...chatProps,
-    };
+export const retrieve = async ({
+  lastChatId,
+  limit,
+}: schema.Retrieve): Promise<schema.Message[] | null> => {
+  try {
+    return await prisma.chat.findMany({
+      orderBy: {
+        id: "desc",
+      },
+      where: lastChatId
+        ? {
+            id: {
+              lt: lastChatId,
+            },
+          }
+        : undefined,
+      take: limit,
+      select: {
+        id: true,
+        user: true,
+        type: true,
+        message: true,
+        createdAt: true,
+      },
+    });
   } catch (err) {
     // TODO: log
     console.log(err);
