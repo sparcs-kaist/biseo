@@ -4,6 +4,7 @@
 [![Conventional Commits][badge/conventional-commits]][conventional-commits]
 
 ## Usage
+> Tested on `node v19.7.0`
 
 1. Run the command below and fill in the `.env` file.
 
@@ -11,20 +12,12 @@
    cp .env.example .env
    ```
 
-2. Create an SSH key via the `ssh-keygen` command. Then place the public key with
-   the `.pub` filename extension in the same directory as the `dev.Dockerfile`.
+2. Install dependencies and run dev server
 
-3. Create and start containers.
-
-   ```bash
-   docker compose -f docker-compose.dev.yml up -d
-   ```
-
-4. You can connect to the container via SSH.
-
-   ```bash
-   ssh -i <private_key> -p <port> root@<host_name>
-   ```
+    ```bash
+    yarn
+    yarn dev
+    ```
 
 [badge/conventional-commits]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white
 [badge/license]: https://img.shields.io/github/license/sparcs-kaist/biseo?color=black
