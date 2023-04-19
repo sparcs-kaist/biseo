@@ -1,3 +1,5 @@
+import * as process from "process";
+
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -9,7 +11,7 @@ const httpServer = createServer(app);
 const io: BiseoServer = new Server(httpServer, {
   cors: { origin: "*" },
 });
-const port = 3000;
+const port = process.env.SERVER_PORT ?? 8000;
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -20,3 +22,4 @@ io.on("connection", (socket) => {
 });
 
 httpServer.listen(port);
+console.log(`Server listening on port ${port}`);

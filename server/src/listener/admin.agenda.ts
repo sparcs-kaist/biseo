@@ -1,5 +1,5 @@
 import type { BiseoServer, BiseoSocket } from "@/types/socket";
-import * as schema from "@/interface/admin/agenda";
+import * as schema from "biseo-interface/admin/agenda";
 import {
   agendaCreate,
   agendaDelete,

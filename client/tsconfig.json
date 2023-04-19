@@ -5,8 +5,6 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
-      "@server": ["../../server/src/interface"],
-      "@server/*": ["../../server/src/interface/*"]
     },
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,

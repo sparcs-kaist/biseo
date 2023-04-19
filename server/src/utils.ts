@@ -2,7 +2,7 @@ import type {
   Emitable,
   Response,
   Error,
-} from "@/interface/helpers";
+} from "biseo-interface/helpers";
 
 export const BiseoResponse = <T extends Emitable>(data: T): Response<T> => ({
   ok: true,

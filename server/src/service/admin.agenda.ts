@@ -1,5 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
-import * as schema from "@/interface/admin/agenda";
+import * as schema from "biseo-interface/admin/agenda";
 import { resolve } from "path";
 import { userInfo } from "os";
 import { BiseoError } from "@/utils";

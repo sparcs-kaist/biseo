@@ -1,0 +1,19 @@
+{
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default"
+    }
+  },
+  "targetDefaults": {
+    "dev": {
+      "dependsOn": [
+        "dev:db:migrate"
+      ]
+    },
+    "dev:db:migrate": {
+      "dependsOn": [
+        "dev:db:up"
+      ]
+    }
+  }
+}
