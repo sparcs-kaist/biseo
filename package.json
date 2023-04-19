@@ -6,9 +6,11 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "dev": "dotenv lerna run dev",
-    "dev:db": "dotenv lerna run dev:db",
-    "dev:db:migrate": "dotenv lerna run dev:db:migrate"
+    "dev": "yarn dev:db:up && yarn dev:db:migrate && yarn dev:app",
+    "dev:app": "dotenv -- nx run-many -t dev",
+    "dev:db": "dotenv nx dev:db biseo-server",
+    "dev:db:up": "dotenv nx dev:db:up biseo-server",
+    "dev:db:migrate": "dotenv nx dev:db:migrate biseo-server"
   },
   "workspaces": [
     "server",
@@ -20,7 +22,7 @@
     "@commitlint/config-conventional": "^17.4.2",
     "dotenv-cli": "^7.2.1",
     "husky": "^8.0.3",
-    "lerna": "^6.6.1",
+    "nx": "^15.9.2",
     "prettier": "^2.8.7"
   }
 }
