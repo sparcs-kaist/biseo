@@ -2,8 +2,8 @@ import type { BiseoSocket } from "./types";
 
 import type { EventNames, EventParams } from "@socket.io/component-emitter";
 
-import type { ClientToServerEvents as EmitEvents } from "@server";
-import type { Res } from "@server/helpers";
+import type { ClientToServerEvents as EmitEvents } from "biseo-interface";
+import type { Res } from "biseo-interface/helpers";
 
 export type ClientEventArgs<
   I extends Record<string, any>,
@@ -18,7 +18,7 @@ type Output<Args extends EventParams<EmitEvents, any>> =
 export function emitAsync<Ev extends EventNames<EmitEvents>>(
   this: BiseoSocket,
   event: Ev,
-  body: Input<EventParams<EmitEvents, Ev>>
+  body: Input<EventParams<EmitEvents, Ev>>,
 ) {
   type O = Output<EventParams<EmitEvents, Ev>>;
 
