@@ -1,7 +1,13 @@
 *.pub
 .env
-/node_modules
+**/node_modules
 
 # IDE Configurations
 .idea
 .vscode
+
+# File system
+**/.DS_Store
+
+# Logs
+*.log

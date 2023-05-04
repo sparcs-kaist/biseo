@@ -1,14 +1,31 @@
 {
   "name": "biseo",
+  "private": true,
   "version": "1.0.0",
   "repository": "https://github.com/sparcs-kaist/biseo.git",
   "license": "MIT",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev": "yarn dev:db:up && yarn dev:db:migrate && yarn dev:app",
+    "dev:app": "dotenv -- nx run-many -t dev",
+    "dev:db": "dotenv nx dev:db biseo-server",
+    "dev:db:up": "dotenv nx dev:db:up biseo-server",
+    "dev:db:migrate": "dotenv nx dev:db:migrate biseo-server"
   },
+  "workspaces": [
+    "server",
+    "client",
+    "interface"
+  ],
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
-    "husky": "^8.0.3"
+    "dotenv-cli": "^7.2.1",
+    "husky": "^8.0.3",
+    "nx": "^15.9.2",
+    "prettier": "^2.8.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

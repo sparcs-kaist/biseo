@@ -2,7 +2,7 @@ import { Server, Socket } from "socket.io";
 import {
   ClientToServerEvents,
   ServerToClientEvents,
-} from "@/interface";
+} from "biseo-interface";
 
 export type BiseoServer = Server<
   ClientToServerEvents,

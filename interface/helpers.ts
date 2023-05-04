@@ -1,8 +1,18 @@
-type Emitable = Record<string, any>;
+export type Emitable = Record<string, any>;
+
+export interface Response<T extends Emitable> {
+  ok: true;
+  data: T;
+}
+
+export interface Error {
+  ok: false;
+  message: string;
+}
 
 export type Res<T extends Emitable> =
-  | { ok: true, data: T }
-  | { ok: false, message: string }
+  | Response<T>
+  | Error;
 export type Callback<T extends Emitable> = (emit: Res<T>) => void;
 
 export type Ev<
