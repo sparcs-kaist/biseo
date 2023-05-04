@@ -1,12 +1,8 @@
 import { io } from "socket.io-client";
 import type { BiseoSocket } from "./types";
-import { asyncifyEmit } from "./utils";
+import { emitAsync } from "./utils";
 
-const _socket: BiseoSocket = io(
-  import.meta.env.VITE_SERVER_URL,
-  { autoConnect: false },
-);
-
-export const socket = Object.assign(_socket,
-  { emitAsync: asyncifyEmit(_socket) },
+export const socket = Object.assign(
+  io(import.meta.env.VITE_SERVER_URL, { autoConnect: false }) as BiseoSocket,
+  { emitAsync }
 );
