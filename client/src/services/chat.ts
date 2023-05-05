@@ -1,6 +1,6 @@
 import { socket } from "@/socket";
 import { create } from "zustand";
-import type { Message } from "@server/chat";
+import type { Message } from "biseo-interface/chat";
 
 const RETRIEVE_CHAT_OFFSET = 20;
 
