@@ -14,7 +14,7 @@ type Handler<Ev extends ClientEventNames> = (
   context: { io: BiseoServer, socket: BiseoSocket },
 ) => Promise<ResponseOf<Ev>>;
 
-export const listener = () => {
+export const Router = () => {
   let initialized = false;
   const listeners: Listener[] = [];
 
