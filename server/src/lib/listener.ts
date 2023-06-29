@@ -15,7 +15,6 @@ type Handler<Ev extends ClientEventNames> = (
 ) => Promise<ResponseOf<Ev>>;
 
 export const Router = () => {
-  let initialized = false;
   const listeners: Listener[] = [];
 
   const on = <Ev extends ClientEventNames>(
@@ -35,13 +34,8 @@ export const Router = () => {
     ) as any));
   };
 
-  const register = (io: Server) => {
-    if (initialized) throw new Error("`register` must be called only once");
-    initialized = true;
-
-    io.on("connection", (socket) => listeners.map(
-      listener => listener(io, socket),
-    ));
+  const register = (io: BiseoServer, socket: BiseoSocket) => {
+    listeners.map(listener => listener(io, socket));
   };
 
   return { on, register };
