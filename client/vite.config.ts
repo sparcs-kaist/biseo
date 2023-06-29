@@ -15,6 +15,12 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       port: parseInt(process.env.CLIENT_PORT ?? "3000"),
+      proxy: {
+        "/api": {
+          target: process.env.SERVER_URL ?? "http://localhost:8000",
+          ws: true,
+        },
+      },
     },
   };
 });
