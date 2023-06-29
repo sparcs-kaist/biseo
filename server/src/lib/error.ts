@@ -1,4 +1,4 @@
-import { Error } from "biseo-interface/helpers";
+import { Error as ErrorResponse } from "biseo-interface/helpers";
 
 export class BiseoError extends Error {
   constructor(message: string) {
@@ -6,16 +6,11 @@ export class BiseoError extends Error {
   }
 
   serialize() {
-    return {
-      ok: false,
-      message: this.message,
-    } as const;
+    return { ok: false, message: this.message } as const;
   }
 }
 
-export const errorHandler = (callback: (e: Error) => void) => (err: unknown) => {
-  if (err instanceof BiseoError) {
-    return callback(err.serialize());
-  }
+export const errorHandler = (callback: (e: ErrorResponse) => void) => (err: unknown) => {
+  if (err instanceof BiseoError) return callback(err.serialize());
   return callback(new BiseoError("internal server error").serialize());
 };
