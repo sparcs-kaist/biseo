@@ -36,7 +36,7 @@ const useAuth = create<AuthState>()(
     login: async (username, password) => {
       const token = await getToken(username, password);
 
-      if (!token) throw new Error("invalid token");
+      if (!token) throw new Error("incorrect username or password");
 
       const userInfo = await initSocket(token);
       set({ token, userInfo });
