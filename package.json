@@ -7,10 +7,14 @@
   "scripts": {
     "prepare": "husky install",
     "dev": "yarn dev:db:up && yarn dev:db:migrate && yarn dev:app",
-    "dev:app": "dotenv -- nx run-many -t dev",
-    "dev:db": "dotenv nx dev:db biseo-server",
-    "dev:db:up": "dotenv nx dev:db:up biseo-server",
-    "dev:db:migrate": "dotenv nx dev:db:migrate biseo-server"
+    "dev:app": "yarn all dev",
+    "dev:db": "yarn server dev:db",
+    "dev:db:up": "yarn server dev:db:up",
+    "dev:db:migrate": "yarn server dev:db:migrate",
+    "all": "dotenv -- nx run-many -t",
+    "client": "dotenv yarn workspace biseo-client",
+    "server": "dotenv yarn workspace biseo-server",
+    "interface": "dotenv yarn workspace biseo-interface"
   },
   "workspaces": [
     "server",
