@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 import { z } from "zod";
+import type { User } from "@prisma/client";
+
+import { prisma } from "@/db/prisma";
 import { env } from "@/env";
 
 const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
@@ -15,11 +18,11 @@ const decoded = z.object({
   iat: z.number(),
 });
 
-export const verifyToken = (token: string) => {
+export const getUserFromToken = async (token: string): Promise<User | null> => {
   try {
     const { username, iat } = decoded.parse(jwt.verify(token, env.SECRET_KEY));
     if (iat < Math.floor(Date.now() / 1000) - MAX_AGE) return null;
-    return username;
+    return await prisma.user.findUnique({ where: { username } });
   } catch {
     return null;
   }

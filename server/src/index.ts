@@ -3,9 +3,9 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { adminAgendaRouter } from "@/listener/admin.agenda";
 import type { BiseoServer } from "@/types/socket";
-import { authRouter } from "./auth/login";
+import { authRouter } from "./auth/router";
 import { env } from "./env";
-import { verifyToken } from "./auth/token";
+import { auth } from "@/auth/socket";
 
 const app = express();
 const httpServer = createServer(app);
@@ -23,18 +23,7 @@ app.get("/api", (req, res) => {
 
 app.use("/api/auth", authRouter);
 
-io.use((socket, next) => {
-  const nickname = verifyToken(socket.handshake.auth.token);
-
-  if (!nickname) {
-    next(new Error("invalid token"));
-    return socket.disconnect();
-  }
-
-  // TODO: check if user is admin
-  socket.emit("init", { nickname, isAdmin: false });
-  next();
-});
+io.use(auth);
 
 io.on("connection", (socket) => {
 

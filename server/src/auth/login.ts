@@ -1,33 +1,28 @@
 import { z } from "zod";
-import { Router } from "express";
-import asyncHandler from "express-async-handler";
+import type { Request, Response } from "express";
+
+import { prisma } from "@/db/prisma";
 
 import { authenticate } from "./ldap";
 import { getToken } from "./token";
-
-const router = Router();
 
 const loginSchema = z.object({
   username: z.string(),
   password: z.string(),
 });
 
-router.post("/login", asyncHandler(async (req, res) => {
-  console.log(req.body);
+export const loginHandler = async (req: Request, res: Response) => {
   const result = await loginSchema.spa(req.body);
 
-  if (!result.success) {
-    res.status(400).send("Bad request");
-    return;
-  }
+  if (!result.success) return res.status(400).send("Bad request");
 
   const username = await authenticate(result.data);
-  if (!username) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
+  if (!username) return res.status(401).send("Unauthorized");
 
-  res.json({ token: getToken(username) });
-}));
+  const user = await prisma.user.findUnique({ where: { username } })
+    || await prisma.user.create({ data: { username, displayName: username } });
 
-export { router as authRouter };
+  return res.json({ token: getToken(user.username) });
+};
+
+
