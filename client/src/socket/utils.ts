@@ -1,36 +1,16 @@
-import type { BiseoSocket } from "./types";
+import type { ClientEventNames, ResponseOf, SchemaOf } from "biseo-interface";
+import type { Res } from "biseo-interface/helpers";
+import { Socket } from "socket.io-client";
 
-import type {
-  EventNames,
-  EventParams,
-} from "@socket.io/component-emitter";
-
-import type { ClientToServerEvents as EmitEvents } from "@server";
-import type { Res } from "@server/helpers";
-
-export type ClientEventArgs<I extends Record<string, any>, O extends Record<string, any>>
-  = [I, (output: Res<O>) => void];
-
-type Input<Args extends EventParams<EmitEvents, any>> =
-  Args extends ClientEventArgs<infer I, infer O> ? I : never;
-type Output<Args extends EventParams<EmitEvents, any>> =
-  Args extends ClientEventArgs<infer I, infer O> ? O : never;
-
-export const asyncifyEmit = (socket: BiseoSocket) => {
-  return <Ev extends EventNames<EmitEvents>>(
-    event: Ev,
-    body: Input<EventParams<EmitEvents, Ev>>,
-  ) => {
-    type O = Output<EventParams<EmitEvents, Ev>>
-
-    return new Promise<O>((resolve, reject) => {
-      socket.emit<Ev>(event, ...[body, (res: Res<O>) => {
-        if (res.ok) {
-          resolve(res.data);
-        } else {
-          reject(new Error(res.message));
-        }
-      }] as EventParams<EmitEvents, Ev>);
-    });
-  };
-};
+export function emitAsync<Ev extends ClientEventNames>(
+  this: Socket,
+  event: Ev,
+  body: SchemaOf<Ev>,
+) {
+  return new Promise<ResponseOf<Ev>>((resolve, reject) => {
+    this.emit(event, body, (res: Res<ResponseOf<Ev>>) => res.ok
+      ? resolve(res.data)
+      : reject(new Error(res.message)),
+    );
+  });
+}

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { AgendaBase, AgendaStatus, Choice } from "../../agenda/common";
-import { User } from "../../user/common";
+import { AgendaBase, AgendaStatus, Choice } from "../../agenda";
+import { User } from "../../user";
 
 /**
  * AdminAgendaStatus
