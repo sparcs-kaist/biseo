@@ -35,7 +35,7 @@ export const send = async ({
 export const retrieve = async ({
   lastChatId,
   limit,
-}: schema.Retrieve): Promise<schema.Message[] | null> => {
+}: schema.Retrieve): Promise<schema.Message[]> => {
   try {
     return await prisma.chat.findMany({
       orderBy: {
@@ -60,6 +60,6 @@ export const retrieve = async ({
   } catch (err) {
     // TODO: log
     console.log(err);
-    return null;
+    throw new BiseoError("failed to retrieve chat");
   }
 };

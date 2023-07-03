@@ -10,30 +10,8 @@ router.on("chat.send", schema.Send, async (req, { io }) => {
   return {};
 });
 
+router.on("chat.retrieve", schema.Retrieve, async (req, { io }) => {
+  return await retrieve(req);
+});
+
 export { router as chatRouter };
-
-// export const chatListener = (io: BiseoServer, socket: BiseoSocket): void => {
-//   socket.on("chat.send", async (req, callback) => {
-//     try {
-//       schema.Send.parse(req);
-//       // TODO: retreive current user info from socket
-//     } catch (err) {
-//       return callback(BiseoError("bad request"));
-//     }
-
-//     callback(BiseoResponse({}));
-//   });
-
-//   socket.on("chat.retrieve", async (req, callback) => {
-//     try {
-//       schema.Retrieve.parse(req);
-//     } catch (err) {
-//       return callback(BiseoError("bad request"));
-//     }
-
-//     const res = await retrieve(req);
-//     if (!res) return callback(BiseoError("failed to retrieve chat"));
-
-//     callback(BiseoResponse(res));
-//   });
-// };
