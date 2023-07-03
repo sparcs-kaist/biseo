@@ -1,34 +1,39 @@
-import type { BiseoServer, BiseoSocket } from "@/types/socket";
-import * as schema from "@/interface/chat";
+import * as schema from "biseo-interface/chat";
 import { send, retrieve } from "@/service/chat";
-import { BiseoError, BiseoResponse } from "../utils";
 
-export const chatListener = (io: BiseoServer, socket: BiseoSocket): void => {
-  socket.on("chat.send", async (req, callback) => {
-    try {
-      schema.Send.parse(req);
-      // TODO: retreive current user info from socket
-    } catch (err) {
-      return callback(BiseoError("bad request"));
-    }
+import { Router } from "@/lib/listener";
 
-    const res = await send(req);
-    if (!res) return callback(BiseoError("failed to send chat"));
+const router = Router();
 
-    io.emit("chat.received", res);
-    callback(BiseoResponse({}));
-  });
+router.on("chat.send", schema.Send, async (req, { io }) => {
+  io.emit("chat.received", await send(req));
+  return {};
+});
 
-  socket.on("chat.retrieve", async (req, callback) => {
-    try {
-      schema.Retrieve.parse(req);
-    } catch (err) {
-      return callback(BiseoError("bad request"));
-    }
+export { router as chatRouter };
 
-    const res = await retrieve(req);
-    if (!res) return callback(BiseoError("failed to retrieve chat"));
+// export const chatListener = (io: BiseoServer, socket: BiseoSocket): void => {
+//   socket.on("chat.send", async (req, callback) => {
+//     try {
+//       schema.Send.parse(req);
+//       // TODO: retreive current user info from socket
+//     } catch (err) {
+//       return callback(BiseoError("bad request"));
+//     }
 
-    callback(BiseoResponse(res));
-  });
-};
+//     callback(BiseoResponse({}));
+//   });
+
+//   socket.on("chat.retrieve", async (req, callback) => {
+//     try {
+//       schema.Retrieve.parse(req);
+//     } catch (err) {
+//       return callback(BiseoError("bad request"));
+//     }
+
+//     const res = await retrieve(req);
+//     if (!res) return callback(BiseoError("failed to retrieve chat"));
+
+//     callback(BiseoResponse(res));
+//   });
+// };
