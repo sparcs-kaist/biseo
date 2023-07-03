@@ -1,11 +1,6 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import * as schema from "biseo-interface/admin/agenda";
-import { resolve } from "path";
-import { userInfo } from "os";
-import { BiseoError } from "@/utils";
-import { prependListener } from "process";
-
-const prisma = new PrismaClient();
+import { prisma } from "@/db/prisma";
 
 export const agendaCreate = async ({
   title,
@@ -41,8 +36,10 @@ export const agendaCreate = async ({
               user: {
                 select: {
                   id: true,
-                  nickname: true,
-                  name: true,
+                  username: true,
+                  displayName: true,
+                  // nickname: true,
+                  // name: true,
                 },
               },
             },

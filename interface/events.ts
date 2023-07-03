@@ -1,5 +1,6 @@
 import type { Events, Ev } from "./helpers";
 
+import type * as init from "./init";
 import type * as adminAgenda from "./admin/agenda";
 import type * as agenda from "./agenda";
 import type * as chat from "./chat";
@@ -31,6 +32,7 @@ export type ClientToServerEvents = Events<{
 }>;
 
 export type ServerToClientEvents = Events<{
+  init: Ev<init.Init>,
   chat: {
     received: Ev<chat.Received>,
   },

@@ -6,8 +6,8 @@ import { z } from "zod";
  */
 export const User = z.object({
   id: z.number(),
-  name: z.string(),
-  nickname: z.string(),
+  username: z.string(),
+  displayName: z.string(),
 });
 export type User = z.infer<typeof User>;
 
@@ -16,6 +16,6 @@ export type User = z.infer<typeof User>;
  * some description about chat user schema goes here
  */
 export const ChatUser = User.omit({
-  name: true,
+  username: true,
 });
 export type ChatUser = z.infer<typeof ChatUser>;
