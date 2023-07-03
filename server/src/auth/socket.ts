@@ -14,5 +14,6 @@ export const auth = (socket: BiseoSocket, next: (err?: ExtendedError) => void) =
 const handler = async (socket: BiseoSocket) => {
   const user = await getUserFromToken(socket.handshake.auth.token);
   if (!user) throw new Error("invalid token");
+  socket.join(user.username);
   return socket.emit("init", user);
 };
