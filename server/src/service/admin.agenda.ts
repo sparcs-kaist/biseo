@@ -36,8 +36,10 @@ export const agendaCreate = async ({
               user: {
                 select: {
                   id: true,
-                  nickname: true,
-                  name: true,
+                  username: true,
+                  displayName: true,
+                  // nickname: true,
+                  // name: true,
                 },
               },
             },
