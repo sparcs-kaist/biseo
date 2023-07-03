@@ -6,13 +6,13 @@ import { prisma } from "@/db/prisma";
 import { authenticate } from "./ldap";
 import { getToken } from "./token";
 
-const loginSchema = z.object({
+const Login = z.object({
   username: z.string(),
   password: z.string(),
 });
 
 export const loginHandler = async (req: Request, res: Response) => {
-  const result = await loginSchema.spa(req.body);
+  const result = await Login.spa(req.body);
 
   if (!result.success) return res.status(400).send("Bad request");
 
