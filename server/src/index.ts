@@ -3,7 +3,7 @@ import * as process from "process";
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { adminAgendaListener } from "@/listener/admin.agenda";
+import { adminAgendaRouter } from "@/listener/admin.agenda";
 import type { BiseoServer } from "@/types/socket";
 
 const app = express();
@@ -17,9 +17,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-io.on("connection", (socket) => {
-  adminAgendaListener(io, socket);
-});
+adminAgendaRouter.register(io);
 
 httpServer.listen(port);
 console.log(`Server listening on port ${port}`);
