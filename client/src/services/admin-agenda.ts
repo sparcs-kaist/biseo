@@ -4,9 +4,9 @@ import type { AdminAgenda } from "biseo-interface/admin/agenda";
 
 
 interface AdminAgendaState {
-    agendas: AdminAgenda[];
+    adminAgendas: AdminAgenda[];
 }
 
 const useAdminAgenda = create<AdminAgendaState>((set,get) => ({
-    agendas: [],
+    adminAgendas: [],
 }))
