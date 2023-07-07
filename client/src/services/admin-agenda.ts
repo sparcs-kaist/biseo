@@ -6,6 +6,7 @@ import type { AdminAgenda, AdminAgendaCreate } from "biseo-interface/admin/agend
 interface AdminAgendaState {
     adminAgendas: AdminAgenda[];
     createAgenda: (agenda : AdminAgendaCreate) => void;
+    retrieveAll: () => void;
 }
 
 const useAdminAgenda = create<AdminAgendaState>((set,get) => ({
@@ -19,8 +20,13 @@ const useAdminAgenda = create<AdminAgendaState>((set,get) => ({
         }
     },
 
+    retrieveAll: async () => {
+        try {
+            const retAdminAgendas = await socket.emitAsync("admin.agenda.retrieveAll",{})
+            set({adminAgendas:retAdminAgendas});
+        } catch(error){
+            // TODO: handle error
+        }
+    },
 
 }))
-
-
-
