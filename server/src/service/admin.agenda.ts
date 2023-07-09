@@ -228,8 +228,8 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
                 user: {
                   select: {
                     id: true,
-                    name: true,
-                    nickname: true,
+                    username: true,
+                    displayName: true,
                   },
                 },
               },
@@ -241,8 +241,8 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
             user: {
               select: {
                 id: true,
-                name: true,
-                nickname: true,
+                username: true,
+                displayName: true,
               },
             },
           },
@@ -255,7 +255,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
       if (agenda.startAt && !agenda.endAt) status = "ongoing";
       else if (!agenda.startAt && !agenda.endAt) status = "preparing";
       else if (agenda.endAt) status = "terminated";
-      let voted: { id: number; name: string; nickname: string }[] = [];
+      let voted: { id: number; username: string; displayName: string }[] = [];
       return {
         id: agenda.id,
         title: agenda.title,
@@ -271,14 +271,14 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
                 ...voted,
                 {
                   id: voter.user.id,
-                  name: voter.user.name,
-                  nickname: voter.user.nickname,
+                  username: voter.user.username,
+                  displayName: voter.user.displayName,
                 },
               ];
               return {
                 id: voter.user.id,
-                name: voter.user.name,
-                nickname: voter.user.nickname,
+                username: voter.user.username,
+                displayName: voter.user.displayName,
               };
             }),
           };
@@ -316,8 +316,8 @@ export const remind = async ({
                 user: {
                   select: {
                     id: true,
-                    name: true,
-                    nickname: true,
+                    username: true,
+                    displayName: true,
                   },
                 },
               },
@@ -329,8 +329,8 @@ export const remind = async ({
             user: {
               select: {
                 id: true,
-                name: true,
-                nickname: true,
+                username: true,
+                displayName: true,
               },
             },
           },
