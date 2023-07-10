@@ -298,7 +298,11 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
 
 export const remind = async ({
   id,
-}: schema.Remind): Promise<schema.Remind[] | null> => {
+}: schema.Remind): Promise<{
+  users: string[];
+  agendaID: number;
+  message: string;
+} | null> => {
   try {
     const voteInfo = await prisma.agenda.findUnique({
       where: {
@@ -308,6 +312,7 @@ export const remind = async ({
         startAt: true,
         deletedAt: true,
         endAt: true,
+        title: true,
 
         choices: {
           select: {
@@ -344,8 +349,12 @@ export const remind = async ({
       const user: number[] = choice.users.map((user) => user.user.id);
       votedId = [...votedId, ...user];
     }
-    const unvoters = totalId.filter((user) => !votedId.includes(user.id));
-    return unvoters;
+    const unvoters = totalId
+      .filter((user) => !votedId.includes(user.id))
+      .map((person) => person.username);
+    const message = "관리자가 투표를 독촉합니다";
+    return { users: unvoters, agendaID: id, message: message };
+    //return unvoters.map((user) => {return {id: user.id, message: "관리자가 " + voteInfo.title + "에 대한 투표를 독촉합니다." }});
   } catch (err) {
     return null;
   }
