@@ -74,3 +74,10 @@ const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
     }
   },
 }));
+
+socket.on("admin.agenda.created", (adminAgenda) => {
+  useAdminAgenda.setState((state) => ({
+    // TODO: handle local id
+    adminAgendas: [...state.adminAgendas, adminAgenda],
+  }));
+});
