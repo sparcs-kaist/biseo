@@ -5,12 +5,12 @@ import { Router } from "@/lib/listener";
 
 const router = Router();
 
-router.on("chat.send", schema.Send, async (req, { io }) => {
-  io.emit("chat.received", await send(req));
+router.on("chat.send", schema.Send, async (req, { io, user }) => {
+  io.emit("chat.received", await send(req, user));
   return {};
 });
 
-router.on("chat.retrieve", schema.Retrieve, async (req, { io }) => {
+router.on("chat.retrieve", schema.Retrieve, async (req) => {
   return await retrieve(req);
 });
 
