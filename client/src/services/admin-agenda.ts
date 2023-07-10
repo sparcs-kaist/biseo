@@ -81,3 +81,18 @@ socket.on("admin.agenda.created", (adminAgenda) => {
     adminAgendas: [...state.adminAgendas, adminAgenda],
   }));
 });
+socket.on("admin.agenda.statusUpdated", ({ id }) => {
+  useAdminAgenda.setState((state) => {
+    state.adminAgendas.forEach((element) => {
+      if (element.id == id) {
+        if (element.status == "preparing") {
+          element.status = "ongoing";
+        }
+      }
+    });
+    return {
+      // TODO: handle local id
+      adminAgendas: [...state.adminAgendas],
+    };
+  });
+});
