@@ -4,11 +4,13 @@ import type {
   AdminAgenda,
   AdminAgendaCreate,
 } from "biseo-interface/admin/agenda";
+import type { AgendaStatus } from "biseo-interface/agenda";
 
 interface AdminAgendaState {
   adminAgendas: AdminAgenda[];
   createAgenda: (agenda: AdminAgendaCreate) => void;
   retrieveAll: () => void;
+  statusUpdate: (id: number, status: AgendaStatus) => void;
 }
 
 const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
@@ -30,6 +32,16 @@ const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
       );
       set({ adminAgendas: retAdminAgendas });
     } catch (error) {
+      // TODO: handle error
+    }
+  },
+  statusUpdate: async (id, status) => {
+    try {
+      await socket.emitAsync("admin.agenda.statusUpdate", {
+        id: id,
+        status: status,
+      });
+    } catch {
       // TODO: handle error
     }
   },
