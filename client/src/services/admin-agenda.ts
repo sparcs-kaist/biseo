@@ -111,7 +111,19 @@ socket.on("admin.agenda.updated", (adminAgenda) => {
     });
     return {
       // TODO: handle local id
-      adminAgendas: [...newAgendas],
+      adminAgendas: newAgendas,
+    };
+  });
+});
+
+socket.on("admin.agenda.deleted", (adminAgenda) => {
+  useAdminAgenda.setState((state) => {
+    const newAgendas: AdminAgenda[] = state.adminAgendas.filter(
+      (agenda) => agenda.id !== adminAgenda.id
+    );
+    return {
+      // TODO: handle local id
+      adminAgendas: newAgendas,
     };
   });
 });
