@@ -100,3 +100,18 @@ socket.on("admin.agenda.statusUpdated", ({ id }) => {
     };
   });
 });
+
+socket.on("admin.agenda.updated", (adminAgenda) => {
+  useAdminAgenda.setState((state) => {
+    const newAgendas: AdminAgenda[] = state.adminAgendas.map((agenda) => {
+      if (agenda.id === adminAgenda.id) {
+        return adminAgenda;
+      }
+      return agenda;
+    });
+    return {
+      // TODO: handle local id
+      adminAgendas: [...newAgendas],
+    };
+  });
+});
