@@ -127,3 +127,22 @@ socket.on("admin.agenda.deleted", (adminAgenda) => {
     };
   });
 });
+
+socket.on("admin.agenda.voted", (voteData) => {
+  useAdminAgenda.setState((state) => {
+    const newAgendas: AdminAgenda[] = state.adminAgendas.map((agenda) => {
+      if (agenda.id === voteData.id) {
+        return {
+          ...agenda,
+          choices: voteData.choices,
+          voters: voteData.voters,
+        };
+      }
+      return agenda;
+    });
+    return {
+      // TODO: handle local id
+      adminAgendas: newAgendas,
+    };
+  });
+});
