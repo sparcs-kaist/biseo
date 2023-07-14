@@ -1,9 +1,10 @@
 import { socket } from "@/socket";
 import { create } from "zustand";
+import { useEffect } from "react";
 import {
-  Agenda,
-  TerminatedAgenda,
   OngoingAgenda,
+  TerminatedAgenda,
+  Agenda,
 } from "biseo-interface/agenda";
 
 interface Voted {
@@ -32,6 +33,7 @@ const useAgenda = create<AgendaState>((set, get) => ({
       await socket.emitAsync("agenda.vote", { choiceId });
     } catch (error) {
       // TODO: handle error
+      console.error("Vote error:", error);
     }
   },
   retrieveAgendas: async () => {
@@ -42,6 +44,7 @@ const useAgenda = create<AgendaState>((set, get) => ({
       set((state) => ({ agendas: [...agendas, ...state.agendas] }));
     } catch (error) {
       // TODO: handle error
+      console.error("Retrieve Agendas error:", error);
     }
   },
 }));
