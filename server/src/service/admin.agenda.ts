@@ -342,7 +342,8 @@ export const remind = async ({
         },
       },
     });
-    if (!voteInfo) return null;
+    const message = "관리자가 투표를 독촉합니다";
+    if (!voteInfo) return { users: [], agendaID: id, message: message };
     let votedId: number[] = [];
     const totalId = voteInfo.voters.map((votableId) => votableId.user);
     for (const choice of voteInfo.choices) {
@@ -352,9 +353,8 @@ export const remind = async ({
     const unvoters = totalId
       .filter((user) => !votedId.includes(user.id))
       .map((person) => person.username);
-    const message = "관리자가 투표를 독촉합니다";
+
     return { users: unvoters, agendaID: id, message: message };
-    //return unvoters.map((user) => {return {id: user.id, message: "관리자가 " + voteInfo.title + "에 대한 투표를 독촉합니다." }});
   } catch (err) {
     return null;
   }
