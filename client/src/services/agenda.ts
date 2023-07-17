@@ -1,24 +1,13 @@
 import { socket } from "@/socket";
 import { create } from "zustand";
 import { useEffect } from "react";
-import {
+import type {
   OngoingAgenda,
   TerminatedAgenda,
   Agenda,
+  Voted,
+  Reminded,
 } from "biseo-interface/agenda";
-
-interface Voted {
-  id: number;
-  voters: {
-    voted: number;
-    total: number;
-  };
-}
-
-interface Reminded {
-  agendaId: number;
-  message: string;
-}
 
 interface AgendaState {
   agendas: Agenda[];
@@ -32,8 +21,7 @@ const useAgenda = create<AgendaState>((set, get) => ({
     try {
       await socket.emitAsync("agenda.vote", { choiceId });
     } catch (error) {
-      // TODO: handle error
-      console.error("Vote error:", error);
+      // TODO: globally handle error using zustand middleware
     }
   },
   retrieveAgendas: async () => {
@@ -43,19 +31,18 @@ const useAgenda = create<AgendaState>((set, get) => ({
       });
       set((state) => ({ agendas: [...agendas, ...state.agendas] }));
     } catch (error) {
-      // TODO: handle error
-      console.error("Retrieve Agendas error:", error);
+      // TODO: globally handle error using zustand middleware
     }
   },
 }));
 
-socket.on("agenda.started", (ongoingAgenda: OngoingAgenda) => {
+socket.on("agenda.started", (ongoingAgenda) => {
   useAgenda.setState((state) => ({
     agendas: [...state.agendas, ongoingAgenda],
   }));
 });
 
-socket.on("agenda.voted", (voted: Voted) => {
+socket.on("agenda.voted", (voted) => {
   useAgenda.setState((state) => {
     const updatedAgendas = state.agendas.map((agenda) =>
       agenda.id === voted.id ? { ...agenda, voters: voted.voters } : agenda
@@ -64,7 +51,7 @@ socket.on("agenda.voted", (voted: Voted) => {
   });
 });
 
-socket.on("agenda.terminated", (terminatedAgenda: TerminatedAgenda) => {
+socket.on("agenda.terminated", (terminatedAgenda) => {
   useAgenda.setState((state) => {
     const updatedAgendas = state.agendas.map((agenda) =>
       agenda.id === terminatedAgenda.id ? terminatedAgenda : agenda
@@ -73,7 +60,7 @@ socket.on("agenda.terminated", (terminatedAgenda: TerminatedAgenda) => {
   });
 });
 
-socket.on("agenda.reminded", (reminded: Reminded) => {
+socket.on("agenda.reminded", (reminded) => {
   // TODO: Fix the alert algorithm according to the design
   alert(`Reminder Alert ${reminded.agendaId}: ${reminded.message}`);
 });
