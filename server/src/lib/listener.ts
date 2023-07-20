@@ -5,14 +5,27 @@ import type { ClientEventNames, ResponseOf, SchemaOf } from "biseo-interface";
 import type { Res } from "biseo-interface/helpers";
 
 import type { BiseoServer, BiseoSocket } from "@/types/socket";
+import type { User } from "@prisma/client";
 import { BiseoError, errorHandler } from "./error";
 
 type Listener = (io: Server, socket: Socket) => void;
 
+interface HandlerContext {
+  io: BiseoServer;
+  socket: BiseoSocket;
+  user: User;
+}
+
 type Handler<Ev extends ClientEventNames> = (
   data: SchemaOf<Ev>,
-  context: { io: BiseoServer, socket: BiseoSocket },
+  context: HandlerContext,
 ) => Promise<ResponseOf<Ev>>;
+
+const context = (io: BiseoServer, socket: BiseoSocket): HandlerContext => ({
+  io,
+  socket,
+  user: socket.data.user!,
+});
 
 export const Router = () => {
   const listeners: Listener[] = [];
@@ -28,7 +41,7 @@ export const Router = () => {
       ) => schema
         .parseAsync(req)
         .catch(() => { throw new BiseoError("bad request"); })
-        .then(req => handler(req, { io, socket }))
+        .then(req => handler(req, context(io, socket)))
         .then(res => callback({ ok: true, data: res }))
         .catch(errorHandler(callback))
     ) as any));
