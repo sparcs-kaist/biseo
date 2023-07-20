@@ -49,7 +49,10 @@ export type AgendaBase = z.infer<typeof AgendaBase>;
  */
 export const OngoingAgenda = AgendaBase.extend({
   status: z.enum(["ongoing"]),
-  voted: z.number().nullable(), // choiceId | null
+  user: z.object({
+    votable: z.boolean(),
+    voted: z.number().nullable(), // choiceId | null
+  }),
   choices: z.array(Choice),
 });
 export type OngoingAgenda = z.infer<typeof OngoingAgenda>;
