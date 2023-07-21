@@ -77,25 +77,19 @@ const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
 
 socket.on("admin.agenda.created", (adminAgenda) => {
   useAdminAgenda.setState((state) => ({
-    // TODO: handle local id
     adminAgendas: [...state.adminAgendas, adminAgenda],
   }));
 });
 
-socket.on("admin.agenda.statusUpdated", ({ id }) => {
+socket.on("admin.agenda.statusUpdated", ({ id, status }) => {
   useAdminAgenda.setState((state) => {
     const newAdminAgendas: AdminAgenda[] = state.adminAgendas.map((agenda) => {
       if (agenda.id === id) {
-        if (agenda.status === "preparing") {
-          return { ...agenda, status: "ongoing" };
-        } else if (agenda.status === "ongoing") {
-          return { ...agenda, status: "terminated" };
-        }
+        return { ...agenda, status: status };
       }
       return agenda;
     });
     return {
-      // TODO: handle local id
       adminAgendas: newAdminAgendas,
     };
   });
@@ -110,7 +104,6 @@ socket.on("admin.agenda.updated", (adminAgenda) => {
       return agenda;
     });
     return {
-      // TODO: handle local id
       adminAgendas: newAgendas,
     };
   });
@@ -122,7 +115,6 @@ socket.on("admin.agenda.deleted", (adminAgenda) => {
       (agenda) => agenda.id !== adminAgenda.id
     );
     return {
-      // TODO: handle local id
       adminAgendas: newAgendas,
     };
   });
@@ -141,7 +133,6 @@ socket.on("admin.agenda.voted", (voteData) => {
       return agenda;
     });
     return {
-      // TODO: handle local id
       adminAgendas: newAgendas,
     };
   });
