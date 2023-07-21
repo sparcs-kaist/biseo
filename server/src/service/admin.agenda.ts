@@ -256,6 +256,18 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
       else if (!agenda.startAt && !agenda.endAt) status = "preparing";
       else if (agenda.endAt) status = "terminated";
       let voted: { id: number; username: string; displayName: string }[] = [];
+      for (const choice of agenda.choices) {
+        for (const voter of choice.users) {
+          voted = [
+            ...voted,
+            {
+              id: voter.user.id,
+              username: voter.user.username,
+              displayName: voter.user.displayName,
+            },
+          ];
+        }
+      }
       return {
         id: agenda.id,
         title: agenda.title,
@@ -266,21 +278,24 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
           return {
             id: choice.id,
             name: choice.name,
-            voters: choice.users.map((voter) => {
-              voted = [
-                ...voted,
-                {
-                  id: voter.user.id,
-                  username: voter.user.username,
-                  displayName: voter.user.displayName,
-                },
-              ];
-              return {
-                id: voter.user.id,
-                username: voter.user.username,
-                displayName: voter.user.displayName,
-              };
-            }),
+            voters: [
+              { id: choice.users.length, username: "", displayName: "" },
+            ],
+            // choice.users.map((voter) => {
+            //   voted = [
+            //     ...voted,
+            //     {
+            //       id: voter.user.id,
+            //       username: voter.user.username,
+            //       displayName: voter.user.displayName,
+            //     },
+            //   ];
+            //   return {
+            //     id: voter.user.id,
+            //     username: voter.user.username,
+            //     displayName: voter.user.displayName,
+            //   };
+            // }),
           };
         }),
         voters: {
