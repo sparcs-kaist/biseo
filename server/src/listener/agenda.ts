@@ -6,14 +6,18 @@ import { Router } from "@/lib/listener";
 
 const router = Router();
 
-router.on("agenda.retrieveAll", schema.RetrieveAll, async (req, { io }) => {
-  const res = await retrieveAll(req);
-  if (!res) throw new BiseoError("failed to retrieve agenda");
-  return res;
-});
+router.on(
+  "agenda.retrieveAll",
+  schema.RetrieveAll,
+  async (req, { io, user }) => {
+    const res = await retrieveAll(req, user);
+    if (!res) throw new BiseoError("failed to retrieve agenda");
+    return res;
+  }
+);
 
-router.on("agenda.vote", schema.Vote, async (req, { io }) => {
-  const res = await vote(req);
+router.on("agenda.vote", schema.Vote, async (req, { io, user }) => {
+  const res = await vote(req, user);
   if (!res) throw new BiseoError("failed to vote");
   return {};
 });

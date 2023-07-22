@@ -1,9 +1,12 @@
-import type { Prisma } from "@prisma/client";
+import type { User } from "@prisma/client";
 import * as schema from "biseo-interface/agenda";
 import { prisma } from "@/db/prisma";
 
-export const retrieveAll = async ({}): Promise<schema.RetrieveAllCb | null> => {
-  const agenda_dbres = await prisma.agenda.findMany({
+export const retrieveAll = async (
+  {}: schema.RetrieveAll,
+  user: User
+): Promise<schema.RetrieveAllCb | null> => {
+  const agendaDbRes = await prisma.agenda.findMany({
     where: { deletedAt: null },
     include: {
       voters: true,
@@ -16,17 +19,18 @@ export const retrieveAll = async ({}): Promise<schema.RetrieveAllCb | null> => {
       },
     },
   });
-  const res = agenda_dbres.map((agenda): schema.Agenda => {
-    let status: "ongoing" | "terminated" = !agenda.endAt
-      ? "ongoing"
-      : "terminated";
-    return {
-      // TODO: union ongoing | terminated agenda does not match with status
+  const res = agendaDbRes.map((agenda): schema.Agenda => {
+    const userVotable = agenda.voters.some((v) => v.userId == user.id);
+    //TODO: possible optimization
+    const userVoted = userVotable
+      ? agenda.choices.find((c) => c.users.some((u) => u.userId == user.id))
+          ?.id || null
+      : null;
+    const commonField = {
       id: agenda.id,
       title: agenda.title,
       content: agenda.content,
       resolution: agenda.subtitle,
-      status: status,
       voters: {
         voted: agenda.choices.reduce(
           (acc, choice) => acc + choice.users.length,
@@ -34,25 +38,49 @@ export const retrieveAll = async ({}): Promise<schema.RetrieveAllCb | null> => {
         ),
         total: agenda.voters.length,
       },
-      voted: null, // TODO: How to know `voted` without `user`?
-      choices: agenda.choices.map((choice) => {
-        return {
-          id: choice.id,
-          name: choice.name,
-        };
-      }),
     };
+    return !agenda.startAt
+      ? {
+          ...commonField,
+          status: "preparing",
+        }
+      : !agenda.endAt
+      ? {
+          ...commonField,
+          status: "ongoing",
+          user: {
+            votable: userVotable,
+            voted: userVoted,
+          },
+          choices: agenda.choices.map((choice) => {
+            return {
+              id: choice.id,
+              name: choice.name,
+            };
+          }),
+        }
+      : {
+          ...commonField,
+          status: "terminated",
+          choices: agenda.choices.map((choice) => {
+            return {
+              id: choice.id,
+              name: choice.name,
+              count: choice.users.length,
+            };
+          }),
+        };
   });
-  return null;
+  return res;
 };
 
-export const vote = async ({
-  choiceId, // TODO: Is `choiceId` unique among choices?
-}: schema.Vote): Promise<schema.VoteCb> => {
-  // TODO: check Votable (necessary?)
+export const vote = async (
+  { choiceId }: schema.Vote,
+  user: User
+): Promise<schema.VoteCb> => {
   const res = prisma.userChoice.create({
     data: {
-      userId: 0, // TODO: How to get userId without `user`?
+      userId: user.id,
       choiceId: choiceId,
     },
   });
