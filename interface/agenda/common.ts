@@ -23,7 +23,7 @@ export type ChoiceWithResult = z.infer<typeof ChoiceWithResult>;
  * AgendaStatus
  * some description about agenda status type goes here
  */
-export const AgendaStatus = z.enum(["ongoing", "terminated"]);
+export const AgendaStatus = z.enum(["preparing", "ongoing", "terminated"]);
 export type AgendaStatus = z.infer<typeof AgendaStatus>;
 
 /**
@@ -42,6 +42,15 @@ export const AgendaBase = z.object({
   }),
 });
 export type AgendaBase = z.infer<typeof AgendaBase>;
+
+/**
+ * PreparingAgenda
+ * some description about preparing agenda schema goes here
+ */
+export const PreparingAgenda = AgendaBase.extend({
+  status: z.enum(["preparing"]),
+});
+export type PreparingAgenda = z.infer<typeof PreparingAgenda>;
 
 /**
  * OngoingAgenda
@@ -71,5 +80,9 @@ export type TerminatedAgenda = z.infer<typeof TerminatedAgenda>;
  * Agenda
  * some description about agenda type goes here
  */
-export const Agenda = z.union([OngoingAgenda, TerminatedAgenda]);
+export const Agenda = z.union([
+  PreparingAgenda,
+  OngoingAgenda,
+  TerminatedAgenda,
+]);
 export type Agenda = z.infer<typeof Agenda>;
