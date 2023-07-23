@@ -43,6 +43,9 @@ export const retrieveAll = async (
       ? {
           ...commonField,
           status: "preparing",
+          user: {
+            votable: userVotable,
+          },
         }
       : !agenda.endAt
       ? {
