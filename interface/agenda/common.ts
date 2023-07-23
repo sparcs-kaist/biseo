@@ -49,6 +49,9 @@ export type AgendaBase = z.infer<typeof AgendaBase>;
  */
 export const PreparingAgenda = AgendaBase.extend({
   status: z.enum(["preparing"]),
+  user: z.object({
+    votable: z.boolean(),
+  }),
 });
 export type PreparingAgenda = z.infer<typeof PreparingAgenda>;
 
