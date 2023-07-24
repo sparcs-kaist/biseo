@@ -199,15 +199,98 @@ export const agendaUpdate = async (
         },
       },
     });
+    const agendaFromDB = await prisma.agenda.findUnique({
+      where: {
+        id: agendaUpdate.id,
+      },
+      select: {
+        id: true,
+        title: true,
+        subtitle: true,
+        content: true,
+        startAt: true,
+        endAt: true,
+        deletedAt: true,
+
+        choices: {
+          select: {
+            id: true,
+            name: true,
+            users: {
+              select: {
+                user: {
+                  select: {
+                    id: true,
+                    username: true,
+                    displayName: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        voters: {
+          select: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                displayName: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    let organizedAgenda = null;
+    if (agendaFromDB) {
+      let status: "ongoing" | "preparing" | "terminated" = "ongoing";
+      if (agendaFromDB.startAt && !agendaFromDB.endAt) status = "ongoing";
+      else if (!agendaFromDB.startAt && !agendaFromDB.endAt)
+        status = "preparing";
+      else if (agendaFromDB.endAt) status = "terminated";
+      let voted: { id: number; username: string; displayName: string }[] = [];
+      for (const choice of agendaFromDB.choices) {
+        for (const voter of choice.users) {
+          voted = [
+            ...voted,
+            {
+              id: voter.user.id,
+              username: voter.user.username,
+              displayName: voter.user.displayName,
+            },
+          ];
+        }
+      }
+      organizedAgenda = {
+        id: agendaFromDB.id,
+        title: agendaFromDB.title,
+        content: agendaFromDB.content,
+        resolution: agendaFromDB.subtitle,
+        status: status,
+        choices: agendaFromDB.choices.map((choice) => {
+          return {
+            id: choice.id,
+            name: choice.name,
+            count: choice.users.length,
+          };
+        }),
+        voters: {
+          total: agendaFromDB.voters.map((user) => user.user),
+          voted: voted,
+        },
+      };
+    }
+    return organizedAgenda;
   } catch (err) {
     console.log(err);
+    return null;
   }
-  return null;
 };
 
 export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
   try {
-    const res = await prisma.agenda.findMany({
+    const agendaFromDB = await prisma.agenda.findMany({
       where: { deletedAt: null },
 
       select: {
@@ -250,7 +333,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
       },
     });
 
-    const res2 = res.map((agenda) => {
+    const res = agendaFromDB.map((agenda) => {
       let status: "ongoing" | "preparing" | "terminated" = "ongoing";
       if (agenda.startAt && !agenda.endAt) status = "ongoing";
       else if (!agenda.startAt && !agenda.endAt) status = "preparing";
@@ -287,7 +370,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
         },
       };
     });
-    return res2;
+    return res;
   } catch (err) {
     console.log(err);
     return null;
