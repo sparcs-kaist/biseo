@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { AdminAgenda, AdminChoice } from "./common";
 import { User } from "../../user";
+import { AgendaStatus } from "../../agenda";
 
 /**
  * Created
@@ -15,6 +16,7 @@ export type Created = z.infer<typeof Created>;
  */
 export const StatusUpdated = z.object({
   id: z.number(),
+  status: AgendaStatus,
 });
 export type StatusUpdated = z.infer<typeof StatusUpdated>;
 

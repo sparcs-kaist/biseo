@@ -1,6 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import * as schema from "biseo-interface/admin/agenda";
 import { prisma } from "@/db/prisma";
+import { AgendaStatus } from "biseo-interface/agenda";
 
 export const agendaCreate = async ({
   title,
@@ -90,7 +91,7 @@ export const agendaStatusUpdate = async ({
         },
       });
 
-      return updatedAgendaId;
+      return { id: updatedAgendaId.id, status: "ongoing" };
     } catch (err) {
       // TODO: log
       console.log(err);
@@ -119,7 +120,7 @@ export const agendaStatusUpdate = async ({
         },
       });
 
-      return updatedAgendaId;
+      return { id: updatedAgendaId.id, status: "terminated" };
     } catch (err) {
       // TODO: log
       console.log(err);
