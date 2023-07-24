@@ -54,7 +54,7 @@ export const agendaCreate = async ({
       choices: choices.map((choice) => ({
         id: choice.id,
         name: choice.name,
-        voters: [],
+        count: 0,
       })),
       voters: {
         voted: [],
@@ -278,24 +278,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
           return {
             id: choice.id,
             name: choice.name,
-            voters: [
-              { id: choice.users.length, username: "", displayName: "" },
-            ],
-            // choice.users.map((voter) => {
-            //   voted = [
-            //     ...voted,
-            //     {
-            //       id: voter.user.id,
-            //       username: voter.user.username,
-            //       displayName: voter.user.displayName,
-            //     },
-            //   ];
-            //   return {
-            //     id: voter.user.id,
-            //     username: voter.user.username,
-            //     displayName: voter.user.displayName,
-            //   };
-            // }),
+            count: choice.users.length,
           };
         }),
         voters: {
