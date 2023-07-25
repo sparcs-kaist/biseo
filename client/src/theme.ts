@@ -14,7 +14,8 @@ export const theme = {
     blue400: "#6EABF4",
     blue500: "#0066AE",
     blue600: "#004B81",
-  },
+  } as const,
 } as const;
 
 export type Theme = typeof theme;
+export type Color = keyof Theme["colors"];
