@@ -1,11 +1,13 @@
 import type { User } from "@prisma/client";
 import * as schema from "biseo-interface/agenda";
 import { prisma } from "@/db/prisma";
+import { BiseoError } from "@/lib/error";
+import { BiseoServer } from "@/types/socket";
 
 export const retrieveAll = async (
   {}: schema.RetrieveAll,
   user: User
-): Promise<schema.RetrieveAllCb | null> => {
+): Promise<schema.RetrieveAllCb> => {
   const agendaDbRes = await prisma.agenda.findMany({
     where: { deletedAt: null },
     include: {
@@ -65,6 +67,10 @@ export const retrieveAll = async (
       : {
           ...commonField,
           status: "terminated",
+          user: {
+            votable: userVotable,
+            voted: userVoted,
+          },
           choices: agenda.choices.map((choice) => {
             return {
               id: choice.id,
@@ -74,18 +80,93 @@ export const retrieveAll = async (
           }),
         };
   });
+  if (!res) throw new BiseoError("failed to retrieve agenda");
+
   return res;
 };
 
 export const vote = async (
-  { choiceId }: schema.Vote,
+  { choiceId, agendaId }: schema.Vote,
+  io: BiseoServer,
   user: User
-): Promise<schema.VoteCb> => {
-  const res = prisma.userChoice.create({
-    data: {
-      userId: user.id,
-      choiceId: choiceId,
-    },
-  });
-  return {};
+) => {
+  // validation
+  const isUserVotable =
+    (await prisma.userAgendaVotable.count({
+      where: {
+        userId: user.id,
+        agendaId: agendaId,
+      },
+    })) > 0;
+  const isChoiceInAgenda =
+    (await prisma.choice.count({
+      where: {
+        id: choiceId,
+        agendaId: agendaId,
+      },
+    })) > 0;
+  if (isUserVotable && isChoiceInAgenda) {
+    const res = await prisma.userChoice.create({
+      data: {
+        userId: user.id,
+        choiceId: choiceId,
+      },
+      select: {
+        choice: {
+          select: {
+            agenda: {
+              select: {
+                choices: {
+                  select: {
+                    users: {
+                      select: {
+                        user: {
+                          select: {
+                            id: true,
+                            username: true,
+                            displayName: true,
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                voters: {
+                  select: {
+                    user: {
+                      select: {
+                        id: true,
+                        username: true,
+                        displayName: true,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    if (!res) throw new BiseoError("failed to vote");
+    io.emit("agenda.voted", {
+      id: agendaId,
+      voters: {
+        voted: res.choice.agenda.choices.reduce(
+          (acc, choice) => acc + choice.users.length,
+          0
+        ),
+        total: res.choice.agenda.voters.length,
+      },
+    });
+    io.emit("admin.agenda.voted", {
+      id: agendaId,
+      voters: {
+        voted: res.choice.agenda.choices.flatMap((c) =>
+          c.users.map((u) => u.user)
+        ),
+        total: res.choice.agenda.voters.flatMap((v) => v.user),
+      },
+    });
+  }
 };

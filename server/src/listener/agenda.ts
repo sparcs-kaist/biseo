@@ -11,14 +11,12 @@ router.on(
   schema.RetrieveAll,
   async (req, { io, user }) => {
     const res = await retrieveAll(req, user);
-    if (!res) throw new BiseoError("failed to retrieve agenda");
     return res;
   }
 );
 
 router.on("agenda.vote", schema.Vote, async (req, { io, user }) => {
-  const res = await vote(req, user);
-  if (!res) throw new BiseoError("failed to vote");
+  await vote(req, io, user);
   return {};
 });
 
