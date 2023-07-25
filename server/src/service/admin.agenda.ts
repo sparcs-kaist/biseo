@@ -3,6 +3,8 @@ import * as schema from "biseo-interface/admin/agenda";
 import { prisma } from "@/db/prisma";
 import { AgendaStatus } from "biseo-interface/agenda";
 
+import { logger } from "../utils/logger";
+
 export const agendaCreate = async ({
   title,
   resolution,
@@ -15,10 +17,10 @@ export const agendaCreate = async ({
     subtitle: resolution,
     content: content,
     choices: {
-      create: choices.map((name) => ({ name: name })),
+      create: choices.map(name => ({ name: name })),
     },
     voters: {
-      create: voters.total.map((id) => ({ userId: id })),
+      create: voters.total.map(id => ({ userId: id })),
     },
   };
 
@@ -52,19 +54,18 @@ export const agendaCreate = async ({
       ...agendaProps,
       resolution: subtitle,
       status: "preparing",
-      choices: choices.map((choice) => ({
+      choices: choices.map(choice => ({
         id: choice.id,
         name: choice.name,
         voters: [],
       })),
       voters: {
         voted: [],
-        total: voters.map((voter) => voter.user),
+        total: voters.map(voter => voter.user),
       },
     };
   } catch (err) {
-    // TODO: log
-    console.log(err);
+    logger.error(err);
     return null;
   }
 };
@@ -93,8 +94,7 @@ export const agendaStatusUpdate = async ({
 
       return { id: updatedAgendaId.id, status: "ongoing" };
     } catch (err) {
-      // TODO: log
-      console.log(err);
+      logger.error(err);
       return null;
     }
   }
@@ -122,8 +122,7 @@ export const agendaStatusUpdate = async ({
 
       return { id: updatedAgendaId.id, status: "terminated" };
     } catch (err) {
-      // TODO: log
-      console.log(err);
+      logger.error(err);
       return null;
     }
   }
@@ -157,13 +156,13 @@ export const agendaDelete = async ({
       });
     }
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
   return null;
 };
 
 export const agendaUpdate = async (
-  agendaUpdate: schema.AdminAgendaUpdate
+  agendaUpdate: schema.AdminAgendaUpdate,
 ): Promise<schema.Updated | null> => {
   try {
     //Delete prior choices and voters
@@ -188,12 +187,12 @@ export const agendaUpdate = async (
         content: agendaUpdate.content,
         choices: {
           createMany: {
-            data: agendaUpdate.choices.map((it) => ({ name: it })),
+            data: agendaUpdate.choices.map(it => ({ name: it })),
           },
         },
         voters: {
           createMany: {
-            data: agendaUpdate.voters.total.map((it) => ({
+            data: agendaUpdate.voters.total.map(it => ({
               userId: it,
             })),
           },
@@ -201,7 +200,7 @@ export const agendaUpdate = async (
       },
     });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
   return null;
 };
@@ -251,7 +250,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
       },
     });
 
-    const res2 = res.map((agenda) => {
+    const res2 = res.map(agenda => {
       let status: "ongoing" | "preparing" | "terminated" = "ongoing";
       if (agenda.startAt && !agenda.endAt) status = "ongoing";
       else if (!agenda.startAt && !agenda.endAt) status = "preparing";
@@ -263,11 +262,11 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
         content: agenda.content,
         resolution: agenda.subtitle,
         status: status,
-        choices: agenda.choices.map((choice) => {
+        choices: agenda.choices.map(choice => {
           return {
             id: choice.id,
             name: choice.name,
-            voters: choice.users.map((voter) => {
+            voters: choice.users.map(voter => {
               voted = [
                 ...voted,
                 {
@@ -285,14 +284,14 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
           };
         }),
         voters: {
-          total: agenda.voters.map((user) => user.user),
+          total: agenda.voters.map(user => user.user),
           voted: voted,
         },
       };
     });
     return res2;
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return null;
   }
 };
@@ -340,12 +339,12 @@ export const remind = async ({
     });
     if (!voteInfo) return null;
     let votedId: number[] = [];
-    const totalId = voteInfo.voters.map((votableId) => votableId.user);
+    const totalId = voteInfo.voters.map(votableId => votableId.user);
     for (const choice of voteInfo.choices) {
-      const user: number[] = choice.users.map((user) => user.user.id);
+      const user: number[] = choice.users.map(user => user.user.id);
       votedId = [...votedId, ...user];
     }
-    const unvoters = totalId.filter((user) => !votedId.includes(user.id));
+    const unvoters = totalId.filter(user => !votedId.includes(user.id));
     return unvoters;
   } catch (err) {
     return null;
