@@ -40,7 +40,7 @@ export type Deleted = z.infer<typeof Deleted>;
  */
 export const Voted = z.object({
   id: z.number(),
-  choices: z.array(AdminChoice),
+  // choices: z.array(AdminChoice),
   voters: z.object({
     voted: z.array(User),
     total: z.array(User),
