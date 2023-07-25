@@ -1,16 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import { protect } from "@/utils/routes";
-import { Main, Login, Admin, Layout } from "./pages";
+import { PageLayout } from "@/components/templates";
+import { MainPage, LoginPage, AdminPage } from "@/components/pages";
 
 export default createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <PageLayout />,
     children: [
-      { path: "/", element: <Main /> },
+      { path: "/", element: <MainPage /> },
       {
         path: "/admin",
-        element: <Admin />,
+        element: <AdminPage />,
         ...protect({ to: "/", when: user => !user?.isAdmin }),
       },
     ],
@@ -18,7 +19,7 @@ export default createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <LoginPage />,
     ...protect({ to: "/", when: user => !!user }),
   },
 ]);
