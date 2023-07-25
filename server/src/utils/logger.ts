@@ -17,58 +17,71 @@ const finalFormat = format.printf(({ level, message, timestamp, stack }) => {
   }`;
 });
 
+// 파일 출력 시 사용될 포맷. 색 관련 특수문자가 파일에 쓰여지는 것을 방지하기 위해 색상이 표시되지 않습니다.
+const uncolorizedFormat = format.combine(
+  baseFormat,
+  format.uncolorize(),
+  finalFormat,
+);
+
 // 콘솔 출력 시 사용될 포맷. 색상이 표시됩니다.
-const consoleFormat = format.combine(
+const colorizedFormat = format.combine(
   baseFormat,
   format.colorize({ all: true }),
   finalFormat,
 );
 
-// 파일 출력 시 사용될 포맷. 색 관련 특수문자가 파일에 쓰여지는 것을 방지하기 위해 색상이 표시되지 않습니다.
-const fileFormat = format.combine(baseFormat, format.uncolorize(), finalFormat);
-const datePattern = "YYYY-MM-DD-HH"; // 로그 파일명에 포함되는 시각
-const maxSize = 5242880; // 로그 파일당 최대 크기 (=5MB)
+// 로그 파일명에 포함되는 시각 포맷을 정의합니다.
+const datePattern = "YYYY-MM-DD-HH";
+// 로그 파일당 최대 크기를 정의합니다(=5MB).
+const maxSize = 5242880;
+
+const logger =
+  env.NODE_ENV === "production"
+    ? // "production" 환경에서 사용되는 winston Logger 객체를 생성합니다.
+      createLogger({
+        level: "info",
+        format: uncolorizedFormat,
+        defaultMeta: { service: "biseo" },
+        transports: [
+          // 전체 로그("info", "warn", "error")를 저장합니다.
+          new dailyRotateFileTransport({
+            level: "info",
+            filename: path.resolve("logs/%DATE%-combined.log"),
+            datePattern,
+            maxSize,
+          }),
+          // 예외 처리로 핸들링 된 오류 로그("error")를 저장합니다.
+          new dailyRotateFileTransport({
+            level: "error",
+            filename: path.resolve("logs/%DATE%-error.log"),
+            datePattern,
+            maxSize,
+          }),
+        ],
+        exceptionHandlers: [
+          // 예외 처리가 되지 않은 오류 로그("error")를 저장합니다.
+          new dailyRotateFileTransport({
+            filename: path.resolve("logs/%DATE%-unhandled.log"),
+            datePattern,
+            maxSize,
+          }),
+        ],
+      })
+    : // "development", "test" 환경에서 사용되는 winston Logger 객체입니다.
+      createLogger({
+        level: "info",
+        format: colorizedFormat,
+        defaultMeta: { service: "biseo" },
+        transports: [new transports.Console()],
+        exceptionHandlers: [new transports.Console()],
+      });
 
 /**
  * console.log()와 console.error() 대신 사용되는 winston Logger 객체입니다.
+ * production 환경에서는 파일 시스템에 로그가 저장되고, development와 test 환경에서는 콘솔에 로그가 출력됩니다.
  *
- * 전체 로그는 "logs/YYYY-MM-DD-HH.combined.log" 파일에,
- * 예외 처리로 핸들링 된 오류 로그는 "logs/YYYY-MM-DD-HH.error.log" 파일에,
- * 예외 처리가 되지 않은 오류는 "logs/YYYY-MM-DD-HH.unhandled.log"에 저장됩니다.
  * @method info(message: string, callback: winston.LogCallback) - 일반적인 정보(API 접근 등) 기록을 위해 사용합니다.
  * @method error(message: string, callback: winston.LogCallback)  - 오류 메시지를 기록하기 위해 사용합니다.
  */
-const logger = createLogger({
-  level: "info", // "info"와 같은 중요도이거나 더 중요한 레벨의 로그들만 로깅합니다("info", "warn", "error").
-  format: fileFormat,
-  defaultMeta: { service: "biseo" },
-  transports: [
-    new dailyRotateFileTransport({
-      level: "info", // "info", "warn", "error" 로그를 저장합니다.
-      filename: path.resolve("../logs/%DATE%-combined.log"),
-      datePattern,
-      maxSize,
-    }),
-    new dailyRotateFileTransport({
-      level: "error", // "error" 로그를 저장합니다.
-      filename: path.resolve("../logs/%DATE%-error.log"),
-      datePattern,
-      maxSize,
-    }),
-    new transports.Console({
-      // production, test 환경에는 화려한 콘솔이 없을 가능성이 높으므로 색상 없이 출력합니다.
-      format: env.NODE_ENV === "development" ? consoleFormat : fileFormat,
-    }),
-  ],
-  exceptionHandlers: [
-    // 핸들링되지 않은 예외들은 별도의 파일로 저장됩니다. 콘솔로도 출력됩니다.
-    new dailyRotateFileTransport({
-      filename: path.resolve("../logs/%DATE%-unhandled.log"),
-      datePattern,
-      maxSize,
-    }),
-    new transports.Console(),
-  ],
-});
-
 export { logger };
