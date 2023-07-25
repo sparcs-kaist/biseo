@@ -31,14 +31,14 @@ const colorizedFormat = format.combine(
   finalFormat,
 );
 
-// 로그 파일명에 포함되는 시각 포맷을 정의합니다.
+// 로그 파일명에 포함되는 시각
 const datePattern = "YYYY-MM-DD-HH";
-// 로그 파일당 최대 크기를 정의합니다(=5MB).
-const maxSize = 5242880;
+// 로그 파일당 최대 크기(=5MB).
+const maxSize = 5 * 1024 * 1024;
 
 const logger =
   env.NODE_ENV === "production"
-    ? // "production" 환경에서 사용되는 winston Logger 객체를 생성합니다.
+    ? // "production" 환경에서 사용되는 Logger 객체
       createLogger({
         level: "info",
         format: uncolorizedFormat,
@@ -68,7 +68,7 @@ const logger =
           }),
         ],
       })
-    : // "development", "test" 환경에서 사용되는 winston Logger 객체입니다.
+    : // "development", "test" 환경에서 사용되는 Logger 객체
       createLogger({
         level: "info",
         format: colorizedFormat,
