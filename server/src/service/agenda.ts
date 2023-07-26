@@ -57,12 +57,10 @@ export const retrieveAll = async (
             votable: userVotable,
             voted: userVoted,
           },
-          choices: agenda.choices.map((choice) => {
-            return {
-              id: choice.id,
-              name: choice.name,
-            };
-          }),
+          choices: agenda.choices.map((choice) => ({
+            id: choice.id,
+            name: choice.name,
+          })),
         }
       : {
           ...commonField,
@@ -91,54 +89,52 @@ export const vote = async (
   user: User
 ) => {
   // validation
-  const isUserVotable =
-    (await prisma.userAgendaVotable.count({
-      where: {
-        userId: user.id,
-        agendaId: agendaId,
-      },
-    })) > 0;
-  const isChoiceInAgenda =
-    (await prisma.choice.count({
-      where: {
-        id: choiceId,
-        agendaId: agendaId,
-      },
-    })) > 0;
-  if (isUserVotable && isChoiceInAgenda) {
-    const res = await prisma.userChoice.create({
-      data: {
-        userId: user.id,
-        choiceId: choiceId,
-      },
-      select: {
-        choice: {
-          select: {
-            agenda: {
-              select: {
-                choices: {
-                  select: {
-                    users: {
-                      select: {
-                        user: {
-                          select: {
-                            id: true,
-                            username: true,
-                            displayName: true,
-                          },
+  const isUserVotable = !!(await prisma.userAgendaVotable.count({
+    where: {
+      userId: user.id,
+      agendaId: agendaId,
+    },
+  }));
+  if (!isUserVotable) throw new BiseoError("No permission");
+  const isChoiceInAgenda = !!(await prisma.choice.count({
+    where: {
+      id: choiceId,
+      agendaId: agendaId,
+    },
+  }));
+  if (!isChoiceInAgenda) throw new BiseoError("Invalid choice");
+  const res = await prisma.userChoice.create({
+    data: {
+      userId: user.id,
+      choiceId: choiceId,
+    },
+    select: {
+      choice: {
+        select: {
+          agenda: {
+            select: {
+              choices: {
+                select: {
+                  users: {
+                    select: {
+                      user: {
+                        select: {
+                          id: true,
+                          username: true,
+                          displayName: true,
                         },
                       },
                     },
                   },
                 },
-                voters: {
-                  select: {
-                    user: {
-                      select: {
-                        id: true,
-                        username: true,
-                        displayName: true,
-                      },
+              },
+              voters: {
+                select: {
+                  user: {
+                    select: {
+                      id: true,
+                      username: true,
+                      displayName: true,
                     },
                   },
                 },
@@ -147,26 +143,25 @@ export const vote = async (
           },
         },
       },
-    });
-    if (!res) throw new BiseoError("failed to vote");
-    io.emit("agenda.voted", {
-      id: agendaId,
-      voters: {
-        voted: res.choice.agenda.choices.reduce(
-          (acc, choice) => acc + choice.users.length,
-          0
-        ),
-        total: res.choice.agenda.voters.length,
-      },
-    });
-    io.emit("admin.agenda.voted", {
-      id: agendaId,
-      voters: {
-        voted: res.choice.agenda.choices.flatMap((c) =>
-          c.users.map((u) => u.user)
-        ),
-        total: res.choice.agenda.voters.flatMap((v) => v.user),
-      },
-    });
-  }
+    },
+  });
+  io.emit("agenda.voted", {
+    id: agendaId,
+    voters: {
+      voted: res.choice.agenda.choices.reduce(
+        (acc, choice) => acc + choice.users.length,
+        0
+      ),
+      total: res.choice.agenda.voters.length,
+    },
+  });
+  io.emit("admin.agenda.voted", {
+    id: agendaId,
+    voters: {
+      voted: res.choice.agenda.choices.flatMap((c) =>
+        c.users.map((u) => u.user)
+      ),
+      total: res.choice.agenda.voters.flatMap((v) => v.user),
+    },
+  });
 };

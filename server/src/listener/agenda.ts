@@ -10,8 +10,7 @@ router.on(
   "agenda.retrieveAll",
   schema.RetrieveAll,
   async (req, { io, user }) => {
-    const res = await retrieveAll(req, user);
-    return res;
+    return retrieveAll(req, user);
   }
 );
 
