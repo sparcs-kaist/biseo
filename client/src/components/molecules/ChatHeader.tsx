@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Text } from "../atoms";
+import { Text } from "@/components/atoms";
 
 interface Props {
   title: string;
