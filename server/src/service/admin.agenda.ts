@@ -38,8 +38,6 @@ export const agendaCreate = async ({
                   id: true,
                   username: true,
                   displayName: true,
-                  // nickname: true,
-                  // name: true,
                 },
               },
             },
@@ -199,89 +197,62 @@ export const agendaUpdate = async (
         },
       },
     });
-    const agendaFromDB = await prisma.agenda.findUnique({
-      where: {
-        id: agendaUpdate.id,
-      },
-      select: {
-        id: true,
-        title: true,
-        subtitle: true,
-        content: true,
-        startAt: true,
-        endAt: true,
-        deletedAt: true,
-
-        choices: {
-          select: {
-            id: true,
-            name: true,
-            users: {
-              select: {
-                user: {
-                  select: {
-                    id: true,
-                    username: true,
-                    displayName: true,
-                  },
+    const { subtitle, choices, voters, ...agendaProps } =
+      await prisma.agenda.update({
+        where: {
+          id: agendaUpdate.id,
+        },
+        data: {
+          title: agendaUpdate.title,
+          subtitle: agendaUpdate.resolution,
+          content: agendaUpdate.content,
+          choices: {
+            createMany: {
+              data: agendaUpdate.choices.map((it) => ({ name: it })),
+            },
+          },
+          voters: {
+            createMany: {
+              data: agendaUpdate.voters.total.map((it) => ({
+                userId: it,
+              })),
+            },
+          },
+        },
+        select: {
+          id: true,
+          title: true,
+          subtitle: true,
+          content: true,
+          choices: true,
+          voters: {
+            include: {
+              user: {
+                select: {
+                  id: true,
+                  username: true,
+                  displayName: true,
                 },
               },
             },
           },
         },
-        voters: {
-          select: {
-            user: {
-              select: {
-                id: true,
-                username: true,
-                displayName: true,
-              },
-            },
-          },
-        },
+      });
+    return {
+      ...agendaProps,
+      resolution: subtitle,
+      status: "preparing",
+      choices: choices.map((choice) => ({
+        id: choice.id,
+        name: choice.name,
+        voters: [],
+        count: 0,
+      })),
+      voters: {
+        voted: [],
+        total: voters.map((voter) => voter.user),
       },
-    });
-    let organizedAgenda = null;
-    if (agendaFromDB) {
-      let status: "ongoing" | "preparing" | "terminated" = "ongoing";
-      if (agendaFromDB.startAt && !agendaFromDB.endAt) status = "ongoing";
-      else if (!agendaFromDB.startAt && !agendaFromDB.endAt)
-        status = "preparing";
-      else if (agendaFromDB.endAt) status = "terminated";
-      let voted: { id: number; username: string; displayName: string }[] = [];
-      for (const choice of agendaFromDB.choices) {
-        for (const voter of choice.users) {
-          voted = [
-            ...voted,
-            {
-              id: voter.user.id,
-              username: voter.user.username,
-              displayName: voter.user.displayName,
-            },
-          ];
-        }
-      }
-      organizedAgenda = {
-        id: agendaFromDB.id,
-        title: agendaFromDB.title,
-        content: agendaFromDB.content,
-        resolution: agendaFromDB.subtitle,
-        status: status,
-        choices: agendaFromDB.choices.map((choice) => {
-          return {
-            id: choice.id,
-            name: choice.name,
-            count: choice.users.length,
-          };
-        }),
-        voters: {
-          total: agendaFromDB.voters.map((user) => user.user),
-          voted: voted,
-        },
-      };
-    }
-    return organizedAgenda;
+    };
   } catch (err) {
     console.log(err);
     return null;
@@ -334,21 +305,14 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
     });
 
     const res = agendaFromDB.map((agenda) => {
-      let status: "ongoing" | "preparing" | "terminated" = "ongoing";
+      let status: schema.AdminAgendaStatus = "ongoing";
       if (agenda.startAt && !agenda.endAt) status = "ongoing";
       else if (!agenda.startAt && !agenda.endAt) status = "preparing";
       else if (agenda.endAt) status = "terminated";
       let voted: { id: number; username: string; displayName: string }[] = [];
       for (const choice of agenda.choices) {
         for (const voter of choice.users) {
-          voted = [
-            ...voted,
-            {
-              id: voter.user.id,
-              username: voter.user.username,
-              displayName: voter.user.displayName,
-            },
-          ];
+          voted = [...voted, voter.user];
         }
       }
       return {
@@ -357,13 +321,11 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
         content: agenda.content,
         resolution: agenda.subtitle,
         status: status,
-        choices: agenda.choices.map((choice) => {
-          return {
-            id: choice.id,
-            name: choice.name,
-            count: choice.users.length,
-          };
-        }),
+        choices: agenda.choices.map((choice) => ({
+          id: choice.id,
+          name: choice.name,
+          count: choice.users.length,
+        })),
         voters: {
           total: agenda.voters.map((user) => user.user),
           voted: voted,

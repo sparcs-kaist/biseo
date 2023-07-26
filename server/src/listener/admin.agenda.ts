@@ -54,12 +54,10 @@ router.on("admin.agenda.remind", schema.Remind, async (req, { io }) => {
 
   //Implement unvoters emit
   //io.to("unvoters").emit("agenda.reminded", ??? );
-  for (const unvoter of res.users) {
-    io.to("user/" + unvoter).emit("agenda.reminded", {
-      message: res.message,
-      agendaId: res.agendaID,
-    });
-  }
+  io.to(res.users.map((user) => `user/${user}`)).emit("agenda.reminded", {
+    message: res.message,
+    agendaId: res.agendaID,
+  });
   return {};
 });
 
