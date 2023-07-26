@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Text } from "@/components/atoms";
-import { ChatMessage } from "@/components/molecules";
+import { ChatHeader, ChatMessage } from "@/components/molecules";
 import styled from "@emotion/styled";
 
 const ChatContainer = styled.div`
@@ -9,20 +9,11 @@ const ChatContainer = styled.div`
   overflow: hidden;
 `;
 
-const ChatHeader = styled.div`
-  width: 100%;
-  border-bottom: solid 1px ${props => props.theme.colors.gray200};
-`;
-
 export const ChatSection: React.FC = () => {
   return (
     <ChatContainer>
       <Box w={458} h={690} round={5}>
-        <ChatHeader>
-          <Box w="fill" h={42} bg="gray100" justify="center" padHorizontal={20}>
-            <Text variant="title2">스레드</Text>
-          </Box>
-        </ChatHeader>
+        <ChatHeader title="스레드" />
         <Box h="fill" justify="end">
           <ChatMessage
             user="닉네임"
