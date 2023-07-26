@@ -305,10 +305,11 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
     });
 
     const res = agendaFromDB.map((agenda) => {
-      let status: schema.AdminAgendaStatus = "ongoing";
-      if (agenda.startAt && !agenda.endAt) status = "ongoing";
-      else if (!agenda.startAt && !agenda.endAt) status = "preparing";
-      else if (agenda.endAt) status = "terminated";
+      const status: schema.AdminAgendaStatus = !agenda.startAt
+        ? "preparing"
+        : !agenda.endAt
+        ? "ongoing"
+        : "terminated";
       let voted: { id: number; username: string; displayName: string }[] = [];
       for (const choice of agenda.choices) {
         for (const voter of choice.users) {
@@ -342,62 +343,45 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
 export const remind = async ({
   id,
 }: schema.Remind): Promise<{
-  users: string[];
-  agendaID: number;
+  usernames: string[];
+  agendaId: number;
   message: string;
 } | null> => {
   try {
-    const voteInfo = await prisma.agenda.findUnique({
+    // Validate if id is existing
+    const agenda = await prisma.agenda.findUnique({
       where: {
         id: id,
       },
       select: {
-        startAt: true,
-        deletedAt: true,
-        endAt: true,
         title: true,
-
-        choices: {
-          select: {
-            users: {
-              select: {
-                user: {
-                  select: {
-                    id: true,
-                    username: true,
-                    displayName: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-        voters: {
-          select: {
-            user: {
-              select: {
-                id: true,
-                username: true,
-                displayName: true,
-              },
-            },
-          },
-        },
+      },
+    });
+    const unvotedUsers = await prisma.user.findMany({
+      select: { username: true },
+      where: {
+        agendas: { some: { agendaId: id } },
+        NOT: { choices: { some: { choice: { agendaId: id } } } },
       },
     });
     const message = "관리자가 투표를 독촉합니다";
-    if (!voteInfo) return { users: [], agendaID: id, message: message };
-    let votedId: number[] = [];
-    const totalId = voteInfo.voters.map((votableId) => votableId.user);
-    for (const choice of voteInfo.choices) {
-      const user: number[] = choice.users.map((user) => user.user.id);
-      votedId = [...votedId, ...user];
-    }
-    const unvoters = totalId
-      .filter((user) => !votedId.includes(user.id))
-      .map((person) => person.username);
+    if (!agenda) return null;
+    if (!unvotedUsers) return { usernames: [], agendaId: id, message: message };
+    // let votedId: number[] = [];
+    // const totalId = agenda.voters.map((votableId) => votableId.user);
+    // for (const choice of agenda.choices) {
+    //   const user: number[] = choice.users.map((user) => user.user.id);
+    //   votedId = [...votedId, ...user];
+    // }
+    // const unvoters = totalId
+    //   .filter((user) => !votedId.includes(user.id))
+    //   .map((person) => person.username);
 
-    return { users: unvoters, agendaID: id, message: message };
+    return {
+      usernames: unvotedUsers.map((user) => user.username),
+      agendaId: id,
+      message: message,
+    };
   } catch (err) {
     return null;
   }

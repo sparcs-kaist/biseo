@@ -54,9 +54,9 @@ router.on("admin.agenda.remind", schema.Remind, async (req, { io }) => {
 
   //Implement unvoters emit
   //io.to("unvoters").emit("agenda.reminded", ??? );
-  io.to(res.users.map((user) => `user/${user}`)).emit("agenda.reminded", {
+  io.to(res.usernames.map((user) => `user/${user}`)).emit("agenda.reminded", {
     message: res.message,
-    agendaId: res.agendaID,
+    agendaId: res.agendaId,
   });
   return {};
 });
