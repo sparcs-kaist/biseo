@@ -3,7 +3,7 @@ import * as schema from "biseo-interface/admin/agenda";
 import { prisma } from "@/db/prisma";
 import { AgendaStatus } from "biseo-interface/agenda";
 
-import { logger } from "../utils/logger";
+import { logger } from "@/utils/logger";
 
 export const agendaCreate = async ({
   title,
