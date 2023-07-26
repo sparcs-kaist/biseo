@@ -96,6 +96,13 @@ export const vote = async (
     },
   }));
   if (!isUserVotable) throw new BiseoError("No permission");
+  const isAlreadyVoted = !!(await prisma.userChoice.count({
+    where: {
+      userId: user.id,
+      choiceId: choiceId,
+    },
+  }));
+  if (isAlreadyVoted) throw new BiseoError("Already voted");
   const isChoiceInAgenda = !!(await prisma.choice.count({
     where: {
       id: choiceId,
