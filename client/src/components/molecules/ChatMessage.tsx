@@ -1,12 +1,7 @@
 import React from "react";
+import { Message } from "biseo-interface/chat";
 import { Box, Text } from "@/components/atoms";
 import styled from "@emotion/styled";
-
-interface Props {
-  user: string;
-  time: Date;
-  message: string;
-}
 
 const formatTime = (time: Date) => {
   const hours = time.getHours();
@@ -27,16 +22,20 @@ const ChatMessageContainer = styled.div`
   border-top: solid 1px ${props => props.theme.colors.gray200};
 `;
 
-export const ChatMessage: React.FC<Props> = ({ user, time, message }) => {
+export const ChatMessage: React.FC<Message> = ({
+  user,
+  createdAt,
+  message,
+}) => {
   return (
     <ChatMessageContainer>
       <Box dir="column" gap={4} padHorizontal={20} padVertical={10}>
         <Box dir="row" gap={4} align="center">
           <Text variant="boldtitle3" color="black">
-            {user}
+            {user.displayName}
           </Text>
           <Text variant="option2" color="gray500">
-            {formatTime(time)}
+            {formatTime(createdAt)}
           </Text>
         </Box>
         <Text variant="body" color="black">
