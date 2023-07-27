@@ -1,4 +1,5 @@
 import * as schema from "biseo-interface/admin/agenda";
+
 import {
   agendaCreate,
   agendaDelete,
@@ -28,12 +29,16 @@ router.on("admin.agenda.delete", schema.Delete, async (req, { io }) => {
   return {};
 });
 
-router.on("admin.agenda.statusUpdate", schema.StatusUpdate, async (req, { io }) => {
-  const res = await agendaStatusUpdate(req);
-  if (!res) throw new BiseoError("failed to update status the agenda");
-  io.to("admin").emit("admin.agenda.statusUpdated", res);
-  return {};
-});
+router.on(
+  "admin.agenda.statusUpdate",
+  schema.StatusUpdate,
+  async (req, { io }) => {
+    const res = await agendaStatusUpdate(req);
+    if (!res) throw new BiseoError("failed to update status the agenda");
+    io.to("admin").emit("admin.agenda.statusUpdated", res);
+    return {};
+  }
+);
 
 router.on("admin.agenda.update", schema.Update, async (req, { io }) => {
   const res = await agendaUpdate(req);
@@ -49,14 +54,22 @@ router.on("admin.agenda.remind", schema.Remind, async (req, { io }) => {
 
   //Implement unvoters emit
   //io.to("unvoters").emit("agenda.reminded", ??? );
+  io.to(res.usernames.map((user) => `user/${user}`)).emit("agenda.reminded", {
+    message: res.message,
+    agendaId: res.agendaId,
+  });
   return {};
 });
 
-router.on("admin.agenda.retrieveAll", schema.RetrieveAll, async (req, { io }) => {
-  const res = await retrieveAll();
-  if (!res) throw new BiseoError("failed to update the agenda");
+router.on(
+  "admin.agenda.retrieveAll",
+  schema.RetrieveAll,
+  async (req, { io }) => {
+    const res = await retrieveAll();
+    if (!res) throw new BiseoError("failed to update the agenda");
 
-  return res;
-});
+    return res;
+  }
+);
 
 export { router as adminAgendaRouter };
