@@ -1,5 +1,10 @@
 import { z } from "zod";
-import { AgendaBase, AgendaStatus, Choice } from "../../agenda";
+import {
+  AgendaBase,
+  AgendaStatus,
+  Choice,
+  ChoiceWithResult,
+} from "../../agenda";
 import { User } from "../../user";
 
 /**
@@ -8,15 +13,6 @@ import { User } from "../../user";
  */
 export const AdminAgendaStatus = z.enum([...AgendaStatus.options, "preparing"]);
 export type AdminAgendaStatus = z.infer<typeof AdminAgendaStatus>;
-
-/**
- * AdminChoice
- * some description about admin choice schema goes here
- */
-export const AdminChoice = Choice.extend({
-  voters: z.array(User),
-});
-export type AdminChoice = z.infer<typeof AdminChoice>;
 
 /**
  * AdminAgenda
@@ -31,7 +27,7 @@ export const AdminAgenda = AgendaBase.omit({
     total: z.array(User),
   }),
   status: AdminAgendaStatus,
-  choices: z.array(AdminChoice),
+  choices: z.array(ChoiceWithResult),
 });
 export type AdminAgenda = z.infer<typeof AdminAgenda>;
 
