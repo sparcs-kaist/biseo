@@ -3,6 +3,8 @@ import * as schema from "biseo-interface/admin/agenda";
 import { prisma } from "@/db/prisma";
 import { AgendaStatus } from "biseo-interface/agenda";
 
+import { logger } from "@/utils/logger";
+
 export const agendaCreate = async ({
   title,
   resolution,
@@ -15,10 +17,10 @@ export const agendaCreate = async ({
     subtitle: resolution,
     content: content,
     choices: {
-      create: choices.map((name) => ({ name: name })),
+      create: choices.map(name => ({ name: name })),
     },
     voters: {
-      create: voters.total.map((id) => ({ userId: id })),
+      create: voters.total.map(id => ({ userId: id })),
     },
   };
 
@@ -50,19 +52,18 @@ export const agendaCreate = async ({
       ...agendaProps,
       resolution: subtitle,
       status: "preparing",
-      choices: choices.map((choice) => ({
+      choices: choices.map(choice => ({
         id: choice.id,
         name: choice.name,
         count: 0,
       })),
       voters: {
         voted: [],
-        total: voters.map((voter) => voter.user),
+        total: voters.map(voter => voter.user),
       },
     };
   } catch (err) {
-    // TODO: log
-    console.log(err);
+    logger.error(err);
     return null;
   }
 };
@@ -91,8 +92,7 @@ export const agendaStatusUpdate = async ({
 
       return { id: updatedAgendaId.id, status: "ongoing" };
     } catch (err) {
-      // TODO: log
-      console.log(err);
+      logger.error(err);
       return null;
     }
   }
@@ -120,8 +120,7 @@ export const agendaStatusUpdate = async ({
 
       return { id: updatedAgendaId.id, status: "terminated" };
     } catch (err) {
-      // TODO: log
-      console.log(err);
+      logger.error(err);
       return null;
     }
   }
@@ -155,13 +154,13 @@ export const agendaDelete = async ({
       });
     }
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
   return null;
 };
 
 export const agendaUpdate = async (
-  agendaUpdate: schema.AdminAgendaUpdate
+  agendaUpdate: schema.AdminAgendaUpdate,
 ): Promise<schema.Updated | null> => {
   try {
     //Delete prior choices and voters
@@ -186,12 +185,12 @@ export const agendaUpdate = async (
         content: agendaUpdate.content,
         choices: {
           createMany: {
-            data: agendaUpdate.choices.map((it) => ({ name: it })),
+            data: agendaUpdate.choices.map(it => ({ name: it })),
           },
         },
         voters: {
           createMany: {
-            data: agendaUpdate.voters.total.map((it) => ({
+            data: agendaUpdate.voters.total.map(it => ({
               userId: it,
             })),
           },
@@ -255,7 +254,7 @@ export const agendaUpdate = async (
       },
     };
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return null;
   }
 };
@@ -329,14 +328,14 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
           count: choice.users.length,
         })),
         voters: {
-          total: agenda.voters.map((user) => user.user),
+          total: agenda.voters.map(user => user.user),
           voted: voted,
         },
       };
     });
     return res;
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return null;
   }
 };
@@ -384,6 +383,7 @@ export const remind = async ({
       message: message,
     };
   } catch (err) {
+    logger.error(err);
     return null;
   }
 };

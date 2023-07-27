@@ -3,8 +3,9 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 
 import type { BiseoServer } from "@/types/socket";
-import { authRouter } from "./auth/router";
-import { env } from "./env";
+import { authRouter } from "@/auth/router";
+import { env } from "@/env";
+import { logger } from "@/utils/logger";
 
 import { auth } from "@/auth/socket";
 
@@ -29,10 +30,10 @@ app.use("/api/auth", authRouter);
 
 io.use(auth);
 
-io.on("connection", (socket) => {
+io.on("connection", socket => {
   adminAgendaRouter.register(io, socket);
   chatRouter.register(io, socket);
 });
 
 httpServer.listen(port);
-console.log(`Server listening on port ${port}`);
+logger.info(`Server listening on port ${port}`);
