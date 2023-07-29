@@ -5,11 +5,11 @@ interface Props {
   anonymous: boolean;
 }
 
-export const AgendaDetail: React.FC<Props> = ({ anonymous }) => {
+export const VoteDetail: React.FC<Props> = ({ anonymous }) => {
   return (
     <>
       {anonymous ? (
-        <Box w={260} justify="space-between">
+        <Box w={260} justify="space-between" dir="row">
           <Text variant="subtitle" color="black">
             투표 상세
           </Text>

@@ -14,7 +14,7 @@ interface Props {
 export const AgendaDetail: React.FC<Props> = ({ agenda }) => {
   return (
     <>
-      <Box w={260}>
+      <Box w={260} gap={2}>
         <Text variant="title2" color="black">
           {agenda.title}
         </Text>

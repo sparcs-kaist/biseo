@@ -33,8 +33,8 @@ const graph = (choices: { name: string; count: number }[], colors: Color[]) => {
 
 export const ChoiceGraph: React.FC<Props> = ({ choices, colors }) => {
   return (
-    <Box h={46} padHorizontal={20} dir="column" gap={10}>
-      <Box w={260} align="space-between" dir="row">
+    <Box h={46} dir="column" gap={10}>
+      <Box w={260} justify="space-between" dir="row">
         <Text variant="subtitle" color="black">
           투표결과
         </Text>
