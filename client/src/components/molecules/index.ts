@@ -5,3 +5,4 @@ export * from "./SectionHeader";
 export * from "./VoteDetail";
 export * from "./AgendaFoldedText";
 export * from "./AgendaTag";
+export * from "./OptionVoteResult";
