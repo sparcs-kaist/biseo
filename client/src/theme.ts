@@ -14,6 +14,12 @@ export const theme = {
     blue400: "#6EABF4",
     blue500: "#0066AE",
     blue600: "#004B81",
+    // added by ella
+    // purple200: purple-light
+    // purple600: purple
+    gray600: "555555",
+    purple200: "#F6EEFE",
+    purple600: "#9836EF",
   } as const,
 } as const;
 
