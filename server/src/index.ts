@@ -11,6 +11,7 @@ import { auth } from "@/auth/socket";
 
 import { adminAgendaRouter } from "@/listener/admin.agenda";
 import { chatRouter } from "@/listener/chat";
+import { agendaRouter } from "./listener/agenda";
 
 const app = express();
 const httpServer = createServer(app);
@@ -33,6 +34,7 @@ io.use(auth);
 io.on("connection", socket => {
   adminAgendaRouter.register(io, socket);
   chatRouter.register(io, socket);
+  agendaRouter.register(io, socket);
 });
 
 httpServer.listen(port);

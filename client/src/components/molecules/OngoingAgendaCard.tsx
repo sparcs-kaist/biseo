@@ -2,24 +2,29 @@ import React from "react";
 import { Box, Card, Text, Choice, Button } from "@/components/atoms";
 import { ReactComponent as SelectIcon } from "@/assets/select.svg";
 import { theme } from "@/theme";
+import { OngoingAgenda } from "biseo-interface/agenda";
 
-export const OngoingAgendaCard: React.FC = () => {
+type OngoingAgendaProps = {
+  agenda: OngoingAgenda;
+};
+
+export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   return (
-    <Card primary clickable>
-      <Box gap={10}>
+    <Card primary>
+      <Box dir="column" gap={10}>
         <Box>
-          <Text color="black" variant="title2">
-            투표 제목이 위치할 자리입니다
+          <Text variant="title2" color="black">
+            {agenda.title}
           </Text>
-          <Text color="gray500" variant="subtitle">
-            투표 제목이 위치할 자리입니다
+          <Text variant="subtitle" color="gray500">
+            {agenda.content}
           </Text>
         </Box>
         <Box>
-          <Text color="blue600" variant="body">
-            의결문안이 위치할 자리입니다.
+          <Text variant="body" color="blue600">
+            {agenda.resolution}
           </Text>
-          <Box gap={6}>
+          <Box dir="column" gap={6}>
             <Choice chosen>
               <Box dir="row" gap={10}>
                 <SelectIcon stroke={theme.colors.blue600}></SelectIcon>
