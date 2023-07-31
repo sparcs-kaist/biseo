@@ -1,0 +1,66 @@
+Arguments: 
+  /home/minjoo/.nvm/versions/node/v18.12.0/bin/node /home/minjoo/.nvm/versions/node/v18.12.0/bin/yarn dev
+
+PATH: 
+  /home/minjoo/biseo/node_modules/.bin:/home/minjoo/node_modules/.bin:/home/node_modules/.bin:/node_modules/.bin:/home/minjoo/.nvm/versions/node/v18.12.0/bin:/tmp/yarn--1690816892466-0.38794765055877867:/home/minjoo/biseo/node_modules/.bin:/home/minjoo/.config/yarn/link/node_modules/.bin:/home/minjoo/biseo/node_modules/.bin:/home/minjoo/.nvm/versions/node/v18.12.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/home/minjoo/.nvm/versions/node/v18.12.0/lib/node_modules/npm/bin/node-gyp-bin:/home/minjoo/.nvm/versions/node/v18.12.0/bin/node_modules/npm/bin/node-gyp-bin:/tmp/yarn--1690816892193-0.37141061562824285:/home/minjoo/biseo/node_modules/.bin:/home/minjoo/.config/yarn/link/node_modules/.bin:/home/minjoo/biseo/node_modules/.bin:/home/minjoo/.nvm/versions/node/v18.12.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/home/minjoo/.nvm/versions/node/v18.12.0/lib/node_modules/npm/bin/node-gyp-bin:/home/minjoo/.nvm/versions/node/v18.12.0/bin/node_modules/npm/bin/node-gyp-bin:/tmp/yarn--1690816876600-0.9417103626906229:/home/minjoo/biseo/node_modules/.bin:/home/minjoo/.config/yarn/link/node_modules/.bin:/home/minjoo/biseo/node_modules/.bin:/home/minjoo/.yarn/bin:/home/minjoo/.nvm/versions/node/v18.12.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/home/minjoo/.nvm/versions/node/v18.12.0/lib/node_modules/npm/bin/node-gyp-bin:/home/minjoo/.nvm/versions/node/v18.12.0/bin/node_modules/npm/bin/node-gyp-bin:/home/minjoo/.vscode-server/bin/2ccd690cbff1569e4a83d7c43d45101f817401dc/bin/remote-cli:/home/minjoo/.nvm/versions/node/v18.12.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files/Common Files/Oracle/Java/javapath:/mnt/c/Program Files (x86)/VMware/VMware Workstation/bin/:/mnt/c/Program Files/Java/jdk1.8.0_301/bin:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/PuTTY/:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/mnt/c/Program Files/MongoDB/Server/6.0/bin:/mnt/c/Program Files (x86)/scala/bin:/mnt/c/Program Files (x86)/sbt/bin:/Docker/host/bin:/mnt/c/Program Files (x86)/Pulse Secure/VC142.CRT/X64/:/mnt/c/Program Files (x86)/Pulse Secure/VC142.CRT/X86/:/mnt/c/Program Files (x86)/Common Files/Pulse Secure/TNC Client Plugin/:/mnt/c/Program Files/MATLAB/R2023a/bin:/mnt/c/Users/Minjoo/AppData/Local/Programs/Python/Python39/Scripts/:/mnt/c/Users/Minjoo/AppData/Local/Programs/Python/Python39/:/mnt/c/Users/Minjoo/AppData/Local/Microsoft/WindowsApps:/mnt/c/Program Files/JetBrains/PyCharm Community Edition 2020.3.2/bin:/mnt/c/Users/Minjoo/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Program Files/Java/jdk1.8.0_241:/mnt/c/Users/Minjoo/AppData/Roaming/npm:/mnt/c/Users/Minjoo/AppData/Local/Programs/mongosh/:/mnt/c/Users/Minjoo/AppData/Local/Coursier/data/bin:/mnt/c/Program Files/PsychoPy:/mnt/c/Program Files/PsychoPy/DLLs:/snap/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.12.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/minjoo/biseo/package.json: Unexpected token } in JSON at position 943
+      at JSON.parse (<anonymous>)
+      at /home/minjoo/.nvm/versions/node/v18.12.0/lib/node_modules/yarn/lib/cli.js:1629:59
+      at Generator.next (<anonymous>)
+      at step (/home/minjoo/.nvm/versions/node/v18.12.0/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /home/minjoo/.nvm/versions/node/v18.12.0/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "biseo-server",
+    "version": "2.0.0",
+    "main": "src/index.ts",
+    "license": "MIT",
+    "scripts": {
+      "dev": "nodemon",
+      "dev:db": "docker compose -f docker-compose.dev.yml up",
+      "dev:db:up": "docker compose -f docker-compose.dev.yml up -d",
+      "dev:db:down": "docker compose -f docker-compose.dev.yml down",
+      "dev:db:migrate": "prisma migrate dev",
+      "build": "tsc",
+      "env": "echo $NODE_ENV"
+    },
+    "dependencies": {
+      "@prisma/client": "^4.9.0",
+      "express": "^4.18.2",
+      "jsonwebtoken": "^9.0.0",
+      "ldapts": "^4.2.6",
+      "socket.io": "^4.5.4",
+      "winston": "^3.10.0",
+      "winston-daily-rotate-file": "^4.7.1",
+      "zod": "^3.20.2"
+    },
+    "devDependencies": {
+      "@types/express": "^4.17.15",
+      "@types/jsonwebtoken": "^9.0.2",
+      "@types/node": "^18.11.18",
+      "biseo-interface": "*",
+      "nodemon": "^2.0.20",
+      "prisma": "^4.9.0",
+      "ts-node": "^10.9.1",
+      "tsconfig-paths": "^4.1.2",
+      "typescript": "^5.0.4"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

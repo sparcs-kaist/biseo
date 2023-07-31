@@ -10,7 +10,7 @@ interface Props {
   agenda: Agenda;
 }
 
-export const AgendaFolded: React.FC<Props> = ({ agenda }) => {
+export const AgendaFoldedText: React.FC<Props> = ({ agenda }) => {
   return (
     <>
       <Box w={260} gap={2}>

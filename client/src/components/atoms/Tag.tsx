@@ -3,6 +3,9 @@ import { css } from "@emotion/react";
 import type { Color } from "@/theme";
 
 export const Tag = styled.div<{
+  public?: boolean;
+  anonymous?: boolean;
+  votable?: boolean;
   bg?: Color;
   round?: number;
   align?: "center" | "start" | "end";
@@ -15,6 +18,9 @@ export const Tag = styled.div<{
   padRight?: number;
 }>(
   ({
+    public = false,
+    anonymous,
+    votable,
     bg,
     round = 3,
     align = "center",

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Box, Text } from "@/components/atoms";
-import { AgendaFolded, AgendaTag } from "@/components/molecules";
+import { AgendaFoldedText, AgendaTag } from "@/components/molecules";
 
 import type { Color } from "@/theme";
 
@@ -17,12 +17,12 @@ const _tags = {
 
 
 // Card component에서 clickable인지 확인하기
-export const AgendaFoldedTest: React.FC = () => {
+export const AgendaFoldedCard: React.FC = () => {
   return (
     <Card primary={false}>
       <Box gap={8}>
         <AgendaTag tags={_tags} />
-        <AgendaFolded agenda={_agenda} />
+        <AgendaFoldedText agenda={_agenda} />
       </Box>
     </Card>
   );

@@ -11,12 +11,11 @@ interface Props {
   tags: Tags;
 }
 
-// TODO: 배경색 theme에 추가해서 변경하기
 // TODO: 텍스트 확정해서 알맞게 변경하기
 export const AgendaTag: React.FC<Props> = ({ tags }) => {
   return (
     <>
-      <Box dir={"row"} gap={8} align={"center"}>
+      <Box dir="row" gap={8} align="center">
         <Tag bg="gray200">
           <Text variant="option1" color="gray600">
             {tags.public ? "공개" : "비공개"}

@@ -11,15 +11,16 @@ import type {
 
 interface AgendaState {
   agendas: Agenda[];
-  voteAgenda: (choiceId: number) => void;
+  voteAgenda: (choiceId: number, agendaId: number) => void;
   retrieveAgendas: () => void;
 }
 
 const useAgenda = create<AgendaState>((set, get) => ({
   agendas: [],
-  voteAgenda: async (choiceId) => {
+  // emit choiceId and agendaId to server
+  voteAgenda: async (choiceId, agendaId) => {
     try {
-      await socket.emitAsync("agenda.vote", { choiceId });
+      await socket.emitAsync("agenda.vote", { choiceId, agendaId });
     } catch (error) {
       // TODO: globally handle error using zustand middleware
     }
