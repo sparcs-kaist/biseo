@@ -1,14 +1,30 @@
 import React from "react";
-import { Box, Card, Text, Choice, Button } from "@/components/atoms";
-import { ReactComponent as SelectIcon } from "@/assets/select.svg";
-import { theme } from "@/theme";
+import { Box, Card, Text, Button } from "@/components/atoms";
 import { OngoingAgenda } from "biseo-interface/agenda";
+import { ChoiceComponent, CompletedChoice, NotVotableChoice } from "./Choice";
 
 type OngoingAgendaProps = {
   agenda: OngoingAgenda;
 };
 
 export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
+  const choices = agenda.user.votable ? (
+    agenda.user.voted ? (
+      <CompletedChoice />
+    ) : (
+      agenda.choices.map((choice, id) => (
+        <ChoiceComponent
+          key={id}
+          choice={choice}
+          chosen={false}
+          onClick={() => null}
+        ></ChoiceComponent>
+      ))
+    )
+  ) : (
+    <NotVotableChoice />
+  );
+
   return (
     <Card primary>
       <Box dir="column" gap={10}>
@@ -20,36 +36,11 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
             {agenda.content}
           </Text>
         </Box>
-        <Box>
+        <Box dir="column" gap={6}>
           <Text variant="body" color="blue600">
             {agenda.resolution}
           </Text>
-          <Box dir="column" gap={6}>
-            <Choice chosen>
-              <Box dir="row" gap={10}>
-                <SelectIcon stroke={theme.colors.blue600}></SelectIcon>
-                <Text color="white" variant="body">
-                  투표항목 1
-                </Text>
-              </Box>
-            </Choice>
-            <Choice>
-              <Box dir="row" gap={10}>
-                <SelectIcon stroke={theme.colors.gray500}></SelectIcon>
-                <Text color="gray500" variant="body">
-                  투표항목 2
-                </Text>
-              </Box>
-            </Choice>
-            <Choice>
-              <Box dir="row" gap={10}>
-                <SelectIcon stroke={theme.colors.gray500}></SelectIcon>
-                <Text color="gray500" variant="body">
-                  투표항목 3
-                </Text>
-              </Box>
-            </Choice>
-          </Box>
+          {choices}
         </Box>
         <Box dir="row" justify="end" w="fill">
           <Button>
