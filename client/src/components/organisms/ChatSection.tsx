@@ -1,10 +1,22 @@
 import React from "react";
-import { Text } from "@/components/atoms";
+import styled from "@emotion/styled";
+import { ChatHeader, ChatInput } from "@/components/molecules";
+import { ChatContainer } from "@/components/organisms";
 
-export const ChatSection: React.FC = () => {
-  return (
-    <section>
-      <Text variant="title2">스레드</Text>
-    </section>
-  );
-};
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 458px;
+  height: 690px;
+  border: solid 1px ${props => props.theme.colors.gray300};
+  border-radius: 5px;
+  overflow: hidden;
+`;
+
+export const ChatSection: React.FC = () => (
+  <Container>
+    <ChatHeader title="스레드" />
+    <ChatContainer />
+    <ChatInput />
+  </Container>
+);
