@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Card, Divider } from "@/components/atoms";
 import {
+  AgendaFoldedText,
+  AgendaTag,
   AgendaDetail,
-  ChoiceGraph,
-  ChoicePercentage,
+  // ChoiceGraph,
+  // ChoicePercentage,
+  OptionVoteResult,
+  VoteResult,
   VoteDetail,
 } from "@/components/molecules";
 
@@ -15,40 +19,40 @@ const _agenda = {
   content: "의결문안이 위치할 자리입니다.",
 };
 
-const _choices: {
-  choices: { name: string; count: number }[];
-  colors: Color[];
-} = {
-  choices: [
-    { name: "찬성", count: 10 },
-    { name: "반대", count: 10 },
-  ],
-  colors: ["blue400", "blue300"],
+const _tags = {
+  hidden: false,
+  anonymous: true,
+  votable: true,
 };
-
-const __choices: { name: string; count: number; color: Color }[] = [
+const _choices: { name: string; count: number; color: Color }[] = [
   { name: "찬성", count: 10, color: "blue400" },
   { name: "반대", count: 10, color: "blue300" },
 ];
 
 export const AgendaCard: React.FC = () => {
+  const [enabled, setEnabled] = useState<boolean>(false);
+
   return (
-    <Card>
-      <Box gap={15}>
-        <AgendaDetail agenda={_agenda} />
-        <Divider />
-        <ChoiceGraph choices={_choices.choices} colors={_choices.colors} />
-        <Box gap={12}>
-          {__choices.map(choice => (
-            <ChoicePercentage
-              choice={choice}
-              total={__choices.reduce((acc, choice) => acc + choice.count, 0)}
-            />
-          ))}
+    <Card primary clickable onClick={() => setEnabled(enabled => !enabled)}>
+      {enabled ? (
+        <Box gap={15}>
+          <AgendaDetail agenda={_agenda} />
+          <Divider />
+          <VoteResult hidden={_tags.hidden} />
+          <Box gap={12}>
+            {_choices.map(choice => (
+              <OptionVoteResult name={choice.name} count={choice.count} />
+            ))}
+          </Box>
+          <Divider />
+          <VoteDetail anonymous={_tags.anonymous} />
         </Box>
-        <Divider />
-        <VoteDetail anonymous={true} />
-      </Box>
+      ) : (
+        <Box gap={8}>
+          <AgendaTag tags={_tags} />
+          <AgendaFoldedText agenda={_agenda} />
+        </Box>
+      )}
     </Card>
   );
 };
