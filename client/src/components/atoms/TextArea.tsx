@@ -11,6 +11,7 @@ export const TextArea: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   return (
     <Container variant="body" onInput={() => {}} contentEditable>
+      {/* TODO: max char limit, emoticon and hyperlink */}
       {message}
     </Container>
   );
