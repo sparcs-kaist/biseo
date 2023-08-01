@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { EmoticonIcon, SendIcon } from "@/assets";
 import { Box, Divider, TextArea } from "@/components/atoms";
-import { ReactComponent as EmoticonIcon } from "@/assets/emoticon.svg";
-import { ReactComponent as SendIcon } from "@/assets/send.svg";
 
 const Container = styled.div`
   display: flex;
