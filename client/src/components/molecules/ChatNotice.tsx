@@ -1,19 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Text } from "@/components/atoms";
+import { Box, Text } from "@/components/atoms";
 
 interface Props {
   message: string; // TODO: introduce Notice type
 }
-
-const ChatNoticeContainer = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  padding: 10px 15px;
-  background-color: ${props => props.theme.colors.gray100};
-  border-top: solid 1px ${props => props.theme.colors.gray200};
-`;
 
 const Container = styled.div`
   position: relative;
@@ -28,13 +19,13 @@ const Container = styled.div`
 
 export const ChatNotice: React.FC<Props> = ({ message }) => {
   return (
-    <ChatNoticeContainer>
+    <Box w="fill" padHorizontal={15} padVertical={10} align="center">
       <Container>
         <Text variant="subtitle">📢</Text>
         <Text variant="boldtitle4" color="blue600">
           {message}
         </Text>
       </Container>
-    </ChatNoticeContainer>
+    </Box>
   );
 };
