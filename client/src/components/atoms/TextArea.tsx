@@ -11,6 +11,7 @@ export const TextArea: React.FC = () => {
   const [message, setMessage] = useState<string>("");
   return (
     <Container onInput={() => {}} contentEditable>
+      {/* TODO: issue with text size */}
       <Text variant="body">{message}</Text>
     </Container>
   );

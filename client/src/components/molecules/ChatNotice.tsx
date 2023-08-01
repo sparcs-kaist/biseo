@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Text } from "@/components/atoms";
 
 interface Props {
-  message: string;
+  message: string; // TODO: introduce Notice type
 }
 
 const ChatNoticeContainer = styled.div`
