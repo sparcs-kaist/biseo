@@ -17,15 +17,13 @@ const Container = styled.div`
   border-radius: 10px;
 `;
 
-export const ChatNotice: React.FC<Props> = ({ message }) => {
-  return (
-    <Box w="fill" padHorizontal={15} padVertical={10} align="center">
-      <Container>
-        <Text variant="subtitle">📢</Text>
-        <Text variant="boldtitle4" color="blue600">
-          {message}
-        </Text>
-      </Container>
-    </Box>
-  );
-};
+export const ChatNotice: React.FC<Props> = ({ message }) => (
+  <Box w="fill" padHorizontal={15} padVertical={10} align="center">
+    <Container>
+      <Text variant="subtitle">📢</Text>
+      <Text variant="boldtitle4" color="blue600">
+        {message}
+      </Text>
+    </Container>
+  </Box>
+);

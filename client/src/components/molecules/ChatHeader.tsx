@@ -5,10 +5,8 @@ interface Props {
   title: string;
 }
 
-export const ChatHeader: React.FC<Props> = ({ title }) => {
-  return (
-    <Box w="fill" h={42} bg="gray100" padHorizontal={20} justify="center">
-      <Text variant="title2">{title}</Text>
-    </Box>
-  );
-};
+export const ChatHeader: React.FC<Props> = ({ title }) => (
+  <Box w="fill" h={42} bg="gray100" padHorizontal={20} justify="center">
+    <Text variant="title2">{title}</Text>
+  </Box>
+);

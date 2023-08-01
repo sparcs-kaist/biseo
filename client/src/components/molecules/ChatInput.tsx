@@ -16,15 +16,13 @@ const Container = styled.div`
   border-radius: 5px;
 `;
 
-export const ChatInput: React.FC = () => {
-  return (
-    <Box w="fill" pad={10} bg="white100">
-      <Container>
-        <TextArea />
-        <Divider dir="vertical" />
-        <EmoticonIcon />
-        <SendIcon />
-      </Container>
-    </Box>
-  );
-};
+export const ChatInput: React.FC = () => (
+  <Box w="fill" pad={10} bg="white100">
+    <Container>
+      <TextArea />
+      <Divider dir="vertical" />
+      <EmoticonIcon />
+      <SendIcon />
+    </Container>
+  </Box>
+);

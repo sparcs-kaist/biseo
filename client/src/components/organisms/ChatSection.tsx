@@ -13,12 +13,10 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-export const ChatSection: React.FC = () => {
-  return (
-    <Container>
-      <ChatHeader title="스레드" />
-      <ChatContainer />
-      <ChatInput />
-    </Container>
-  );
-};
+export const ChatSection: React.FC = () => (
+  <Container>
+    <ChatHeader title="스레드" />
+    <ChatContainer />
+    <ChatInput />
+  </Container>
+);

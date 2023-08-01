@@ -73,19 +73,17 @@ const Container = styled.div`
 `;
 // TODO: scrollbar design
 
-export const ChatContainer: React.FC = () => {
-  return (
-    <Container>
-      {rawData
-        .slice()
-        .reverse()
-        .map(data =>
-          data.type === "message" ? (
-            <ChatMessage {...(data as Message)} />
-          ) : (
-            <ChatNotice {...data} />
-          ),
-        )}
-    </Container>
-  );
-};
+export const ChatContainer: React.FC = () => (
+  <Container>
+    {rawData
+      .slice()
+      .reverse()
+      .map(data =>
+        data.type === "message" ? (
+          <ChatMessage {...(data as Message)} />
+        ) : (
+          <ChatNotice {...data} />
+        ),
+      )}
+  </Container>
+);
