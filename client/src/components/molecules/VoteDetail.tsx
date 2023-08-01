@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text } from "@/components/atoms";
+import { Box, Text, Tag } from "@/components/atoms";
 
 interface Props {
   anonymous: boolean;
@@ -13,9 +13,7 @@ export const VoteDetail: React.FC<Props> = ({ anonymous }) => {
           <Text variant="subtitle" color="black">
             투표 상세
           </Text>
-          <Text variant="option1" color="gray500">
-            무기명
-          </Text>
+          <Tag type="anonymous" />
         </Box>
       ) : (
         <>TODO</>
