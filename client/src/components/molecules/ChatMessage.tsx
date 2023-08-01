@@ -1,20 +1,7 @@
 import React from "react";
 import { Message } from "biseo-interface/chat";
 import { Box, Text } from "@/components/atoms";
-
-const formatTime = (time: Date) => {
-  const hours = time.getHours();
-  const minutes = time.getMinutes();
-  const ampm = hours < 12 ? "오전" : "오후";
-
-  const formatLength = (time: number) => {
-    return time < 10 ? "0" + time : time;
-  };
-  const displayHours = formatLength(hours % 12 ? hours % 12 : 12);
-  const displayMinutes = formatLength(minutes);
-
-  return `${ampm} ${displayHours}:${displayMinutes}`;
-};
+import { formatTime } from "@/utils/format";
 
 export const ChatMessage: React.FC<Message> = ({
   user,
