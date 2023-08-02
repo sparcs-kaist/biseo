@@ -1,8 +1,8 @@
 import { theme } from "@/theme";
 import styled from "@emotion/styled";
 import type { Choice } from "biseo-interface/agenda";
-import { Box, Text } from "../atoms";
-import { ReactComponent as SelectIcon } from "@/assets/select.svg";
+import { Box, Text } from "@/components/atoms";
+import { SelectIcon } from "@/assets";
 
 const ChoiceContainer = styled.div<{
   chosen?: boolean;
@@ -30,7 +30,6 @@ const ChoiceComponent: React.FC<ChoiceProps> = ({
 }) => {
   const iconColor = chosen ? theme.colors.blue600 : theme.colors.gray500;
   const textColor = chosen ? "white" : "gray500";
-
   return (
     <ChoiceContainer onClick={onClick} chosen={chosen}>
       <Box dir="row" gap={10}>
@@ -43,30 +42,26 @@ const ChoiceComponent: React.FC<ChoiceProps> = ({
   );
 };
 
-const CompletedChoice: React.FC = () => {
-  return (
-    <ChoiceContainer onClick={() => null} chosen={true}>
-      <Box dir="row" gap={10}>
-        <SelectIcon stroke={theme.colors.blue600} />
-        <Text variant="body" color="white">
-          투표 완료
-        </Text>
-      </Box>
-    </ChoiceContainer>
-  );
-};
+const CompletedChoice: React.FC = () => (
+  <ChoiceContainer onClick={() => null} chosen={true}>
+    <Box dir="row" gap={10}>
+      <SelectIcon stroke={theme.colors.blue600} />
+      <Text variant="body" color="white">
+        투표 완료
+      </Text>
+    </Box>
+  </ChoiceContainer>
+);
 
-const NotVotableChoice: React.FC = () => {
-  return (
-    <ChoiceContainer onClick={() => null} chosen={false}>
-      <Box dir="row" gap={10}>
-        <SelectIcon stroke={theme.colors.gray500} />
-        <Text variant="body" color="gray500">
-          투표 권한이 없습니다.
-        </Text>
-      </Box>
-    </ChoiceContainer>
-  );
-};
+const NotVotableChoice: React.FC = () => (
+  <ChoiceContainer onClick={() => null} chosen={false}>
+    <Box dir="row" gap={10}>
+      <SelectIcon stroke={theme.colors.gray500} />
+      <Text variant="body" color="gray500">
+        투표 권한이 없습니다.
+      </Text>
+    </Box>
+  </ChoiceContainer>
+);
 
 export { ChoiceComponent, CompletedChoice, NotVotableChoice };

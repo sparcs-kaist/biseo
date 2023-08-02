@@ -4,15 +4,15 @@ import type { Agenda } from "biseo-interface/agenda";
 
 interface AgendaState {
   agendas: Agenda[];
-  voteAgenda: (agendaId: number, choiceId: number) => void;
+  voteAgenda: (choiceId: number, agendaId: number) => void;
   retrieveAgendas: () => void;
 }
 
 const useAgenda = create<AgendaState>((set, get) => ({
   agendas: [],
-  voteAgenda: async (agendaId, choiceId) => {
+  voteAgenda: async (choiceId, agendaId) => {
     try {
-      await socket.emitAsync("agenda.vote", { agendaId, choiceId });
+      await socket.emitAsync("agenda.vote", { choiceId, agendaId });
     } catch (error) {
       // TODO: globally handle error using zustand middleware
     }
