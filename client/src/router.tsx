@@ -12,6 +12,11 @@ export default createBrowserRouter([
       {
         path: "/admin",
         element: <AdminPage />,
+        children: [
+          { path: "users", element: <></> },
+          { path: "agendas", element: <></> },
+          { path: "settings", element: <></> },
+        ],
         ...protect({ to: "/", when: user => !user?.isAdmin }),
       },
     ],
