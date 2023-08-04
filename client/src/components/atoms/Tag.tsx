@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
+import { css, SerializedStyles } from "@emotion/react";
 import { theme } from "@/theme";
 import type { Color } from "@/theme";
 
@@ -12,21 +12,21 @@ const colors = (color: Color, bg: Color) =>
 
 type TagTypes = "public" | "private" | "identified" | "anonymous" | "votable";
 
-const tagNames = {
+const tagNames: Record<TagTypes, string> = {
   public: "공개",
   private: "비공개",
   identified: "기명",
   anonymous: "무기명",
   votable: "투표 가능",
-} as const;
+};
 
-const tagStyles = {
+const tagStyles: Record<TagTypes, SerializedStyles> = {
   public: colors("orange600", "orange200"),
   private: colors("gray600", "gray200"),
   identified: colors("green600", "green200"),
   anonymous: colors("purple600", "purple200"),
   votable: colors("blue600", "blue200"),
-} as const;
+};
 
 const TagInner = styled.div<{
   type: TagTypes;
