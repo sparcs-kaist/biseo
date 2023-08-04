@@ -2,10 +2,10 @@ import React from "react";
 import { Box, Text, Tag } from "@/components/atoms";
 
 interface Props {
-  hidden?: boolean;
+  type?: boolean;
 }
 
-export const VoteResult: React.FC<Props> = ({ hidden }) => {
+export const VoteResult: React.FC<Props> = ({ type }) => {
   return (
     <Box w={260} justify="space-between" dir="row">
       <Box gap={5} dir="row">
@@ -16,7 +16,7 @@ export const VoteResult: React.FC<Props> = ({ hidden }) => {
           내 투표 보기
         </Text>
       </Box>
-      <Tag type={hidden ? "hidden" : "_hidden"} />
+      <Tag type={type ? "public" : "private"} />
     </Box>
   );
 };

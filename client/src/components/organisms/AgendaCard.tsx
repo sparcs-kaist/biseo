@@ -20,8 +20,8 @@ const _agenda = {
 };
 
 const _tags = {
-  hidden: false,
-  anonymous: true,
+  public: false,
+  identified: false,
   votable: true,
 };
 const _choices: { name: string; count: number; color: Color }[] = [
@@ -38,14 +38,14 @@ export const AgendaCard: React.FC = () => {
         <Box gap={15}>
           <AgendaDetail agenda={_agenda} />
           <Divider />
-          <VoteResult hidden={_tags.hidden} />
+          <VoteResult type={_tags.public} />
           <Box gap={12}>
             {_choices.map(choice => (
               <OptionVoteResult name={choice.name} count={choice.count} />
             ))}
           </Box>
           <Divider />
-          <VoteDetail anonymous={_tags.anonymous} />
+          <VoteDetail type={_tags.identified} />
         </Box>
       ) : (
         <Box gap={8}>
