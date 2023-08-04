@@ -7,3 +7,8 @@ export * from "./VoteResult";
 export * from "./AgendaFoldedText";
 export * from "./AgendaTag";
 export * from "./OptionVoteResult";
+export * from "./ChatHeader";
+export * from "./ChatInput";
+export * from "./ChatMessage";
+export * from "./ChatNotice";
+export * from "./SectionHeader";
