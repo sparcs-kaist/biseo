@@ -7,8 +7,8 @@ interface Props {
 
 export const VoteResult: React.FC<Props> = ({ type }) => {
   return (
-    <Box w={260} justify="space-between" dir="row">
-      <Box gap={5} dir="row">
+    <Box w={260} justify="space-between" dir="row" align="center">
+      <Box gap={5} dir="row" align="center">
         <Text variant="subtitle" color="black">
           투표 결과
         </Text>

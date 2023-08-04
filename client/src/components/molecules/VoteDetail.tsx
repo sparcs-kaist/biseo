@@ -11,7 +11,7 @@ export const VoteDetail: React.FC<Props> = ({ type }) => {
       {type ? (
         <>TODO</>
       ) : (
-        <Box w={260} justify="space-between" dir="row">
+        <Box w={260} justify="space-between" dir="row" align="center">
           <Text variant="subtitle" color="black">
             투표 상세
           </Text>

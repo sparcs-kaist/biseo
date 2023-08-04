@@ -10,18 +10,19 @@ interface Props {
 export const OptionVoteResult: React.FC<Props> = ({ name, count }) => {
   return (
     <BorderedBox
-      h={30}
       w={260}
+      h={30}
+      bg="white"
       round={5}
+      dir="row"
+      align="center"
+      justify="space-between"
       padHorizontal={13}
       padVertical={6}
-      justify="space-between"
-      bg="white"
-      color="gray200"
-      dir="row"
       borderSize={1}
       borderStyle="solid"
       borderColor="gray200"
+      color="gray200"
     >
       <Text color="gray500" variant="option1">
         {name}
