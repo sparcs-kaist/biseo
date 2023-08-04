@@ -6,12 +6,14 @@ interface Props {
   name: string;
   count: number;
   totalCount: number;
+  userChoice: boolean;
 }
 
 export const OptionVoteResult: React.FC<Props> = ({
   name,
   count,
   totalCount,
+  userChoice,
 }) => {
   return (
     <BorderedBox
@@ -26,13 +28,13 @@ export const OptionVoteResult: React.FC<Props> = ({
       // padVertical={6}
       borderSize={1}
       borderStyle="solid"
-      borderColor="gray200"
+      borderColor={userChoice ? "blue300" : "gray200"}
       color="gray200"
       position="relative"
     >
       <Box
         w={(260 * count) / totalCount}
-        bg="blue100"
+        bg={userChoice ? "blue200" : "blue100"}
         h={30}
         z-index={0}
         position="absolute"

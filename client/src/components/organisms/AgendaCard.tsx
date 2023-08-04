@@ -24,20 +24,28 @@ const _tags = {
   identified: false,
   votable: true,
 };
-const _choices: { name: string; count: number; color: Color }[] = [
-  { name: "찬성", count: 10, color: "blue400" },
-  { name: "반대", count: 5, color: "blue300" },
+const userChoice: number = 1;
+const _choices: { id: number; name: string; count: number; color: Color }[] = [
+  { id: 1, name: "찬성", count: 10, color: "blue400" },
+  { id: 2, name: "반대", count: 5, color: "blue300" },
 ];
 const totalCount: number = _choices.map(c => c.count).reduce((a, b) => a + b);
 
 export const AgendaCard: React.FC = () => {
   const [enabled, setEnabled] = useState<boolean>(false);
+  const [revealChoice, setRevealChoice] = useState<boolean>(false);
+  const switchRevealChoice = (prev: boolean) => {
+    setRevealChoice(!prev);
+  };
 
   return (
     <Card
       primary
       clickable
-      onClick={() => setEnabled(enabled => !enabled)}
+      onClick={e => {
+        setEnabled(enabled => !enabled);
+        e.stopPropagation();
+      }}
       round={5}
     >
       {enabled ? (
@@ -48,13 +56,18 @@ export const AgendaCard: React.FC = () => {
             content={_agenda.content}
           />
           <Divider />
-          <VoteResult type={_tags.public} />
+          <VoteResult
+            type={_tags.public}
+            clickHandler={switchRevealChoice}
+            revealChoice={revealChoice}
+          />
           <Box gap={12}>
             {_choices.map(choice => (
               <OptionVoteResult
                 name={choice.name}
                 count={choice.count}
                 totalCount={totalCount}
+                userChoice={revealChoice && userChoice == choice.id}
               />
             ))}
           </Box>
