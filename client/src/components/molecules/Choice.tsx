@@ -17,24 +17,24 @@ const ChoiceContainer = styled.div<{
   gap: 10px;
 `;
 
-type ChoiceProps = {
+interface ChoiceProps {
   choice: Choice;
   chosen: boolean;
   onClick: () => void;
-};
+}
 
-const ChoiceComponent: React.FC<ChoiceProps> = ({
+export const ChoiceComponent: React.FC<ChoiceProps> = ({
   choice,
   chosen,
   onClick,
 }) => {
-  const iconColor = chosen ? theme.colors.blue600 : theme.colors.gray500;
-  const textColor = chosen ? "white" : "gray500";
   return (
     <ChoiceContainer onClick={onClick} chosen={chosen}>
       <Box dir="row" gap={10}>
-        <SelectIcon stroke={iconColor} />
-        <Text variant="body" color={textColor}>
+        <SelectIcon
+          stroke={chosen ? theme.colors.blue600 : theme.colors.gray500}
+        />
+        <Text variant="body" color={chosen ? "white" : "gray500"}>
           {choice.name}
         </Text>
       </Box>
@@ -42,7 +42,7 @@ const ChoiceComponent: React.FC<ChoiceProps> = ({
   );
 };
 
-const CompletedChoice: React.FC = () => (
+export const CompletedChoice: React.FC = () => (
   <ChoiceContainer onClick={() => null} chosen={true}>
     <Box dir="row" gap={10}>
       <SelectIcon stroke={theme.colors.blue600} />
@@ -53,7 +53,7 @@ const CompletedChoice: React.FC = () => (
   </ChoiceContainer>
 );
 
-const NotVotableChoice: React.FC = () => (
+export const NotVotableChoice: React.FC = () => (
   <ChoiceContainer onClick={() => null} chosen={false}>
     <Box dir="row" gap={10}>
       <SelectIcon stroke={theme.colors.gray500} />
@@ -63,5 +63,3 @@ const NotVotableChoice: React.FC = () => (
     </Box>
   </ChoiceContainer>
 );
-
-export { ChoiceComponent, CompletedChoice, NotVotableChoice };

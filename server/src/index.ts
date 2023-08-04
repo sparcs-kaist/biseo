@@ -11,7 +11,7 @@ import { auth } from "@/auth/socket";
 
 import { adminAgendaRouter } from "@/listener/admin.agenda";
 import { chatRouter } from "@/listener/chat";
-import { agendaRouter } from "./listener/agenda";
+import { agendaRouter } from "@/listener/agenda";
 
 const app = express();
 const httpServer = createServer(app);

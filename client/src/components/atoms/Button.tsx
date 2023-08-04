@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const Button = styled.div<{}>`
+export const Button = styled.div`
   width: 90px;
   height: 28px;
   border-radius: 5px;

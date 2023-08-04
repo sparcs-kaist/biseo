@@ -1,21 +1,20 @@
 import React from "react";
 import { Box, Card } from "@/components/atoms";
-import { SectionHeader } from "@/components/molecules/SectionHeader";
-import { OngoingAgendaCard } from "../molecules/OngoingAgendaCard";
-import { Agenda, OngoingAgenda } from "biseo-interface/agenda";
+import { OngoingAgendaCard, SectionHeader } from "@/components/molecules";
+import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
 import { useAgenda } from "@/services/agenda";
 
 const isOngoingAgenda = (agenda: Agenda): agenda is OngoingAgenda => {
   return agenda.status === "ongoing";
-};
+}; // TODO : move to utils
 
 export const AgendaSection: React.FC = () => {
   const { ongoingAgendas } = useAgenda(state => ({
     ongoingAgendas: state.agendas.filter(isOngoingAgenda),
   }));
 
-  const ongolingAgendaCards = ongoingAgendas.map((agenda, id) => (
-    <OngoingAgendaCard key={id} agenda={agenda}></OngoingAgendaCard>
+  const ongoingAgendaCards = ongoingAgendas.map(agenda => (
+    <OngoingAgendaCard key={agenda.id} agenda={agenda}></OngoingAgendaCard>
   ));
 
   return (
@@ -23,7 +22,7 @@ export const AgendaSection: React.FC = () => {
       <Box dir="column" w={380}>
         <SectionHeader count={4}>진행중인 투표</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
-          {ongolingAgendaCards}
+          {ongoingAgendaCards}
         </Box>
       </Box>
       <Box dir="column" w={300}>
