@@ -33,10 +33,16 @@ socket.on("agenda.started", ongoingAgenda => {
   }));
 });
 
-socket.on("agenda.voted", voted => {
+socket.on("agenda.voted", ({ id, user, voters }) => {
   useAgenda.setState(state => {
     const updatedAgendas = state.agendas.map(agenda =>
-      agenda.id === voted.id ? { ...agenda, voters: voted.voters } : agenda,
+      agenda.id === id
+        ? {
+            ...agenda,
+            user: { votable: agenda.user.votable, voted: user.voted },
+            voters: voters,
+          }
+        : agenda,
     );
     return { agendas: updatedAgendas };
   });
