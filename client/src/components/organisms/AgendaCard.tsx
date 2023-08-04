@@ -41,7 +41,11 @@ export const AgendaCard: React.FC = () => {
     >
       {enabled ? (
         <Box gap={15}>
-          <AgendaDetail agenda={_agenda} />
+          <AgendaDetail
+            title={_agenda.title}
+            subtitle={_agenda.subtitle}
+            content={_agenda.content}
+          />
           <Divider />
           <VoteResult type={_tags.public} />
           <Box gap={12}>
@@ -55,7 +59,7 @@ export const AgendaCard: React.FC = () => {
       ) : (
         <Box gap={8}>
           <AgendaTag tags={_tags} />
-          <AgendaFoldedText agenda={_agenda} />
+          <AgendaFoldedText title={_agenda.title} subtitle={_agenda.subtitle} />
         </Box>
       )}
     </Card>

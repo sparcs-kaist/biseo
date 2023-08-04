@@ -1,26 +1,18 @@
 import React from "react";
 import { Box, Text } from "@/components/atoms";
 
-interface Agenda {
+interface Props {
   title: string;
   subtitle: string;
 }
 
-interface Props {
-  agenda: Agenda;
-}
-
-export const AgendaFoldedText: React.FC<Props> = ({ agenda }) => {
-  return (
-    <>
-      <Box w={260} gap={2}>
-        <Text variant="title2" color="black">
-          {agenda.title}
-        </Text>
-        <Text variant="subtitle" color="gray500">
-          {agenda.subtitle}
-        </Text>
-      </Box>
-    </>
-  );
-};
+export const AgendaFoldedText: React.FC<Props> = ({ title, subtitle }) => (
+  <Box w={260} gap={2}>
+    <Text variant="title2" color="black">
+      {title}
+    </Text>
+    <Text variant="subtitle" color="gray500">
+      {subtitle}
+    </Text>
+  </Box>
+);
