@@ -26,8 +26,9 @@ const _tags = {
 };
 const _choices: { name: string; count: number; color: Color }[] = [
   { name: "찬성", count: 10, color: "blue400" },
-  { name: "반대", count: 10, color: "blue300" },
+  { name: "반대", count: 5, color: "blue300" },
 ];
+const totalCount: number = _choices.map(c => c.count).reduce((a, b) => a + b);
 
 export const AgendaCard: React.FC = () => {
   const [enabled, setEnabled] = useState<boolean>(false);
@@ -50,7 +51,11 @@ export const AgendaCard: React.FC = () => {
           <VoteResult type={_tags.public} />
           <Box gap={12}>
             {_choices.map(choice => (
-              <OptionVoteResult name={choice.name} count={choice.count} />
+              <OptionVoteResult
+                name={choice.name}
+                count={choice.count}
+                totalCount={totalCount}
+              />
             ))}
           </Box>
           <Divider />

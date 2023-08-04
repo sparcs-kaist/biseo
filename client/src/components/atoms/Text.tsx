@@ -26,7 +26,8 @@ type Variants = keyof typeof textStyles;
 export const Text = styled.p<{
   variant?: Variants;
   color?: Color;
-}>(({ variant = "body", color = "black", theme }) => [
-  css({ color: theme.colors[color] }),
+  position?: "absolute" | "static";
+}>(({ variant = "body", color = "black", theme, position = "static" }) => [
+  css({ color: theme.colors[color], position: position }),
   textStyles[variant],
 ]);
