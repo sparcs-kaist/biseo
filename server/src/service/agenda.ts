@@ -32,7 +32,7 @@ export const retrieveAll = async (
       id: agenda.id,
       title: agenda.title,
       content: agenda.content,
-      resolution: agenda.subtitle,
+      resolution: agenda.resolution,
       voters: {
         voted: agenda.choices.reduce(
           (acc, choice) => acc + choice.users.length,

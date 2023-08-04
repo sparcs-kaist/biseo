@@ -1,5 +1,19 @@
 import { z } from "zod";
-import { OngoingAgenda, TerminatedAgenda } from "./common";
+import { OngoingAgenda, PreparingAgenda, TerminatedAgenda } from "./common";
+
+/**
+ * Created
+ * description
+ */
+export const Created = PreparingAgenda;
+export type Created = z.infer<typeof Created>;
+
+/**
+ * Updated
+ * description
+ */
+export const Updated = PreparingAgenda;
+export type Updated = z.infer<typeof Created>;
 
 /**
  * Started
@@ -30,6 +44,15 @@ export type Voted = z.infer<typeof Voted>;
  */
 export const Terminated = TerminatedAgenda;
 export type Terminated = z.infer<typeof Terminated>;
+
+/**
+ * Deleted
+ * description
+ */
+export const Deleted = z.object({
+  id: z.number(),
+});
+export type Deleted = z.infer<typeof Deleted>;
 
 /**
  * Reminded

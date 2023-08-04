@@ -52,6 +52,7 @@ export const PreparingAgenda = AgendaBase.extend({
   user: z.object({
     votable: z.boolean(),
   }),
+  choices: z.array(Choice),
 });
 export type PreparingAgenda = z.infer<typeof PreparingAgenda>;
 

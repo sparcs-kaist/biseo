@@ -7,6 +7,7 @@ import {
   NotVotableChoice,
 } from "@/components/molecules";
 import { useAgenda } from "@/services/agenda";
+import { useAdminAgenda } from "@/services/admin-agenda";
 
 interface OngoingAgendaProps {
   agenda: OngoingAgenda;
@@ -16,6 +17,10 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   const [chosenChoiceId, setChosenChoiceId] = useState(0);
   const { voteAgenda } = useAgenda(state => ({
     voteAgenda: state.voteAgenda,
+  }));
+
+  const { statusUpdate } = useAdminAgenda(state => ({
+    statusUpdate: state.statusUpdate,
   }));
 
   const vote = useCallback(() => {
@@ -72,7 +77,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
           {choices}
         </Box>
         <Box dir="row" justify="end" w="fill">
-          <Button onClick={() => vote()}>
+          <Button onClick={() => statusUpdate(agenda.id, "terminated")}>
             <Text variant="option1" color="blue600">
               투표하기
             </Text>
