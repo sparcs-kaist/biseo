@@ -33,7 +33,12 @@ export const AgendaCard: React.FC = () => {
   const [enabled, setEnabled] = useState<boolean>(false);
 
   return (
-    <Card primary clickable onClick={() => setEnabled(enabled => !enabled)}>
+    <Card
+      primary
+      clickable
+      onClick={() => setEnabled(enabled => !enabled)}
+      round={5}
+    >
       {enabled ? (
         <Box gap={15}>
           <AgendaDetail agenda={_agenda} />
