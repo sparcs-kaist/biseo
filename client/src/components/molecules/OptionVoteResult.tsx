@@ -32,7 +32,7 @@ export const OptionVoteResult: React.FC<Props> = ({
     >
       <Box
         w={(260 * count) / totalCount}
-        bg="blue200"
+        bg="blue100"
         h={30}
         z-index={0}
         position="absolute"
