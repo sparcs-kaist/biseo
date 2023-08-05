@@ -8,7 +8,7 @@ import { ChatUser } from "../user";
 export const Message = z.object({
   id: z.number(),
   user: ChatUser,
-  type: z.string(),
+  type: z.enum(["message", "notice"]),
   message: z.string(),
   createdAt: z.date(),
 });
