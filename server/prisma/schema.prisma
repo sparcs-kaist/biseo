@@ -78,8 +78,8 @@ model UserAgendaVotable {
 }
 
 enum ChatType {
-  Message
-  Alarm
+  message
+  notice
 
   @@map("chat_type")
 }
