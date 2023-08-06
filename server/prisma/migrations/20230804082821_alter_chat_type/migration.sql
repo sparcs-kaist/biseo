@@ -5,4 +5,5 @@
 
 */
 -- AlterTable
-ALTER TABLE ` chat ` MODIFY ` type ` ENUM ('message', 'notice') NOT NULL;
+ALTER TABLE `chat`
+    MODIFY `type` ENUM ('message', 'notice') NOT NULL;
