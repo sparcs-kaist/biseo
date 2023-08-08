@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
-import { ChatHeader, ChatInput } from "@/components/molecules";
-import { ChatContainer } from "@/components/organisms";
+import { ChatHeader, ChatInput, Message } from "@/components/molecules";
+
+import { useChat } from "@/services";
+
+export const ChatSection: React.FC = () => {
+  const { messages, sendMessage } = useChat();
+
+  useEffect(() => console.log(messages), [messages]);
+
+  return (
+    <Container>
+      <ChatHeader title="스레드" />
+      <Message.List>
+        {messages.map(message => (
+          <Message key={message.id} message={message} />
+        ))}
+      </Message.List>
+      <ChatInput send={sendMessage} />
+    </Container>
+  );
+};
 
 const Container = styled.div`
   display: flex;
@@ -12,11 +31,3 @@ const Container = styled.div`
   border-radius: 5px;
   overflow: hidden;
 `;
-
-export const ChatSection: React.FC = () => (
-  <Container>
-    <ChatHeader title="스레드" />
-    <ChatContainer />
-    <ChatInput />
-  </Container>
-);

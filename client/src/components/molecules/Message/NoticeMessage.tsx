@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "@emotion/styled";
+import React from "react";
 import { Box, Text } from "@/components/atoms";
 
 interface Props {
@@ -17,7 +17,7 @@ const Container = styled.div`
   border-radius: 10px;
 `;
 
-export const ChatNotice: React.FC<Props> = ({ message }) => (
+export const NoticeMessage: React.FC<Props> = ({ message }) => (
   <Box w="fill" padHorizontal={15} padVertical={10} align="center">
     <Container>
       <Text variant="subtitle">📢</Text>
