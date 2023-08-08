@@ -9,6 +9,7 @@ export const theme = {
     gray400: "#B6B6B6",
     gray500: "#8C8C8C",
     gray600: "#555555",
+    grayTrans: "rgba(85, 85, 85, 0.1)",
     blue100: "#FAFCFF",
     blue200: "#E7F0FF",
     blue300: "#BFDCFF",

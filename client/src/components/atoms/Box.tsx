@@ -10,7 +10,7 @@ export const Box = styled.div<{
   dir?: "row" | "column";
   gap?: number | "auto";
   align?: "center" | "start" | "end";
-  justify?: "center" | "start" | "end";
+  justify?: "center" | "start" | "end" | "space-between";
   pad?: number;
   padHorizontal?: number;
   padVertical?: number;
