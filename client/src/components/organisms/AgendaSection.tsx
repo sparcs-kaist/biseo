@@ -1,7 +1,10 @@
 import React from "react";
+import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
+
 import { Box, Card } from "@/components/atoms";
 import { OngoingAgendaCard, SectionHeader } from "@/components/molecules";
-import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
+import { AgendaCard } from "@/components/organisms";
+
 import { useAgenda } from "@/services/agenda";
 
 const isOngoingAgenda = (agenda: Agenda): agenda is OngoingAgenda => {
@@ -27,7 +30,7 @@ export const AgendaSection: React.FC = () => {
       </Box>
       <Box dir="column" w={300}>
         <SectionHeader count={2}>종료된 투표</SectionHeader>
-        <Card>qwer</Card>
+        <AgendaCard></AgendaCard>
       </Box>
     </Box>
   );

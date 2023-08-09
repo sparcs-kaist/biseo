@@ -1,6 +1,7 @@
 *.pub
 .env
 **/node_modules
+*.log
 
 # IDE Configurations
 .idea
