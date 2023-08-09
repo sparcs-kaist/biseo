@@ -4,64 +4,92 @@ import { immer } from "zustand/middleware/immer";
 import type { Message } from "biseo-interface/chat";
 import type { ChatUser } from "biseo-interface/user";
 
-import { createDraftMessage } from "./common";
+import { createDraftMessage, RETRIEVE_CHAT_OFFSET } from "./common";
+import { socket } from "@/socket";
 
 interface ChatState {
+  /**
+   * Map of messages
+   */
   messages: Map<number, Message>;
 
   /**
-   * Creates a temporary message for optimistic ui update
-   * Returns the id of the draft message which can be used to resolve the draft
+   *
    */
-  createDraft: (message: string, user: ChatUser) => number;
-  // (message?: Message) => void;
+  loading: boolean;
 
   /**
-   * Resolves a draft message
-   * Removes or replaces the draft message with the actual message
+   * Whether there are more messages to load
    */
-  resolveDraft: (draftId: number, message?: Message) => void;
+  hasMore: boolean;
 
   /**
-   * Creates a message in the store
+   * Appends a message to the store
    */
-  createMessage: (message: Message) => void;
+  append: (message: Message) => void;
 
   /**
-   * Appends multiple messages to the store
+   * Loads messages and appends to the store
    */
-  appendMessages: (messages: Message[]) => void;
+  load: () => Promise<void>;
+
+  /**
+   * Sends a message to the server and appends to the store
+   * Use optimistic update using draft message
+   */
+  send: (message: string, user: ChatUser) => Promise<void>;
 }
 
 const useChatStore = create(
   immer<ChatState>((set, get) => ({
     messages: new Map(),
-    createMessage: message =>
+    loading: false,
+    hasMore: true,
+    append: message =>
       set(state => {
         state.messages.set(message.id, message);
       }),
-    appendMessages: messages =>
+    load: async () => {
+      if (!get().hasMore) return;
+
+      set({ loading: true });
+
+      const messages = await socket.emitAsync("chat.retrieve", {
+        lastChatId: Math.min(...get().messages.keys()) || null,
+        limit: RETRIEVE_CHAT_OFFSET,
+      });
+
+      if (messages.length === 0) return set({ hasMore: false, loading: false });
+
       set(state => {
         messages.map(message => {
           state.messages.set(message.id, message);
         });
-      }),
-    createDraft: (message, user) => {
-      const draftMessage = createDraftMessage(
-        message,
-        user,
-        get().messages.keys(),
-      );
-      set(state => {
-        state.messages.set(draftMessage.id, draftMessage);
+        state.loading = false;
       });
-      return draftMessage.id;
     },
-    resolveDraft: (draftId, message) =>
+    send: async (message, user) => {
+      // Creates a local draft message
+      const draft = createDraftMessage(message, user, get().messages.keys());
+
       set(state => {
-        state.messages.delete(draftId);
-        message && state.messages.set(message.id, message);
-      }),
+        state.messages.set(draft.id, draft);
+      });
+
+      try {
+        const created = await socket.emitAsync("chat.send", { message });
+        set(state => {
+          // Removes the draft message and replaces with the created message
+          state.messages.delete(draft.id);
+          state.messages.set(created.id, created);
+        });
+      } catch {
+        set(state => {
+          // Removes the draft message when error
+          state.messages.delete(draft.id);
+        });
+      }
+    },
   })),
 );
 
