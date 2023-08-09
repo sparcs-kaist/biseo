@@ -14,7 +14,7 @@ export const Scroll = styled.div`
   ::-webkit-scrollbar-thumb {
     border: 4px solid transparent;
     background-clip: padding-box;
-    background-color: rgba(182, 182, 182, 1);
+    background-color: ${props => props.theme.colors.gray400};
     border-radius: 100px;
   }
 `;
