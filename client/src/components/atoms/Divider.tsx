@@ -17,3 +17,4 @@ export const Divider = styled.hr<{
         `}
   `,
 );
+

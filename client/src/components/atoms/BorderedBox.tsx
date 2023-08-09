@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import type { Color } from "@/theme";
 
-export const Box = styled.div<{
+export const BorderedBox = styled.div<{
   w?: Size;
   h?: Size;
   bg?: Color;
@@ -18,6 +18,9 @@ export const Box = styled.div<{
   padBottom?: number;
   padLeft?: number;
   padRight?: number;
+  borderSize?: number;
+  borderColor?: Color;
+  borderStyle?: "solid";
 }>(
   ({
     w = "hug",
@@ -36,6 +39,9 @@ export const Box = styled.div<{
     padBottom = padVertical,
     padTop = padVertical,
     theme,
+    borderSize = 0,
+    borderColor,
+    borderStyle,
   }) => css`
     width: ${size(w)};
     height: ${size(h)};
@@ -50,6 +56,8 @@ export const Box = styled.div<{
     padding-bottom: ${padBottom}px;
     padding-left: ${padLeft}px;
     padding-right: ${padRight}px;
+    border: ${borderSize}px ${borderStyle};
+    border-color: ${borderColor ? theme.colors[borderColor] : "transparent"};
   `,
 );
 
