@@ -14,6 +14,9 @@ export type Started = z.infer<typeof Started>;
  */
 export const Voted = z.object({
   id: z.number(),
+  user: z.object({
+    voted: z.number(),
+  }),
   voters: z.object({
     voted: z.number(),
     total: z.number(),
