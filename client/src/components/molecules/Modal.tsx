@@ -1,12 +1,11 @@
 import React, { PropsWithChildren, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { CloseIcon } from "@/assets";
 import { Box, Text } from "@/components/atoms";
 
 interface Props extends PropsWithChildren {
   title: string;
-  show: boolean;
-  setShow: (show: boolean) => void;
 }
 
 const Container = styled.dialog`
@@ -43,26 +42,22 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-export const Modal: React.FC<Props> = ({ title, show, setShow, children }) => {
+export const Modal: React.FC<Props> = ({ title, children }) => {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (ref.current) show ? ref.current.showModal() : ref.current.close();
-  }, [show]);
-
-  useEffect(() => {
-    const listener = () => setShow(false);
-    ref.current?.addEventListener("close", listener);
-    return () => ref.current?.removeEventListener("close", listener);
-  }, [setShow]);
+    if (ref.current) ref.current.showModal();
+  }, []);
 
   return (
     <Container ref={ref}>
       <Box w="fill" dir="row" align="center" justify="space-between">
         <Text variant="title1">{title}</Text>
-        <CloseButton onClick={() => setShow(false)}>
-          <CloseIcon />
-        </CloseButton>
+        <Link to=".." relative="path" replace>
+          <CloseButton>
+            <CloseIcon />
+          </CloseButton>
+        </Link>
       </Box>
       <InnerContainer>{children}</InnerContainer>
     </Container>
