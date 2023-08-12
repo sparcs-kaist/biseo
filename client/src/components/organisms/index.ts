@@ -7,3 +7,4 @@ export * from "./EditAgendaModal";
 export * from "./Header";
 export * from "./OngoingAgendaModal";
 export * from "./TerminatedAgendaModal";
+export * from "./AdminAgendaSection";
