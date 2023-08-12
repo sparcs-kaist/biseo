@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "@emotion/styled";
+
 import { EmoticonIcon, SendIcon } from "@/assets";
 import { Box, Divider, TextArea } from "@/components/atoms";
+import { useInput } from "@/common/hooks";
 
-const Container = styled.div`
+interface Props {
+  send: (message: string) => void;
+}
+
+export const ChatInput: React.FC<Props> = ({ send }) => {
+  const { input, setValue } = useInput();
+
+  const sendCurrent = useCallback(() => send(input.value), [input.value]);
+
+  return (
+    <Box w="fill" pad={10} bg="white100">
+      <InputForm>
+        <TextArea
+          onKeyPress={e => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              sendCurrent();
+              setValue("");
+            }
+          }}
+          {...input}
+        />
+        <Divider dir="vertical" />
+        <EmoticonIcon />
+        <SendIcon onClick={sendCurrent} />
+        {/*TODO: Replace with button / add hover, actove effect*/}
+      </InputForm>
+    </Box>
+  );
+};
+
+const InputForm = styled.form`
   display: flex;
   flex-direction: row;
   gap: 10px;
@@ -14,14 +47,3 @@ const Container = styled.div`
   border: solid 1px ${props => props.theme.colors.gray300};
   border-radius: 5px;
 `;
-
-export const ChatInput: React.FC = () => (
-  <Box w="fill" pad={10} bg="white100">
-    <Container>
-      <TextArea />
-      <Divider dir="vertical" />
-      <EmoticonIcon />
-      <SendIcon />
-    </Container>
-  </Box>
-);
