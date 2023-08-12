@@ -4,12 +4,12 @@ import {
   AgendaFoldedText,
   AgendaTag,
   AgendaDetail,
-  // ChoiceGraph,
-  // ChoicePercentage,
   OptionVoteResult,
   VoteResult,
   VoteDetail,
 } from "@/components/molecules";
+
+import type { TerminatedAgenda, Agenda } from "biseo-interface/agenda";
 
 import type { Color } from "@/theme";
 
@@ -24,33 +24,56 @@ const _tags = {
   identified: false,
   votable: true,
 };
-const _choices: { name: string; count: number; color: Color }[] = [
-  { name: "찬성", count: 10, color: "blue400" },
-  { name: "반대", count: 10, color: "blue300" },
+const userChoice: number = 1;
+const _choices: { id: number; name: string; count: number }[] = [
+  { id: 1, name: "찬성", count: 10 },
+  { id: 2, name: "반대", count: 5 },
 ];
 
-export const AgendaCard: React.FC = () => {
-  const [enabled, setEnabled] = useState<boolean>(false);
+interface Props {
+  agenda: TerminatedAgenda;
+}
 
+export const AgendaCard: React.FC<Props> = ({ agenda }) => {
+  const [enabled, setEnabled] = useState<boolean>(false);
+  const [revealChoice, setRevealChoice] = useState<boolean>(false);
+  const switchRevealChoice = (prev: boolean) => {
+    setRevealChoice(!prev);
+  };
+  const totalCount: number = agenda.choices
+    .map(c => c.count)
+    .reduce((a, b) => a + b);
   return (
     <Card
       primary
       clickable
-      onClick={() => setEnabled(enabled => !enabled)}
+      onClick={e => {
+        setEnabled(enabled => !enabled);
+        e.stopPropagation();
+      }}
       round={5}
     >
       {enabled ? (
         <Box gap={15}>
           <AgendaDetail
-            title={_agenda.title}
-            subtitle={_agenda.subtitle}
-            content={_agenda.content}
+            title={agenda.title}
+            subtitle={agenda.resolution}
+            content={agenda.content}
           />
           <Divider />
-          <VoteResult type={_tags.public} />
+          <VoteResult
+            type={_tags.public}
+            clickHandler={switchRevealChoice}
+            revealChoice={revealChoice}
+          />
           <Box gap={12}>
-            {_choices.map(choice => (
-              <OptionVoteResult name={choice.name} count={choice.count} />
+            {agenda.choices.map(choice => (
+              <OptionVoteResult
+                name={choice.name}
+                count={choice.count}
+                totalCount={totalCount}
+                userChoice={revealChoice && agenda.user.voted == choice.id}
+              />
             ))}
           </Box>
           <Divider />
@@ -58,7 +81,13 @@ export const AgendaCard: React.FC = () => {
         </Box>
       ) : (
         <Box gap={8}>
-          <AgendaTag tags={_tags} />
+          <AgendaTag
+            tags={{
+              public: _tags.public,
+              identified: _tags.identified,
+              votable: agenda.user.votable,
+            }}
+          />
           <AgendaFoldedText title={_agenda.title} subtitle={_agenda.subtitle} />
         </Box>
       )}

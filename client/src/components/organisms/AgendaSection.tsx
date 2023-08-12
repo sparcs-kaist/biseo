@@ -4,6 +4,12 @@ import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
 import { Box, Card } from "@/components/atoms";
 import { OngoingAgendaCard, SectionHeader } from "@/components/molecules";
 import { AgendaCard } from "@/components/organisms";
+import { useAgenda } from "@/services/agenda";
+import type { Agenda, TerminatedAgenda } from "biseo-interface/agenda";
+
+const isTerminatedAgenda = (agenda: Agenda): agenda is TerminatedAgenda => {
+  return agenda.status === "terminated";
+};
 
 import { useAgenda } from "@/services/agenda";
 
@@ -30,7 +36,11 @@ export const AgendaSection: React.FC = () => {
       </Box>
       <Box dir="column" w={300}>
         <SectionHeader count={2}>종료된 투표</SectionHeader>
-        <AgendaCard></AgendaCard>
+        {useAgenda(state =>
+          state.agendas
+            .filter(isTerminatedAgenda)
+            .map(agenda => <AgendaCard agenda={agenda}></AgendaCard>),
+        )}
       </Box>
     </Box>
   );

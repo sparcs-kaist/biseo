@@ -21,6 +21,7 @@ export const BorderedBox = styled.div<{
   borderSize?: number;
   borderColor?: Color;
   borderStyle?: "solid";
+  position?: "absolute" | "static" | "relative";
 }>(
   ({
     w = "hug",
@@ -42,6 +43,7 @@ export const BorderedBox = styled.div<{
     borderSize = 0,
     borderColor,
     borderStyle,
+    position = "static",
   }) => css`
     width: ${size(w)};
     height: ${size(h)};
@@ -58,6 +60,8 @@ export const BorderedBox = styled.div<{
     padding-right: ${padRight}px;
     border: ${borderSize}px ${borderStyle};
     border-color: ${borderColor ? theme.colors[borderColor] : "transparent"};
+    overflow: hidden;
+    position: ${position};
   `,
 );
 
