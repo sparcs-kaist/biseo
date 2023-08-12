@@ -15,8 +15,8 @@ import type { Color } from "@/theme";
 
 const _agenda = {
   title: "투표 제목이 위치할 자리입니다.",
-  subtitle: "투표 설명이 위치할 자리입니다.",
-  content: "의결문안이 위치할 자리입니다.",
+  content: "투표 설명이 위치할 자리입니다.",
+  resolution: "의결문안이 위치할 자리입니다.",
 };
 
 const _tags = {
@@ -56,9 +56,9 @@ export const AgendaCard: React.FC<Props> = ({ agenda }) => {
       {enabled ? (
         <Box gap={15}>
           <AgendaDetail
-            title={agenda.title}
-            subtitle={agenda.resolution}
-            content={agenda.content}
+            title={_agenda.title}
+            content={_agenda.content}
+            resolution={_agenda.resolution}
           />
           <Divider />
           <VoteResult
@@ -81,14 +81,8 @@ export const AgendaCard: React.FC<Props> = ({ agenda }) => {
         </Box>
       ) : (
         <Box gap={8}>
-          <AgendaTag
-            tags={{
-              public: _tags.public,
-              identified: _tags.identified,
-              votable: agenda.user.votable,
-            }}
-          />
-          <AgendaFoldedText title={_agenda.title} subtitle={_agenda.subtitle} />
+          <AgendaTag tags={_tags} />
+          <AgendaFoldedText title={_agenda.title} subtitle={_agenda.content} />
         </Box>
       )}
     </Card>
