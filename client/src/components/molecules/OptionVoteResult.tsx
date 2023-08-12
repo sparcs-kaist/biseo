@@ -1,6 +1,5 @@
-import React, { type PropsWithChildren } from "react";
+import React from "react";
 import { Box, Text, BorderedBox } from "@/components/atoms";
-import type { Color } from "@/theme";
 
 interface Props {
   name: string;

@@ -1,3 +1,4 @@
+import React from "react";
 import { Color, theme } from "@/theme";
 import styled from "@emotion/styled";
 import type { Choice } from "biseo-interface/agenda";

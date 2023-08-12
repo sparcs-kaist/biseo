@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AdminAgenda, AdminChoice } from "./common";
+import { AdminAgenda } from "./common";
 import { User } from "../../user";
 import { AgendaStatus } from "../../agenda";
 

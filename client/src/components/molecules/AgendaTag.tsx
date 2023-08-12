@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Tag } from "@/components/atoms";
+import { Box, Tag } from "@/components/atoms";
 
 interface Tags {
   public: boolean;

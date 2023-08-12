@@ -9,9 +9,8 @@ import {
   VoteDetail,
 } from "@/components/molecules";
 
-import type { TerminatedAgenda, Agenda } from "biseo-interface/agenda";
+import type { TerminatedAgenda } from "biseo-interface/agenda";
 
-import type { Color } from "@/theme";
 
 const _agenda = {
   title: "투표 제목이 위치할 자리입니다.",

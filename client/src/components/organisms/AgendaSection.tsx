@@ -1,17 +1,19 @@
 import React from "react";
-import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
+import type {
+  Agenda,
+  OngoingAgenda,
+  TerminatedAgenda,
+} from "biseo-interface/agenda";
 
-import { Box, Card } from "@/components/atoms";
+import { Box } from "@/components/atoms";
 import { OngoingAgendaCard, SectionHeader } from "@/components/molecules";
 import { AgendaCard } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
-import type { Agenda, TerminatedAgenda } from "biseo-interface/agenda";
 
 const isTerminatedAgenda = (agenda: Agenda): agenda is TerminatedAgenda => {
   return agenda.status === "terminated";
 };
 
-import { useAgenda } from "@/services/agenda";
 
 const isOngoingAgenda = (agenda: Agenda): agenda is OngoingAgenda => {
   return agenda.status === "ongoing";
