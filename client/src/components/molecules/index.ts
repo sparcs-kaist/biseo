@@ -16,3 +16,4 @@ export * from "./ChatNotice";
 export * from "./HeaderItem";
 export * from "./Modal";
 export * from "./SectionHeader";
+export * from "./AdminOngoingAgendaCard";
