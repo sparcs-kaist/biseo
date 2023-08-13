@@ -8,9 +8,9 @@ interface Props {
 
 export const ParticipantBar: React.FC<Props> = ({ total, participant }) => (
   <Box w={300} h={59} gap={8} dir="column">
-    <Box w={75} h={20} gap={8} dir="row">
+    <Box w={75} h={20} gap={8} dir="row" align="center">
       <Text variant="body" color="black">
-        투표 현황
+        투표 참여
       </Text>
       <Box bg="blue200" round={5} align="center" justify="center" w={20} h={20}>
         <Text color="blue600">{participant}</Text>
@@ -48,10 +48,10 @@ export const ParticipantBar: React.FC<Props> = ({ total, participant }) => (
         padHorizontal={13}
         padVertical={6}
       >
-        <Text color="gray500" variant="option1">
+        <Text color="black" variant="option1">
           {(participant * 100) / total}%
         </Text>
-        <Text color="gray500" variant="option1">
+        <Text color="black" variant="option1">
           {participant}/{total}
         </Text>
       </Box>

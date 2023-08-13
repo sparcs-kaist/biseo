@@ -51,7 +51,7 @@ export const Modal: React.FC<Props> = ({ title, children }) => {
 
   return (
     <Container ref={ref}>
-      <Box gap={20}>
+      <Box gap={15}>
         <Box w="fill" dir="row" align="center" justify="space-between">
           <Text variant="title1">{title}</Text>
           <Link to=".." relative="path" replace>
