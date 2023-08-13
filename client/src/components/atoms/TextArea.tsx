@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import { Text } from "@/components/atoms";
+import TextareaAutosize from "react-textarea-autosize";
 
-// TODO: max char limit, emoticon and hyperlink
-export const TextArea = styled(Text)`
+// TODO: Apply text styles / Relates - #53
+export const TextArea = styled(TextareaAutosize)`
   width: 100%;
   outline: none;
+  resize: none;
+  border: none;
 `;
-
-TextArea.defaultProps = { contentEditable: true };
