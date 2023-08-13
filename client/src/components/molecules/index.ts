@@ -15,6 +15,7 @@ export * from "./HeaderItem";
 export * from "./Modal";
 export * from "./SectionHeader";
 export * from "./AdminOngoingAgendaCard";
+export * from "./AdminPreparingAgendaCard";
 export * from "./Message";
 export * from "./ModalInnerTextBox";
 export * from "./ParticipantBar";
