@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "@emotion/styled";
 
 const ProgressContainer = styled.div<{ width?: number }>(
@@ -27,7 +28,7 @@ interface ProgressProps {
   max: number;
 }
 
-export const ProgressBar = ({ value, max }: ProgressProps) => (
+export const ProgressBar: React.FC<ProgressProps> = ({ value, max }) => (
   <ProgressContainer>
     <progress value={value} max={max} />
   </ProgressContainer>

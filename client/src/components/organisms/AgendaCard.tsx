@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Box, Card, Divider } from "@/components/atoms";
 import {
   AgendaFoldedText,
@@ -27,9 +27,9 @@ export const AgendaCard: React.FC<Props> = ({ agenda }) => {
   const switchRevealChoice = (prev: boolean) => {
     setRevealChoice(!prev);
   };
-  const totalCount: number = agenda.choices.reduce(
-    (acc, c) => acc + c.count,
-    0,
+  const totalCount: number = useMemo(
+    () => agenda.choices.reduce((acc, c) => acc + c.count, 0),
+    [agenda.choices],
   );
   return (
     <Card
