@@ -3,13 +3,13 @@ import type * as schema from "biseo-interface/chat";
 
 import { prisma } from "@/db/prisma";
 
-export const send = async (
+export const createMessage = async (
   { message }: schema.Send,
   user: User,
 ): Promise<schema.Message> => {
   const sendQuery: Prisma.ChatCreateInput = {
     user: { connect: user },
-    type: "Message",
+    type: "message",
     message: message,
     createdAt: new Date(),
   };
