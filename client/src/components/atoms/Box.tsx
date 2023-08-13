@@ -18,6 +18,8 @@ export const Box = styled.div<{
   padBottom?: number;
   padLeft?: number;
   padRight?: number;
+  zIndex?: number;
+  position?: "static" | "absolute";
 }>(
   ({
     w = "hug",
@@ -36,6 +38,8 @@ export const Box = styled.div<{
     padBottom = padVertical,
     padTop = padVertical,
     theme,
+    zIndex = 0,
+    position = "static",
   }) => css`
     width: ${size(w)};
     height: ${size(h)};
@@ -50,6 +54,8 @@ export const Box = styled.div<{
     padding-bottom: ${padBottom}px;
     padding-left: ${padLeft}px;
     padding-right: ${padRight}px;
+    z-index: ${zIndex};
+    position: ${position};
   `,
 );
 

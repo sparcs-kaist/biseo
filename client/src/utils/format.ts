@@ -1,4 +1,6 @@
-export const formatTime = (time: Date) => {
+export const formatTime = (isoString: string) => {
+  const time = new Date(isoString);
+
   const hours = time.getHours();
   const minutes = time.getMinutes();
   const ampm = hours < 12 ? "오전" : "오후";

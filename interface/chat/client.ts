@@ -9,7 +9,7 @@ export const Send = z.object({
   message: z.string(),
 });
 export type Send = z.infer<typeof Send>;
-export const SendCb = z.object({});
+export const SendCb = Message;
 export type SendCb = z.infer<typeof SendCb>;
 
 /**

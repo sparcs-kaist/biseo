@@ -2,7 +2,6 @@ import { z } from "zod";
 import {
   AgendaBase,
   AgendaStatus,
-  Choice,
   ChoiceWithResult,
 } from "../../agenda";
 import { User } from "../../user";

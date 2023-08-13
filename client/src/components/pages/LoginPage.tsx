@@ -10,8 +10,8 @@ export const LoginPage: React.FC = () => {
     isLoggedIn: !!state.userInfo,
   }));
 
-  const username = useInput("");
-  const password = useInput("");
+  const username = useInput();
+  const password = useInput();
 
   const handleLogin = useCallback(
     (e: FormEvent<HTMLFormElement>) => {

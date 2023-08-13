@@ -11,6 +11,7 @@
     "dev:db": "yarn server dev:db",
     "dev:db:up": "yarn server dev:db:up",
     "dev:db:migrate": "yarn server dev:db:migrate",
+    "studio": "yarn dev:db:up && yarn server prisma studio",
     "all": "dotenv -- nx run-many -t",
     "client": "dotenv yarn workspace biseo-client",
     "server": "dotenv yarn workspace biseo-server",

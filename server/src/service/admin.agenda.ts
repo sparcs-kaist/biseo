@@ -1,7 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import * as schema from "biseo-interface/admin/agenda";
 import { prisma } from "@/db/prisma";
-import { AgendaStatus } from "biseo-interface/agenda";
 
 import { logger } from "@/utils/logger";
 
