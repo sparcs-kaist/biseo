@@ -6,4 +6,5 @@ export * from "./Button";
 export * from "./Tag";
 export * from "./BorderedBox";
 export * from "./TextArea";
+export * from "./ProgressBar";
 export * from "./Scroll";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Box, Card, Divider } from "@/components/atoms";
 import {
   AgendaFoldedText,
@@ -11,23 +11,11 @@ import {
 
 import type { TerminatedAgenda } from "biseo-interface/agenda";
 
-
-const _agenda = {
-  title: "투표 제목이 위치할 자리입니다.",
-  subtitle: "투표 설명이 위치할 자리입니다.",
-  content: "의결문안이 위치할 자리입니다.",
-};
-
 const _tags = {
   public: false,
   identified: false,
   votable: true,
 };
-const userChoice: number = 1;
-const _choices: { id: number; name: string; count: number }[] = [
-  { id: 1, name: "찬성", count: 10 },
-  { id: 2, name: "반대", count: 5 },
-];
 
 interface Props {
   agenda: TerminatedAgenda;
@@ -39,9 +27,10 @@ export const AgendaCard: React.FC<Props> = ({ agenda }) => {
   const switchRevealChoice = (prev: boolean) => {
     setRevealChoice(!prev);
   };
-  const totalCount: number = agenda.choices
-    .map(c => c.count)
-    .reduce((a, b) => a + b);
+  const totalCount: number = useMemo(
+    () => agenda.choices.reduce((acc, c) => acc + c.count, 0),
+    [agenda.choices],
+  );
   return (
     <Card
       primary
@@ -56,8 +45,8 @@ export const AgendaCard: React.FC<Props> = ({ agenda }) => {
         <Box gap={15}>
           <AgendaDetail
             title={agenda.title}
-            subtitle={agenda.resolution}
             content={agenda.content}
+            resolution={agenda.resolution}
           />
           <Divider />
           <VoteResult
@@ -87,7 +76,7 @@ export const AgendaCard: React.FC<Props> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <AgendaFoldedText title={_agenda.title} subtitle={_agenda.subtitle} />
+          <AgendaFoldedText title={agenda.title} subtitle={agenda.content} />
         </Box>
       )}
     </Card>
