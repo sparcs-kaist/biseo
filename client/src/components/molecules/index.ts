@@ -16,3 +16,4 @@ export * from "./Modal";
 export * from "./SectionHeader";
 export * from "./AdminOngoingAgendaCard";
 export * from "./Message";
+export * from "./AdminAgendaTags";
