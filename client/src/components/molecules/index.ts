@@ -18,3 +18,4 @@ export * from "./AdminOngoingAgendaCard";
 export * from "./Message";
 export * from "./ModalInnerTextBox";
 export * from "./ParticipantBar";
+export * from "./TerminatedAgendaModalInner";
