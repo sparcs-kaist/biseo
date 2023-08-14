@@ -13,7 +13,7 @@ interface SubComponents {
 }
 
 const BoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
-  <Box w={300} dir="column" gap={8} align="center">
+  <Box w={300} dir="column" gap={8}>
     <Text variant="body" color="black">
       {title}
     </Text>
@@ -34,7 +34,7 @@ const BoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
 //ModalInner.TextBox = TextBox;
 
 const TextBoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
-  <Box w={300} dir="column" gap={8} align="center">
+  <Box w={300} dir="column" gap={8}>
     <Text variant="body" color="black">
       {title}
     </Text>
@@ -196,7 +196,7 @@ const OptionVoteResult: React.FC<PropsForOptionVoteResult> = ({
   );
 };
 
-export const ModalInner: SubComponents = {
+export const TerminatedModalInner: SubComponents = {
   BoxWithTitle: BoxWithTitle,
   TextBoxWithTitle: TextBoxWithTitle,
   ParticipantBar: ParticipantBar,
