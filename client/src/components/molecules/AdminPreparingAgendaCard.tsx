@@ -19,7 +19,7 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
     <Card round={5}>
       <Box gap={8} w="fill">
         <AgendaTag tags={_tags} admin />
-        <Box>
+        <Box gap={2}>
           <Text variant="title2" color="black">
             {agenda.title}
           </Text>

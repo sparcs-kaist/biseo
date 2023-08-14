@@ -1,6 +1,7 @@
 export * from "./BorderedBox";
 export * from "./Box";
 export * from "./Button";
+export * from "./NewAgendaButton";
 export * from "./Card";
 export * from "./Divider";
 export * from "./ProgressBar";

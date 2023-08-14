@@ -1,7 +1,8 @@
 import React from "react";
 import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
+import { PlusIcon } from "@/assets";
 
-import { Box } from "@/components/atoms";
+import { Box, Button, NewAgendaButton, Text } from "@/components/atoms";
 import {
   AdminOngoingAgendaCard,
   AdminPreparingAgendaCard,
@@ -49,7 +50,15 @@ export const AdminAgendaSection: React.FC = () => {
     <Box dir="row" gap={20}>
       <Box dir="column" w={300}>
         <SectionHeader count={3}>대기중인 투표</SectionHeader>
+
         <Box dir="column" w="fill" gap={15}>
+          <Box dir="column" w="fill" gap={15}>
+            <NewAgendaButton>
+              <Text color="gray500" variant="body">
+                <PlusIcon></PlusIcon> 새로운 투표
+              </Text>
+            </NewAgendaButton>
+          </Box>
           {preparingAgendaCards}
         </Box>
       </Box>
