@@ -1,4 +1,6 @@
 import React from "react";
+import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
+
 import { Box } from "@/components/atoms";
 import {
   AdminOngoingAgendaCard,

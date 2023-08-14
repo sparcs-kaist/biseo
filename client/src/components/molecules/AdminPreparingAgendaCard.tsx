@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Text,
-  Card,
-  Divider,
-  ProgressBar,
-  Button,
-} from "@/components/atoms";
+import { Box, Text, Card, Divider, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
 import { AdminAgenda } from "biseo-interface/admin/agenda";
