@@ -33,7 +33,8 @@ export const AgendaCard: React.FC<Props> = ({ agenda }) => {
   );
   return (
     <Card
-      primary
+      primary={false}
+      bold={enabled}
       clickable
       onClick={e => {
         setEnabled(enabled => !enabled);
