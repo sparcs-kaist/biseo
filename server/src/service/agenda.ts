@@ -115,61 +115,14 @@ export const vote = async (
       userId: user.id,
       choiceId: choiceId,
     },
-    select: {
-      choice: {
-        select: {
-          agenda: {
-            select: {
-              choices: {
-                select: {
-                  users: {
-                    select: {
-                      user: {
-                        select: {
-                          id: true,
-                          username: true,
-                          displayName: true,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-              voters: {
-                select: {
-                  user: {
-                    select: {
-                      id: true,
-                      username: true,
-                      displayName: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
   });
   io.emit("agenda.voted", {
     id: agendaId,
-    user: {
-      voted: choiceId,
-    },
-    voters: {
-      voted: res.choice.agenda.choices.reduce(
-        (acc, choice) => acc + choice.users.length,
-        0,
-      ),
-      total: res.choice.agenda.voters.length,
-    },
+    voted: choiceId,
   });
   io.emit("admin.agenda.voted", {
     id: agendaId,
-    voters: {
-      voted: res.choice.agenda.choices.flatMap(c => c.users.map(u => u.user)),
-      total: res.choice.agenda.voters.flatMap(v => v.user),
-    },
+    voted: choiceId,
+    user: user,
   });
 };
