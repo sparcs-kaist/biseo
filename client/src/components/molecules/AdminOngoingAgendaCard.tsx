@@ -10,8 +10,8 @@ import {
 } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
-import type { OngoingAgenda } from "biseo-interface/agenda";
 import { AdminAgenda } from "biseo-interface/admin/agenda";
+import { useAdminAgenda } from "@/services/admin-agenda";
 
 const _tags = {
   public: false,
@@ -27,6 +27,18 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
   const navigate = useNavigate();
 
   const openModal = () => navigate(`ongoing?agendaId=${agenda.id}`);
+
+  const { remindAgenda, terminateAgenda } = useAdminAgenda(state => ({
+    remindAgenda: state.remindAgenda,
+    terminateAgenda: state.statusUpdate,
+  }));
+
+  const remind = () => {
+    remindAgenda(agenda.id);
+  };
+  const terminate = () => {
+    terminateAgenda(agenda.id, "terminated");
+  };
 
   return (
     <Card round={5} onClick={openModal}>
@@ -51,12 +63,22 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
         </Box>
         <Divider />
         <Box dir="row" w="fill" gap={8} justify="space-between">
-          <Button>
+          <Button
+            onClick={e => {
+              e.stopPropagation();
+              remind();
+            }}
+          >
             <Text variant="option1" color="blue600">
               투표 독촉하기
             </Text>
           </Button>
-          <Button>
+          <Button
+            onClick={e => {
+              e.stopPropagation();
+              terminate();
+            }}
+          >
             <Text variant="option1" color="blue600">
               투표 종료하기
             </Text>
