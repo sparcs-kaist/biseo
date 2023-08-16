@@ -2,11 +2,14 @@ import React from "react";
 import { BorderedBox, Box, Text, TextArea } from "../atoms";
 
 interface Props {
-  total: number;
-  participant: number;
+  total?: number;
+  participant?: number;
 }
 
-export const ParticipantBar: React.FC<Props> = ({ total, participant }) => (
+export const ParticipantBar: React.FC<Props> = ({
+  total = 0,
+  participant = 0,
+}) => (
   <Box w={300} h={59} gap={8} dir="column">
     <Box w={75} h={20} gap={8} dir="row" align="center">
       <Text variant="body" color="black">
