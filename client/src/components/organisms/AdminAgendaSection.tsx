@@ -1,17 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
 
 import { Box } from "@/components/atoms";
 import { AdminOngoingAgendaCard, SectionHeader } from "@/components/molecules";
-import { useAgenda } from "@/services/agenda";
+import { useAdminAgenda } from "@/services/admin-agenda";
+import { AdminAgenda } from "biseo-interface/admin/agenda";
 
-const isOngoingAgenda = (agenda: Agenda): agenda is OngoingAgenda => {
+const isOngoingAgenda = (agenda: AdminAgenda) /*: agenda is OngoingAgenda*/ => {
   return agenda.status === "ongoing";
 };
 
 export const AdminAgendaSection: React.FC = () => {
-  const { ongoingAgendas } = useAgenda(state => ({
-    ongoingAgendas: state.agendas.filter(isOngoingAgenda),
+  console.log(useAdminAgenda(state => state.adminAgendas.length));
+  const { ongoingAgendas } = useAdminAgenda(state => ({
+    ongoingAgendas: state.adminAgendas.filter(isOngoingAgenda),
   }));
 
   const ongoingAgendaCards = ongoingAgendas.map(agenda => (

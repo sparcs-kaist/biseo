@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Text,
@@ -10,6 +11,7 @@ import {
 import { AgendaTag } from "@/components/molecules";
 
 import type { OngoingAgenda } from "biseo-interface/agenda";
+import { AdminAgenda } from "biseo-interface/admin/agenda";
 
 const _tags = {
   public: false,
@@ -18,12 +20,16 @@ const _tags = {
 };
 
 interface Props {
-  agenda: OngoingAgenda;
+  agenda: AdminAgenda;
 }
 
 export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
+  const navigate = useNavigate();
+
+  const openModal = () => navigate(`ongoing?agendaId=${agenda.id}`);
+
   return (
-    <Card round={5}>
+    <Card round={5} onClick={openModal}>
       <Box gap={8} w="fill">
         <AgendaTag tags={_tags} admin />
         <Box>
@@ -35,9 +41,12 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
           </Text>
         </Box>
         <Box dir="row" w="fill" align="center" justify="space-between">
-          <ProgressBar max={agenda.voters.total} value={agenda.voters.voted} />
+          <ProgressBar
+            max={agenda.voters.total.length}
+            value={agenda.voters.voted.length}
+          />
           <Text variant="option1" color="gray500">
-            투표참여 {agenda.voters.voted}/{agenda.voters.total}
+            투표참여 {agenda.voters.voted.length}/{agenda.voters.total.length}
           </Text>
         </Box>
         <Divider />
