@@ -21,6 +21,18 @@ export const OngoingAgendaModal: React.FC = () => {
     ),
   }));
 
+  const { remindAgenda, terminateAgenda } = useAdminAgenda(state => ({
+    remindAgenda: state.remindAgenda,
+    terminateAgenda: state.statusUpdate,
+  }));
+
+  const remind = () => {
+    targetAgenda && remindAgenda(targetAgenda.id);
+  };
+  const terminate = () => {
+    targetAgenda && terminateAgenda(targetAgenda.id, "terminated");
+  };
+
   return (
     <Modal title="진행 중인 투표">
       <Box w={630} justify="space-between" dir="row">
@@ -57,12 +69,12 @@ export const OngoingAgendaModal: React.FC = () => {
           >
             <AdminAgendaTags />
             <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Button h={38}>
+              <Button h={38} onClick={remind}>
                 <Text variant="boldtitle3" color="blue600">
                   투표 독촉하기
                 </Text>
               </Button>
-              <Button h={38}>
+              <Button h={38} onClick={terminate}>
                 <Text variant="boldtitle3" color="blue600">
                   투표 종료하기
                 </Text>
