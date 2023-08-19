@@ -122,6 +122,8 @@ export const vote = async (
             select: {
               choices: {
                 select: {
+                  id: true,
+                  name: true,
                   users: {
                     select: {
                       user: {
@@ -167,6 +169,11 @@ export const vote = async (
   });
   io.emit("admin.agenda.voted", {
     id: agendaId,
+    choices: res.choice.agenda.choices.map(choice => ({
+      id: choice.id,
+      name: choice.name,
+      count: choice.users.length,
+    })),
     voters: {
       voted: res.choice.agenda.choices.flatMap(c => c.users.map(u => u.user)),
       total: res.choice.agenda.voters.flatMap(v => v.user),
