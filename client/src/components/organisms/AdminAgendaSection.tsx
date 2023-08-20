@@ -11,6 +11,7 @@ import {
 import { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { CreateAgendaModal } from "./CreateAgendaModal";
+import { EditAgendaModal } from "./EditAgendaModal";
 import { AdminTerminatedAgendaCard } from "@/components/molecules/AdminTerminatedAgendaCard";
 
 const isOngoingAgenda = (agenda: AdminAgenda) => {
@@ -76,7 +77,7 @@ export const AdminAgendaSection: React.FC = () => {
           TODO
         </Box>
       </Box>
-      <CreateAgendaModal />
+      <EditAgendaModal />
     </Box>
   );
 };

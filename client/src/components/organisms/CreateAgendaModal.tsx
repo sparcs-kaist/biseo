@@ -17,10 +17,10 @@ export const CreateAgendaModal: React.FC = () => (
             <ModalInner.TextBox>내용을 입력하세요</ModalInner.TextBox>
           </ModalInner>
           <ModalInner title="투표 설명">
-            <ModalInner.TextBox>테스트를 진행한다</ModalInner.TextBox>
+            <ModalInner.TextBox>내용을 입력하세요</ModalInner.TextBox>
           </ModalInner>
           <ModalInner title="의결 문안">
-            <ModalInner.TextBox>테스트를 진행한다</ModalInner.TextBox>
+            <ModalInner.TextBox>내용을 입력하세요</ModalInner.TextBox>
           </ModalInner>
         </Box>
 
