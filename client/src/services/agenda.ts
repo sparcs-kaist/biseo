@@ -8,7 +8,7 @@ interface AgendaState {
   retrieveAgendas: () => void;
 }
 
-const useAgenda = create<AgendaState>((set, get) => ({
+const useAgenda = create<AgendaState>(set => ({
   agendas: [],
   voteAgenda: async (choiceId, agendaId) => {
     try {

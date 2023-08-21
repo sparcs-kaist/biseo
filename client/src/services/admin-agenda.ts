@@ -17,10 +17,10 @@ interface AdminAgendaState {
   remindAgenda: (id: number) => void;
 }
 
-const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
+export const useAdminAgenda = create<AdminAgendaState>(set => ({
   adminAgendas: [],
 
-  createAgenda: async (agenda) => {
+  createAgenda: async agenda => {
     try {
       await socket.emitAsync("admin.agenda.create", agenda);
     } catch (error) {
@@ -32,7 +32,7 @@ const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
     try {
       const retAdminAgendas = await socket.emitAsync(
         "admin.agenda.retrieveAll",
-        {}
+        {},
       );
       set({ adminAgendas: retAdminAgendas });
     } catch (error) {
@@ -50,7 +50,7 @@ const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
     }
   },
 
-  updateAgenda: async (agenda) => {
+  updateAgenda: async agenda => {
     try {
       await socket.emitAsync("admin.agenda.update", agenda);
     } catch (error) {
@@ -58,7 +58,7 @@ const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
     }
   },
 
-  deleteAgenda: async (id) => {
+  deleteAgenda: async id => {
     try {
       await socket.emitAsync("admin.agenda.delete", { id });
     } catch (error) {
@@ -66,7 +66,7 @@ const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
     }
   },
 
-  remindAgenda: async (id) => {
+  remindAgenda: async id => {
     try {
       await socket.emitAsync("admin.agenda.remind", { id });
     } catch (error) {
@@ -75,15 +75,15 @@ const useAdminAgenda = create<AdminAgendaState>((set, get) => ({
   },
 }));
 
-socket.on("admin.agenda.created", (adminAgenda) => {
-  useAdminAgenda.setState((state) => ({
+socket.on("admin.agenda.created", adminAgenda => {
+  useAdminAgenda.setState(state => ({
     adminAgendas: [...state.adminAgendas, adminAgenda],
   }));
 });
 
 socket.on("admin.agenda.statusUpdated", ({ id, status }) => {
-  useAdminAgenda.setState((state) => {
-    const newAdminAgendas: AdminAgenda[] = state.adminAgendas.map((agenda) => {
+  useAdminAgenda.setState(state => {
+    const newAdminAgendas: AdminAgenda[] = state.adminAgendas.map(agenda => {
       if (agenda.id === id) {
         return { ...agenda, status: status };
       }
@@ -95,9 +95,9 @@ socket.on("admin.agenda.statusUpdated", ({ id, status }) => {
   });
 });
 
-socket.on("admin.agenda.updated", (adminAgenda) => {
-  useAdminAgenda.setState((state) => {
-    const newAgendas: AdminAgenda[] = state.adminAgendas.map((agenda) => {
+socket.on("admin.agenda.updated", adminAgenda => {
+  useAdminAgenda.setState(state => {
+    const newAgendas: AdminAgenda[] = state.adminAgendas.map(agenda => {
       if (agenda.id === adminAgenda.id) {
         return adminAgenda;
       }
@@ -109,10 +109,10 @@ socket.on("admin.agenda.updated", (adminAgenda) => {
   });
 });
 
-socket.on("admin.agenda.deleted", (adminAgenda) => {
-  useAdminAgenda.setState((state) => {
+socket.on("admin.agenda.deleted", adminAgenda => {
+  useAdminAgenda.setState(state => {
     const newAgendas: AdminAgenda[] = state.adminAgendas.filter(
-      (agenda) => agenda.id !== adminAgenda.id
+      agenda => agenda.id !== adminAgenda.id,
     );
     return {
       adminAgendas: newAgendas,
@@ -120,9 +120,9 @@ socket.on("admin.agenda.deleted", (adminAgenda) => {
   });
 });
 
-socket.on("admin.agenda.voted", (voteData) => {
-  useAdminAgenda.setState((state) => {
-    const newAgendas: AdminAgenda[] = state.adminAgendas.map((agenda) => {
+socket.on("admin.agenda.voted", voteData => {
+  useAdminAgenda.setState(state => {
+    const newAgendas: AdminAgenda[] = state.adminAgendas.map(agenda => {
       if (agenda.id === voteData.id) {
         return {
           ...agenda,
@@ -137,3 +137,5 @@ socket.on("admin.agenda.voted", (voteData) => {
     };
   });
 });
+
+export { useAdminAgenda };

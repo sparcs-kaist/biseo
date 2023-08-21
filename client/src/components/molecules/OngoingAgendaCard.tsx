@@ -24,7 +24,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
     } else {
       voteAgenda(chosenChoiceId, agenda.id);
     }
-  }, [voteAgenda, chosenChoiceId, agenda.id]);
+  }, [chosenChoiceId]);
 
   const choose = useCallback(
     (choiceId: number) => {
@@ -34,7 +34,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
         setChosenChoiceId(choiceId);
       }
     },
-    [setChosenChoiceId, chosenChoiceId],
+    [chosenChoiceId],
   );
 
   const choices = agenda.user.votable ? (
@@ -55,7 +55,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   );
 
   return (
-    <Card primary>
+    <Card primary bold>
       <Box dir="column" gap={10}>
         <Box>
           <Text variant="title2" color="black">
