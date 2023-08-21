@@ -10,6 +10,7 @@ import { logger } from "@/utils/logger";
 import { auth } from "@/auth/socket";
 
 import { adminAgendaRouter } from "@/listener/admin.agenda";
+import { adminUserRouter } from "@/listener/admin.user";
 import { chatRouter } from "@/listener/chat";
 import { agendaRouter } from "@/listener/agenda";
 
@@ -33,6 +34,7 @@ io.use(auth);
 
 io.on("connection", socket => {
   adminAgendaRouter.register(io, socket);
+  adminUserRouter.register(io, socket);
   chatRouter.register(io, socket);
   agendaRouter.register(io, socket);
 });

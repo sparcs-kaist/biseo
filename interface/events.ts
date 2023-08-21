@@ -2,6 +2,7 @@ import type { Events, Ev } from "./helpers";
 
 import type * as init from "./init";
 import type * as adminAgenda from "./admin/agenda";
+import type * as adminUser from "./admin/user";
 import type * as agenda from "./agenda";
 import type * as chat from "./chat";
 import type * as user from "./user";
@@ -27,6 +28,9 @@ export type ClientToServerEvents = Events<{
       update: Ev<adminAgenda.Update, adminAgenda.UpdateCb>;
       delete: Ev<adminAgenda.Delete, adminAgenda.DeleteCb>;
       remind: Ev<adminAgenda.Remind, adminAgenda.RemindCb>;
+    };
+    user: {
+      retrieveAll: Ev<adminUser.RetrieveAll, adminUser.RetrieveAllCb>;
     };
   };
 }>;
