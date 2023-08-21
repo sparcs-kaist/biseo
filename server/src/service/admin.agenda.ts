@@ -1,4 +1,4 @@
-import type { Prisma } from "@prisma/client";
+import type { Prisma, User } from "@prisma/client";
 import * as schema from "biseo-interface/admin/agenda";
 import type {
   OngoingAgenda,
@@ -8,7 +8,28 @@ import type {
 import { prisma } from "@/db/prisma";
 import { BiseoError } from "@/lib/error";
 
-import { User } from "biseo-interface/user";
+const selectSomeUserFields = {
+  select: {
+    id: true,
+    username: true,
+    displayName: true,
+  },
+};
+
+const selectOnlyUser = {
+  select: {
+    user: selectSomeUserFields,
+  },
+};
+
+const selectAgendaDefaultFields = {
+  select: {
+    id: true,
+    title: true,
+    resolution: true,
+    content: true,
+  },
+};
 
 export const createAgenda = async ({
   title,
@@ -36,22 +57,9 @@ export const createAgenda = async ({
   } = await prisma.agenda.create({
     data: createAgendaQuery,
     select: {
-      id: true,
-      title: true,
-      resolution: true,
-      content: true,
+      ...selectAgendaDefaultFields.select,
       choices: true,
-      voters: {
-        select: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              displayName: true,
-            },
-          },
-        },
-      },
+      voters: selectOnlyUser,
     },
   });
 
@@ -108,26 +116,13 @@ export const startAgenda = async (agendaId: number, user: User) => {
         deletedAt: null,
       },
       select: {
-        id: true,
-        title: true,
-        resolution: true,
-        content: true,
+        ...selectAgendaDefaultFields.select,
         choices: {
           include: {
             users: true,
           },
         },
-        voters: {
-          select: {
-            user: {
-              select: {
-                id: true,
-                username: true,
-                displayName: true,
-              },
-            },
-          },
-        },
+        voters: selectOnlyUser,
       },
     });
 
@@ -167,10 +162,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
       },
     },
     select: {
-      id: true,
-      title: true,
-      resolution: true,
-      content: true,
+      ...selectAgendaDefaultFields.select,
       choices: {
         include: {
           users: true,
@@ -181,17 +173,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
           },
         },
       },
-      voters: {
-        select: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              displayName: true,
-            },
-          },
-        },
-      },
+      voters: selectOnlyUser,
     },
   });
 
@@ -226,22 +208,29 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
 };
 
 export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
-  // TODO(panya): validate - 해당 agenda가 preparing 상태여야 함
-
   //Delete prior choices and voters
-  await prisma.choice.deleteMany({
+  const deleteChoices = prisma.choice.deleteMany({
     where: {
       agendaId: agendaUpdate.id,
+      agenda: {
+        startAt: null,
+        deletedAt: null,
+      },
     },
   });
-  await prisma.userAgendaVotable.deleteMany({
+
+  const deleteUserAgendaVotable = prisma.userAgendaVotable.deleteMany({
     where: {
       agendaId: agendaUpdate.id,
+      agenda: {
+        startAt: null,
+        deletedAt: null,
+      },
     },
   });
 
   //Update agenda info, choice DB and voter DB
-  const { choices, voters, ...updatedAgenda } = await prisma.agenda.update({
+  const updateAgenda = prisma.agenda.update({
     where: {
       id: agendaUpdate.id,
     },
@@ -263,24 +252,19 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
       },
     },
     select: {
-      id: true,
-      title: true,
-      resolution: true,
-      content: true,
+      ...selectAgendaDefaultFields.select,
       choices: true,
-      voters: {
-        select: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              displayName: true,
-            },
-          },
-        },
-      },
+      voters: selectOnlyUser,
     },
   });
+
+  const result = await prisma.$transaction([
+    deleteChoices,
+    deleteUserAgendaVotable,
+    updateAgenda,
+  ]);
+
+  const { choices, voters, ...updatedAgenda } = result[2];
 
   const agendaVotable: PreparingAgenda = {
     ...updatedAgenda,
@@ -354,47 +338,20 @@ export const deleteAgenda = async ({
   return { id };
 };
 
-export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
+export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
   const agendaFromDB = await prisma.agenda.findMany({
     where: { deletedAt: null },
-
     select: {
-      id: true,
-      title: true,
-      resolution: true,
-      content: true,
+      ...selectAgendaDefaultFields.select,
       startAt: true,
       endAt: true,
       deletedAt: true,
-
       choices: {
-        select: {
-          id: true,
-          name: true,
-          users: {
-            select: {
-              user: {
-                select: {
-                  id: true,
-                  username: true,
-                  displayName: true,
-                },
-              },
-            },
-          },
+        include: {
+          users: selectOnlyUser,
         },
       },
-      voters: {
-        select: {
-          user: {
-            select: {
-              id: true,
-              username: true,
-              displayName: true,
-            },
-          },
-        },
-      },
+      voters: selectOnlyUser,
     },
   });
 
