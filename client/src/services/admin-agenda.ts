@@ -137,5 +137,3 @@ socket.on("admin.agenda.voted", voteData => {
     };
   });
 });
-
-export { useAdminAgenda };
