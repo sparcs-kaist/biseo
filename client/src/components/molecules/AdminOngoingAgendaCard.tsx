@@ -42,7 +42,7 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
   };
 
   return (
-    <Card round={5} onClick={openModal}>
+    <Card primary={false} bold={false} round={5} onClick={openModal}>
       <Box gap={8} w="fill">
         <AgendaTag tags={_tags} admin />
         <Box>

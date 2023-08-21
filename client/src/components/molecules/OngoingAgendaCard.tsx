@@ -55,7 +55,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   );
 
   return (
-    <Card primary>
+    <Card primary bold>
       <Box dir="column" gap={10}>
         <Box>
           <Text variant="title2" color="black">
