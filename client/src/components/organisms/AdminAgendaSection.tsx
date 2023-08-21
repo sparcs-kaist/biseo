@@ -27,12 +27,9 @@ const isTerminatedAgenda = (agenda: AdminAgenda) => {
 };
 //const navigate = useNavigate();
 export const AdminAgendaSection: React.FC = () => {
-  const { ongoingAgendas } = useAdminAgenda(state => ({
-    ongoingAgendas: state.adminAgendas.filter(isOngoingAgenda),
   const { preparingAgendas } = useAdminAgenda(state => ({
     preparingAgendas: state.adminAgendas.filter(isPreparingAgenda),
   }));
-
   const { ongoingAgendas } = useAdminAgenda(state => ({
     ongoingAgendas: state.adminAgendas.filter(isOngoingAgenda),
   }));
