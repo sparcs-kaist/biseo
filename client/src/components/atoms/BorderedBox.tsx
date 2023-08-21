@@ -22,7 +22,16 @@ export const BorderedBox = styled.div<{
   padRight?: number;
   borderSize?: number;
   borderColor?: Color;
-  borderStyle?: "solid";
+  borderStyle?:
+    | "solid"
+    | "dotted"
+    | "dashed"
+    | "double"
+    | "groove"
+    | "groove"
+    | "ridge"
+    | "hidden"
+    | "none";
   position?: "absolute" | "static" | "relative";
 }>(
   ({
