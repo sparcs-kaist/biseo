@@ -12,7 +12,10 @@ interface Props {
 export const ChatInput: React.FC<Props> = ({ send }) => {
   const { input, setValue } = useInput();
 
-  const sendCurrent = useCallback(() => send(input.value), [input.value]);
+  const sendCurrent = useCallback(() => {
+    send(input.value);
+    setValue("");
+  }, [input.value]);
 
   return (
     <Box w="fill" pad={10} bg="white100">
@@ -22,7 +25,6 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
               sendCurrent();
-              setValue("");
             }
           }}
           {...input}
