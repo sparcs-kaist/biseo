@@ -7,6 +7,8 @@ export const BorderedBox = styled.div<{
   h?: Size;
   bg?: Color;
   round?: number;
+  roundTop?: number;
+  roundBot?: number;
   dir?: "row" | "column";
   gap?: number | "auto";
   align?: "center" | "start" | "end";
@@ -28,6 +30,8 @@ export const BorderedBox = styled.div<{
     h = "hug",
     bg,
     round = 0,
+    roundTop = round,
+    roundBot = round,
     dir = "column",
     gap = 0,
     align = "start",
@@ -48,7 +52,7 @@ export const BorderedBox = styled.div<{
     width: ${size(w)};
     height: ${size(h)};
     background-color: ${bg ? theme.colors[bg] : "transparent"};
-    border-radius: ${round}px;
+    border-radius: ${roundTop}px ${roundTop}px ${roundBot}px ${roundBot}px;
     display: flex;
     flex-direction: ${dir};
     align-items: ${align};

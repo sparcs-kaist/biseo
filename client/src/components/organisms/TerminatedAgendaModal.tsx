@@ -1,22 +1,6 @@
 import React from "react";
-import {
-  Modal,
-  ModalInnerTextBox,
-  OptionVoteResult,
-  ParticipantBar,
-  TerminatedModalInner,
-} from "@/components/molecules";
-import {
-  BorderedBox,
-  Box,
-  Header,
-  Table,
-  Text,
-  TextArea,
-  Cell,
-  Row,
-  Tag,
-} from "../atoms";
+import { Modal, TerminatedModalInner } from "@/components/molecules";
+import { Box, Header, Table, Cell, Row } from "../atoms";
 import { useLocation } from "react-router-dom";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
