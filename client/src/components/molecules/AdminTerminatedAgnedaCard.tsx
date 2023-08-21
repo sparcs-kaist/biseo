@@ -4,6 +4,7 @@ import { Box, Card } from "../atoms";
 import { AgendaTag } from "./AgendaTag";
 import { AgendaFoldedText } from "./AgendaFoldedText";
 import { AdminAgenda } from "biseo-interface/admin/agenda";
+import { useNavigate } from "react-router-dom";
 
 const _tags = {
   public: false,
@@ -16,15 +17,11 @@ interface Props {
 }
 
 export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
+  const navigate = useNavigate();
+  const openModal = () => navigate(`terminated?agendaId=${agenda.id}`);
+
   return (
-    <Card
-      primary={false}
-      clickable
-      onClick={e => {
-        /* use navigate? */
-      }}
-      round={5}
-    >
+    <Card primary={false} clickable onClick={openModal} round={5}>
       <Box gap={8}>
         <AgendaTag
           tags={{

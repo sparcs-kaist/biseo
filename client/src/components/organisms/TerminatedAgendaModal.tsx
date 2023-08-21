@@ -6,51 +6,102 @@ import {
   ParticipantBar,
   TerminatedModalInner,
 } from "@/components/molecules";
-import { BorderedBox, Box, Table, Text, TextArea } from "../atoms";
+import {
+  BorderedBox,
+  Box,
+  Header,
+  Table,
+  Text,
+  TextArea,
+  Cell,
+  Row,
+  Tag,
+} from "../atoms";
+import { useLocation } from "react-router-dom";
+import { useAdminAgenda } from "@/services/admin-agenda";
 
-export const TerminatedAgendaModal: React.FC = () => (
-  <Modal title="종료된 투표">
-    <Box h={498} w={630} justify="space-between" dir="row">
-      <Box w={300} h={498} gap={20} dir="column">
-        <Box w={300} gap={10}>
-          <TerminatedModalInner.TextBoxWithTitle title="투표 제목">
-            이혜원 회원의 승급 심사
-          </TerminatedModalInner.TextBoxWithTitle>
-          <TerminatedModalInner.TextBoxWithTitle title="투표 내용">
-            이혜원 회원의 승급 심사입니다 참 재밌겠죠? 사실 안봐도 승급
-            확정이긴합니다 이걸 왜 하냐고요
-          </TerminatedModalInner.TextBoxWithTitle>
-          <TerminatedModalInner.TextBoxWithTitle title="의결 문안">
-            글쎄요
-          </TerminatedModalInner.TextBoxWithTitle>
-        </Box>
-        <Box w={300} h={245} gap={10}>
-          <TerminatedModalInner.ParticipantBar total={10} participant={6} />
-          <Box w={300} h={177} dir="column" gap={8}>
-            <TerminatedModalInner.OptionResultsBox>
-              <TerminatedModalInner.OptionVoteResult
-                name="찬성"
-                count={5}
-                totalCount={7}
-                w={280}
-              />
-              <TerminatedModalInner.OptionVoteResult
-                name="반대"
-                count={1}
-                totalCount={7}
-                w={280}
-              />
-              <TerminatedModalInner.OptionVoteResult
-                name="몰루"
-                count={1}
-                totalCount={7}
-                w={280}
-              />
-            </TerminatedModalInner.OptionResultsBox>
+export const TerminatedAgendaModal: React.FC = () => {
+  const location = useLocation();
+  // location.state로 접근해서 필요한 데이터 사용
+  console.log(location.state);
+  const modalParams = new URLSearchParams(location.search);
+  const agendaId = parseInt(modalParams.get("agendaId") as string);
+
+  const { targetAgenda } = useAdminAgenda(state => ({
+    targetAgenda: state.adminAgendas.find(
+      agenda => agenda.id === agendaId && agenda.status === "terminated",
+    ),
+  }));
+  const totalChoiceCount =
+    targetAgenda == undefined
+      ? 0
+      : targetAgenda?.choices
+          .map(choice => choice.count)
+          .reduce((prev, current) => prev + current, 0);
+  const totalVoterCount =
+    targetAgenda?.voters.voted.length == undefined
+      ? 0
+      : targetAgenda?.voters.voted.length;
+  const totalVotableCount =
+    targetAgenda?.voters.total.length == undefined
+      ? 0
+      : targetAgenda?.voters.total.length;
+
+  return (
+    <Modal title="종료된 투표">
+      <Box h={498} w={630} justify="space-between" dir="row">
+        <Box w={300} h={498} gap={20} dir="column">
+          <Box w={300} gap={10}>
+            <TerminatedModalInner.TextBoxWithTitle title="투표 제목">
+              {targetAgenda?.title}
+            </TerminatedModalInner.TextBoxWithTitle>
+            <TerminatedModalInner.TextBoxWithTitle title="투표 내용">
+              {targetAgenda?.content}
+            </TerminatedModalInner.TextBoxWithTitle>
+            <TerminatedModalInner.TextBoxWithTitle title="의결 문안">
+              {targetAgenda?.resolution}
+            </TerminatedModalInner.TextBoxWithTitle>
+          </Box>
+          <Box w={300} h={245} gap={10}>
+            <TerminatedModalInner.ParticipantBar
+              total={totalVotableCount}
+              participant={totalVoterCount}
+            />
+            <Box w={300} h={177} dir="column" gap={8}>
+              <TerminatedModalInner.OptionResultsBox>
+                {targetAgenda?.choices.map(choice => (
+                  <TerminatedModalInner.OptionVoteResult
+                    name={choice.name}
+                    count={choice.count}
+                    totalCount={totalChoiceCount}
+                    w={280}
+                  />
+                ))}
+              </TerminatedModalInner.OptionResultsBox>
+            </Box>
           </Box>
         </Box>
+        <Table>
+          <Header>
+            <Cell w={27} onClick={() => ({})}>
+              ㅁ
+            </Cell>
+            <Cell w={55}>이름</Cell>
+            <Cell w={80}>닉네임</Cell>
+            <Cell>태그</Cell>
+          </Header>
+          {targetAgenda?.voters.total.map(user => (
+            <Row>
+              <Cell w={27} onClick={() => ({})}>
+                ㅁ
+              </Cell>
+              <Cell w={55}>{user.username}</Cell>
+              <Cell w={80}>{user.displayName}</Cell>
+              <Cell>태그</Cell>
+            </Row>
+          ))}
+        </Table>
       </Box>
-      <Table></Table>
-    </Box>
-  </Modal>
-);
+    </Modal>
+  );
+};

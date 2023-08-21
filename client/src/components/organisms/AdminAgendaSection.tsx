@@ -11,6 +11,7 @@ import { useAgenda } from "@/services/agenda";
 import { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { AdminTerminatedAgendaCard } from "../molecules/AdminTerminatedAgnedaCard";
+import { useNavigate } from "react-router-dom";
 
 const isOngoingAgenda = (agenda: AdminAgenda) => {
   return agenda.status === "ongoing";
@@ -18,7 +19,7 @@ const isOngoingAgenda = (agenda: AdminAgenda) => {
 const isTerminatedAgenda = (agenda: AdminAgenda) => {
   return agenda.status === "terminated";
 };
-
+//const navigate = useNavigate();
 export const AdminAgendaSection: React.FC = () => {
   const { ongoingAgendas } = useAdminAgenda(state => ({
     ongoingAgendas: state.adminAgendas.filter(isOngoingAgenda),
@@ -30,7 +31,13 @@ export const AdminAgendaSection: React.FC = () => {
     <AdminOngoingAgendaCard agenda={agenda} />
   ));
   const terminatedAgendaCards = terminatedAgendas.map(agenda => (
-    <AdminTerminatedAgendaCard agenda={agenda} />
+    <div
+    // onClick={() => {
+    //   navigate("termntated");
+    // }}
+    >
+      <AdminTerminatedAgendaCard agenda={agenda} />
+    </div>
   ));
   //const terminatedAgendaCards = terminatedAgendas.map(agenda => <></>);
 
