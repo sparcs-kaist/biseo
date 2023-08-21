@@ -7,6 +7,8 @@ interface ModalInnerProps extends PropsWithChildren {
 }
 interface SubComponents {
   TextBox: typeof TextBox;
+  VoteOption: typeof VoteOption;
+  VoteOptions: typeof VoteOptions;
   AddVoteOptionArea: typeof AddVoteOptionArea;
   VoteChoice: typeof VoteChoice;
   TextButton: typeof TextButton;
@@ -58,6 +60,32 @@ const TextBox: React.FC<PropsWithChildren> = ({ children }) => (
   </BorderedBox>
 );
 ModalInner.TextBox = TextBox;
+
+const VoteOptions: React.FC<PropsWithChildren> = ({ children }) => (
+  <Box dir="row" gap={8}>
+    {children}
+  </Box>
+);
+ModalInner.VoteOptions = VoteOptions;
+
+const VoteOption: React.FC<PropsWithChildren> = ({ children }) => (
+  <BorderedBox
+    borderColor="gray200"
+    bg="white"
+    w="hug"
+    h={30}
+    justify="center"
+    borderSize={1}
+    padHorizontal={15}
+    round={5}
+    borderStyle="solid"
+  >
+    <Text color="gray600" variant="subtitle">
+      {children}
+    </Text>
+  </BorderedBox>
+);
+ModalInner.VoteOption = VoteOption;
 
 const AddVoteOptionArea: React.FC<PropsWithChildren> = ({ children }) => (
   <Box w={300}>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
 import { PlusIcon } from "@/assets";
 
@@ -26,6 +27,8 @@ const isTerminatedAgenda = (agenda: AdminAgenda) => {
 };
 //const navigate = useNavigate();
 export const AdminAgendaSection: React.FC = () => {
+  const { ongoingAgendas } = useAdminAgenda(state => ({
+    ongoingAgendas: state.adminAgendas.filter(isOngoingAgenda),
   const { preparingAgendas } = useAdminAgenda(state => ({
     preparingAgendas: state.adminAgendas.filter(isPreparingAgenda),
   }));

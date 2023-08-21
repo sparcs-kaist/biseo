@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { Box } from "@/components/atoms";
 import { AdminAgendaSection } from "@/components/organisms";
-import { useAgenda } from "@/services/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
 export const AdminAgendaPage: React.FC = () => {
