@@ -40,10 +40,10 @@ export const AdminAgendaSection: React.FC = () => {
   const { terminatedAgendas } = useAdminAgenda(state => ({
     terminatedAgendas: state.adminAgendas.filter(isTerminatedAgenda),
   }));
+  
   const ongoingAgendaCards = ongoingAgendas.map(agenda => (
     <AdminOngoingAgendaCard agenda={agenda} />
   ));
-
   const preparingAgendaCards = preparingAgendas.map(agenda => (
     <AdminPreparingAgendaCard agenda={agenda} />
   ));
