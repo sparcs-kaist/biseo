@@ -4,6 +4,7 @@ import { Box, Text, Card, Divider, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
 import { AdminAgenda } from "biseo-interface/admin/agenda";
+import { useAdminAgenda } from "@/services/admin-agenda";
 
 const _tags = {
   public: true,
@@ -19,6 +20,14 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
   const navigate = useNavigate();
   const openModal = () => navigate(`edit?agendaId=${agenda.id}`);
 
+  const { startAgenda } = useAdminAgenda(state => ({
+    startAgenda: state.statusUpdate,
+  }));
+
+  const start = () => {
+    startAgenda(agenda.id, "ongoing");
+  };
+
   return (
     <Card round={5} onClick={openModal}>
       <Box gap={8} w="fill">
@@ -33,7 +42,12 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
         </Box>
         <Divider />
         <Box dir="row" w="fill" gap={8} justify="space-between">
-          <Button>
+          <Button
+            onClick={e => {
+              e.stopPropagation();
+              start();
+            }}
+          >
             <Text variant="option1" color="blue600">
               투표 시작하기
             </Text>
