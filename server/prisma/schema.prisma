@@ -9,17 +9,17 @@ datasource db {
 }
 
 model Agenda {
-  id        Int                 @id @default(autoincrement())
-  title     String
-  subtitle  String
-  content   String
-  startAt   DateTime?           @map("start_at")
-  endAt     DateTime?           @map("end_at")
-  createdAt DateTime            @default(now()) @map("created_at")
-  updatedAt DateTime            @updatedAt @map("updated_at")
-  deletedAt DateTime?           @map("deleted_at")
-  choices   Choice[]
-  voters    UserAgendaVotable[]
+  id         Int                 @id @default(autoincrement())
+  title      String
+  resolution String
+  content    String
+  startAt    DateTime?           @map("start_at")
+  endAt      DateTime?           @map("end_at")
+  createdAt  DateTime            @default(now()) @map("created_at")
+  updatedAt  DateTime            @updatedAt @map("updated_at")
+  deletedAt  DateTime?           @map("deleted_at")
+  choices    Choice[]
+  voters     UserAgendaVotable[]
 
   @@map("agenda")
 }
