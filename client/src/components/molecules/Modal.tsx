@@ -46,7 +46,10 @@ export const Modal: React.FC<Props> = ({ title, children }) => {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (ref.current) ref.current.showModal();
+    if (ref.current) {
+      ref.current.close();
+      ref.current.showModal();
+    }
   }, []);
 
   return (

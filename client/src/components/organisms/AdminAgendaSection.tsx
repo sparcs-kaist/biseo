@@ -77,7 +77,7 @@ export const AdminAgendaSection: React.FC = () => {
           TODO
         </Box>
       </Box>
-      <EditAgendaModal />
+      {/* <EditAgendaModal /> */}
     </Box>
   );
 };
