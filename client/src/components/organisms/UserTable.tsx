@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import type { AdminUser } from "biseo-interface/admin/user";
-import { Header, Table, Cell, Row, CheckBox } from "@/components/atoms";
+import {
+  Box,
+  Header,
+  Table,
+  Cell,
+  Row,
+  CheckBox,
+  UserTag,
+} from "@/components/atoms";
 import { useAdminUser } from "@/services/admin-user";
 
 interface Props {
@@ -56,7 +64,11 @@ export const UserTable: React.FC<Props> = ({
           </Cell>
           <Cell w={80}>{user.username}</Cell>
           <Cell w={120}>{user.displayName}</Cell>
-          <Cell>태그</Cell>
+          <Cell>
+            <Box dir="row" gap={5}>
+              {user.isAdmin ? <UserTag>어드민</UserTag> : <></>}
+            </Box>
+          </Cell>
         </Row>
       ))}
     </Table>
