@@ -46,7 +46,9 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
 
   const choices = agenda.user.votable ? (
     agenda.user.voted ? (
-      <CompletedChoice />
+      <CompletedChoice
+        choice={agenda.choices.find(choice => choice.id === agenda.user.voted)}
+      />
     ) : (
       agenda.choices.map(choice => (
         <ChoiceComponent
