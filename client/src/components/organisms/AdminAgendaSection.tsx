@@ -40,7 +40,7 @@ export const AdminAgendaSection: React.FC = () => {
   const { terminatedAgendas } = useAdminAgenda(state => ({
     terminatedAgendas: state.adminAgendas.filter(isTerminatedAgenda),
   }));
-  
+
   const ongoingAgendaCards = ongoingAgendas.map(agenda => (
     <AdminOngoingAgendaCard agenda={agenda} />
   ));
@@ -54,7 +54,9 @@ export const AdminAgendaSection: React.FC = () => {
   return (
     <Box dir="row" gap={20}>
       <Box dir="column" w={300}>
-        <SectionHeader count={3}>대기중인 투표</SectionHeader>
+        <SectionHeader count={preparingAgendaCards.length}>
+          예정된 투표
+        </SectionHeader>
 
         <Box dir="column" w="fill" gap={15}>
           <Box dir="column" w="fill" gap={15}>
@@ -68,13 +70,17 @@ export const AdminAgendaSection: React.FC = () => {
         </Box>
       </Box>
       <Box dir="column" w={300}>
-        <SectionHeader count={3}>진행중인 투표</SectionHeader>
+        <SectionHeader count={ongoingAgendaCards.length}>
+          진행중인 투표
+        </SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           {ongoingAgendaCards}
         </Box>
       </Box>
       <Box dir="column" w={300}>
-        <SectionHeader count={2}>종료된 투표</SectionHeader>
+        <SectionHeader count={terminatedAgendaCards.length}>
+          종료된 투표
+        </SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           {terminatedAgendaCards}
         </Box>

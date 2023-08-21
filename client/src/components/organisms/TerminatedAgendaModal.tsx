@@ -1,7 +1,8 @@
 import React from "react";
-import { Modal, TerminatedModalInner } from "@/components/molecules";
-import { Box, Header, Table, Cell, Row, CheckBox } from "../atoms";
 import { useLocation } from "react-router-dom";
+import { Box } from "@/components/atoms";
+import { Modal, TerminatedModalInner } from "@/components/molecules";
+import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
 export const TerminatedAgendaModal: React.FC = () => {
@@ -65,26 +66,7 @@ export const TerminatedAgendaModal: React.FC = () => {
             </Box>
           </Box>
         </Box>
-        <Table>
-          <Header>
-            <Cell w={27} onClick={() => ({})}>
-              <CheckBox disabled />
-            </Cell>
-            <Cell w={55}>이름</Cell>
-            <Cell w={80}>닉네임</Cell>
-            <Cell>태그</Cell>
-          </Header>
-          {targetAgenda?.voters.total.map(user => (
-            <Row>
-              <Cell w={27} onClick={() => ({})}>
-                <CheckBox />
-              </Cell>
-              <Cell w={55}>{user.username}</Cell>
-              <Cell w={80}>{user.displayName}</Cell>
-              <Cell>태그</Cell>
-            </Row>
-          ))}
-        </Table>
+        <UserTable />
       </Box>
     </Modal>
   );

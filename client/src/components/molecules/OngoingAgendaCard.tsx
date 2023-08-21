@@ -2,6 +2,7 @@ import React, { useState, useCallback } from "react";
 import { Box, Card, Text, Button } from "@/components/atoms";
 import type { OngoingAgenda } from "biseo-interface/agenda";
 import {
+  AgendaTag,
   ChoiceComponent,
   CompletedChoice,
   NotVotableChoice,
@@ -11,6 +12,12 @@ import { useAgenda } from "@/services/agenda";
 interface OngoingAgendaProps {
   agenda: OngoingAgenda;
 }
+
+const _tags = {
+  public: false,
+  identified: false,
+  votable: true,
+};
 
 export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   const [chosenChoiceId, setChosenChoiceId] = useState(0);
@@ -57,7 +64,14 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   return (
     <Card primary bold>
       <Box dir="column" gap={10}>
-        <Box>
+        <Box gap={8}>
+          <AgendaTag
+            tags={{
+              public: _tags.public,
+              identified: _tags.identified,
+              votable: agenda.user.votable,
+            }}
+          />
           <Text variant="title2" color="black">
             {agenda.title}
           </Text>
