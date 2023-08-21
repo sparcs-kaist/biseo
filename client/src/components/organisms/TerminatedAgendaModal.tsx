@@ -66,7 +66,7 @@ export const TerminatedAgendaModal: React.FC = () => {
             </Box>
           </Box>
         </Box>
-        <UserTable />
+        <UserTable editable />
       </Box>
     </Modal>
   );
