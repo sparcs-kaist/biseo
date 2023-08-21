@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { LogoIcon } from "@/assets";
 import { Box } from "@/components/atoms";
-import { HeaderItem } from "@/components/molecules";
+import { HeaderItem, LogOutButton } from "@/components/molecules";
 import { useAuth } from "@/services/auth";
 
 const adminPathList = [
@@ -22,24 +22,32 @@ const Container = styled.header`
   border-bottom: 1px solid ${props => props.theme.colors.gray300};
 `;
 
-export const Header: React.FC = () => (
-  <Container>
-    <Box h="fill" dir="row" align="center">
-      <LogoIcon />
-    </Box>
-    <Box w="fill" h="fill" dir="row" align="center" justify="center">
-      {useAuth().userInfo?.isAdmin ? (
-        adminPathList.map((item, index) => (
-          <HeaderItem
-            key={index}
-            name={item.name}
-            path={item.path}
-            selected={window.location.pathname === "/" + item.path}
-          />
-        ))
-      ) : (
-        <></>
-      )}
-    </Box>
-  </Container>
-);
+export const Header: React.FC = () => {
+  const { displayName } = useAuth(state => ({
+    displayName: state.userInfo?.displayName,
+  }));
+  return (
+    <Container>
+      <Box h="fill" dir="row" align="center">
+        <LogoIcon />
+      </Box>
+      <Box w="fill" h="fill" dir="row" align="center" justify="center">
+        {useAuth().userInfo?.isAdmin ? (
+          adminPathList.map((item, index) => (
+            <HeaderItem
+              key={index}
+              name={item.name}
+              path={item.path}
+              selected={window.location.pathname === "/" + item.path}
+            />
+          ))
+        ) : (
+          <></>
+        )}
+      </Box>
+      <LogOutButton
+        displayName={displayName == undefined ? "SPARCS ANON" : displayName}
+      />
+    </Container>
+  );
+};
