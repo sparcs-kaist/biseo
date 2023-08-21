@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Text, Card, Divider, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
@@ -15,8 +16,11 @@ interface Props {
 }
 
 export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
+  const navigate = useNavigate();
+  const openModal = () => navigate(`edit?agendaId=${agenda.id}`);
+
   return (
-    <Card round={5}>
+    <Card round={5} onClick={openModal}>
       <Box gap={8} w="fill">
         <AgendaTag tags={_tags} admin />
         <Box gap={2}>
