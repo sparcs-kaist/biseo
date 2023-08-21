@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
 import { PlusIcon } from "@/assets";
 
@@ -15,6 +15,7 @@ import { CreateAgendaModal } from "./CreateAgendaModal";
 import { EditAgendaModal } from "./EditAgendaModal";
 import { AdminTerminatedAgendaCard } from "@/components/molecules/AdminTerminatedAgendaCard";
 
+
 const isOngoingAgenda = (agenda: AdminAgenda) => {
   return agenda.status === "ongoing";
 };
@@ -25,8 +26,11 @@ const isPreparingAgenda = (agenda: AdminAgenda) => {
 const isTerminatedAgenda = (agenda: AdminAgenda) => {
   return agenda.status === "terminated";
 };
-//const navigate = useNavigate();
+
 export const AdminAgendaSection: React.FC = () => {
+  const navigate = useNavigate();
+  const openModal = () => navigate(`create`);
+
   const { preparingAgendas } = useAdminAgenda(state => ({
     preparingAgendas: state.adminAgendas.filter(isPreparingAgenda),
   }));
@@ -46,7 +50,6 @@ export const AdminAgendaSection: React.FC = () => {
   const terminatedAgendaCards = terminatedAgendas.map(agenda => (
     <AdminTerminatedAgendaCard agenda={agenda} />
   ));
-  //const terminatedAgendaCards = terminatedAgendas.map(agenda => <></>);
 
   return (
     <Box dir="row" gap={20}>
@@ -55,7 +58,7 @@ export const AdminAgendaSection: React.FC = () => {
 
         <Box dir="column" w="fill" gap={15}>
           <Box dir="column" w="fill" gap={15}>
-            <NewAgendaButton>
+            <NewAgendaButton onClick={openModal}>
               <Text color="gray500" variant="body">
                 <PlusIcon></PlusIcon> 새로운 투표
               </Text>
@@ -74,7 +77,6 @@ export const AdminAgendaSection: React.FC = () => {
         <SectionHeader count={2}>종료된 투표</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           {terminatedAgendaCards}
-          TODO
         </Box>
       </Box>
       {/* <EditAgendaModal /> */}

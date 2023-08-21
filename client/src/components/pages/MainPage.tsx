@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Box } from "@/components/atoms";
 import {
-  AdminAgendaSection,
   AgendaSection,
   ChatSection,
 } from "@/components/organisms";
