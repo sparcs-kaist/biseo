@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Color, theme } from "@/theme";
 import styled from "@emotion/styled";
 import type { Choice } from "biseo-interface/agenda";
 import { Text } from "@/components/atoms";
 import { SelectIcon } from "@/assets";
 import { PropsWithChildren } from "react";
+import { css } from "@emotion/react";
 
 const Container = styled.div<{
   color: Color;
+  clickable?: boolean;
 }>`
   border-radius: 5px;
   background-color: ${props => props.theme.colors[props.color]};
@@ -19,6 +21,12 @@ const Container = styled.div<{
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  ${props =>
+    props.clickable &&
+    css`
+      cursor: pointer;
+    `}
 `;
 
 interface ChoiceTextProps extends PropsWithChildren {
@@ -33,21 +41,47 @@ const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children }) => {
   );
 };
 
+const choiceBaseStyle = (
+  containerColor: Color,
+  selectIconColor: Color,
+  textColor: Color,
+) => {
+  return { containerColor, selectIconColor, textColor };
+};
+
+const choiceStyles = {
+  chosen: choiceBaseStyle("blue600", "blue600", "white"),
+  hover: choiceBaseStyle("blue200", "blue600", "blue600"),
+  notChosen: choiceBaseStyle("white", "gray500", "gray500"),
+};
+
 interface ChoiceBaseProps {
-  chosen: boolean;
+  variant: keyof typeof choiceStyles;
   text: string;
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-const ChoiceBase: React.FC<ChoiceBaseProps> = ({ chosen, text, onClick }) => {
-  const containerColor = chosen ? "blue600" : "white";
-  const selectIconColor = chosen ? theme.colors.blue600 : theme.colors.gray500;
-  const textColor = chosen ? "white" : "gray500";
+const ChoiceBase: React.FC<ChoiceBaseProps> = ({
+  variant,
+  text,
+  onClick,
+  onMouseEnter,
+  onMouseLeave,
+}) => {
+  const choiceBaseStyle = choiceStyles[variant];
 
   return (
-    <Container color={containerColor} onClick={onClick}>
-      <SelectIcon stroke={selectIconColor} />
-      <ChoiceText color={textColor}>{text}</ChoiceText>
+    <Container
+      color={choiceBaseStyle.containerColor}
+      onClick={onClick}
+      clickable={!!onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <SelectIcon stroke={theme.colors[choiceBaseStyle.selectIconColor]} />
+      <ChoiceText color={choiceBaseStyle.textColor}>{text}</ChoiceText>
     </Container>
   );
 };
@@ -62,12 +96,38 @@ export const ChoiceComponent: React.FC<ChoiceProps> = ({
   choice,
   chosen,
   onClick,
-}) => <ChoiceBase chosen={chosen} text={choice.name} onClick={onClick} />;
-
-export const CompletedChoice: React.FC = () => (
-  <ChoiceBase chosen={true} text="투표 완료" />
+}) => (
+  <ChoiceBase
+    variant={chosen ? "chosen" : "notChosen"}
+    text={choice.name}
+    onClick={onClick}
+  />
 );
 
+interface CompletedChoiceProps {
+  choice?: Choice;
+}
+
+export const CompletedChoice: React.FC<CompletedChoiceProps> = ({ choice }) => {
+  const [hover, setHover] = useState(false);
+
+  return hover ? (
+    <ChoiceBase
+      variant="hover"
+      text={choice?.name ?? ""}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    />
+  ) : (
+    <ChoiceBase
+      variant="chosen"
+      text="투표 완료"
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    />
+  );
+};
+
 export const NotVotableChoice: React.FC = () => (
-  <ChoiceBase chosen={false} text="투표 권한이 없습니다." />
+  <ChoiceBase variant="notChosen" text="투표 권한이 없습니다." />
 );
