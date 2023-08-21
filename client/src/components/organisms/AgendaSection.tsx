@@ -19,12 +19,11 @@ const isOngoingAgenda = (agenda: Agenda): agenda is OngoingAgenda => {
 }; // TODO : move to utils
 
 export const AgendaSection: React.FC = () => {
-  const { ongoingAgendas } = useAgenda(state => ({
+  const { ongoingAgendas, terminatedAgendas } = useAgenda(state => ({
     ongoingAgendas: state.agendas.filter(isOngoingAgenda),
-  }));
-  const { terminatedAgendas } = useAgenda(state => ({
     terminatedAgendas: state.agendas.filter(isTerminatedAgenda),
   }));
+
   const ongoingAgendaCards = ongoingAgendas.map(agenda => (
     <OngoingAgendaCard key={agenda.id} agenda={agenda}></OngoingAgendaCard>
   ));
@@ -42,7 +41,9 @@ export const AgendaSection: React.FC = () => {
       </Box>
       <Box dir="column" w={300}>
         <SectionHeader count={2}>종료된 투표</SectionHeader>
-        {terminatedAgendaCards}
+        <Box dir="column" w="fill" gap={15}>
+          {terminatedAgendaCards}
+        </Box>
       </Box>
     </Box>
   );
