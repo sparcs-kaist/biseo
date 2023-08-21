@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Header, Table, Cell, Row } from "@/components/atoms";
+import React, { useEffect, useState } from "react";
+import { Header, Table, Cell, Row, CheckBox, Text } from "@/components/atoms";
 import { useAdminUser } from "@/services/admin-user";
 
 export const UserTable: React.FC = () => {
@@ -12,23 +12,35 @@ export const UserTable: React.FC = () => {
     retrieveUsers();
   }, []);
 
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const selectUser = (id: number) => {
+    if (selectedUsers.includes(id)) {
+      setSelectedUsers(selectedUsers.filter(user => user !== id));
+    } else {
+      setSelectedUsers([...selectedUsers, id]);
+    }
+  };
+
   return (
     <Table>
       <Header>
         <Cell w={27} onClick={() => ({})}>
-          ㅁ
+          <CheckBox disabled />
         </Cell>
-        <Cell w={55}>이름</Cell>
-        <Cell w={80}>닉네임</Cell>
+        <Cell w={80}>이름</Cell>
+        <Cell w={120}>닉네임</Cell>
         <Cell>태그</Cell>
       </Header>
       {users?.map(user => (
-        <Row>
+        <Row
+          selected={selectedUsers.includes(user.id)}
+          onClick={() => selectUser(user.id)}
+        >
           <Cell w={27} onClick={() => ({})}>
-            ㅁ
+            <CheckBox checked={selectedUsers.includes(user.id)} />
           </Cell>
-          <Cell w={55}>{user.username}</Cell>
-          <Cell w={80}>{user.displayName}</Cell>
+          <Cell w={80}>{user.username}</Cell>
+          <Cell w={120}>{user.displayName}</Cell>
           <Cell>태그</Cell>
         </Row>
       ))}
