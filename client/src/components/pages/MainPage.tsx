@@ -4,7 +4,6 @@ import {
   AdminAgendaSection,
   AgendaSection,
   ChatSection,
-  EditAgendaModal,
 } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
 
@@ -19,8 +18,7 @@ export const MainPage: React.FC = () => {
 
   return (
     <Box dir="row" padTop={10} padBottom={30} gap={20}>
-      <AdminAgendaSection />
-      <EditAgendaModal />
+      <AgendaSection />
       <ChatSection />
     </Box>
   );

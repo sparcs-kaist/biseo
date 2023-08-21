@@ -5,6 +5,11 @@ interface ModalInnerProps extends PropsWithChildren {
   title: string;
   count?: number;
 }
+
+interface ButtonProps extends PropsWithChildren {
+  onClick: () => void;
+}
+
 interface SubComponents {
   TextBox: typeof TextBox;
   VoteOption: typeof VoteOption;
@@ -113,7 +118,7 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children }) => (
 );
 ModalInner.VoteOption = VoteOption;
 
-const AddVoteOptionArea: React.FC<PropsWithChildren> = ({ children }) => (
+const AddVoteOptionArea: React.FC<ButtonProps> = ({ children, onClick }) => (
   <Box w={300}>
     <BorderedBox
       borderColor="gray200"
@@ -130,7 +135,7 @@ const AddVoteOptionArea: React.FC<PropsWithChildren> = ({ children }) => (
     >
       {children}
     </BorderedBox>
-    <TextButton>새로운 항목</TextButton>
+    <TextButton onClick={onClick}>새로운 항목</TextButton>
   </Box>
 );
 ModalInner.AddVoteOptionArea = AddVoteOptionArea;
@@ -156,7 +161,7 @@ const VoteChoice: React.FC<PropsWithChildren> = ({ children }) => (
 );
 ModalInner.VoteChoice = VoteChoice;
 
-const TextButton: React.FC<PropsWithChildren> = ({ children }) => (
+const TextButton: React.FC<ButtonProps> = ({ children, onClick }) => (
   <BorderedBox
     borderColor="gray200"
     bg="gray100"
@@ -172,10 +177,20 @@ const TextButton: React.FC<PropsWithChildren> = ({ children }) => (
     justify="space-between"
     dir="row"
   >
-    <Text color="gray500" variant="subtitle">
-      {children}
-    </Text>
-    <Box bg="blue200" round={5} align="center" justify="center" w={20} h={20}>
+    <input
+      type="text"
+      placeholder={children?.toString()}
+      style={{ border: 0 }}
+    />
+    <Box
+      bg="blue200"
+      round={5}
+      align="center"
+      justify="center"
+      w={20}
+      h={20}
+      onClick={onClick}
+    >
       <Text color="blue600" variant="boldtitle2">
         +
       </Text>

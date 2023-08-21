@@ -6,8 +6,6 @@ import { useLocation } from "react-router-dom";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { AdminAgendaUpdate } from "biseo-interface/admin/agenda";
 
-const voteOptions: string[] = ["찬성", "반대", "기권"];
-
 export const EditAgendaModal: React.FC = () => {
   const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
   const location = useLocation();
@@ -61,9 +59,9 @@ export const EditAgendaModal: React.FC = () => {
           </Box>
 
           <ModalInner title="투표 항목" count={1}>
-            <ModalInner.AddVoteOptionArea>
-              {voteOptions.map(opt => (
-                <ModalInner.VoteChoice>{opt}</ModalInner.VoteChoice>
+            <ModalInner.AddVoteOptionArea onClick={() => {}}>
+              {targetAgenda?.choices.map(opt => (
+                <ModalInner.VoteChoice>{opt.name}</ModalInner.VoteChoice>
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>
