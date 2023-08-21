@@ -46,20 +46,25 @@ export const Modal: React.FC<Props> = ({ title, children }) => {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (ref.current) ref.current.showModal();
+    if (ref.current) {
+      ref.current.close();
+      ref.current.showModal();
+    }
   }, []);
 
   return (
     <Container ref={ref}>
-      <Box w="fill" dir="row" align="center" justify="space-between">
-        <Text variant="title1">{title}</Text>
-        <Link to=".." relative="path" replace>
-          <CloseButton>
-            <CloseIcon />
-          </CloseButton>
-        </Link>
+      <Box gap={20}>
+        <Box w="fill" dir="row" align="center" justify="space-between">
+          <Text variant="title1">{title}</Text>
+          <Link to=".." relative="path" replace>
+            <CloseButton>
+              <CloseIcon />
+            </CloseButton>
+          </Link>
+        </Box>
+        <InnerContainer>{children}</InnerContainer>
       </Box>
-      <InnerContainer>{children}</InnerContainer>
     </Container>
   );
 };

@@ -5,18 +5,20 @@ interface Props {
   name: string;
   count: number;
   totalCount: number;
-  userChoice: boolean;
+  w?: number;
+  userChoice?: boolean;
 }
 
 export const OptionVoteResult: React.FC<Props> = ({
   name,
   count,
   totalCount,
-  userChoice,
+  userChoice = true,
+  w = 260,
 }) => {
   return (
     <BorderedBox
-      w={260}
+      w={w}
       h={30}
       bg="white"
       round={5}
@@ -32,7 +34,7 @@ export const OptionVoteResult: React.FC<Props> = ({
       position="relative"
     >
       <Box
-        w={(260 * count) / totalCount}
+        w={(w * count) / totalCount}
         bg={userChoice ? "blue200" : "blue100"}
         h={30}
         z-index={0}
@@ -41,7 +43,7 @@ export const OptionVoteResult: React.FC<Props> = ({
       <Box
         z-index={2}
         position="absolute"
-        w={260}
+        w={w}
         h={30}
         dir="row"
         align="center"

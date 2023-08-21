@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { AdminAgenda } from "./common";
 import { User } from "../../user";
-import { AgendaStatus } from "../../agenda";
+import { AgendaStatus, ChoiceWithResult } from "../../agenda";
 
 /**
  * Created
@@ -43,6 +43,7 @@ export type Deleted = z.infer<typeof Deleted>;
 export const Voted = z.object({
   id: z.number(),
   // choices: z.array(AdminChoice),
+  choices: z.array(ChoiceWithResult),
   voters: z.object({
     voted: z.array(User),
     total: z.array(User),
