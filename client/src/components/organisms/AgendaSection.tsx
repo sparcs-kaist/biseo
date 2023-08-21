@@ -7,7 +7,11 @@ import {
 } from "biseo-interface/agenda";
 
 import { Box } from "@/components/atoms";
-import { OngoingAgendaCard, SectionHeader } from "@/components/molecules";
+import {
+  AgendaEmpty,
+  OngoingAgendaCard,
+  SectionHeader,
+} from "@/components/molecules";
 import { TerminatedAgendaCard } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
 import { PreparingAgendaCard } from "../molecules/PreparingAgendaCard";
@@ -49,13 +53,21 @@ export const AgendaSection: React.FC = () => {
           진행중인 투표
         </SectionHeader>
         <Box dir="column" w="fill" gap={15}>
-          {ongoingAgendaCards}
+          {ongoingAgendaCards.length != 0 ? (
+            ongoingAgendaCards
+          ) : (
+            <AgendaEmpty agendaType="ongoing" />
+          )}
         </Box>
         <SectionHeader count={preparingAgendaCards.length}>
           예정된 투표
         </SectionHeader>
         <Box dir="column" w="fill" gap={15}>
-          {preparingAgendaCards}
+          {preparingAgendaCards.length != 0 ? (
+            preparingAgendaCards
+          ) : (
+            <AgendaEmpty agendaType="preparing" />
+          )}
         </Box>
       </Box>
       <Box dir="column" w={300}>
@@ -63,7 +75,11 @@ export const AgendaSection: React.FC = () => {
           종료된 투표
         </SectionHeader>
         <Box dir="column" w="fill" gap={15}>
-          {terminatedAgendaCards}
+          {terminatedAgendaCards.length != 0 ? (
+            terminatedAgendaCards
+          ) : (
+            <AgendaEmpty agendaType="terminated" />
+          )}
         </Box>
       </Box>
     </Box>
