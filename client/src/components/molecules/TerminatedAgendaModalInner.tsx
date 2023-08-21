@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { BorderedBox, Box, Text, TextArea } from "@/components/atoms";
+import { BorderedBox, Box, Text } from "@/components/atoms";
 
 interface BoxWithTitle extends PropsWithChildren {
   title: string;

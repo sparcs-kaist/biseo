@@ -9,8 +9,7 @@ import {
 } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
-import type { OngoingAgenda } from "biseo-interface/agenda";
-import { AdminAgenda } from "biseo-interface/admin/agenda";
+import type { AdminAgenda } from "biseo-interface/admin/agenda";
 
 const _tags = {
   public: false,

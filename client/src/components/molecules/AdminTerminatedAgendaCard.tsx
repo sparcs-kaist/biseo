@@ -1,9 +1,8 @@
 import { TerminatedAgenda } from "biseo-interface/agenda";
 import { AdminTerminatedAgenda } from "../organisms/AdminTerminatedAgenda";
-import { Box, Card } from "../atoms";
-import { AgendaTag } from "./AgendaTag";
-import { AgendaFoldedText } from "./AgendaFoldedText";
-import { AdminAgenda } from "biseo-interface/admin/agenda";
+import { Box, Card } from "@/components/atoms";
+import { AgendaTag, AgendaFoldedText } from "@/components/molecules";
+import type { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useNavigate } from "react-router-dom";
 
 const _tags = {

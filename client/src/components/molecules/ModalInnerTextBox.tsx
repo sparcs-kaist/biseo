@@ -1,5 +1,5 @@
 import React from "react";
-import { BorderedBox, Box, Text, TextArea } from "../atoms";
+import { BorderedBox, Box, Text } from "@/components/atoms";
 
 interface Props {
   title: string;
