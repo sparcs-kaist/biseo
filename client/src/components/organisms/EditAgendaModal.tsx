@@ -8,6 +8,10 @@ import { AdminAgendaUpdate } from "biseo-interface/admin/agenda";
 
 export const EditAgendaModal: React.FC = () => {
   const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
+  const [titleS, setTitleS] = useState("");
+  const [contentS, setContentS] = useState("");
+  const [resolutionS, setResolutionS] = useState("");
+
   const location = useLocation();
 
   const modalParams = new URLSearchParams(location.search);
@@ -22,6 +26,18 @@ export const EditAgendaModal: React.FC = () => {
   const { updateAgenda } = useAdminAgenda(state => ({
     updateAgenda: state.updateAgenda,
   }));
+  const { deleteAgenda } = useAdminAgenda(state => ({
+    deleteAgenda: state.deleteAgenda,
+  }));
+  const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitleS(e.target.value);
+  };
+  const onChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContentS(e.target.value);
+  };
+  const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setResolutionS(e.target.value);
+  };
 
   const update = (AgendaParam: AdminAgendaUpdate) => {
     targetAgenda &&
@@ -46,13 +62,17 @@ export const EditAgendaModal: React.FC = () => {
               <ModalInner.TextBox></ModalInner.TextBox>
             </ModalInner>
             <ModalInner title="투표 제목">
-              <ModalInner.InputBox>{targetAgenda?.content}</ModalInner.InputBox>
+              <ModalInner.InputBox onClick={onChangeTitle}>
+                {targetAgenda?.title}
+              </ModalInner.InputBox>
             </ModalInner>
             <ModalInner title="투표 설명">
-              <ModalInner.InputBox>{targetAgenda?.content}</ModalInner.InputBox>
+              <ModalInner.InputBox onClick={onChangeContent}>
+                {targetAgenda?.content}
+              </ModalInner.InputBox>
             </ModalInner>
             <ModalInner title="의결 문안">
-              <ModalInner.InputBox>
+              <ModalInner.InputBox onClick={onChangeResolution}>
                 {targetAgenda?.resolution}
               </ModalInner.InputBox>
             </ModalInner>
@@ -108,12 +128,26 @@ export const EditAgendaModal: React.FC = () => {
               </Box>
             </Box>
             <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Button h={38}>
+              <Button
+                h={38}
+                onClick={() =>
+                  updateAgenda({
+                    id: targetAgenda?.id,
+                    title: titleS,
+                    content: contentS,
+                    resolution: resolutionS,
+                    voters: {
+                      total: [],
+                    },
+                    choices: [],
+                  })
+                }
+              >
                 <Text variant="boldtitle3" color="blue600">
                   투표 수정하기
                 </Text>
               </Button>
-              <Button h={38}>
+              <Button h={38} onClick={() => deleteAgenda(targetAgenda?.id)}>
                 <Text variant="boldtitle3" color="blue600">
                   투표 삭제하기
                 </Text>
