@@ -21,7 +21,7 @@ interface Props {
   agenda: TerminatedAgenda;
 }
 
-export const AgendaCard: React.FC<Props> = ({ agenda }) => {
+export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   const [enabled, setEnabled] = useState<boolean>(false);
   const [revealChoice, setRevealChoice] = useState<boolean>(false);
   const switchRevealChoice = (prev: boolean) => {

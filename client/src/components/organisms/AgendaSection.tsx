@@ -1,14 +1,16 @@
 import React from "react";
-import type {
+import {
   Agenda,
   OngoingAgenda,
+  PreparingAgenda,
   TerminatedAgenda,
 } from "biseo-interface/agenda";
 
 import { Box } from "@/components/atoms";
 import { OngoingAgendaCard, SectionHeader } from "@/components/molecules";
-import { AgendaCard } from "@/components/organisms";
+import { TerminatedAgendaCard } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
+import { PreparingAgendaCard } from "../molecules/PreparingAgendaCard";
 
 const isTerminatedAgenda = (agenda: Agenda): agenda is TerminatedAgenda => {
   return agenda.status === "terminated";
@@ -18,17 +20,26 @@ const isOngoingAgenda = (agenda: Agenda): agenda is OngoingAgenda => {
   return agenda.status === "ongoing";
 }; // TODO : move to utils
 
-export const AgendaSection: React.FC = () => {
-  const { ongoingAgendas, terminatedAgendas } = useAgenda(state => ({
-    ongoingAgendas: state.agendas.filter(isOngoingAgenda),
-    terminatedAgendas: state.agendas.filter(isTerminatedAgenda),
-  }));
+const preparingAgenda = (agenda: Agenda): agenda is PreparingAgenda => {
+  return agenda.status === "preparing";
+}; // TODO : move to utils
 
+export const AgendaSection: React.FC = () => {
+  const { ongoingAgendas, terminatedAgendas, preparingAgendas } = useAgenda(
+    state => ({
+      ongoingAgendas: state.agendas.filter(isOngoingAgenda),
+      terminatedAgendas: state.agendas.filter(isTerminatedAgenda),
+      preparingAgendas: state.agendas.filter(preparingAgenda),
+    }),
+  );
   const ongoingAgendaCards = ongoingAgendas.map(agenda => (
     <OngoingAgendaCard key={agenda.id} agenda={agenda} />
   ));
   const terminatedAgendaCards = terminatedAgendas.map(agenda => (
-    <AgendaCard agenda={agenda} />
+    <TerminatedAgendaCard key={agenda.id} agenda={agenda} />
+  ));
+  const preparingAgendaCards = preparingAgendas.map(agenda => (
+    <PreparingAgendaCard agenda={agenda} />
   ));
 
   return (
@@ -39,6 +50,12 @@ export const AgendaSection: React.FC = () => {
         </SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           {ongoingAgendaCards}
+        </Box>
+        <SectionHeader count={preparingAgendaCards.length}>
+          예정된 투표
+        </SectionHeader>
+        <Box dir="column" w="fill" gap={15}>
+          {preparingAgendaCards}
         </Box>
       </Box>
       <Box dir="column" w={300}>
