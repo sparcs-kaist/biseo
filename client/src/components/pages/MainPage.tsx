@@ -18,7 +18,7 @@ export const MainPage: React.FC = () => {
 
   return (
     <Box dir="row" padTop={10} padBottom={30} gap={20}>
-      <AdminAgendaSection />
+      <AgendaSection />
       <ChatSection />
     </Box>
   );
