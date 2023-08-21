@@ -13,6 +13,7 @@ import { AgendaTag } from "@/components/molecules";
 import { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
+
 const _tags = {
   public: false,
   identified: false,

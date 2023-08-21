@@ -21,7 +21,7 @@ export const AdminAgendaPage: React.FC = () => {
           create
         </Link>
         <Link to="edit" replace>
-          edit
+          editS
         </Link>
         <Link to="ongoing" replace>
           ongoing
