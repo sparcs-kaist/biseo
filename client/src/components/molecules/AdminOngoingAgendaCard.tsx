@@ -9,7 +9,7 @@ import {
 } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
-import type { OngoingAgenda } from "biseo-interface/agenda";
+import type { AdminAgenda } from "biseo-interface/admin/agenda";
 
 const _tags = {
   public: false,
@@ -18,7 +18,7 @@ const _tags = {
 };
 
 interface Props {
-  agenda: OngoingAgenda;
+  agenda: AdminAgenda;
 }
 
 export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
@@ -35,9 +35,12 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
           </Text>
         </Box>
         <Box dir="row" w="fill" align="center" justify="space-between">
-          <ProgressBar max={agenda.voters.total} value={agenda.voters.voted} />
+          <ProgressBar
+            max={agenda.voters.total.length}
+            value={agenda.voters.voted.length}
+          />
           <Text variant="option1" color="gray500">
-            투표참여 {agenda.voters.voted}/{agenda.voters.total}
+            투표참여 {agenda.voters.voted.length}/{agenda.voters.total.length}
           </Text>
         </Box>
         <Divider />

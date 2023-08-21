@@ -17,7 +17,7 @@ interface AdminAgendaState {
   remindAgenda: (id: number) => void;
 }
 
-const useAdminAgenda = create<AdminAgendaState>(set => ({
+export const useAdminAgenda = create<AdminAgendaState>(set => ({
   adminAgendas: [],
 
   createAgenda: async agenda => {
