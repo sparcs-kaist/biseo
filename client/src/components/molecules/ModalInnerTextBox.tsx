@@ -7,7 +7,7 @@ interface ModalInnerProps extends PropsWithChildren {
 }
 
 interface ButtonProps extends PropsWithChildren {
-  onClick: () => void;
+  onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface SubComponents {
@@ -67,7 +67,7 @@ const TextBox: React.FC<PropsWithChildren> = ({ children }) => (
 );
 ModalInner.TextBox = TextBox;
 
-const InputBox: React.FC<PropsWithChildren> = ({ children }) => (
+const InputBox: React.FC<ButtonProps> = ({ children, onClick }) => (
   <BorderedBox
     borderColor="gray200"
     bg="gray100"
@@ -84,6 +84,7 @@ const InputBox: React.FC<PropsWithChildren> = ({ children }) => (
       type="text"
       placeholder={children?.toString()}
       style={{ border: 0 }}
+      onChange={onClick}
     />
     {/* <Text color="gray300" variant="subtitle">
       {children}
@@ -181,6 +182,7 @@ const TextButton: React.FC<ButtonProps> = ({ children, onClick }) => (
       type="text"
       placeholder={children?.toString()}
       style={{ border: 0 }}
+      onChange={onClick}
     />
     <Box
       bg="blue200"
