@@ -92,4 +92,5 @@ export type Agenda = z.infer<typeof Agenda>;
  * AgendaStatus
  * some description about agenda status type goes here
  */
-export type AgendaStatus = Agenda["status"];
+export const AgendaStatus = z.enum(["preparing", "ongoing", "terminated"]);
+export type AgendaStatus = z.infer<typeof AgendaStatus>;

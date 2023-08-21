@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  AgendaBase,
-  AgendaStatus,
-  ChoiceWithResult,
-} from "../../agenda";
+import { AgendaBase, AgendaStatus, ChoiceWithResult } from "../../agenda";
 import { User } from "../../user";
 
 /**
