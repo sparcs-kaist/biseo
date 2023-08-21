@@ -18,7 +18,7 @@ const mention = {
 };
 
 interface Props {
-  agendaType: "ongoing" | "termingated" | "preparing";
+  agendaType: "ongoing" | "terminated" | "preparing";
 }
 
 const findMention = (agendaType: string) => {
@@ -27,18 +27,24 @@ const findMention = (agendaType: string) => {
   else return mention.preparing;
 };
 
-export const AdminPreparingAgendaCard: React.FC<Props> = ({ agendaType }) => {
+export const AgendaEmpty: React.FC<Props> = ({ agendaType }) => {
   return (
     <BorderedBox
-      w={300}
+      w="fill"
       h={52}
       borderColor="gray300"
       borderStyle="dashed"
       borderSize={1}
+      round={5}
+      padHorizontal={20}
+      padVertical={18}
+      align="center"
     >
-      <Text variant="subtitle" color="gray500">
-        {findMention(agendaType)} 투표가 없습니다.
-      </Text>
+      <Box h={16} align="center">
+        <Text variant="subtitle" color="gray500">
+          {findMention(agendaType)} 투표가 없습니다.
+        </Text>
+      </Box>
     </BorderedBox>
   );
 };
