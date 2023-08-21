@@ -7,7 +7,7 @@ interface AdminUserState {
   retrieveAll: () => void;
 }
 
-export const useAdminAgenda = create<AdminUserState>(set => ({
+export const useAdminUser = create<AdminUserState>(set => ({
   adminUsers: [],
 
   retrieveAll: async () => {
