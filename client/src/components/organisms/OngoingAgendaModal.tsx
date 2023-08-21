@@ -7,8 +7,6 @@ import { ParticipantBar } from "../molecules/ParticipantBar";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
 
-const voteOptions: string[] = ["찬성!", "찬성?", "찬성.."];
-
 export const OngoingAgendaModal: React.FC = () => {
   const location = useLocation();
 

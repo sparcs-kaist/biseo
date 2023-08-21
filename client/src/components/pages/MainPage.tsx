@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Box } from "@/components/atoms";
 import {
-  AdminAgendaSection,
   AgendaSection,
   ChatSection,
 } from "@/components/organisms";
@@ -18,7 +17,7 @@ export const MainPage: React.FC = () => {
 
   return (
     <Box dir="row" padTop={10} padBottom={30} gap={20}>
-      <AdminAgendaSection />
+      <AgendaSection />
       <ChatSection />
     </Box>
   );
