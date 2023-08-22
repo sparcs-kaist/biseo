@@ -1,10 +1,11 @@
 import React from "react";
 import { PlusIcon } from "@/assets";
-import { Box, NewAddButton, Text } from "@/components/atoms";
+import { Box, Text } from "@/components/atoms";
 import {
   SectionHeader,
   UserTagCards,
   AgendaTemplateCards,
+  AddButton,
 } from "@/components/molecules";
 
 export const AdminUserSection: React.FC = () => {
@@ -14,11 +15,7 @@ export const AdminUserSection: React.FC = () => {
         <SectionHeader count={3}>투표 템플릿</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           <Box dir="column" w="fill" gap={15}>
-            <NewAddButton>
-              <Text color="gray500" variant="body">
-                <PlusIcon></PlusIcon> 새로운 템플릿
-              </Text>
-            </NewAddButton>
+            <AddButton content="새로운 템플릿"/>
           </Box>
           <AgendaTemplateCards />
         </Box>
@@ -27,11 +24,7 @@ export const AdminUserSection: React.FC = () => {
         <SectionHeader count={4}>유저 태그</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           <Box dir="column" w="fill" gap={15}>
-            <NewAddButton>
-              <Text color="gray500" variant="body">
-                <PlusIcon></PlusIcon> 새로운 태그
-              </Text>
-            </NewAddButton>
+            <AddButton content="새로운 태그"/>
           </Box>
           <UserTagCards />
           <UserTagCards />

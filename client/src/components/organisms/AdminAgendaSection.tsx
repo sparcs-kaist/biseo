@@ -3,11 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
 import { PlusIcon } from "@/assets";
 
-import { Box, Button, NewAddButton, Text } from "@/components/atoms";
+import { Box, Button, Text } from "@/components/atoms";
 import {
   AdminOngoingAgendaCard,
   AdminPreparingAgendaCard,
   SectionHeader,
+  AddButton,
 } from "@/components/molecules";
 import { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
@@ -59,11 +60,7 @@ export const AdminAgendaSection: React.FC = () => {
 
         <Box dir="column" w="fill" gap={15}>
           <Box dir="column" w="fill" gap={15}>
-            <NewAddButton onClick={openModal}>
-              <Text color="gray500" variant="body">
-                <PlusIcon></PlusIcon> 새로운 투표
-              </Text>
-            </NewAddButton>
+            <AddButton content="새로운 투표" onClick={openModal}/>
           </Box>
           {preparingAgendaCards}
         </Box>

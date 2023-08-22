@@ -26,3 +26,4 @@ export * from "./logoutButton";
 export * from "./AgendaTemplateCards";
 export * from "./UserTagCards";
 export * from "./AdminTag";
+export * from "./AddButton";
