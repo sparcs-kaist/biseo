@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-export const NewAgendaButton = styled.div`
+export const NewAddButton = styled.div`
   width: 100%;
   height: 40px;
   padding: 0px 15px;
