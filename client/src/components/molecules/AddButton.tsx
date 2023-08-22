@@ -6,8 +6,6 @@ interface Props {
   content: string;
   onClick?: () => void;
 }
-//when you click the button, it will go to the other page
-
 
 export const AddButton: React.FC<Props> = ({ content, onClick }) => (
     <NewAddButton onClick={onClick}>
