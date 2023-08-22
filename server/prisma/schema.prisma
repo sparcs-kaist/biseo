@@ -32,6 +32,7 @@ model User {
   chats       Chat[]
   choices     UserChoice[]
   agendas     UserAgendaVotable[]
+  tags        UserTag[]
 
   @@map("user")
 }
@@ -82,4 +83,20 @@ enum ChatType {
   notice
 
   @@map("chat_type")
+}
+
+model UserTag {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int    @map("user_id")
+  type     UserTagType
+
+  @@map("user_tag")
+}
+
+enum UserTagType {
+  regular
+  associate
+
+  @@map("user_tag_type")
 }
