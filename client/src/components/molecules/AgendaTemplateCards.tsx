@@ -11,7 +11,7 @@ export const AgendaTemplateCards: React.FC = () => {
   return (
     <Card round={5}>
       <Box gap={8} w="fill">
-        <AdminTag tags={_tags} options={3} />
+        <AdminTag tags={_tags} suffix={3} />
         <Box gap={11}>
           <Text variant="title2" color="gray600">
             😎 정회원 승급 심사 템플릿

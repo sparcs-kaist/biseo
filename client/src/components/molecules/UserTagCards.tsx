@@ -11,11 +11,7 @@ export const UserTagCards: React.FC = () => {
     <Card primary={false} round={5}>
       <Box gap={8}>
         <Box gap={8} dir="row">
-          <AdminTag
-            tags={{
-              user: _tags.user,
-            }}
-          />
+          <AdminTag tags={_tags} suffix={23} />
           <UserTag>정회원</UserTag>
         </Box>
         <Box w={340}>

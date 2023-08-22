@@ -25,7 +25,7 @@ const tagNames: Record<TagTypes, string> = {
   identified: "기명",
   anonymous: "무기명",
   votable: "투표 가능",
-  user: "태그 대상 23",
+  user: "태그 대상",
   template: "투표항목",
 };
 
@@ -56,14 +56,14 @@ const TagInner = styled.div<{
 ]);
 
 interface Props {
-  options?: number;
+  suffix?: number;
   type: TagTypes;
 }
 
-export const Tag: React.FC<Props> = ({ options, type }) => {
+export const Tag: React.FC<Props> = ({ suffix, type }) => {
   return (
     <TagInner type={type}>
-      {tagNames[type]} {options}
+      {tagNames[type]} {suffix}
     </TagInner>
   );
 };

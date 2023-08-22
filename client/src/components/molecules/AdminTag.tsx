@@ -7,15 +7,15 @@ interface Tags {
 }
 
 interface Props {
-  options?: number;
+  suffix?: number;
   tags: Tags;
 }
 
-export const AdminTag: React.FC<Props> = ({ options, tags }) => {
+export const AdminTag: React.FC<Props> = ({ suffix, tags }) => {
   return (
     <Box dir="row" gap={8} align="center">
-      {tags.user && <Tag type="user" />}
-      {tags.template && <Tag type="template" options={options} />}
+      {tags.user && <Tag type="user" suffix={suffix}/>}
+      {tags.template && <Tag type="template" suffix={suffix} />}
     </Box>
   );
 };
