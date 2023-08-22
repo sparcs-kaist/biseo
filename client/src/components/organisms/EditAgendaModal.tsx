@@ -12,6 +12,7 @@ export const EditAgendaModal: React.FC = () => {
   const [contentS, setContentS] = useState("");
   const [resolutionS, setResolutionS] = useState("");
 
+  const [newchoiceS, setNewchoiceS] = useState("");
   const location = useLocation();
 
   const modalParams = new URLSearchParams(location.search);
@@ -22,6 +23,11 @@ export const EditAgendaModal: React.FC = () => {
       agenda => agenda.id === agendaId && agenda.status === "preparing",
     ),
   }));
+  const [choicesS, setChoicesS] = useState(
+    targetAgenda!.choices.map(choice => {
+      return choice.name;
+    }),
+  );
 
   const { updateAgenda } = useAdminAgenda(state => ({
     updateAgenda: state.updateAgenda,
@@ -37,6 +43,12 @@ export const EditAgendaModal: React.FC = () => {
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResolutionS(e.target.value);
+  };
+  const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewchoiceS(e.target.value);
+  };
+  const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChoicesS([...choicesS!, newchoiceS]);
   };
 
   const update = (AgendaParam: AdminAgendaUpdate) => {
@@ -79,9 +91,12 @@ export const EditAgendaModal: React.FC = () => {
           </Box>
 
           <ModalInner title="투표 항목" count={1}>
-            <ModalInner.AddVoteOptionArea onClick={() => {}}>
-              {targetAgenda?.choices.map(opt => (
-                <ModalInner.VoteChoice>{opt.name}</ModalInner.VoteChoice>
+            <ModalInner.AddVoteOptionArea
+              onClick={onChangeChoice}
+              onSubmit={onSubmitChoice}
+            >
+              {choicesS.map(opt => (
+                <ModalInner.VoteChoice>{opt}</ModalInner.VoteChoice>
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>
@@ -132,14 +147,14 @@ export const EditAgendaModal: React.FC = () => {
                 h={38}
                 onClick={() =>
                   updateAgenda({
-                    id: targetAgenda?.id,
+                    id: targetAgenda!.id,
                     title: titleS,
                     content: contentS,
                     resolution: resolutionS,
                     voters: {
                       total: [],
                     },
-                    choices: [],
+                    choices: choicesS,
                   })
                 }
               >
@@ -147,7 +162,7 @@ export const EditAgendaModal: React.FC = () => {
                   투표 수정하기
                 </Text>
               </Button>
-              <Button h={38} onClick={() => deleteAgenda(targetAgenda?.id)}>
+              <Button h={38} onClick={() => deleteAgenda(targetAgenda!.id)}>
                 <Text variant="boldtitle3" color="blue600">
                   투표 삭제하기
                 </Text>

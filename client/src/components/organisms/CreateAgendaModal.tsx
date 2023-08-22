@@ -13,6 +13,8 @@ export const CreateAgendaModal: React.FC = () => {
   const [titleS, setTitleS] = useState("");
   const [contentS, setContentS] = useState("");
   const [resolutionS, setResolutionS] = useState("");
+  const [choicesS, setChoicesS] = useState([""]);
+  const [newchoiceS, setNewchoiceS] = useState("");
 
   const { createAgenda } = useAdminAgenda(state => ({
     createAgenda: state.createAgenda,
@@ -26,6 +28,13 @@ export const CreateAgendaModal: React.FC = () => {
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResolutionS(e.target.value);
+  };
+  const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewchoiceS(e.target.value);
+  };
+  const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChoicesS([...choicesS, newchoiceS]);
+    setNewchoiceS("");
   };
 
   return (
@@ -53,8 +62,11 @@ export const CreateAgendaModal: React.FC = () => {
             </ModalInner>
 
             <ModalInner title="투표 항목" count={1}>
-              <ModalInner.AddVoteOptionArea onClick={() => {}}>
-                {voteOptions.map(opt => (
+              <ModalInner.AddVoteOptionArea
+                onClick={onChangeChoice}
+                onSubmit={onSubmitChoice}
+              >
+                {choicesS.map(opt => (
                   <ModalInner.VoteChoice>{opt}</ModalInner.VoteChoice>
                 ))}
               </ModalInner.AddVoteOptionArea>
@@ -113,7 +125,7 @@ export const CreateAgendaModal: React.FC = () => {
                     voters: {
                       total: [],
                     },
-                    choices: [],
+                    choices: choicesS.filter(word => word != ""),
                   })
                 }
               >

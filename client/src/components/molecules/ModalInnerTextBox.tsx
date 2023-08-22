@@ -10,6 +10,11 @@ interface ButtonProps extends PropsWithChildren {
   onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+interface SubmitProps extends PropsWithChildren {
+  onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 interface SubComponents {
   TextBox: typeof TextBox;
   VoteOption: typeof VoteOption;
@@ -119,7 +124,11 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children }) => (
 );
 ModalInner.VoteOption = VoteOption;
 
-const AddVoteOptionArea: React.FC<ButtonProps> = ({ children, onClick }) => (
+const AddVoteOptionArea: React.FC<SubmitProps> = ({
+  children,
+  onClick,
+  onSubmit,
+}) => (
   <Box w={300}>
     <BorderedBox
       borderColor="gray200"
@@ -136,7 +145,9 @@ const AddVoteOptionArea: React.FC<ButtonProps> = ({ children, onClick }) => (
     >
       {children}
     </BorderedBox>
-    <TextButton onClick={onClick}>새로운 항목</TextButton>
+    <TextButton onClick={onClick} onSubmit={onSubmit}>
+      새로운 항목
+    </TextButton>
   </Box>
 );
 ModalInner.AddVoteOptionArea = AddVoteOptionArea;
@@ -162,7 +173,7 @@ const VoteChoice: React.FC<PropsWithChildren> = ({ children }) => (
 );
 ModalInner.VoteChoice = VoteChoice;
 
-const TextButton: React.FC<ButtonProps> = ({ children, onClick }) => (
+const TextButton: React.FC<SubmitProps> = ({ children, onClick, onSubmit }) => (
   <BorderedBox
     borderColor="gray200"
     bg="gray100"
@@ -191,7 +202,7 @@ const TextButton: React.FC<ButtonProps> = ({ children, onClick }) => (
       justify="center"
       w={20}
       h={20}
-      onClick={onClick}
+      onClick={onSubmit}
     >
       <Text color="blue600" variant="boldtitle2">
         +
