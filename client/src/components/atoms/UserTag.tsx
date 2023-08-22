@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import type { UserTag as UserTagType } from "biseo-interface/admin/user";
+import type { UserTag as UserTagType } from "biseo-interface/user";
 import styled from "@emotion/styled";
 
 interface Props extends PropsWithChildren {
