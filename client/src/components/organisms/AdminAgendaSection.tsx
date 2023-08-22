@@ -9,42 +9,32 @@ import {
   AddButton,
   AdminTerminatedAgendaCard,
 } from "@/components/molecules";
-import type { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
-
-const isOngoingAgenda = (agenda: AdminAgenda) => {
-  return agenda.status === "ongoing";
-};
-
-const isPreparingAgenda = (agenda: AdminAgenda) => {
-  return agenda.status === "preparing";
-};
-const isTerminatedAgenda = (agenda: AdminAgenda) => {
-  return agenda.status === "terminated";
-};
+import {
+  isOngoingAgenda,
+  isPreparingAgenda,
+  isTerminatedAgenda,
+} from "@/utils/agenda";
 
 export const AdminAgendaSection: React.FC = () => {
   const navigate = useNavigate();
   const openModal = () => navigate(`create`);
 
-  const { preparingAgendas } = useAdminAgenda(state => ({
-    preparingAgendas: state.adminAgendas.filter(isPreparingAgenda),
-  }));
-  const { ongoingAgendas } = useAdminAgenda(state => ({
-    ongoingAgendas: state.adminAgendas.filter(isOngoingAgenda),
-  }));
-  const { terminatedAgendas } = useAdminAgenda(state => ({
-    terminatedAgendas: state.adminAgendas.filter(isTerminatedAgenda),
-  }));
+  const { preparingAgendas, ongoingAgendas, terminatedAgendas } =
+    useAdminAgenda(state => ({
+      ongoingAgendas: state.adminAgendas.filter(isOngoingAgenda),
+      terminatedAgendas: state.adminAgendas.filter(isTerminatedAgenda),
+      preparingAgendas: state.adminAgendas.filter(isPreparingAgenda),
+    }));
 
-  const ongoingAgendaCards = ongoingAgendas.map(agenda => (
-    <AdminOngoingAgendaCard agenda={agenda} />
-  ));
   const preparingAgendaCards = preparingAgendas.map(agenda => (
-    <AdminPreparingAgendaCard agenda={agenda} />
+    <AdminPreparingAgendaCard key={agenda.id} agenda={agenda} />
+  ));
+  const ongoingAgendaCards = ongoingAgendas.map(agenda => (
+    <AdminOngoingAgendaCard key={agenda.id} agenda={agenda} />
   ));
   const terminatedAgendaCards = terminatedAgendas.map(agenda => (
-    <AdminTerminatedAgendaCard agenda={agenda} />
+    <AdminTerminatedAgendaCard key={agenda.id} agenda={agenda} />
   ));
 
   return (
@@ -53,7 +43,6 @@ export const AdminAgendaSection: React.FC = () => {
         <SectionHeader count={preparingAgendaCards.length}>
           예정된 투표
         </SectionHeader>
-
         <Box dir="column" w="fill" gap={15}>
           <Box dir="column" w="fill" gap={15}>
             <AddButton content="새로운 투표" onClick={openModal} />
@@ -77,7 +66,6 @@ export const AdminAgendaSection: React.FC = () => {
           {terminatedAgendaCards}
         </Box>
       </Box>
-      {/* <EditAgendaModal /> */}
     </Box>
   );
 };

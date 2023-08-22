@@ -1,11 +1,4 @@
 import React from "react";
-import type {
-  Agenda,
-  OngoingAgenda,
-  PreparingAgenda,
-  TerminatedAgenda,
-} from "biseo-interface/agenda";
-
 import { Box } from "@/components/atoms";
 import {
   AgendaEmpty,
@@ -15,35 +8,29 @@ import {
 } from "@/components/molecules";
 import { TerminatedAgendaCard } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
-
-const isTerminatedAgenda = (agenda: Agenda): agenda is TerminatedAgenda => {
-  return agenda.status === "terminated";
-};
-
-const isOngoingAgenda = (agenda: Agenda): agenda is OngoingAgenda => {
-  return agenda.status === "ongoing";
-}; // TODO : move to utils
-
-const preparingAgenda = (agenda: Agenda): agenda is PreparingAgenda => {
-  return agenda.status === "preparing";
-}; // TODO : move to utils
+import {
+  isOngoingAgenda,
+  isTerminatedAgenda,
+  isPreparingAgenda,
+} from "@/utils/agenda";
 
 export const AgendaSection: React.FC = () => {
-  const { ongoingAgendas, terminatedAgendas, preparingAgendas } = useAgenda(
+  const { preparingAgendas, ongoingAgendas, terminatedAgendas } = useAgenda(
     state => ({
+      preparingAgendas: state.agendas.filter(isPreparingAgenda),
       ongoingAgendas: state.agendas.filter(isOngoingAgenda),
       terminatedAgendas: state.agendas.filter(isTerminatedAgenda),
-      preparingAgendas: state.agendas.filter(preparingAgenda),
     }),
   );
+
+  const preparingAgendaCards = preparingAgendas.map(agenda => (
+    <PreparingAgendaCard key={agenda.id} agenda={agenda} />
+  ));
   const ongoingAgendaCards = ongoingAgendas.map(agenda => (
     <OngoingAgendaCard key={agenda.id} agenda={agenda} />
   ));
   const terminatedAgendaCards = terminatedAgendas.map(agenda => (
     <TerminatedAgendaCard key={agenda.id} agenda={agenda} />
-  ));
-  const preparingAgendaCards = preparingAgendas.map(agenda => (
-    <PreparingAgendaCard agenda={agenda} />
   ));
 
   return (

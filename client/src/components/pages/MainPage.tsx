@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
 import { Box } from "@/components/atoms";
-import {
-  AdminAgendaSection,
-  AgendaSection,
-  ChatSection,
-} from "@/components/organisms";
+import { AgendaSection, ChatSection } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
 
 export const MainPage: React.FC = () => {
