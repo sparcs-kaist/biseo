@@ -1,20 +1,16 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
-import { PlusIcon } from "@/assets";
+import { useNavigate } from "react-router-dom";
 
-import { Box, Button, Text } from "@/components/atoms";
+import { Box } from "@/components/atoms";
 import {
   AdminOngoingAgendaCard,
   AdminPreparingAgendaCard,
   SectionHeader,
   AddButton,
+  AdminTerminatedAgendaCard,
 } from "@/components/molecules";
-import { AdminAgenda } from "biseo-interface/admin/agenda";
+import type { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { CreateAgendaModal } from "./CreateAgendaModal";
-import { EditAgendaModal } from "./EditAgendaModal";
-import { AdminTerminatedAgendaCard } from "@/components/molecules/AdminTerminatedAgendaCard";
 
 const isOngoingAgenda = (agenda: AdminAgenda) => {
   return agenda.status === "ongoing";
@@ -60,7 +56,7 @@ export const AdminAgendaSection: React.FC = () => {
 
         <Box dir="column" w="fill" gap={15}>
           <Box dir="column" w="fill" gap={15}>
-            <AddButton content="새로운 투표" onClick={openModal}/>
+            <AddButton content="새로운 투표" onClick={openModal} />
           </Box>
           {preparingAgendaCards}
         </Box>

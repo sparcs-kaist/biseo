@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@/components/atoms";
-import { AdminUserSection } from "../organisms/AdminUserSection";
+import { AdminUserSection } from "@/components/organisms";
 
 export const AdminSettingPage: React.FC = () => (
   <Box dir="row" padTop={20} padBottom={30} gap={20}>

@@ -1,10 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { AdminAgendaTags, Modal } from "@/components/molecules";
+import { AdminAgendaTags, Modal, ParticipantBar, ModalInner } from "@/components/molecules";
 import { Button, Box, Text } from "@/components/atoms";
-import { ModalInner } from "../molecules/ModalInnerTextBox";
-import { ParticipantBar } from "../molecules/ParticipantBar";
-
 import { useAdminAgenda } from "@/services/admin-agenda";
 
 export const OngoingAgendaModal: React.FC = () => {

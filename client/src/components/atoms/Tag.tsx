@@ -60,10 +60,8 @@ interface Props {
   type: TagTypes;
 }
 
-export const Tag: React.FC<Props> = ({ suffix, type }) => {
-  return (
-    <TagInner type={type}>
-      {tagNames[type]} {suffix}
-    </TagInner>
-  );
-};
+export const Tag: React.FC<Props> = ({ suffix, type }) => (
+  <TagInner type={type}>
+    {tagNames[type]} {suffix}
+  </TagInner>
+);

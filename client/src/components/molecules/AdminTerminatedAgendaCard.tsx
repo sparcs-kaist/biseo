@@ -1,5 +1,3 @@
-import { TerminatedAgenda } from "biseo-interface/agenda";
-import { AdminTerminatedAgenda } from "../organisms/AdminTerminatedAgenda";
 import { Box, Card } from "@/components/atoms";
 import { AgendaTag, AgendaFoldedText } from "@/components/molecules";
 import type { AdminAgenda } from "biseo-interface/admin/agenda";

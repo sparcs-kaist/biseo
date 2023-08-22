@@ -11,11 +11,9 @@ interface Props {
   tags: Tags;
 }
 
-export const AdminTag: React.FC<Props> = ({ suffix, tags }) => {
-  return (
-    <Box dir="row" gap={8} align="center">
-      {tags.user && <Tag type="user" suffix={suffix}/>}
-      {tags.template && <Tag type="template" suffix={suffix} />}
-    </Box>
-  );
-};
+export const AdminTag: React.FC<Props> = ({ suffix, tags }) => (
+  <Box dir="row" gap={8} align="center">
+    {tags.user && <Tag type="user" suffix={suffix} />}
+    {tags.template && <Tag type="template" suffix={suffix} />}
+  </Box>
+);

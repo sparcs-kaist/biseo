@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, Card, Divider, Button } from "@/components/atoms";
+import { Box, Text, Card, Divider } from "@/components/atoms";
 import { AdminTag } from "@/components/molecules";
 
 const _tags = {

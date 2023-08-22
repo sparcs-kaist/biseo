@@ -1,5 +1,5 @@
 import React from "react";
-import {
+import type {
   Agenda,
   OngoingAgenda,
   PreparingAgenda,
@@ -11,10 +11,10 @@ import {
   AgendaEmpty,
   OngoingAgendaCard,
   SectionHeader,
+  PreparingAgendaCard,
 } from "@/components/molecules";
 import { TerminatedAgendaCard } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
-import { PreparingAgendaCard } from "../molecules/PreparingAgendaCard";
 
 const isTerminatedAgenda = (agenda: Agenda): agenda is TerminatedAgenda => {
   return agenda.status === "terminated";
