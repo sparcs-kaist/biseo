@@ -20,9 +20,6 @@ const Container = styled.div`
   border-radius: 5px;
 `;
 
-const convertToTagName = (tag: UserTagType) =>
-  tag.type === "regular" ? "정회원" : tag.type === "associate" ? "준회원" : "";
-
 export const UserTag: React.FC<Props> = ({ tag, children }) => (
-  <Container>{tag ? convertToTagName(tag) : children}</Container>
+  <Container>{tag ? tag.title : children}</Container>
 );

@@ -68,7 +68,7 @@ export const UserTable: React.FC<Props> = ({
             <Box dir="row" gap={5}>
               {user.isAdmin ? <UserTag>어드민</UserTag> : <></>}
               {user.tags.map((tag, id) => (
-                <UserTag tag={tag} />
+                <UserTag tag={tag.tag} />
               ))}
             </Box>
           </Cell>
