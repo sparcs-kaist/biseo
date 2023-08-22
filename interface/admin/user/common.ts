@@ -7,6 +7,10 @@ import { User } from "../../user";
  */
 export const AdminUser = User.extend({
   isAdmin: z.boolean(),
-  /* TODO: Add tags */
+  tags: z.array(
+    z.object({
+      type: z.enum(["regular", "associate"]),
+    }),
+  ),
 });
 export type AdminUser = z.infer<typeof AdminUser>;

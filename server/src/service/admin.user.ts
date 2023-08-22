@@ -8,6 +8,7 @@ export const retrieveAll = async (): Promise<schema.AdminUser[]> => {
       username: true,
       displayName: true,
       isAdmin: true,
+      tags: true,
     },
   });
 };
