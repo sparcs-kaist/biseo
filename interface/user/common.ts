@@ -25,6 +25,8 @@ export type ChatUser = z.infer<typeof ChatUser>;
  * some description about user tag type goes here
  */
 export const UserTag = z.object({
-  type: z.enum(["regular", "associate"]),
+  id: z.number(),
+  title: z.string(),
+  description: z.string(),
 });
 export type UserTag = z.infer<typeof UserTag>;
