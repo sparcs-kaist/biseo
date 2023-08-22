@@ -23,3 +23,5 @@ export * from "./ParticipantBar";
 export * from "./TerminatedAgendaModalInner";
 export * from "./AgendaEmpty";
 export * from "./logoutButton";
+export * from "./AgendaTemplateCards";
+export * from "./UserTagCards";
