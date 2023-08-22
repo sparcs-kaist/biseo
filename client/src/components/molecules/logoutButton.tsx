@@ -5,18 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   displayName: string;
+  onClick: () => void;
 }
 
-export const LogOutButton: React.FC<Props> = ({ displayName }) => {
-  const navigate = useNavigate();
-  const logout = () => {
-    logoutAuth();
-    console.log("hek");
-    //navigate("/login");
-  };
-  const { logoutAuth } = useAuth(state => ({
-    logoutAuth: state.logout,
-  }));
+export const LogOutButton: React.FC<Props> = ({ displayName, onClick }) => {
   return (
     <Box
       bg="blue200"
@@ -26,7 +18,7 @@ export const LogOutButton: React.FC<Props> = ({ displayName }) => {
       padHorizontal={10}
       justify="center"
       round={5}
-      onClick={logout}
+      onClick={onClick}
     >
       <Text variant="boldtitle3" color="blue600">
         {displayName}
