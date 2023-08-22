@@ -1,12 +1,9 @@
 import React from "react";
-import type { Agenda, OngoingAgenda } from "biseo-interface/agenda";
 import { PlusIcon } from "@/assets";
 import {
   Box,
-  Button,
   NewAgendaButton,
   Text,
-  UserTag,
 } from "@/components/atoms";
 import {
   SectionHeader,

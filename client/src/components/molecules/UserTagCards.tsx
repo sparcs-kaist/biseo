@@ -1,7 +1,5 @@
 import { Box, Card, Text } from "@/components/atoms";
-import { AgendaTag, AgendaFoldedText } from "@/components/molecules";
-import type { AdminAgenda } from "biseo-interface/admin/agenda";
-import { useNavigate } from "react-router-dom";
+import { AgendaTag } from "@/components/molecules";
 
 const _tags = {
   public: false,

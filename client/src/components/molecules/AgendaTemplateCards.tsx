@@ -3,12 +3,10 @@ import { Box, Text, Card, Divider, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
 const _tags = {
-  public: true,
-  identified: true,
-  votable: true,
+  public: false,
+  identified: false,
+  votable: false,
 };
-
-
 
 export const AgendaTemplateCards: React.FC = () => {
   return (
