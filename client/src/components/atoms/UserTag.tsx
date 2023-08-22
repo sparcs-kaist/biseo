@@ -13,7 +13,6 @@ const Container = styled.div`
   background-color: ${props => props.theme.colors.white};
   border: solid 1px ${props => props.theme.colors.gray200};
   border-radius: 5px;
-  padding: 3px 6px;
 `;
 
 const convertToTagName = (tag: UserTagType) =>

@@ -10,7 +10,7 @@ import {
 } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
-import { AdminAgenda } from "biseo-interface/admin/agenda";
+import type { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
 

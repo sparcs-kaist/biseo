@@ -10,7 +10,14 @@ const colors = (color: Color, bg: Color) =>
     backgroundColor: theme.colors[bg],
   });
 
-type TagTypes = "public" | "private" | "identified" | "anonymous" | "votable";
+type TagTypes =
+  | "public"
+  | "private"
+  | "identified"
+  | "anonymous"
+  | "votable"
+  | "user"
+  | "template";
 
 const tagNames: Record<TagTypes, string> = {
   public: "공개",
@@ -18,6 +25,8 @@ const tagNames: Record<TagTypes, string> = {
   identified: "기명",
   anonymous: "무기명",
   votable: "투표 가능",
+  user: "태그 대상",
+  template: "투표항목",
 };
 
 const tagStyles: Record<TagTypes, SerializedStyles> = {
@@ -26,6 +35,8 @@ const tagStyles: Record<TagTypes, SerializedStyles> = {
   identified: colors("green600", "green200"),
   anonymous: colors("purple600", "purple200"),
   votable: colors("blue600", "blue200"),
+  user: colors("purple600", "purple200"),
+  template: colors("orange600", "orange200"),
 };
 
 const TagInner = styled.div<{
@@ -45,9 +56,12 @@ const TagInner = styled.div<{
 ]);
 
 interface Props {
+  suffix?: number;
   type: TagTypes;
 }
 
-export const Tag: React.FC<Props> = ({ type }) => {
-  return <TagInner type={type}>{tagNames[type]}</TagInner>;
-};
+export const Tag: React.FC<Props> = ({ suffix, type }) => (
+  <TagInner type={type}>
+    {tagNames[type]} {suffix}
+  </TagInner>
+);
