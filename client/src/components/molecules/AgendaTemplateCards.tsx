@@ -1,18 +1,17 @@
 import React from "react";
 import { Box, Text, Card, Divider, Button } from "@/components/atoms";
-import { AgendaTag } from "@/components/molecules";
+import { AdminTag } from "@/components/molecules";
 
 const _tags = {
-  public: false,
-  identified: false,
-  votable: false,
+  template: true,
+  user: false,
 };
 
 export const AgendaTemplateCards: React.FC = () => {
   return (
     <Card round={5}>
       <Box gap={8} w="fill">
-        <AgendaTag tags={_tags} admin />
+        <AdminTag tags={_tags} options={3} />
         <Box gap={11}>
           <Text variant="title2" color="gray600">
             😎 정회원 승급 심사 템플릿

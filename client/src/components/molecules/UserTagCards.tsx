@@ -1,24 +1,22 @@
-import { Box, Card, Text } from "@/components/atoms";
-import { AgendaTag } from "@/components/molecules";
+import { Box, Card, Text, UserTag } from "@/components/atoms";
+import { AdminTag } from "@/components/molecules";
 
 const _tags = {
-  public: false,
-  identified: false,
-  votable: false,
+  user: true,
+  template: false,
 };
 
 export const UserTagCards: React.FC = () => {
   return (
     <Card primary={false} round={5}>
       <Box gap={8}>
-        <Box gap={8}>
-          <AgendaTag
+        <Box gap={8} dir="row">
+          <AdminTag
             tags={{
-              public: _tags.public,
-              identified: _tags.identified,
-              votable: _tags.votable,
+              user: _tags.user,
             }}
           />
+          <UserTag>정회원</UserTag>
         </Box>
         <Box w={340}>
           <Text variant="title2" color="gray600">
