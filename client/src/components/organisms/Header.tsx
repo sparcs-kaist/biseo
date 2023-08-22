@@ -4,6 +4,7 @@ import { LogoIcon } from "@/assets";
 import { Box } from "@/components/atoms";
 import { HeaderItem, LogOutButton } from "@/components/molecules";
 import { useAuth } from "@/services/auth";
+import { useNavigate } from "react-router-dom";
 
 const adminPathList = [
   { name: "유저 모드", path: "" },
@@ -23,9 +24,18 @@ const Container = styled.header`
 `;
 
 export const Header: React.FC = () => {
-  const { displayName } = useAuth(state => ({
+  const { displayName, logout } = useAuth(state => ({
     displayName: state.userInfo?.displayName,
+    logout: state.logout,
   }));
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/", { replace: true });
+  };
+
   return (
     <Container>
       <Box h="fill" dir="row" align="center">
@@ -47,6 +57,7 @@ export const Header: React.FC = () => {
       </Box>
       <LogOutButton
         displayName={displayName == undefined ? "SPARCS ANON" : displayName}
+        onClick={() => handleLogout()}
       />
     </Container>
   );
