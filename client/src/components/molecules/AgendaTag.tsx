@@ -12,12 +12,10 @@ interface Props {
   tags: Tags;
 }
 
-export const AgendaTag: React.FC<Props> = ({ admin, tags }) => {
-  return (
-    <Box dir="row" gap={8} align="center">
-      <Tag type={tags.public ? "public" : "private"} />
-      <Tag type={tags.identified ? "identified" : "anonymous"} />
-      {tags.votable && !admin && <Tag type="votable" />}
-    </Box>
-  );
-};
+export const AgendaTag: React.FC<Props> = ({ admin, tags }) => (
+  <Box dir="row" gap={8} align="center">
+    <Tag type={tags.public ? "public" : "private"} />
+    <Tag type={tags.identified ? "identified" : "anonymous"} />
+    {tags.votable && !admin && <Tag type="votable" />}
+  </Box>
+);
