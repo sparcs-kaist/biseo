@@ -1,11 +1,12 @@
+import React, { PropsWithChildren } from "react";
+import type { UserTag as UserTagType } from "biseo-interface/admin/user";
 import styled from "@emotion/styled";
 
-export const UserTag = styled.div`
-  display: flex;
-  height: 18px;
-  padding: 3px 6px;
-  justify-content: center;
-  align-items: center;
+interface Props extends PropsWithChildren {
+  tag?: UserTagType;
+}
+
+const Container = styled.div`
   font-size: 9px;
   font-weight: 500;
   color: ${props => props.theme.colors.gray500};
@@ -13,3 +14,10 @@ export const UserTag = styled.div`
   border: solid 1px ${props => props.theme.colors.gray200};
   border-radius: 5px;
 `;
+
+const convertToTagName = (tag: UserTagType) =>
+  tag.type === "regular" ? "정회원" : tag.type === "associate" ? "준회원" : "";
+
+export const UserTag: React.FC<Props> = ({ tag, children }) => (
+  <Container>{tag ? convertToTagName(tag) : children}</Container>
+);
