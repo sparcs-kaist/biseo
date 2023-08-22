@@ -6,6 +6,7 @@ import {
   ChatSection,
 } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
+import { SelectBox } from "@/components/atoms/SelectBox";
 
 export const MainPage: React.FC = () => {
   const { retrieveAgendas } = useAgenda(state => ({
@@ -18,8 +19,9 @@ export const MainPage: React.FC = () => {
 
   return (
     <Box dir="row" padTop={10} padBottom={30} gap={20}>
-      <AgendaSection />
-      <ChatSection />
+      <SelectBox width={300} options={["All", "Admin"]} />
+      {/*<AgendaSection />*/}
+      {/*<ChatSection />*/}
     </Box>
   );
 };

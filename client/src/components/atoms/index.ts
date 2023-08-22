@@ -12,3 +12,4 @@ export * from "./Tag";
 export * from "./Text";
 export * from "./TextArea";
 export * from "./UserTag";
+export * from "./Label";
