@@ -1,5 +1,5 @@
-import { Box, Card } from "@/components/atoms";
-import { AgendaTag, AgendaFoldedText } from "@/components/molecules";
+import { Box, Card, Text } from "@/components/atoms";
+import { AgendaTag } from "@/components/molecules";
 import type { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useNavigate } from "react-router-dom";
 
@@ -18,7 +18,7 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   const openModal = () => navigate(`terminated?agendaId=${agenda.id}`);
 
   return (
-    <Card primary={false} clickable onClick={openModal} round={5}>
+    <Card clickable onClick={openModal}>
       <Box gap={8}>
         <AgendaTag
           tags={{
@@ -27,7 +27,14 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             votable: _tags.votable,
           }}
         />
-        <AgendaFoldedText title={agenda.title} subtitle={agenda.content} />
+        <Box gap={2}>
+          <Text variant="title2" color="black">
+            {agenda.title}
+          </Text>
+          <Text variant="subtitle" color="gray500">
+            {agenda.content}
+          </Text>
+        </Box>
       </Box>
     </Card>
   );

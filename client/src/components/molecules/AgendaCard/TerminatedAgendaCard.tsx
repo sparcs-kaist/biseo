@@ -1,9 +1,7 @@
 import React, { useState, useMemo } from "react";
-import { Box, Card, Divider } from "@/components/atoms";
+import { Box, Card, Divider, Text } from "@/components/atoms";
 import {
-  AgendaFoldedText,
   AgendaTag,
-  AgendaDetail,
   OptionVoteResult,
   VoteResult,
   VoteDetail,
@@ -33,22 +31,28 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   );
   return (
     <Card
-      primary={false}
       bold={enabled}
       clickable
       onClick={e => {
         setEnabled(enabled => !enabled);
         e.stopPropagation();
       }}
-      round={5}
     >
       {enabled ? (
         <Box gap={15}>
-          <AgendaDetail
-            title={agenda.title}
-            content={agenda.content}
-            resolution={agenda.resolution}
-          />
+          <Box gap={2}>
+            <Text variant="title2" color="black">
+              {agenda.title}
+            </Text>
+            <Text variant="subtitle" color="gray500">
+              {agenda.content}
+            </Text>
+          </Box>
+          <Box>
+            <Text variant="body" color="blue600">
+              {agenda.resolution}
+            </Text>
+          </Box>
           <Divider />
           <VoteResult
             type={_tags.public}
@@ -77,7 +81,14 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <AgendaFoldedText title={agenda.title} subtitle={agenda.content} />
+          <Box gap={2}>
+            <Text variant="title2" color="black">
+              {agenda.title}
+            </Text>
+            <Text variant="subtitle" color="gray500">
+              {agenda.content}
+            </Text>
+          </Box>
         </Box>
       )}
     </Card>
