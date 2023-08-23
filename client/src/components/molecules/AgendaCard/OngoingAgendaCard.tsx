@@ -63,7 +63,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
 
   return (
     <Card primary bold>
-      <Box dir="column" gap={10}>
+      <Box gap={10}>
         <Box gap={8}>
           <AgendaTag
             tags={{
@@ -72,14 +72,16 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <Text variant="title2" color="black">
-            {agenda.title}
-          </Text>
-          <Text variant="subtitle" color="gray500">
-            {agenda.content}
-          </Text>
+          <Box gap={2}>
+            <Text variant="title2" color="black">
+              {agenda.title}
+            </Text>
+            <Text variant="subtitle" color="gray500">
+              {agenda.content}
+            </Text>
+          </Box>
         </Box>
-        <Box dir="column" gap={6}>
+        <Box gap={6}>
           <Text variant="body" color="blue600">
             {agenda.resolution}
           </Text>

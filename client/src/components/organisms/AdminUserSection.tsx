@@ -4,7 +4,7 @@ import {
   SectionHeader,
   UserTagCards,
   AgendaTemplateCards,
-  AddButton,
+  AddButtonCard,
 } from "@/components/molecules";
 
 export const AdminUserSection: React.FC = () => (
@@ -13,7 +13,7 @@ export const AdminUserSection: React.FC = () => (
       <SectionHeader count={3}>투표 템플릿</SectionHeader>
       <Box dir="column" w="fill" gap={15}>
         <Box dir="column" w="fill" gap={15}>
-          <AddButton content="새로운 템플릿" />
+          <AddButtonCard content="새로운 템플릿" />
         </Box>
         <AgendaTemplateCards />
       </Box>
@@ -22,7 +22,7 @@ export const AdminUserSection: React.FC = () => (
       <SectionHeader count={4}>유저 태그</SectionHeader>
       <Box dir="column" w="fill" gap={15}>
         <Box dir="column" w="fill" gap={15}>
-          <AddButton content="새로운 태그" />
+          <AddButtonCard content="새로운 태그" />
         </Box>
         <UserTagCards />
         <UserTagCards />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Text, Card, Divider, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
@@ -7,8 +7,8 @@ import type { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
 const _tags = {
-  public: true,
-  identified: true,
+  public: false,
+  identified: false,
   votable: true,
 };
 
@@ -29,7 +29,7 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
   };
 
   return (
-    <Card round={5} onClick={openModal}>
+    <Card onClick={openModal}>
       <Box gap={8} w="fill">
         <AgendaTag tags={_tags} admin />
         <Box gap={2}>

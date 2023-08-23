@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Card } from "@/components/atoms";
-import { AgendaFoldedText, AgendaTag } from "@/components/molecules";
+import { Box, Card, Text } from "@/components/atoms";
+import { AgendaTag } from "@/components/molecules";
 
 import type { PreparingAgenda } from "biseo-interface/agenda";
 
@@ -16,7 +16,7 @@ interface Props {
 
 export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
   return (
-    <Card primary={false} round={5}>
+    <Card>
       <Box gap={8}>
         <AgendaTag
           tags={{
@@ -25,7 +25,14 @@ export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
             votable: agenda.user.votable,
           }}
         />
-        <AgendaFoldedText title={agenda.title} subtitle={agenda.content} />
+        <Box gap={2}>
+          <Text variant="title2" color="black">
+            {agenda.title}
+          </Text>
+          <Text variant="subtitle" color="gray500">
+            {agenda.content}
+          </Text>
+        </Box>
       </Box>
     </Card>
   );

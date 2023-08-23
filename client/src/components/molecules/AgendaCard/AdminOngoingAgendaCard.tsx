@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -12,7 +12,6 @@ import { AgendaTag } from "@/components/molecules";
 
 import type { AdminAgenda } from "biseo-interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
-
 
 const _tags = {
   public: false,
@@ -42,7 +41,7 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
   };
 
   return (
-    <Card primary={false} bold={false} round={5} onClick={openModal}>
+    <Card onClick={openModal}>
       <Box gap={8} w="fill">
         <AgendaTag tags={_tags} admin />
         <Box>

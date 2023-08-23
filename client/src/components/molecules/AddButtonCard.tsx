@@ -7,7 +7,7 @@ interface Props {
   onClick?: () => void;
 }
 
-export const AddButton: React.FC<Props> = ({ content, onClick }) => (
+export const AddButtonCard: React.FC<Props> = ({ content, onClick }) => (
   <Card align="center" small clickable onClick={onClick}>
     <Text color="gray500" variant="body">
       <PlusIcon></PlusIcon> {content}
