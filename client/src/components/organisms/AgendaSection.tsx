@@ -32,16 +32,17 @@ export const AgendaSection: React.FC = () => {
     (agendaStatus: AgendaStatus) => {
       const agendas = getAgendas(agendaStatus);
 
-      if (agendas.length === 0)
-        return <AgendaCard.Empty agendaStatus={agendaStatus} />;
-      else
-        return (
-          <AgendaCard.List>
-            {agendas.map(agenda => (
+      return (
+        <AgendaCard.List>
+          {agendas.length === 0 ? (
+            <AgendaCard.Empty agendaStatus={agendaStatus} />
+          ) : (
+            agendas.map(agenda => (
               <AgendaCard key={agenda.id} agenda={agenda} />
-            ))}
-          </AgendaCard.List>
-        );
+            ))
+          )}
+        </AgendaCard.List>
+      );
     },
     [preparingAgendas, ongoingAgendas, terminatedAgendas],
   );

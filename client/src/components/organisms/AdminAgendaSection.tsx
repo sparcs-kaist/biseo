@@ -40,19 +40,20 @@ export const AdminAgendaSection: React.FC = () => {
     (agendaStatus: AdminAgendaStatus) => {
       const agendas = getAgendas(agendaStatus);
 
-      if (agendas.length === 0)
-        return <AgendaCard.Empty agendaStatus={agendaStatus} />;
-      else
-        return (
-          <AgendaCard.List>
-            {agendaStatus === "preparing" && (
-              <AddButtonCard content="새로운 투표" onClick={openModal} />
-            )}
-            {agendas.map(agenda => (
+      return (
+        <AgendaCard.List>
+          {agendaStatus === "preparing" && (
+            <AddButtonCard content="새로운 투표" onClick={openModal} />
+          )}
+          {agendas.length === 0 ? (
+            <AgendaCard.Empty agendaStatus={agendaStatus} />
+          ) : (
+            agendas.map(agenda => (
               <AgendaCard.Admin key={agenda.id} agenda={agenda} />
-            ))}
-          </AgendaCard.List>
-        );
+            ))
+          )}
+        </AgendaCard.List>
+      );
     },
     [preparingAgendas, ongoingAgendas, terminatedAgendas],
   );
