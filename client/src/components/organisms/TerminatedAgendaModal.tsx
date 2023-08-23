@@ -1,9 +1,16 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Box } from "@/components/atoms";
-import { Modal, TerminatedModalInner } from "@/components/molecules";
+import { BorderedBox, Box } from "@/components/atoms";
+import {
+  AdminAgendaTags,
+  AdminTag,
+  Modal,
+  ModalInner,
+  TerminatedModalInner,
+} from "@/components/molecules";
 import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { AdminAgenda } from "biseo-interface/admin/agenda";
 
 export const TerminatedAgendaModal: React.FC = () => {
   const location = useLocation();
@@ -33,19 +40,25 @@ export const TerminatedAgendaModal: React.FC = () => {
       : targetAgenda?.voters.total.length;
 
   return (
-    <Modal title="종료된 투표">
-      <Box h={498} w={630} justify="space-between" dir="row">
-        <Box w={300} h={498} gap={20} dir="column">
+    <Modal width={680} height={575} title="종료된 투표">
+      <Box h={498} w={630} justify="space-between" padVertical={15} dir="row">
+        <Box w={300} h={498} gap={20}>
           <Box w={300} gap={10}>
-            <TerminatedModalInner.TextBoxWithTitle title="투표 제목">
-              {targetAgenda?.title}
-            </TerminatedModalInner.TextBoxWithTitle>
-            <TerminatedModalInner.TextBoxWithTitle title="투표 내용">
-              {targetAgenda?.content}
-            </TerminatedModalInner.TextBoxWithTitle>
-            <TerminatedModalInner.TextBoxWithTitle title="의결 문안">
-              {targetAgenda?.resolution}
-            </TerminatedModalInner.TextBoxWithTitle>
+            <ModalInner title="투표 제목">
+              <ModalInner.WhiteTextBox>
+                {targetAgenda?.title}
+              </ModalInner.WhiteTextBox>
+            </ModalInner>
+            <ModalInner title="투표 내용">
+              <ModalInner.WhiteTextBox>
+                {targetAgenda?.content}
+              </ModalInner.WhiteTextBox>
+            </ModalInner>
+            <ModalInner title="의결문안">
+              <ModalInner.WhiteTextBox>
+                {targetAgenda?.resolution}
+              </ModalInner.WhiteTextBox>
+            </ModalInner>
           </Box>
           <Box w={300} h={245} gap={10}>
             <TerminatedModalInner.ParticipantBar
@@ -66,7 +79,31 @@ export const TerminatedAgendaModal: React.FC = () => {
             </Box>
           </Box>
         </Box>
-        <UserTable editable />
+
+        <Box w={300} h={450} gap={20} justify="space-between">
+          <ModalInner title="투표 대상" count={3}>
+            <BorderedBox
+              borderColor="gray200"
+              bg="white"
+              w={300}
+              h={354}
+              borderSize={1}
+              round={5}
+              borderStyle="solid"
+            >
+              <UserTable />
+            </BorderedBox>
+          </ModalInner>
+          <Box
+            w={300}
+            h={52}
+            justify="space-between"
+            padVertical={15}
+            padHorizontal={12}
+          >
+            <AdminAgendaTags />
+          </Box>
+        </Box>
       </Box>
     </Modal>
   );

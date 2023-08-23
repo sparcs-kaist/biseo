@@ -34,7 +34,7 @@ const BoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
 //ModalInner.TextBox = TextBox;
 
 const TextBoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
-  <Box w={300} dir="column" gap={8}>
+  <Box w={300} dir="column" gap={10}>
     <Text variant="body" color="black">
       {title}
     </Text>

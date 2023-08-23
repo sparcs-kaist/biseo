@@ -1,5 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { BorderedBox, Box, Text, TextArea, Button } from "@/components/atoms";
+import "@/components/atoms/placeholder.css";
+import { TrashIcon } from "@/assets";
 
 interface ModalInnerProps extends PropsWithChildren {
   title: string;
@@ -23,6 +25,7 @@ interface SubComponents {
   VoteChoice: typeof VoteChoice;
   TextButton: typeof TextButton;
   InputBox: typeof InputBox;
+  WhiteTextBox: typeof WhiteTextBox;
 }
 
 export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
@@ -59,19 +62,37 @@ const TextBox: React.FC<PropsWithChildren> = ({ children }) => (
     w={300}
     h={35}
     borderSize={1}
-    padVertical={8}
+    padVertical={10}
     padHorizontal={15}
     round={5}
     borderStyle="solid"
     gap={10}
   >
-    <Text color="gray300" variant="subtitle">
+    <Text color="gray600" variant="subtitle">
       {children}
     </Text>
   </BorderedBox>
 );
 ModalInner.TextBox = TextBox;
-
+const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
+  <BorderedBox
+    borderColor="gray200"
+    bg="white"
+    w={300}
+    h={35}
+    borderSize={1}
+    padVertical={10}
+    padHorizontal={15}
+    round={5}
+    borderStyle="solid"
+    gap={10}
+  >
+    <Text color="gray600" variant="subtitle">
+      {children}
+    </Text>
+  </BorderedBox>
+);
+ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<ButtonProps> = ({ children, onClick }) => (
   <BorderedBox
     borderColor="gray200"
@@ -88,7 +109,7 @@ const InputBox: React.FC<ButtonProps> = ({ children, onClick }) => (
     <input
       type="text"
       placeholder={children?.toString()}
-      style={{ border: 0 }}
+      style={{ border: 0, color: "#555555", fontSize: 11 }}
       onChange={onClick}
     />
     {/* <Text color="gray300" variant="subtitle">
@@ -165,10 +186,12 @@ const VoteChoice: React.FC<PropsWithChildren> = ({ children }) => (
     borderStyle="solid"
     gap={10}
     justify="space-between"
+    dir="row"
   >
     <Text color="gray500" variant="subtitle">
       {children}
     </Text>
+    <TrashIcon />
   </BorderedBox>
 );
 ModalInner.VoteChoice = VoteChoice;
