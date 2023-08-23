@@ -1,5 +1,5 @@
 import React from "react";
-import { NewAddButton, Text } from "@/components/atoms";
+import { Card, Text } from "@/components/atoms";
 import { PlusIcon } from "@/assets";
 
 interface Props {
@@ -8,9 +8,9 @@ interface Props {
 }
 
 export const AddButton: React.FC<Props> = ({ content, onClick }) => (
-  <NewAddButton onClick={onClick}>
+  <Card align="center" small clickable onClick={onClick}>
     <Text color="gray500" variant="body">
       <PlusIcon></PlusIcon> {content}
     </Text>
-  </NewAddButton>
+  </Card>
 );

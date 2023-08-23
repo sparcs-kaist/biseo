@@ -1,13 +1,6 @@
-import React, { useState, useMemo } from "react";
-import { Box, Card, Divider } from "@/components/atoms";
-import {
-  AgendaFoldedText,
-  AgendaTag,
-  AgendaDetail,
-  OptionVoteResult,
-  VoteResult,
-  VoteDetail,
-} from "@/components/molecules";
+import React from "react";
+import { Box, Card } from "@/components/atoms";
+import { AgendaFoldedText, AgendaTag } from "@/components/molecules";
 
 import type { PreparingAgenda } from "biseo-interface/agenda";
 
