@@ -26,12 +26,10 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   }));
 
   const vote = useCallback(() => {
-    if (chosenChoiceId === 0) {
-      return null;
-    } else {
-      voteAgenda(chosenChoiceId, agenda.id);
-    }
+    voteAgenda(chosenChoiceId, agenda.id);
   }, [chosenChoiceId]);
+
+  const chosen = chosenChoiceId !== 0;
 
   const choose = useCallback(
     (choiceId: number) => {
@@ -88,8 +86,8 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
           {choices}
         </Box>
         <Box dir="row" justify="end" w="fill">
-          <Button onClick={() => vote()}>
-            <Text variant="option1" color="blue600">
+          <Button w={90} disabled={!chosen} onClick={() => vote()}>
+            <Text variant="option1" color={chosen ? "blue600" : "blue300"}>
               투표하기
             </Text>
           </Button>
