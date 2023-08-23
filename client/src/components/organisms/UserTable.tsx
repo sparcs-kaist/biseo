@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import type { AdminUser } from "biseo-interface/admin/user";
 import {
   Box,
@@ -8,6 +8,7 @@ import {
   Row,
   CheckBox,
   UserTag,
+  SelectBox,
 } from "@/components/atoms";
 import { useAdminUser } from "@/services/admin-user";
 
@@ -44,36 +45,52 @@ export const UserTable: React.FC<Props> = ({
     }
   };
 
+  const [selectedTag, setSelectedTag] = useState("");
+
+  const filteredUsers = React.useMemo(() => {
+    if (selectedTag) {
+      return (
+        displayUsers?.filter(user =>
+          user.tags.some(tag => tag.type === selectedTag),
+        ) || []
+      );
+    }
+    return displayUsers || [];
+  }, [displayUsers, selectedTag]);
+
   return (
-    <Table>
-      <Header>
-        <Cell w={27} onClick={() => ({})}>
-          <CheckBox disabled />
-        </Cell>
-        <Cell w={80}>이름</Cell>
-        <Cell w={120}>닉네임</Cell>
-        <Cell>태그</Cell>
-      </Header>
-      {displayUsers?.map(user => (
-        <Row
-          selected={selectedUsers.includes(user.id)}
-          onClick={() => editable && selectUser(user.id)}
-        >
+    <>
+      <SelectBox width={92} height={26} onChange={setSelectedTag} />
+      <Table>
+        <Header>
           <Cell w={27} onClick={() => ({})}>
-            <CheckBox checked={selectedUsers.includes(user.id)} />
+            <CheckBox disabled />
           </Cell>
-          <Cell w={80}>{user.username}</Cell>
-          <Cell w={120}>{user.displayName}</Cell>
-          <Cell>
-            <Box dir="row" gap={5}>
-              {user.isAdmin ? <UserTag>어드민</UserTag> : <></>}
-              {user.tags.map((tag, id) => (
-                <UserTag tag={tag} />
-              ))}
-            </Box>
-          </Cell>
-        </Row>
-      ))}
-    </Table>
+          <Cell w={80}>이름</Cell>
+          <Cell w={120}>닉네임</Cell>
+          <Cell>태그</Cell>
+        </Header>
+        {filteredUsers?.map(user => (
+          <Row
+            selected={selectedUsers.includes(user.id)}
+            onClick={() => editable && selectUser(user.id)}
+          >
+            <Cell w={27} onClick={() => ({})}>
+              <CheckBox checked={selectedUsers.includes(user.id)} />
+            </Cell>
+            <Cell w={80}>{user.username}</Cell>
+            <Cell w={120}>{user.displayName}</Cell>
+            <Cell>
+              <Box dir="row" gap={5}>
+                {user.isAdmin ? <UserTag>어드민</UserTag> : <></>}
+                {user.tags.map((tag, id) => (
+                  <UserTag tag={tag} />
+                ))}
+              </Box>
+            </Cell>
+          </Row>
+        ))}
+      </Table>
+    </>
   );
 };

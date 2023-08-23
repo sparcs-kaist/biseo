@@ -1,24 +1,24 @@
 import React from "react";
-import styled from "@emotion/styled";
-import { css, SerializedStyles } from "@emotion/react";
-import { theme } from "@/theme";
-import type { Color } from "@/theme";
-import { Select } from "./Label";
+import { Select, Text } from "@/components/atoms";
 
 interface Props {
   width: number;
-  selectedOption?: string;
-  options: string[];
-  setSelectedOption?: (value: string) => void;
+  height: number;
+  onChange: (selectedValue: string) => void; // new prop
 }
 
-export const SelectBox: React.FC<Props> = ({ width, selectedOption, options }) => (
-    <Select w={width} value={selectedOption}>
-      {options.map(option => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </Select>
-
+export const SelectBox: React.FC<Props> = ({ width, height, onChange }) => (
+  <Select w={width} h={height} onChange={e => onChange(e.target.value)}>
+    <option key="regular" value="regular">
+      <Text variant="option2" color="gray600">
+        정회원
+      </Text>
+    </option>
+    <option key="associate" value="associate">
+      <Text variant="option2" color="gray600">
+        준회원
+      </Text>
+    </option>
+    {/* Add more options later*/}
+  </Select>
 );
