@@ -62,7 +62,7 @@ export type ServerToClientEvents = Events<{
     terminated: Ev<agenda.Terminated>;
     deleted: Ev<agenda.Deleted>;
     reminded: Ev<agenda.Reminded>;
-    tag: {
+    template: {
       created: Ev<agendaTemplate.Created>;
       updated: Ev<agendaTemplate.Updated>;
       deleted: Ev<agendaTemplate.Deleted>;
