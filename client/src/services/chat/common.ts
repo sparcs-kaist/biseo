@@ -1,5 +1,5 @@
-import type { ChatUser } from "biseo-interface/user";
-import type { Message } from "biseo-interface/chat";
+import type { ChatUser } from "@biseo/interface/user";
+import type { Message } from "@biseo/interface/chat";
 
 export const RETRIEVE_CHAT_OFFSET = 20;
 

@@ -1,5 +1,5 @@
 import type { User } from "@prisma/client";
-import * as schema from "biseo-interface/agenda";
+import * as schema from "@biseo/interface/agenda";
 import { prisma } from "@/db/prisma";
 import { BiseoError } from "@/lib/error";
 import { BiseoServer } from "@/types/socket";

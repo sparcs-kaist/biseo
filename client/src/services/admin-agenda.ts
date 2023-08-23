@@ -4,8 +4,8 @@ import type {
   AdminAgenda,
   AdminAgendaCreate,
   AdminAgendaUpdate,
-} from "biseo-interface/admin/agenda";
-import type { AgendaStatus } from "biseo-interface/agenda";
+} from "@biseo/interface/admin/agenda";
+import type { AgendaStatus } from "@biseo/interface/agenda";
 
 interface AdminAgendaState {
   adminAgendas: AdminAgenda[];

@@ -1,8 +1,8 @@
 import type { ZodType } from "zod";
 import type { Server, Socket } from "socket.io";
 
-import type { ClientEventNames, ResponseOf, SchemaOf } from "biseo-interface";
-import type { Res } from "biseo-interface/helpers";
+import type { ClientEventNames, ResponseOf, SchemaOf } from "@biseo/interface";
+import type { Res } from "@biseo/interface/helpers";
 
 import type { BiseoServer, BiseoSocket } from "@/types/socket";
 import type { User } from "@prisma/client";

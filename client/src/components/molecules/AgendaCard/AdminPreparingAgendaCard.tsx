@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Text, Card, Divider, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
-import type { AdminAgenda } from "biseo-interface/admin/agenda";
+import type { AdminAgenda } from "@biseo/interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
 const _tags = {

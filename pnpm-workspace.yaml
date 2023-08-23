@@ -1,0 +1,4 @@
+packages:
+  - 'interface'
+  - 'client'
+  - 'server'

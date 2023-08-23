@@ -6,32 +6,18 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "dev": "yarn dev:db:up && yarn dev:db:migrate && yarn dev:app",
-    "dev:app": "yarn all dev",
-    "dev:db": "yarn server dev:db",
-    "dev:db:up": "yarn server dev:db:up",
-    "dev:db:migrate": "yarn server dev:db:migrate",
-    "studio": "yarn dev:db:up && yarn server prisma studio",
-    "all": "dotenv -- nx run-many -t",
-    "client": "dotenv yarn workspace biseo-client",
-    "server": "dotenv yarn workspace biseo-server",
-    "interface": "dotenv yarn workspace biseo-interface"
+    "dev": "dotenv -- pnpm -r --stream dev",
+    "studio": "dotenv -- pnpm -F @biseo/server studio"
   },
-  "workspaces": [
-    "server",
-    "client",
-    "interface"
-  ],
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "dotenv-cli": "^7.2.1",
     "husky": "^8.0.3",
-    "nx": "^15.9.2",
-    "prettier": "^2.8.7",
-    "vite-plugin-svgr": "^3.2.0"
+    "prettier": "^2.8.7"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "^18.0.0",
+    "pnpm": "^8.6.12"
   }
 }

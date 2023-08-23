@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import type { AdminUser } from "biseo-interface/admin/user";
+import type { AdminUser } from "@biseo/interface/admin/user";
 import {
   Box,
   Header,
