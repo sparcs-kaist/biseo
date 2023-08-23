@@ -20,7 +20,7 @@ export type UserTag = z.infer<typeof UserTag>;
 export const UserTagCreate = z.object({
   title: z.string(),
   description: z.string(),
-  users: z.array(User),
+  users: z.array(z.number()),
 });
 export type UserTagCreate = z.infer<typeof UserTagCreate>;
 

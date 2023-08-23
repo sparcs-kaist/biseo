@@ -11,7 +11,7 @@ export const createTag = async ({
     title,
     description,
     users: {
-      create: users.map(user => ({ userId: user.id })),
+      create: users.map(user => ({ userId: user })),
     },
   };
 
@@ -66,7 +66,7 @@ export const updateTag = async (tagUpdate: schema.UserTagUpdate) => {
       description: tagUpdate.description,
       users: {
         createMany: {
-          data: tagUpdate.users.map(user => ({ userId: user.id })),
+          data: tagUpdate.users.map(user => ({ userId: user })),
         },
       },
     },
