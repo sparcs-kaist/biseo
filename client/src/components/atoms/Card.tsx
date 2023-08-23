@@ -1,38 +1,59 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import { theme } from "@/theme";
 
 export const Card = styled.div<{
   primary?: boolean;
   bold?: boolean;
   clickable?: boolean;
   round?: number;
-}>`
-  border-radius: ${props => props.round || 10}px;
-  background-color: ${props =>
-    props.primary ? props.theme.colors.blue100 : props.theme.colors.white};
-  ${props =>
-    props.bold
-      ? `border: 1px solid ${
-          props.primary
-            ? props.theme.colors.blue600
-            : props.theme.colors.gray500
-        };`
-      : `border: 1px solid ${
-          props.primary
-            ? props.theme.colors.blue300
-            : props.theme.colors.gray300
-        };
-  `}
-  padding: 18px 20px;
-  width: 100%;
+  borderStyle?:
+    | "solid"
+    | "dotted"
+    | "dashed"
+    | "double"
+    | "groove"
+    | "groove"
+    | "ridge"
+    | "hidden"
+    | "none";
+  align?: "center" | "start" | "end";
+  justify?: "center" | "start" | "end" | "space-between";
+}>(
+  ({
+    primary,
+    bold,
+    clickable,
+    round = 5,
+    borderStyle = "solid",
+    align = "start",
+    justify = "start",
+  }) => css`
+    border-radius: ${round}px;
+    background-color: ${primary ? theme.colors.blue100 : theme.colors.white};
+    border: 1px ${borderStyle}
+      ${bold
+        ? primary
+          ? theme.colors.blue600
+          : theme.colors.gray500
+        : primary
+        ? theme.colors.blue300
+        : theme.colors.gray300};
+    padding: 18px 20px;
+    width: 100%;
 
-  ${props =>
-    props.clickable &&
-    css`
+    display: flex;
+    flex-direction: column;
+    align-items: ${align};
+    justify-content: ${justify};
+
+    ${clickable &&
+    `
       cursor: pointer;
 
       &:hover {
-        background-color: ${props.theme.colors.blue100};
+        background-color: ${theme.colors.blue100};
       }
     `}
-`;
+  `,
+);

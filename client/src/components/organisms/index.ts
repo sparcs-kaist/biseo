@@ -1,4 +1,3 @@
-export * from "./TerminatedAgendaCard";
 export * from "./AgendaSection";
 export * from "./ChatSection";
 export * from "./CreateAgendaModal";
