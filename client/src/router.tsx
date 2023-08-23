@@ -56,6 +56,10 @@ export default createBrowserRouter([
                 path: "templateEdit",
                 element: <EditTemplateModal />,
               },
+              {
+                path: "templateCreate",
+                element: <EditTemplateModal />,
+              },
             ],
           },
         ],

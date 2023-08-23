@@ -7,8 +7,6 @@ import { useLocation } from "react-router-dom";
 export const CreateditTemplateModal: React.FC = () => {
   const location = useLocation();
 
-  const modalParams = new URLSearchParams(location.search);
-  const templateId = parseInt(modalParams.get("templateId") as string);
   const [templateTitleState, setTemplateTitleState] = useState("");
   const [agendaTitleState, setAgendaTitleState] = useState("");
   const [agendaContentState, setAgendaContentState] = useState("");
