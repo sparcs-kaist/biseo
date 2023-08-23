@@ -8,3 +8,4 @@ export * from "./TerminatedAgendaModal";
 export * from "./AdminAgendaSection";
 export * from "./UserTable";
 export * from "./AdminUserSection";
+export * from "./EditTemplateModal";
