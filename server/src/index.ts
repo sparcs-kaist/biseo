@@ -13,6 +13,7 @@ import { adminAgendaRouter } from "@/listener/admin.agenda";
 import { adminUserRouter } from "@/listener/admin.user";
 import { chatRouter } from "@/listener/chat";
 import { agendaRouter } from "@/listener/agenda";
+import { userTagRouter } from "@/listener/user.tag";
 
 const app = express();
 const httpServer = createServer(app);
@@ -37,6 +38,7 @@ io.on("connection", socket => {
   adminUserRouter.register(io, socket);
   chatRouter.register(io, socket);
   agendaRouter.register(io, socket);
+  userTagRouter.register(io, socket);
 });
 
 httpServer.listen(port);
