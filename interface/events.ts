@@ -6,6 +6,7 @@ import type * as adminUser from "./admin/user";
 import type * as agenda from "./agenda";
 import type * as chat from "./chat";
 import type * as user from "./user";
+import type * as userTag from "./user/tag";
 
 export type ClientToServerEvents = Events<{
   chat: {
@@ -19,6 +20,12 @@ export type ClientToServerEvents = Events<{
   user: {
     enter: Ev<user.Enter, user.EnterCb>;
     leave: Ev<user.Leave, user.LeaveCb>;
+    tag: {
+      create: Ev<userTag.Create, userTag.CreateCb>;
+      retrieveAll: Ev<userTag.RetrieveAll, userTag.RetrieveAllCb>;
+      update: Ev<userTag.Update, userTag.UpdateCb>;
+      delete: Ev<userTag.Delete, userTag.DeleteCb>;
+    };
   };
   admin: {
     agenda: {
@@ -52,6 +59,11 @@ export type ServerToClientEvents = Events<{
   user: {
     entered: Ev<user.Entered>;
     left: Ev<user.Left>;
+    tag: {
+      created: Ev<userTag.Created>;
+      updated: Ev<userTag.Updated>;
+      deleted: Ev<userTag.Deleted>;
+    };
   };
   admin: {
     agenda: {

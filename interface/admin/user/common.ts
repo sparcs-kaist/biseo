@@ -1,14 +1,6 @@
 import { z } from "zod";
 import { User } from "../../user";
-
-/**
- * UserTag
- * some description about user tag type goes here
- */
-export const UserTag = z.object({
-  type: z.enum(["regular", "associate"]),
-});
-export type UserTag = z.infer<typeof UserTag>;
+import { UserTag } from "../../user/tag";
 
 /**
  * AdminUser

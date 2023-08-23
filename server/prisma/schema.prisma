@@ -58,6 +58,15 @@ model Chat {
   @@map("chat")
 }
 
+model Tag {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  users       UserTag[]
+
+  @@map("tag")
+}
+
 model UserChoice {
   user     User   @relation(fields: [userId], references: [id])
   userId   Int    @map("user_id")
@@ -78,25 +87,19 @@ model UserAgendaVotable {
   @@map("user_agenda_votable")
 }
 
+model UserTag {
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int    @map("user_id")
+  tag      Tag    @relation(fields: [tagId], references: [id])
+  tagId    Int    @map("tag_id")
+
+  @@id([userId, tagId])
+  @@map("user_tag")
+}
+
 enum ChatType {
   message
   notice
 
   @@map("chat_type")
-}
-
-model UserTag {
-  id       Int    @id @default(autoincrement())
-  user     User   @relation(fields: [userId], references: [id])
-  userId   Int    @map("user_id")
-  type     UserTagType
-
-  @@map("user_tag")
-}
-
-enum UserTagType {
-  regular
-  associate
-
-  @@map("user_tag_type")
 }
