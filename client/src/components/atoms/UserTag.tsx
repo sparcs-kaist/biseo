@@ -7,6 +7,11 @@ interface Props extends PropsWithChildren {
 }
 
 const Container = styled.div`
+  display: flex;
+  height: 18px;
+  padding: 3px 6px;
+  justify-content: center;
+  align-items: center;
   font-size: 9px;
   font-weight: 500;
   color: ${props => props.theme.colors.gray500};

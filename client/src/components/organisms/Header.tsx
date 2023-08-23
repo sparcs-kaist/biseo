@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { LogoIcon } from "@/assets";
-import { Box } from "@/components/atoms";
-import { HeaderItem, LogOutButton } from "@/components/molecules";
+import { Box, Button, Text } from "@/components/atoms";
+import { HeaderItem } from "@/components/molecules";
 import { useAuth } from "@/services/auth";
+import { useNavigate } from "react-router-dom";
 
 const adminPathList = [
   { name: "유저 모드", path: "" },
@@ -23,9 +24,17 @@ const Container = styled.header`
 `;
 
 export const Header: React.FC = () => {
-  const { displayName } = useAuth(state => ({
+  const navigate = useNavigate();
+  const { displayName, logout } = useAuth(state => ({
     displayName: state.userInfo?.displayName,
+    logout: state.logout,
   }));
+
+  const handleLogout = () => {
+    logout();
+    navigate("/", { replace: true });
+  };
+
   return (
     <Container>
       <Box h="fill" dir="row" align="center">
@@ -45,9 +54,11 @@ export const Header: React.FC = () => {
           <></>
         )}
       </Box>
-      <LogOutButton
-        displayName={displayName == undefined ? "SPARCS ANON" : displayName}
-      />
+      <Button w="hug" onClick={handleLogout}>
+        <Text variant="boldtitle3" color="blue600">
+          {displayName == undefined ? "SPARCS ANON" : displayName}
+        </Text>
+      </Button>
     </Container>
   );
 };
