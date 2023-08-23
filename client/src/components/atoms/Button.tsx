@@ -1,11 +1,13 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
+import { Color } from "@/theme";
 
-export const Button = styled.div<{
+export const Button = styled.button<{
   w?: Size;
   h?: Size;
+  color?: Color;
 }>(
-  ({ w = "fill", h = 30, theme }) => css`
+  ({ w = "fill", h = 28, color = "blue200", theme }) => css`
     display: flex;
     width: ${size(w)};
     height: ${size(h)};
@@ -15,7 +17,15 @@ export const Button = styled.div<{
     justify-content: center;
     align-items: center;
     line-height: 28px;
-    background-color: ${theme.colors.blue200};
+    background-color: ${theme.colors[color]};
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:disabled {
+      cursor: default;
+    }
   `,
 );
 
