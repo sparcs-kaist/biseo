@@ -12,6 +12,13 @@ export const Select = styled.select<{ w: number, h: number}>`
   border: 1px solid ${props => props.theme.colors.gray200};
   background-color: ${props => props.theme.colors.white};
 
+  font-family: "Noto Sansf KR";
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: ${props => props.theme.colors.gray600};
+
   // Use the imported SVG as a background image
   background-image: url(${downArrow});
   background-repeat: no-repeat;

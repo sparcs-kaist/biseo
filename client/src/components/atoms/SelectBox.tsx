@@ -9,15 +9,14 @@ interface Props {
 
 export const SelectBox: React.FC<Props> = ({ width, height, onChange }) => (
   <Select w={width} h={height} onChange={e => onChange(e.target.value)}>
+    <option value="" disabled selected hidden>
+      전체보기
+    </option>
     <option key="regular" value="regular">
-      <Text variant="option2" color="gray600">
-        정회원
-      </Text>
+      정회원
     </option>
     <option key="associate" value="associate">
-      <Text variant="option2" color="gray600">
-        준회원
-      </Text>
+      준회원
     </option>
     {/* Add more options later*/}
   </Select>
