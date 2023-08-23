@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { User, UserTag } from "../../user";
+import { User } from "../../user";
+import { UserTag } from "../../user/tag";
 
 /**
  * AdminUser
