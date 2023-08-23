@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Box } from "@/components/atoms";
-
 import {
   AgendaSection,
   ChatSection,
