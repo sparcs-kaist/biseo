@@ -1,5 +1,9 @@
 import React from "react";
-import { Select, Text } from "@/components/atoms";
+import {
+  PositionedDownArrowIcon,
+  Select,
+  SelectWrapper,
+} from "@/components/atoms";
 
 interface Props {
   width: number;
@@ -8,16 +12,19 @@ interface Props {
 }
 
 export const SelectBox: React.FC<Props> = ({ width, height, onChange }) => (
-  <Select w={width} h={height} onChange={e => onChange(e.target.value)}>
-    <option value="" disabled selected hidden>
-      전체보기
-    </option>
-    <option key="regular" value="regular">
-      정회원
-    </option>
-    <option key="associate" value="associate">
-      준회원
-    </option>
-    {/* Add more options later*/}
-  </Select>
+  <SelectWrapper>
+    <Select w={width} h={height} onChange={e => onChange(e.target.value)}>
+      <option value="" disabled selected hidden>
+        전체보기
+      </option>
+      <option key="regular" value="regular">
+        정회원
+      </option>
+      <option key="associate" value="associate">
+        준회원
+      </option>
+      {/* Add more options later*/}
+    </Select>
+    <PositionedDownArrowIcon />
+  </SelectWrapper>
 );

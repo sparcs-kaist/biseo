@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 import { DownArrowIcon } from "@/assets";
-import downArrow from "../../assets/downarrow.svg";
+
+export const SelectWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+`;
 
 export const Select = styled.select<{ w: number, h: number}>`
   width: ${props => props.w}px;
@@ -19,11 +23,6 @@ export const Select = styled.select<{ w: number, h: number}>`
   line-height: normal;
   color: ${props => props.theme.colors.gray600};
 
-  // Use the imported SVG as a background image
-  background-image: url(${downArrow});
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-
   &:focus {
     outline: none;
   }
@@ -37,4 +36,12 @@ export const Select = styled.select<{ w: number, h: number}>`
   -o-appearance: none;
   -ms-appearance: none;
   appearance: none;
+`;
+
+export const PositionedDownArrowIcon = styled(DownArrowIcon)`
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
 `;

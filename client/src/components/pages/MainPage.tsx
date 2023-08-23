@@ -4,9 +4,10 @@ import {
   AdminAgendaSection,
   AgendaSection,
   ChatSection,
+  UserTable,
 } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
-import { SelectBox } from "@/components/atoms/SelectBox";
+import { User } from "biseo-interface/user";
 
 export const MainPage: React.FC = () => {
   const { retrieveAgendas } = useAgenda(state => ({
@@ -19,9 +20,9 @@ export const MainPage: React.FC = () => {
 
   return (
     <Box dir="row" padTop={10} padBottom={30} gap={20}>
-      {/*<SelectBox width={300} options={["선택 옵션 1", "선택 옵션 2", "선택 옵션 3"]} />*/}
-      <AgendaSection />
-      <ChatSection />
+      {/*<AgendaSection/>*/}
+      {/*<ChatSection/>*/}
+      <UserTable />
     </Box>
   );
 };
