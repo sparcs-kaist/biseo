@@ -4,6 +4,7 @@ import type * as init from "./init";
 import type * as adminAgenda from "./admin/agenda";
 import type * as adminUser from "./admin/user";
 import type * as agenda from "./agenda";
+import type * as agendaTemplate from "./agenda/template";
 import type * as chat from "./chat";
 import type * as user from "./user";
 import type * as userTag from "./user/tag";
@@ -16,6 +17,12 @@ export type ClientToServerEvents = Events<{
   agenda: {
     retrieveAll: Ev<agenda.RetrieveAll, agenda.RetrieveAllCb>;
     vote: Ev<agenda.Vote, agenda.VoteCb>;
+    template: {
+      create: Ev<agendaTemplate.Create, agendaTemplate.CreateCb>;
+      retrieveAll: Ev<agendaTemplate.RetrieveAll, agendaTemplate.RetrieveAllCb>;
+      update: Ev<agendaTemplate.Update, agendaTemplate.UpdateCb>;
+      delete: Ev<agendaTemplate.Delete, agendaTemplate.DeleteCb>;
+    };
   };
   user: {
     enter: Ev<user.Enter, user.EnterCb>;
@@ -55,6 +62,11 @@ export type ServerToClientEvents = Events<{
     terminated: Ev<agenda.Terminated>;
     deleted: Ev<agenda.Deleted>;
     reminded: Ev<agenda.Reminded>;
+    tag: {
+      created: Ev<agendaTemplate.Created>;
+      updated: Ev<agendaTemplate.Updated>;
+      deleted: Ev<agendaTemplate.Deleted>;
+    };
   };
   user: {
     entered: Ev<user.Entered>;
