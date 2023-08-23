@@ -23,5 +23,5 @@ export * from "./TerminatedAgendaModalInner";
 export * from "./AgendaTemplateCards";
 export * from "./UserTagCards";
 export * from "./AdminTag";
-export * from "./AddButton";
+export * from "./AddButtonCard";
 export * from "./AdminTerminatedAgendaCard";

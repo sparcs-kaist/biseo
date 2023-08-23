@@ -6,6 +6,7 @@ export const Card = styled.div<{
   primary?: boolean;
   bold?: boolean;
   clickable?: boolean;
+  small?: boolean;
   round?: number;
   borderStyle?:
     | "solid"
@@ -19,11 +20,13 @@ export const Card = styled.div<{
     | "none";
   align?: "center" | "start" | "end";
   justify?: "center" | "start" | "end" | "space-between";
+  height?: number;
 }>(
   ({
     primary,
     bold,
     clickable,
+    small,
     round = 5,
     borderStyle = "solid",
     align = "start",
@@ -39,7 +42,7 @@ export const Card = styled.div<{
         : primary
         ? theme.colors.blue300
         : theme.colors.gray300};
-    padding: 18px 20px;
+    padding: ${small ? `12px 15px` : `18px 20px`};
     width: 100%;
 
     display: flex;
