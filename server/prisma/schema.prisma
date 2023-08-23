@@ -68,21 +68,21 @@ model Tag {
 }
 
 model TemplateChoice {
-  id          Int               @id @default(autoincrement())
-  template    Template          @relation(fields: [templateId], references: [id])
-  templateId  Int               @map("template_id")
+  id          Int           @id @default(autoincrement())
+  template    Template      @relation(fields: [templateId], references: [id])
+  templateId  Int           @map("template_id")
   name        String
 
   @@map("template_choice")
 }
 
 model Template {
-  id          Int   @id @default(autoincrement())
+  id            Int               @id @default(autoincrement())
   templateName  String
-	title         String
-	content       String
-	resolution    String
-	choices       TemplateChoice[]
+  title         String
+  content       String
+  resolution    String
+  choices       TemplateChoice[]
 
   @@map("template")
 }
