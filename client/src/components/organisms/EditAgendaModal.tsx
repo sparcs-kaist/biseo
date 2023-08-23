@@ -8,10 +8,11 @@ import { AdminAgendaUpdate } from "biseo-interface/admin/agenda";
 
 export const EditAgendaModal: React.FC = () => {
   const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
-  const [titleS, setTitleS] = useState("");
-  const [contentS, setContentS] = useState("");
-  const [resolutionS, setResolutionS] = useState("");
+  const [titleState, setTitleState] = useState("");
+  const [contentState, setContentState] = useState("");
+  const [resolutionState, setResolutionState] = useState("");
 
+  const [newchoiceState, setNewchoiceState] = useState("");
   const location = useLocation();
 
   const modalParams = new URLSearchParams(location.search);
@@ -22,6 +23,11 @@ export const EditAgendaModal: React.FC = () => {
       agenda => agenda.id === agendaId && agenda.status === "preparing",
     ),
   }));
+  const [choicesState, setChoicesState] = useState(
+    targetAgenda!.choices.map(choice => {
+      return choice.name;
+    }),
+  );
 
   const { updateAgenda } = useAdminAgenda(state => ({
     updateAgenda: state.updateAgenda,
@@ -30,13 +36,19 @@ export const EditAgendaModal: React.FC = () => {
     deleteAgenda: state.deleteAgenda,
   }));
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleS(e.target.value);
+    setTitleState(e.target.value);
   };
   const onChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setContentS(e.target.value);
+    setContentState(e.target.value);
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setResolutionS(e.target.value);
+    setResolutionState(e.target.value);
+  };
+  const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewchoiceState(e.target.value);
+  };
+  const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChoicesState([...choicesState!, newchoiceState]);
   };
 
   const update = (AgendaParam: AdminAgendaUpdate) => {
@@ -79,9 +91,12 @@ export const EditAgendaModal: React.FC = () => {
           </Box>
 
           <ModalInner title="투표 항목" count={1}>
-            <ModalInner.AddVoteOptionArea onClick={() => {}}>
-              {targetAgenda?.choices.map(opt => (
-                <ModalInner.VoteChoice>{opt.name}</ModalInner.VoteChoice>
+            <ModalInner.AddVoteOptionArea
+              onClick={onChangeChoice}
+              onSubmit={onSubmitChoice}
+            >
+              {choicesState.map(opt => (
+                <ModalInner.VoteChoice>{opt}</ModalInner.VoteChoice>
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>
@@ -132,14 +147,14 @@ export const EditAgendaModal: React.FC = () => {
                 h={38}
                 onClick={() =>
                   updateAgenda({
-                    id: targetAgenda?.id,
-                    title: titleS,
-                    content: contentS,
-                    resolution: resolutionS,
+                    id: targetAgenda!.id,
+                    title: titleState,
+                    content: contentState,
+                    resolution: resolutionState,
                     voters: {
                       total: [],
                     },
-                    choices: [],
+                    choices: choicesState,
                   })
                 }
               >
@@ -147,7 +162,7 @@ export const EditAgendaModal: React.FC = () => {
                   투표 수정하기
                 </Text>
               </Button>
-              <Button h={38} onClick={() => deleteAgenda(targetAgenda?.id)}>
+              <Button h={38} onClick={() => deleteAgenda(targetAgenda!.id)}>
                 <Text variant="boldtitle3" color="blue600">
                   투표 삭제하기
                 </Text>
