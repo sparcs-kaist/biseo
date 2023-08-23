@@ -1,13 +1,12 @@
 import React, { useCallback } from "react";
 import { Box } from "@/components/atoms";
-import { SectionHeader } from "@/components/molecules";
+import { SectionHeader, AgendaCard } from "@/components/molecules";
 import { useAgenda } from "@/services/agenda";
 import {
   isOngoingAgenda,
   isTerminatedAgenda,
   isPreparingAgenda,
 } from "@/utils/agenda";
-import { AgendaCard } from "@/components/molecules/AgendaCard";
 import { AgendaStatus } from "biseo-interface/agenda";
 
 export const AgendaSection: React.FC = () => {
@@ -50,17 +49,17 @@ export const AgendaSection: React.FC = () => {
   return (
     <Box dir="row" gap={20}>
       <Box dir="column" w={380}>
-        <SectionHeader count={getAgendas("ongoing").length}>
+        <SectionHeader count={ongoingAgendas.length}>
           진행중인 투표
         </SectionHeader>
         {getAgendaCards("ongoing")}
-        <SectionHeader count={getAgendas("preparing").length}>
+        <SectionHeader count={preparingAgendas.length}>
           예정된 투표
         </SectionHeader>
         {getAgendaCards("preparing")}
       </Box>
       <Box dir="column" w={300}>
-        <SectionHeader count={getAgendas("terminated").length}>
+        <SectionHeader count={terminatedAgendas.length}>
           종료된 투표
         </SectionHeader>
         {getAgendaCards("terminated")}

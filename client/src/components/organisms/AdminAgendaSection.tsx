@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Box } from "@/components/atoms";
 import {
-  AdminOngoingAgendaCard,
-  AdminPreparingAgendaCard,
   SectionHeader,
-  AddButton,
-  AdminTerminatedAgendaCard,
+  AddButtonCard,
+  AgendaCard,
 } from "@/components/molecules";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import {
@@ -15,6 +13,7 @@ import {
   isPreparingAgenda,
   isTerminatedAgenda,
 } from "@/utils/agenda";
+import { AdminAgendaStatus } from "biseo-interface/admin/agenda";
 
 export const AdminAgendaSection: React.FC = () => {
   const navigate = useNavigate();
@@ -27,44 +26,56 @@ export const AdminAgendaSection: React.FC = () => {
       preparingAgendas: state.adminAgendas.filter(isPreparingAgenda),
     }));
 
-  const preparingAgendaCards = preparingAgendas.map(agenda => (
-    <AdminPreparingAgendaCard key={agenda.id} agenda={agenda} />
-  ));
-  const ongoingAgendaCards = ongoingAgendas.map(agenda => (
-    <AdminOngoingAgendaCard key={agenda.id} agenda={agenda} />
-  ));
-  const terminatedAgendaCards = terminatedAgendas.map(agenda => (
-    <AdminTerminatedAgendaCard key={agenda.id} agenda={agenda} />
-  ));
+  const getAgendas = useCallback(
+    (agendaStatus: AdminAgendaStatus) => {
+      if (agendaStatus === "preparing") return preparingAgendas;
+      if (agendaStatus === "ongoing") return ongoingAgendas;
+      if (agendaStatus === "terminated") return terminatedAgendas;
+      return [];
+    },
+    [preparingAgendas, ongoingAgendas, terminatedAgendas],
+  );
+
+  const getAgendaCards = useCallback(
+    (agendaStatus: AdminAgendaStatus) => {
+      const agendas = getAgendas(agendaStatus);
+
+      if (agendas.length === 0)
+        return <AgendaCard.Empty agendaStatus={agendaStatus} />;
+      else
+        return (
+          <AgendaCard.List>
+            {agendaStatus === "preparing" && (
+              <AddButtonCard content="새로운 투표" onClick={openModal} />
+            )}
+            {agendas.map(agenda => (
+              <AgendaCard.Admin key={agenda.id} agenda={agenda} />
+            ))}
+          </AgendaCard.List>
+        );
+    },
+    [preparingAgendas, ongoingAgendas, terminatedAgendas],
+  );
 
   return (
     <Box dir="row" gap={20}>
       <Box dir="column" w={300}>
-        <SectionHeader count={preparingAgendaCards.length}>
+        <SectionHeader count={preparingAgendas.length}>
           예정된 투표
         </SectionHeader>
-        <Box dir="column" w="fill" gap={15}>
-          <Box dir="column" w="fill" gap={15}>
-            <AddButton content="새로운 투표" onClick={openModal} />
-          </Box>
-          {preparingAgendaCards}
-        </Box>
+        {getAgendaCards("preparing")}
       </Box>
       <Box dir="column" w={300}>
-        <SectionHeader count={ongoingAgendaCards.length}>
+        <SectionHeader count={ongoingAgendas.length}>
           진행중인 투표
         </SectionHeader>
-        <Box dir="column" w="fill" gap={15}>
-          {ongoingAgendaCards}
-        </Box>
+        {getAgendaCards("ongoing")}
       </Box>
       <Box dir="column" w={300}>
-        <SectionHeader count={terminatedAgendaCards.length}>
+        <SectionHeader count={terminatedAgendas.length}>
           종료된 투표
         </SectionHeader>
-        <Box dir="column" w="fill" gap={15}>
-          {terminatedAgendaCards}
-        </Box>
+        {getAgendaCards("terminated")}
       </Box>
     </Box>
   );
