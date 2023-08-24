@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { Modal } from "@/components/molecules";
 import { Button, Box, Text, BorderedBox } from "@/components/atoms";
 import { ModalInner } from "../molecules/ModalInnerTextBox";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAgendaTemplate } from "@/services/agenda-template";
 
 export const CreateTemplateModal: React.FC = () => {
@@ -199,11 +199,13 @@ export const CreateTemplateModal: React.FC = () => {
           </Box>
 
           <Box dir="row" w={300} gap={10}>
-            <Button w={300} h={40}>
-              <Text variant="boldtitle3" color="blue600">
-                탬플릿 생성하기
-              </Text>
-            </Button>
+            <Link to=".." relative="path" replace>
+              <Button w={300} h={40} onClick={onTemplateUpdate}>
+                <Text variant="boldtitle3" color="blue600">
+                  탬플릿 생성하기
+                </Text>
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Box>

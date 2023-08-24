@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "@/components/molecules";
 import { Button, Box, Text, BorderedBox } from "@/components/atoms";
 import { ModalInner } from "../molecules/ModalInnerTextBox";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAgendaTemplate } from "@/services/agenda-template";
 
 export const EditTemplateModal: React.FC = () => {
@@ -241,12 +241,13 @@ export const EditTemplateModal: React.FC = () => {
                 탬플릿 수정하기
               </Text>
             </Button>
-
-            <Button w={145} h={40} onClick={onTemplateDelete}>
-              <Text variant="boldtitle3" color="blue600">
-                탬플릿 삭제하기
-              </Text>
-            </Button>
+            <Link to=".." relative="path" replace>
+              <Button w={145} h={40} onClick={onTemplateDelete}>
+                <Text variant="boldtitle3" color="blue600">
+                  탬플릿 삭제하기
+                </Text>
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Box>
