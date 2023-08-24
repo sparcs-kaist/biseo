@@ -1,6 +1,6 @@
 import { socket } from "@/socket";
 import { create } from "zustand";
-import type {
+import {
   AgendaTemplate,
   AgendaTemplateCreate,
   AgendaTemplateUpdate,
@@ -8,14 +8,19 @@ import type {
 
 interface AgendaTemplateState {
   agendaTemplates: AgendaTemplate[];
+  findTemplate: (id: number) => AgendaTemplate | undefined;
   createTemplate: (template: AgendaTemplateCreate) => void;
   retrieveAll: () => void;
   updateTemplate: (template: AgendaTemplateUpdate) => void;
   deleteTemplate: (id: number) => void;
 }
 
-export const useAgendaTemplate = create<AgendaTemplateState>(set => ({
+export const useAgendaTemplate = create<AgendaTemplateState>((set, get) => ({
   agendaTemplates: [],
+
+  findTemplate: id => {
+    return get().agendaTemplates.find(template => template.id === id);
+  },
 
   createTemplate: async template => {
     try {
