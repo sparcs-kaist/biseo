@@ -1,21 +1,18 @@
-import React, { ReactNode, useState } from "react";
+import React, { useState } from "react";
 import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
-import { Button, Box, Text, BorderedBox, SelectText } from "@/components/atoms";
+import { Button, Box, Text } from "@/components/atoms";
 import { ModalInner } from "../molecules/ModalInnerTextBox";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgendaCreate } from "@biseo/interface/admin/agenda";
-import { useLocation } from "react-router-dom";
 import { UserTable } from "./UserTable";
 import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
 
 export const CreateAgendaModal: React.FC = () => {
-  const [agendaCreate, setAgendaCreate] = useState<AdminAgendaCreate>();
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
   const [resolutionState, setResolutionState] = useState("");
 
-  const [choicesState, setChoicesState] = useState([""]);
+  const [choicesState, setChoicesState] = useState<String[]>([]);
   const [votersState, setVotersState] = useState<number[]>([]);
   const [newchoiceState, setNewchoiceState] = useState("");
 
@@ -92,21 +89,13 @@ export const CreateAgendaModal: React.FC = () => {
             </SelectTemplateBox>
           </ModalInner>
           <ModalInner title="투표 대상" count={3}>
-            <BorderedBox
-              borderColor="gray200"
-              bg="white"
-              w={298}
-              h={277}
-              borderSize={1}
-              round={5}
-              borderStyle="solid"
-            >
+            <Box h={277}>
               <UserTable
                 setSelectedUsers={setVotersState}
                 selectedUsers={votersState}
                 editable
               />
-            </BorderedBox>
+            </Box>
           </ModalInner>
           <Box w={300} h={106} padHorizontal={13} padVertical={15} gap={10}>
             <Box dir="row" w={270} h={28} justify="space-between">
