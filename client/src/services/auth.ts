@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import type { Init } from "biseo-interface/init";
+import type { Init } from "@biseo/interface/init";
 
 import { socket } from "@/socket";
 import { initSocket } from "@/socket/init";

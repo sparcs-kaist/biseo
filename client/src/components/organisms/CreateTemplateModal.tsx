@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { Modal } from "@/components/molecules";
 import { Button, Box, Text, BorderedBox } from "@/components/atoms";
-import { ModalInner } from "../molecules/ModalInnerTextBox";
-import { Link, useLocation } from "react-router-dom";
+import { ModalInner } from "@/components/molecules";
+import { Link } from "react-router-dom";
 import { useAgendaTemplate } from "@/services/agenda-template";
 
 export const CreateTemplateModal: React.FC = () => {
@@ -57,7 +57,7 @@ export const CreateTemplateModal: React.FC = () => {
   };
 
   return (
-    <Modal width={680} height={392} title="탬플릿 생성하기">
+    <Modal width={680} height={590} title="탬플릿 생성하기">
       <Box w={630} dir="row" justify="space-between">
         <Box w={300} dir="column" gap={20}>
           <Box dir="column" gap={8}>

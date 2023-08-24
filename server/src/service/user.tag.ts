@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import * as schema from "biseo-interface/user/tag";
+import * as schema from "@biseo/interface/user/tag";
 import { prisma } from "@/db/prisma";
 
 export const createTag = async ({
@@ -23,7 +23,7 @@ export const createTag = async ({
       description: true,
       users: {
         select: {
-          user: true,
+          userId: true,
         },
       },
     },
@@ -31,7 +31,7 @@ export const createTag = async ({
 
   const tagWithUsers: schema.UserTag = {
     ...createdTag,
-    users: createdUsers.map(user => user.user.id),
+    users: createdUsers.map(user => user.userId),
   };
 
   return {
@@ -81,7 +81,7 @@ export const updateTag = async (tagUpdate: schema.UserTagUpdate) => {
       description: true,
       users: {
         select: {
-          user: true,
+          userId: true,
         },
       },
     },
@@ -92,7 +92,7 @@ export const updateTag = async (tagUpdate: schema.UserTagUpdate) => {
 
   const tagWithUsers: schema.UserTag = {
     ...updatedTag,
-    users: users.map(user => user.user.id),
+    users: users.map(user => user.userId),
   };
 
   return {

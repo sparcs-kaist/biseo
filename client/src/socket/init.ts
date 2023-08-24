@@ -1,5 +1,5 @@
 import { socket } from "./io";
-import type { Init } from "biseo-interface/init";
+import type { Init } from "@biseo/interface/init";
 
 export const initSocket = (token: string) => new Promise<Init>((resolve, reject) => {
   socket.auth = { token };

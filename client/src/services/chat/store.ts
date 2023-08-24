@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import type { Message } from "biseo-interface/chat";
-import type { ChatUser } from "biseo-interface/user";
+import type { Message } from "@biseo/interface/chat";
+import type { ChatUser } from "@biseo/interface/user";
 
 import { createDraftMessage, RETRIEVE_CHAT_OFFSET } from "./common";
 import { socket } from "@/socket";

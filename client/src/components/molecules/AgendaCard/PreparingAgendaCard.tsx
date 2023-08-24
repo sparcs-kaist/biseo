@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Card, Text } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
 
-import type { PreparingAgenda } from "biseo-interface/agenda";
+import type { PreparingAgenda } from "@biseo/interface/agenda";
 
 const _tags = {
   public: false,

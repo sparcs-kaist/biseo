@@ -230,6 +230,7 @@ const TextButton: React.FC<SubmitProps> = ({ children, onClick, onSubmit }) => (
       justify="center"
       w={20}
       h={20}
+      // @ts-ignore
       onClick={onSubmit}
     >
       <Text color="blue600" variant="boldtitle2">

@@ -1,9 +1,12 @@
 {
-  "name": "biseo-interface",
+  "name": "@biseo/interface",
   "version": "2.0.0",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.0.4",
     "zod": "^3.21.4"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
   }
 }
