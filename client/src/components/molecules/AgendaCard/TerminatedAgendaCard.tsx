@@ -7,7 +7,7 @@ import {
   VoteDetail,
 } from "@/components/molecules";
 
-import type { TerminatedAgenda } from "biseo-interface/agenda";
+import type { TerminatedAgenda } from "@biseo/interface/agenda";
 
 const _tags = {
   public: false,

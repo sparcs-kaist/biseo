@@ -1,4 +1,4 @@
-import * as schema from "biseo-interface/agenda/template";
+import * as schema from "@biseo/interface/agenda/template";
 
 import {
   createTemplate,

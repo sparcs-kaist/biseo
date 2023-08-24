@@ -4,7 +4,7 @@ import { Button, Box, Text, BorderedBox, SelectText } from "@/components/atoms";
 import { ModalInner } from "../molecules/ModalInnerTextBox";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgendaCreate } from "biseo-interface/admin/agenda";
+import { AdminAgendaCreate } from "@biseo/interface/admin/agenda";
 import { useLocation } from "react-router-dom";
 import { UserTable } from "./UserTable";
 import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
@@ -14,6 +14,7 @@ export const CreateAgendaModal: React.FC = () => {
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
   const [resolutionState, setResolutionState] = useState("");
+
   const [choicesState, setChoicesState] = useState([""]);
   const [votersState, setVotersState] = useState<number[]>([]);
   const [newchoiceState, setNewchoiceState] = useState("");

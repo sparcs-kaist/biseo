@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
 import { Button, Box, Text, BorderedBox } from "@/components/atoms";
-import { ModalInner } from "../molecules/ModalInnerTextBox";
+import { ModalInner } from "@/components/molecules";
 import { useLocation } from "react-router-dom";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgendaUpdate } from "biseo-interface/admin/agenda";
+import { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
 import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
 import { UserTable } from "./UserTable";
 

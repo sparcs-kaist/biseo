@@ -1,13 +1,13 @@
 import React from "react";
 
-import { Agenda } from "biseo-interface/agenda";
+import { Agenda } from "@biseo/interface/agenda";
 import { List } from "./List";
 import { EmptyAgendaCard } from "./EmptyAgendaCard";
 import { OngoingAgendaCard } from "./OngoingAgendaCard";
 import { PreparingAgendaCard } from "./PreparingAgendaCard";
 import { TerminatedAgendaCard } from "./TerminatedAgendaCard";
 import { AdminOngoingAgendaCard } from "./AdminOngoingAgendaCard";
-import { AdminAgenda } from "biseo-interface/admin/agenda";
+import { AdminAgenda } from "@biseo/interface/admin/agenda";
 import { AdminPreparingAgendaCard } from "./AdminPreparingAgendaCard";
 import { AdminTerminatedAgendaCard } from "./AdminTerminatedAgendaCard";
 

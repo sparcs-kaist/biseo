@@ -4,7 +4,7 @@ import type {
   UserTag,
   UserTagCreate,
   UserTagUpdate,
-} from "biseo-interface/user/tag";
+} from "@biseo/interface/user/tag";
 
 interface UserTagState {
   userTags: UserTag[];
