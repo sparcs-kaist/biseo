@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "pnpm migrate && nodemon",
+    "prod": "node -r tsconfig-paths/register dist/index.js",
     "db": "docker compose -f docker-compose.dev.yml",
     "typecheck": "prisma generate && tsc --noEmit",
     "typegen": "prisma generate",
