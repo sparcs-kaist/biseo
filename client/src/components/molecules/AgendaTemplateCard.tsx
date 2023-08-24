@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Text, Card, Divider } from "@/components/atoms";
 import { AdminTag } from "@/components/molecules";
 import { useNavigate } from "react-router-dom";
-import type { AgendaTemplate } from "biseo-interface/agenda/template";
+import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 
 const _tags = {
   template: true,
