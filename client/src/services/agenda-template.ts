@@ -1,6 +1,6 @@
 import { socket } from "@/socket";
 import { create } from "zustand";
-import {
+import type {
   AgendaTemplate,
   AgendaTemplateCreate,
   AgendaTemplateUpdate,

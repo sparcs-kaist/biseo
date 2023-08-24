@@ -1,10 +1,9 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import {
   PositionedDownArrowIcon,
   SelectWrapper,
   TemplateSelect,
 } from "@/components/atoms";
-import { PropsWithChildren } from "react";
 import { useAgendaTemplate } from "@/services/agenda-template";
 
 interface Props extends PropsWithChildren {
@@ -28,10 +27,9 @@ export const SelectTemplateBox: React.FC<Props> = ({
         w={width}
         h={height}
         onChange={e => onChange(parseInt(e.target.value, 10))}
+        defaultValue={0}
       >
-        <option value={0} selected>
-          {children}
-        </option>
+        <option value={0}>{children}</option>
         {templates.map(template => (
           <option key={template.id} value={template.id}>
             {template.templateName}

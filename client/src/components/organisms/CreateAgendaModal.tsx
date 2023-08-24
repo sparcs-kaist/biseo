@@ -1,16 +1,22 @@
-import React, { ReactNode, useState } from "react";
-import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
-import { Button, Box, Text, BorderedBox, SelectText } from "@/components/atoms";
-import { ModalInner } from "../molecules/ModalInnerTextBox";
+import React, { useState } from "react";
+import {
+  AdminAgendaTagsSelect,
+  Modal,
+  ModalInner,
+} from "@/components/molecules";
+import {
+  Button,
+  Box,
+  Text,
+  BorderedBox,
+  SelectTemplateBox,
+} from "@/components/atoms";
+import { UserTable } from "@/components/organisms";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgendaCreate } from "@biseo/interface/admin/agenda";
-import { useLocation } from "react-router-dom";
-import { UserTable } from "./UserTable";
-import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
 import { useAgendaTemplate } from "@/services/agenda-template";
-import { AgendaTemplate } from "@biseo/interface/agenda/template";
-import { Agenda } from "@biseo/interface/agenda";
+import type { AdminAgendaCreate } from "@biseo/interface/admin/agenda";
+import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 
 export const CreateAgendaModal: React.FC = () => {
   const [agendaCreate, setAgendaCreate] = useState<AdminAgendaCreate>();
@@ -72,7 +78,7 @@ export const CreateAgendaModal: React.FC = () => {
                   }
                 }}
               >
-                탬플릿을 선택하세요
+                템플릿을 선택하세요
               </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목">

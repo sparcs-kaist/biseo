@@ -114,9 +114,6 @@ const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
       onChange={onClick}
       value={value}
     />
-    {/* <Text color="gray300" variant="subtitle">
-      {children}
-    </Text> */}
   </BorderedBox>
 );
 ModalInner.InputBox = InputBox;
