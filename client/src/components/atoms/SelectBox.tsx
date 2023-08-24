@@ -24,9 +24,7 @@ export const SelectBox: React.FC<Props> = ({
 }) => (
   <SelectWrapper>
     <Select w={width} h={height} onChange={e => onChange(e.target.value)}>
-      <option value="" selected>
-        전체보기
-      </option>
+      <option defaultValue="">전체보기</option>
       {options.map(option => (
         <option key={option.id} value={option.name}>
           {option.name}
@@ -45,7 +43,7 @@ export const SelectText: React.FC<Props> = ({
 }) => (
   <SelectWrapper>
     <Select w={width} h={height} onChange={e => onChange(e.target.value)}>
-      <option value="" disabled selected hidden>
+      <option defaultValue="" disabled hidden>
         {children}
       </option>
     </Select>
