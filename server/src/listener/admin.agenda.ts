@@ -1,4 +1,4 @@
-import * as schema from "biseo-interface/admin/agenda";
+import * as schema from "@biseo/interface/admin/agenda";
 
 import {
   createAgenda,

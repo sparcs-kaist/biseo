@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Color, theme } from "@/theme";
 import styled from "@emotion/styled";
-import type { Choice } from "biseo-interface/agenda";
+import type { Choice } from "@biseo/interface/agenda";
 import { Text } from "@/components/atoms";
 import { SelectIcon } from "@/assets";
 import { PropsWithChildren } from "react";

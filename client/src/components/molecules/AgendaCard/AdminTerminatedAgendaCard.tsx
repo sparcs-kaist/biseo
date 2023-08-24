@@ -1,6 +1,6 @@
 import { Box, Card, Text } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules";
-import type { AdminAgenda } from "biseo-interface/admin/agenda";
+import type { AdminAgenda } from "@biseo/interface/admin/agenda";
 import { useNavigate } from "react-router-dom";
 
 const _tags = {

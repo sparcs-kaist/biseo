@@ -8,37 +8,38 @@
 ### Prerequisites
 
 - `node >=18.0.0`
-    - Other versions may work, but not tested
-    - Using [`nvm`](https://github.com/nvm-sh/nvm) is recommended
+    - Use [`nvm`](https://github.com/nvm-sh/nvm) or [`pnpm use`](https://pnpm.io/cli/env) to set node version.
+- [`pnpm`](https://pnpm.io/)
+    - `npm install -g pnpm`
 - [`docker`](https://www.docker.com/)
 
 ### Setup
 
-1. Run the command below and fill in the `.env` file.
+1. Fill in the `.env` file.
 
    ```bash
    cp .env.example .env
    ```
-2. (optional, when using `nvm`) Set node version.
-
-   ```bash
-   nvm install
-   ```
-
-3. Install dependencies and run dev server.
+2. Install dependencies and run dev server.
 
     ```bash
-    yarn
-    yarn dev
+    pnpm i
+    pnpm dev
     ```
 
-### Troubleshooting
-
-WIP
 
 ## Deployment
 
-WIP
+1. Fill in the `.env` file.
+
+    ```bash
+    cp .env.prod.example .env
+    ```
+
+2. Build and run the docker image.
+    ```bash
+    docker-compose up -d --build
+    ```
 
 [badge/conventional-commits]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white
 

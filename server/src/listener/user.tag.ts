@@ -1,4 +1,4 @@
-import * as schema from "biseo-interface/user/tag";
+import * as schema from "@biseo/interface/user/tag";
 
 import {
   createTag,

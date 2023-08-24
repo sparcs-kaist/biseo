@@ -4,7 +4,7 @@ import type {
   AgendaTemplate,
   AgendaTemplateCreate,
   AgendaTemplateUpdate,
-} from "biseo-interface/agenda/template";
+} from "@biseo/interface/agenda/template";
 
 interface AgendaTemplateState {
   agendaTemplates: AgendaTemplate[];

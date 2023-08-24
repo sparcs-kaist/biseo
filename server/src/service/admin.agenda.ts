@@ -1,10 +1,10 @@
 import type { Prisma, User } from "@prisma/client";
-import * as schema from "biseo-interface/admin/agenda";
+import * as schema from "@biseo/interface/admin/agenda";
 import type {
   OngoingAgenda,
   PreparingAgenda,
   TerminatedAgenda,
-} from "biseo-interface/agenda";
+} from "@biseo/interface/agenda";
 import { prisma } from "@/db/prisma";
 import { BiseoError } from "@/lib/error";
 
