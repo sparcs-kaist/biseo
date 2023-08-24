@@ -5,11 +5,12 @@ import {
   TemplateSelect,
 } from "@/components/atoms";
 import { PropsWithChildren } from "react";
+import { useAgendaTemplate } from "@/services/agenda-template";
 
 interface Props extends PropsWithChildren {
   width: number;
   height: number;
-  onChange: (selectedValue: string) => void; // new prop
+  onChange: (selectedValue: number) => void; // new prop
 }
 
 export const SelectTemplateBox: React.FC<Props> = ({
@@ -17,18 +18,27 @@ export const SelectTemplateBox: React.FC<Props> = ({
   width,
   height,
   onChange,
-}) => (
-  <SelectWrapper>
-    <TemplateSelect
-      w={width}
-      h={height}
-      onChange={e => onChange(e.target.value)}
-    >
-      <option value="" selected>
-        {children}
-      </option>
-      {/* Add more options later*/}
-    </TemplateSelect>
-    <PositionedDownArrowIcon />
-  </SelectWrapper>
-);
+}) => {
+  const { templates } = useAgendaTemplate(state => ({
+    templates: state.agendaTemplates,
+  }));
+  return (
+    <SelectWrapper>
+      <TemplateSelect
+        w={width}
+        h={height}
+        onChange={e => onChange(parseInt(e.target.value, 10))}
+      >
+        <option value={0} selected>
+          {children}
+        </option>
+        {templates.map(template => (
+          <option key={template.id} value={template.id}>
+            {template.templateName}
+          </option>
+        ))}
+      </TemplateSelect>
+      <PositionedDownArrowIcon />
+    </SelectWrapper>
+  );
+};

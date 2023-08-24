@@ -8,6 +8,9 @@ import { AdminAgendaCreate } from "@biseo/interface/admin/agenda";
 import { useLocation } from "react-router-dom";
 import { UserTable } from "./UserTable";
 import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
+import { useAgendaTemplate } from "@/services/agenda-template";
+import { AgendaTemplate } from "biseo-interface/agenda/template";
+import { Agenda } from "biseo-interface/agenda";
 
 export const CreateAgendaModal: React.FC = () => {
   const [agendaCreate, setAgendaCreate] = useState<AdminAgendaCreate>();
@@ -16,7 +19,7 @@ export const CreateAgendaModal: React.FC = () => {
   const [resolutionState, setResolutionState] = useState("");
   const [choicesState, setChoicesState] = useState<string[]>([]);
   const [newchoiceState, setNewchoiceState] = useState("");
-
+  const [templateState, setTemplateState] = useState(0);
   const { createAgenda } = useAdminAgenda(state => ({
     createAgenda: state.createAgenda,
   }));
@@ -37,29 +40,59 @@ export const CreateAgendaModal: React.FC = () => {
     setChoicesState([...choicesState, newchoiceState]);
     setNewchoiceState("");
   };
+  const { findTemplate } = useAgendaTemplate(state => ({
+    findTemplate: state.findTemplate,
+  }));
 
+  const emptyTemplate: AgendaTemplate = {
+    id: 0,
+    title: "",
+    content: "",
+    resolution: "",
+    choices: [],
+    templateName: "",
+  };
   return (
     <Modal width={680} height={590} title="투표 생성하기">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>
             <ModalInner title="템플릿 선택">
-              <SelectTemplateBox width={300} height={38} onChange={() => {}}>
+              <SelectTemplateBox
+                width={300}
+                height={38}
+                onChange={(templateId: number) => {
+                  const targetTemplate = findTemplate(templateId);
+                  if (targetTemplate != undefined) {
+                    setTemplateState(templateId);
+                    setTitleState(targetTemplate.title);
+                    setContentState(targetTemplate.content);
+                    setResolutionState(targetTemplate.resolution);
+                    setChoicesState(targetTemplate.choices);
+                  }
+                }}
+              >
                 탬플릿을 선택하세요
               </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목">
-              <ModalInner.InputBox onClick={onChangeTitle}>
+              <ModalInner.InputBox onClick={onChangeTitle} value={titleState}>
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
             <ModalInner title="투표 설명">
-              <ModalInner.InputBox onClick={onChangeContent}>
+              <ModalInner.InputBox
+                onClick={() => {} /*onChangeContent*/}
+                value={contentState}
+              >
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
             <ModalInner title="의결 문안">
-              <ModalInner.InputBox onClick={onChangeResolution}>
+              <ModalInner.InputBox
+                onClick={onChangeResolution}
+                value={resolutionState}
+              >
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
