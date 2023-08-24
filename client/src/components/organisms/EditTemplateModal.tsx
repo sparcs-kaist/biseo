@@ -86,7 +86,7 @@ export const EditTemplateModal: React.FC = () => {
   };
 
   return (
-    <Modal title="에딧">
+    <Modal title="탬플릿 수정하기">
       <Box w={630} dir="row" justify="space-between">
         <Box w={300} dir="column" gap={20}>
           <Box dir="column" gap={8}>
