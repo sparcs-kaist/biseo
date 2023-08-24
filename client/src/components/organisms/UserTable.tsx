@@ -43,7 +43,7 @@ export const UserTable: React.FC<Props> = ({
     }
   }, []);
 
-  const [selectedUsers, setSelectedUsers] = useState(selected);
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const selectUser = (id: number) => {
     if (selectedUsers.includes(id)) {
       setSelectedUsers(selectedUsers.filter(user => user !== id));
@@ -51,6 +51,9 @@ export const UserTable: React.FC<Props> = ({
       setSelectedUsers([...selectedUsers, id]);
     }
   };
+  useEffect(() => {
+    setSelectedUsers(selected);
+  }, [selected]);
 
   const [selectedTag, setSelectedTag] = useState("");
 
