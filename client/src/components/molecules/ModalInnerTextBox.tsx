@@ -19,6 +19,7 @@ interface ModalInnerProps extends PropsWithChildren {
 
 interface ButtonProps extends PropsWithChildren {
   onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 }
 
 interface SubmitProps extends PropsWithChildren {
@@ -107,7 +108,7 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
   </BorderedBox>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
-const InputBox: React.FC<ButtonProps> = ({ children, onClick }) => (
+const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
   <BorderedBox
     borderColor="gray200"
     bg="gray100"
@@ -125,10 +126,8 @@ const InputBox: React.FC<ButtonProps> = ({ children, onClick }) => (
       placeholder={children?.toString()}
       style={{ border: 0, color: "#555555", fontSize: 11 }}
       onChange={onClick}
+      value={value}
     />
-    {/* <Text color="gray300" variant="subtitle">
-      {children}
-    </Text> */}
   </BorderedBox>
 );
 ModalInner.InputBox = InputBox;
@@ -201,6 +200,7 @@ const VoteChoice: React.FC<PropsWithChildren> = ({ children }) => (
     gap={10}
     justify="space-between"
     dir="row"
+    align="center"
   >
     <Text color="gray500" variant="subtitle">
       {children}
