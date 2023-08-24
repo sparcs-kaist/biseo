@@ -1,34 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Box,
+  Text,
+  SelectTagBox,
+  SelectTemplateBox,
+} from "@/components/atoms";
 import {
   AdminAgendaTagsSelect,
   Modal,
   ModalInner,
 } from "@/components/molecules";
-import {
-  Button,
-  Box,
-  Text,
-  BorderedBox,
-  SelectTemplateBox,
-} from "@/components/atoms";
 import { UserTable } from "@/components/organisms";
 
-import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAgendaTemplate } from "@/services/agenda-template";
-import type { AdminAgendaCreate } from "@biseo/interface/admin/agenda";
+import { useAdminAgenda } from "@/services/admin-agenda";
+import { useAdminUser } from "@/services/admin-user";
+import { useUserTag } from "@/services/user-tag";
+
 import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 
 export const CreateAgendaModal: React.FC = () => {
-  const [agendaCreate, setAgendaCreate] = useState<AdminAgendaCreate>();
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
   const [resolutionState, setResolutionState] = useState("");
+
   const [choicesState, setChoicesState] = useState<string[]>([]);
+  const [votersState, setVotersState] = useState<number[]>([]);
   const [newchoiceState, setNewchoiceState] = useState("");
   const [templateState, setTemplateState] = useState(0);
   const { createAgenda } = useAdminAgenda(state => ({
     createAgenda: state.createAgenda,
   }));
+  const { tags, retrieveTags } = useUserTag(state => ({
+    tags: state.userTags,
+    retrieveTags: state.retrieveAll,
+  }));
+  const { users, retrieveUsers } = useAdminUser(state => ({
+    users: state.adminUsers,
+    retrieveUsers: state.retrieveAll,
+  }));
+  useEffect(() => {
+    retrieveTags();
+    retrieveUsers();
+  }, []);
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleState(e.target.value);
@@ -50,14 +65,25 @@ export const CreateAgendaModal: React.FC = () => {
     findTemplate: state.findTemplate,
   }));
 
-  const emptyTemplate: AgendaTemplate = {
-    id: 0,
-    title: "",
-    content: "",
-    resolution: "",
-    choices: [],
-    templateName: "",
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const applySelectedTags = () => {
+    const tagIsSelected = (tag: string) => selectedTags.includes(tag);
+    const selected = users.filter(user => user.tags.some(tagIsSelected));
+    setSelectedUsers(selected.map(user => user.id));
   };
+
+  const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { options } = e.target;
+    const optionNum = options.length;
+
+    const selected = [];
+    for (var i = 0; i < optionNum; i++) {
+      if (options[i].selected) selected.push(options[i].value);
+    }
+    setSelectedTags(selected);
+  };
+
   return (
     <Modal width={680} height={590} title="투표 생성하기">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
@@ -123,23 +149,25 @@ export const CreateAgendaModal: React.FC = () => {
           </Box>
         </Box>
         <Box w={300} gap={20}>
-          <ModalInner title="태그 선택">
-            <SelectTemplateBox width={300} height={38} onChange={() => {}}>
-              태그를 선택하세요
-            </SelectTemplateBox>
+          <ModalInner
+            title="태그 선택"
+            buttonText="선택된 태그 적용하기"
+            buttonOnClick={applySelectedTags}
+          >
+            <SelectTagBox
+              selected={selectedTags}
+              onChange={onChangeSelectedTags}
+            />
           </ModalInner>
           <ModalInner title="투표 대상" count={3}>
-            <BorderedBox
-              borderColor="gray200"
-              bg="white"
-              w={298}
-              h={277}
-              borderSize={1}
-              round={5}
-              borderStyle="solid"
-            >
-              <UserTable editable />
-            </BorderedBox>
+            <Box h={277}>
+              <UserTable
+                setSelectedUsers={setVotersState}
+                selectedUsers={votersState}
+                selected={selectedUsers}
+                editable
+              />
+            </Box>
           </ModalInner>
           <Box w={300} h={106} padHorizontal={13} padVertical={15} gap={10}>
             <Box dir="row" w={270} h={28} justify="space-between">
@@ -154,7 +182,7 @@ export const CreateAgendaModal: React.FC = () => {
                     content: contentState,
                     resolution: resolutionState,
                     voters: {
-                      total: [],
+                      total: votersState,
                     },
                     choices: choicesState.filter(word => word != ""),
                   })

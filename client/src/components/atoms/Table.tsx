@@ -8,7 +8,7 @@ export const Cell = styled.td<{ w?: number }>`
   font-weight: 500;
 `;
 
-export const Header = styled.th`
+export const Header = styled.thead`
   position: relative;
   display: flex;
   height: 32px;

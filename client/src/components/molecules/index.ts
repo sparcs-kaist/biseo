@@ -16,7 +16,7 @@ export * from "./AdminAgendaTags";
 export * from "./ModalInnerTextBox";
 export * from "./ParticipantBar";
 export * from "./TerminatedAgendaModalInner";
-export * from "./AgendaTemplateCards";
+export * from "./AgendaTemplateCard";
 export * from "./UserTagCards";
 export * from "./AdminTag";
 export * from "./AddButtonCard";

@@ -30,6 +30,11 @@ export const EditAgendaModal: React.FC = () => {
       return choice.name;
     }),
   );
+  const [votersState, setVotersState] = useState<number[]>(
+    targetAgenda!.voters.total.map(voters => {
+      return voters.id;
+    }),
+  );
 
   const { updateAgenda } = useAdminAgenda(state => ({
     updateAgenda: state.updateAgenda,
@@ -128,7 +133,11 @@ export const EditAgendaModal: React.FC = () => {
               round={5}
               borderStyle="solid"
             >
-              <UserTable />
+              <UserTable
+                selectedUsers={votersState}
+                setSelectedUsers={setVotersState}
+                editable
+              />
             </BorderedBox>
           </ModalInner>
           <Box w="fill" gap={20}>
@@ -143,7 +152,7 @@ export const EditAgendaModal: React.FC = () => {
                     content: contentState,
                     resolution: resolutionState,
                     voters: {
-                      total: [],
+                      total: votersState,
                     },
                     choices: choicesState,
                   })
