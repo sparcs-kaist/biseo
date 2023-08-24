@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Text, Card, Divider } from "@/components/atoms";
 import { AdminTag } from "@/components/molecules";
-import { useAgendaTemplate } from "@/services/agenda-template";
 import { useNavigate } from "react-router-dom";
+import { AgendaTemplate } from "biseo-interface/agenda/template";
 
 const _tags = {
   template: true,
@@ -10,37 +10,29 @@ const _tags = {
 };
 
 interface props {
-  id: number;
-  templateTitle: string;
-  title: string;
-  content: string;
+  template: AgendaTemplate;
 }
 
-export const AgendaTemplateCards: React.FC<props> = ({
-  id,
-  templateTitle,
-  title,
-  content,
-}) => {
+export const AgendaTemplateCard: React.FC<props> = ({ template }) => {
   const navigate = useNavigate();
-  const openModal = () => navigate(`templateEdit?templateId=${id}`);
+  const openModal = () => navigate(`templateEdit?templateId=${template.id}`);
+
   return (
-    <Card round={5} onClick={openModal}>
+    <Card onClick={openModal}>
       <Box gap={8} w="fill">
         <AdminTag tags={_tags} suffix={3} />
         <Box gap={11}>
           <Text variant="title2" color="gray600">
-            {templateTitle}
+            {template.templateName}
           </Text>
         </Box>
         <Divider />
-
         <Box w={340} gap={2}>
           <Text variant="title3" color="gray500">
-            {title}
+            {template.title}
           </Text>
           <Text variant="subtitle" color="gray400">
-            {content}
+            {template.content}
           </Text>
         </Box>
       </Box>
