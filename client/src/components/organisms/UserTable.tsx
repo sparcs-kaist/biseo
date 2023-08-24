@@ -15,12 +15,14 @@ import { useUserTag } from "@/services/user-tag";
 interface Props {
   selectedUsers: number[];
   setSelectedUsers?: (userIds: number[]) => void;
+  selected?: number[];
   editable?: boolean;
 }
 
 export const UserTable: React.FC<Props> = ({
   selectedUsers,
   setSelectedUsers = () => {},
+  selected = [],
   editable,
 }) => {
   const { users, retrieveUsers } = useAdminUser(state => ({
@@ -37,6 +39,10 @@ export const UserTable: React.FC<Props> = ({
     retrieveUsers();
     retrieveTags();
   }, []);
+
+  useEffect(() => {
+    setSelectedUsers(selected);
+  }, [selected]);
 
   const selectUser = (id: number) => {
     if (selectedUsers.includes(id)) {

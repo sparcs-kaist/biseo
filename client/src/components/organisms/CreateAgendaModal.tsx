@@ -1,11 +1,21 @@
-import React, { useState } from "react";
-import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
-import { Button, Box, Text } from "@/components/atoms";
-import { ModalInner } from "../molecules/ModalInnerTextBox";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Box,
+  Text,
+  SelectTagBox,
+  SelectTemplateBox,
+} from "@/components/atoms";
+import {
+  AdminAgendaTagsSelect,
+  Modal,
+  ModalInner,
+} from "@/components/molecules";
+import { UserTable } from "@/components/organisms";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { UserTable } from "./UserTable";
-import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
+import { useAdminUser } from "@/services/admin-user";
+import { useUserTag } from "@/services/user-tag";
 
 export const CreateAgendaModal: React.FC = () => {
   const [titleState, setTitleState] = useState("");
@@ -19,6 +29,18 @@ export const CreateAgendaModal: React.FC = () => {
   const { createAgenda } = useAdminAgenda(state => ({
     createAgenda: state.createAgenda,
   }));
+  const { tags, retrieveTags } = useUserTag(state => ({
+    tags: state.userTags,
+    retrieveTags: state.retrieveAll,
+  }));
+  const { users, retrieveUsers } = useAdminUser(state => ({
+    users: state.adminUsers,
+    retrieveUsers: state.retrieveAll,
+  }));
+  useEffect(() => {
+    retrieveTags();
+    retrieveUsers();
+  }, []);
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleState(e.target.value);
@@ -35,6 +57,25 @@ export const CreateAgendaModal: React.FC = () => {
   const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChoicesState([...choicesState, newchoiceState]);
     setNewchoiceState("");
+  };
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const applySelectedTags = () => {
+    const tagIsSelected = (tag: string) => selectedTags.includes(tag);
+    const selected = users.filter(user => user.tags.some(tagIsSelected));
+    setSelectedUsers(selected.map(user => user.id));
+  };
+
+  const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { options } = e.target;
+    const optionNum = options.length;
+
+    const selected = [];
+    for (var i = 0; i < optionNum; i++) {
+      if (options[i].selected) selected.push(options[i].value);
+    }
+    setSelectedTags(selected);
   };
 
   return (
@@ -83,16 +124,22 @@ export const CreateAgendaModal: React.FC = () => {
           </Box>
         </Box>
         <Box w={300} gap={20}>
-          <ModalInner title="태그 선택">
-            <SelectTemplateBox width={300} height={38} onChange={() => {}}>
-              태그를 선택하세요
-            </SelectTemplateBox>
+          <ModalInner
+            title="태그 선택"
+            buttonText="선택된 태그 적용하기"
+            buttonOnClick={applySelectedTags}
+          >
+            <SelectTagBox
+              selected={selectedTags}
+              onChange={onChangeSelectedTags}
+            />
           </ModalInner>
           <ModalInner title="투표 대상" count={3}>
             <Box h={277}>
               <UserTable
                 setSelectedUsers={setVotersState}
                 selectedUsers={votersState}
+                selected={selectedUsers}
                 editable
               />
             </Box>
