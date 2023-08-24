@@ -4,6 +4,7 @@ export * from "./Button";
 export * from "./Card";
 export * from "./CheckBox";
 export * from "./Divider";
+export * from "./GrayTextButton";
 export * from "./Label";
 export * from "./ProgressBar";
 export * from "./Scroll";

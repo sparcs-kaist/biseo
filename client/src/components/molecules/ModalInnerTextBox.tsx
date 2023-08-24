@@ -1,11 +1,20 @@
 import React, { PropsWithChildren } from "react";
-import { BorderedBox, Box, Text, TextArea, Button } from "@/components/atoms";
+import {
+  BorderedBox,
+  Box,
+  Text,
+  TextArea,
+  Button,
+  GrayTextButton,
+} from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
 
 interface ModalInnerProps extends PropsWithChildren {
   title: string;
   count?: number;
+  buttonText?: string;
+  buttonOnClick?: React.MouseEventHandler;
 }
 
 interface ButtonProps extends PropsWithChildren {
@@ -31,25 +40,30 @@ interface SubComponents {
 export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   title,
   count,
+  buttonText,
+  buttonOnClick,
   children,
 }) => (
   <Box dir="column" gap={8}>
-    <Box dir="row" gap={8} align="center">
-      <Text variant="body" color="black">
-        {title}
-      </Text>
-      {count && (
-        <Box
-          bg="blue200"
-          round={5}
-          align="center"
-          justify="center"
-          w={20}
-          h={20}
-        >
-          <Text color="blue600">{count}</Text>
-        </Box>
-      )}
+    <Box w="fill" dir="row" align="end" justify="space-between">
+      <Box dir="row" align="center" gap={8}>
+        <Text variant="body" color="black">
+          {title}
+        </Text>
+        {count && (
+          <Box
+            bg="blue200"
+            round={5}
+            align="center"
+            justify="center"
+            w={20}
+            h={20}
+          >
+            <Text color="blue600">{count}</Text>
+          </Box>
+        )}
+      </Box>
+      <GrayTextButton onClick={buttonOnClick}>{buttonText}</GrayTextButton>
     </Box>
     {children}
   </Box>
