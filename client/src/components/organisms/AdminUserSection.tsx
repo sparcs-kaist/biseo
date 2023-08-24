@@ -3,7 +3,7 @@ import { Box } from "@/components/atoms";
 import {
   SectionHeader,
   UserTagCards,
-  AgendaTemplateCards,
+  AgendaTemplateCard,
   AddButtonCard,
 } from "@/components/molecules";
 import { useAgendaTemplate } from "@/services/agenda-template";
@@ -20,28 +20,19 @@ export const AdminUserSection: React.FC = () => {
       <Box dir="column" w={380}>
         <SectionHeader count={3}>투표 템플릿</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
-          <Box dir="column" w="fill" gap={15}>
-            <AddButtonCard
-              content="새로운 템플릿"
-              onClick={() => navigate("templateCreate")}
-            />
-          </Box>
+          <AddButtonCard
+            content="새로운 템플릿"
+            onClick={() => navigate("templateCreate")}
+          />
           {templates.map(template => (
-            <AgendaTemplateCards
-              id={template.id}
-              templateTitle={template.templateName}
-              title={template.title}
-              content={template.content}
-            />
+            <AgendaTemplateCard key={template.id} template={template} />
           ))}
         </Box>
       </Box>
       <Box dir="column" w={380}>
         <SectionHeader count={4}>유저 태그</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
-          <Box dir="column" w="fill" gap={15}>
-            <AddButtonCard content="새로운 태그" />
-          </Box>
+          <AddButtonCard content="새로운 태그" />
           <UserTagCards />
           <UserTagCards />
         </Box>
