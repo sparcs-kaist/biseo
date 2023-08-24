@@ -51,7 +51,7 @@ export const UserTable: React.FC<Props> = ({
     if (selectedTag) {
       return (
         displayUsers?.filter(user =>
-          user.tags.some(tag => tag.type === selectedTag),
+          user.tags.some(tag => tag.title === selectedTag),
         ) || []
       );
     }

@@ -13,3 +13,4 @@ export * from "./TextArea";
 export * from "./UserTag";
 export * from "./Label";
 export * from "./SelectBox";
+export * from "./UserTagBox";
