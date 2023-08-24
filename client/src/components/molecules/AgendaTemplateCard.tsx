@@ -2,18 +2,18 @@ import React from "react";
 import { Box, Text, Card, Divider } from "@/components/atoms";
 import { AdminTag } from "@/components/molecules";
 import { useNavigate } from "react-router-dom";
-import { AgendaTemplate } from "biseo-interface/agenda/template";
+import type { AgendaTemplate } from "biseo-interface/agenda/template";
 
 const _tags = {
   template: true,
   user: false,
 };
 
-interface props {
+interface Props {
   template: AgendaTemplate;
 }
 
-export const AgendaTemplateCard: React.FC<props> = ({ template }) => {
+export const AgendaTemplateCard: React.FC<Props> = ({ template }) => {
   const navigate = useNavigate();
   const openModal = () => navigate(`templateEdit?templateId=${template.id}`);
 
