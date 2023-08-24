@@ -45,7 +45,7 @@ export const createTemplate = async ({
 };
 
 export const retrieveAll = async (): Promise<schema.AgendaTemplate[]> => {
-  return await prisma.template.findMany({
+  const findTemplates = await prisma.template.findMany({
     select: {
       id: true,
       templateName: true,
@@ -55,6 +55,11 @@ export const retrieveAll = async (): Promise<schema.AgendaTemplate[]> => {
       choices: true,
     },
   });
+
+  return findTemplates.map(template => ({
+    ...template,
+    choices: template.choices.map(choice => choice.name),
+  }));
 };
 
 export const updateTemplate = async (

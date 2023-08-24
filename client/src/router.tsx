@@ -4,8 +4,10 @@ import { PageLayout } from "@/components/templates";
 import {
   CreateAgendaModal,
   EditAgendaModal,
+  EditTemplateModal,
   OngoingAgendaModal,
   TerminatedAgendaModal,
+  CreateTemplateModal,
 } from "@/components/organisms";
 import {
   MainPage,
@@ -47,7 +49,20 @@ export default createBrowserRouter([
             ],
           },
           { path: "users", element: <AdminUserPage /> },
-          { path: "settings", element: <AdminSettingPage /> },
+          {
+            path: "settings",
+            element: <AdminSettingPage />,
+            children: [
+              {
+                path: "templateEdit",
+                element: <EditTemplateModal />,
+              },
+              {
+                path: "templateCreate",
+                element: <CreateTemplateModal />,
+              },
+            ],
+          },
         ],
         ...protect({ to: "/", when: user => !user?.isAdmin }),
       },
