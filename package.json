@@ -6,8 +6,13 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
+    "postinstall": "pnpm typegen",
     "dev": "dotenv -- pnpm -r --stream dev",
-    "studio": "dotenv -- pnpm -F @biseo/server studio"
+    "db": "dotenv -- pnpm -F @biseo/server db",
+    "typegen": "dotenv -- pnpm -F @biseo/server typegen",
+    "studio": "dotenv -- pnpm -F @biseo/server studio",
+    "typecheck": "pnpm -r typecheck",
+    "build": "pnpm -r build"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",

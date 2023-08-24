@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "pnpm migrate && nodemon",
     "db": "docker compose -f docker-compose.dev.yml",
+    "typecheck": "prisma generate && tsc --noEmit",
+    "typegen": "prisma generate",
     "migrate": "pnpm db up -d && prisma migrate dev",
     "studio": "pnpm db up -d && prisma studio",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "env": "echo $NODE_ENV"
   },
   "dependencies": {

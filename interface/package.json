@@ -5,5 +5,9 @@
   "devDependencies": {
     "typescript": "^5.0.4",
     "zod": "^3.21.4"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
   }
 }
