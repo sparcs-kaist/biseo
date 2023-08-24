@@ -23,10 +23,9 @@ export const SelectTemplateBox: React.FC<Props> = ({
       w={width}
       h={height}
       onChange={e => onChange(e.target.value)}
+      defaultValue=""
     >
-      <option value="" selected>
-        {children}
-      </option>
+      <option value="">{children}</option>
       {/* Add more options later*/}
     </TemplateSelect>
     <PositionedDownArrowIcon />

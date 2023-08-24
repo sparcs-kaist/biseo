@@ -1,16 +1,14 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { BorderedBox, Box } from "@/components/atoms";
+import { Box } from "@/components/atoms";
 import {
   AdminAgendaTags,
-  AdminTag,
   Modal,
   ModalInner,
   TerminatedModalInner,
 } from "@/components/molecules";
 import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgenda } from "@biseo/interface/admin/agenda";
 
 export const TerminatedAgendaModal: React.FC = () => {
   const location = useLocation();
@@ -82,17 +80,13 @@ export const TerminatedAgendaModal: React.FC = () => {
 
         <Box w={300} h={450} gap={20} justify="space-between">
           <ModalInner title="투표 대상" count={3}>
-            <BorderedBox
-              borderColor="gray200"
-              bg="white"
-              w={300}
-              h={354}
-              borderSize={1}
-              round={5}
-              borderStyle="solid"
-            >
-              <UserTable />
-            </BorderedBox>
+            <Box h={354}>
+              <UserTable
+                selectedUsers={
+                  targetAgenda?.voters.total.map(user => user.id) || []
+                }
+              />
+            </Box>
           </ModalInner>
           <Box
             w={300}
