@@ -70,7 +70,7 @@ export const UserTable: React.FC<Props> = ({
       <SelectBox
         width={92}
         height={26}
-        options={tags.map(tag => tag.title)}
+        options={tags.map(tag => ({ id: tag.id, name: tag.title }))}
         onChange={setSelectedTag}
       />
       <Table>

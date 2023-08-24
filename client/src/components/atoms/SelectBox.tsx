@@ -9,7 +9,10 @@ import { PropsWithChildren } from "react";
 interface Props extends PropsWithChildren {
   width: number;
   height: number;
-  options: string[];
+  options: {
+    id: number;
+    name: string;
+  }[];
   onChange: (selectedValue: string) => void; // new prop
 }
 
@@ -24,9 +27,9 @@ export const SelectBox: React.FC<Props> = ({
       <option value="" selected>
         전체보기
       </option>
-      {options.map((option, id) => (
-        <option key={id} value={option}>
-          {option}
+      {options.map(option => (
+        <option key={option.id} value={option.name}>
+          {option.name}
         </option>
       ))}
     </Select>
