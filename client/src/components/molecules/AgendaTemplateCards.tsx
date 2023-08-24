@@ -1,31 +1,49 @@
 import React from "react";
 import { Box, Text, Card, Divider } from "@/components/atoms";
 import { AdminTag } from "@/components/molecules";
+import { useAgendaTemplate } from "@/services/agenda-template";
+import { useNavigate } from "react-router-dom";
 
 const _tags = {
   template: true,
   user: false,
 };
 
-export const AgendaTemplateCards: React.FC = () => (
-  <Card round={5}>
-    <Box gap={8} w="fill">
-      <AdminTag tags={_tags} suffix={3} />
-      <Box gap={11}>
-        <Text variant="title2" color="gray600">
-          😎 정회원 승급 심사 템플릿
-        </Text>
-      </Box>
-      <Divider />
+interface props {
+  id: number;
+  templateTitle: string;
+  title: string;
+  content: string;
+}
 
-      <Box w={340} gap={2}>
-        <Text variant="title3" color="gray500">
-          [본명] 준회원의 정회원 승급심사
-        </Text>
-        <Text variant="subtitle" color="gray400">
-          [본명] 준회원의 [n]번째 정회원 승급심사입니다.
-        </Text>
+export const AgendaTemplateCards: React.FC<props> = ({
+  id,
+  templateTitle,
+  title,
+  content,
+}) => {
+  const navigate = useNavigate();
+  const openModal = () => navigate(`templateEdit?templateId=${id}`);
+  return (
+    <Card round={5} onClick={openModal}>
+      <Box gap={8} w="fill">
+        <AdminTag tags={_tags} suffix={3} />
+        <Box gap={11}>
+          <Text variant="title2" color="gray600">
+            {templateTitle}
+          </Text>
+        </Box>
+        <Divider />
+
+        <Box w={340} gap={2}>
+          <Text variant="title3" color="gray500">
+            {title}
+          </Text>
+          <Text variant="subtitle" color="gray400">
+            {content}
+          </Text>
+        </Box>
       </Box>
-    </Box>
-  </Card>
-);
+    </Card>
+  );
+};
