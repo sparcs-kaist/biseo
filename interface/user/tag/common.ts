@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { User } from "../common";
 
 /**
  * UserTag
@@ -9,7 +8,7 @@ export const UserTag = z.object({
   id: z.number(),
   title: z.string(),
   description: z.string(),
-  users: z.array(User),
+  users: z.array(z.number()), // user id
 });
 export type UserTag = z.infer<typeof UserTag>;
 
