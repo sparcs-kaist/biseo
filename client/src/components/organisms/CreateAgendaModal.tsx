@@ -15,6 +15,7 @@ export const CreateAgendaModal: React.FC = () => {
   const [contentState, setContentState] = useState("");
   const [resolutionState, setResolutionState] = useState("");
   const [choicesState, setChoicesState] = useState([]);
+  const [votersState, setVotersState] = useState<number[]>([]);
   const [newchoiceState, setNewchoiceState] = useState("");
 
   const { createAgenda } = useAdminAgenda(state => ({
@@ -99,7 +100,11 @@ export const CreateAgendaModal: React.FC = () => {
               round={5}
               borderStyle="solid"
             >
-              <UserTable editable />
+              <UserTable
+                setSelectedUsers={setVotersState}
+                selectedUsers={votersState}
+                editable
+              />
             </BorderedBox>
           </ModalInner>
           <Box w={300} h={106} padHorizontal={13} padVertical={15} gap={10}>
@@ -115,7 +120,7 @@ export const CreateAgendaModal: React.FC = () => {
                     content: contentState,
                     resolution: resolutionState,
                     voters: {
-                      total: [],
+                      total: votersState,
                     },
                     choices: choicesState.filter(word => word != ""),
                   })

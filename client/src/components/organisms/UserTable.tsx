@@ -16,12 +16,16 @@ interface Props {
   userList?: AdminUser[];
   selected?: number[];
   editable?: boolean;
+  setSelectedUsers?: (userIds: number[]) => void;
+  selectedUsers?: number[];
 }
 
 export const UserTable: React.FC<Props> = ({
   userList,
   selected = [],
   editable = false,
+  setSelectedUsers,
+  selectedUsers,
 }) => {
   const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,
@@ -36,12 +40,11 @@ export const UserTable: React.FC<Props> = ({
     }
   }, []);
 
-  const [selectedUsers, setSelectedUsers] = useState(selected);
   const selectUser = (id: number) => {
-    if (selectedUsers.includes(id)) {
-      setSelectedUsers(selectedUsers.filter(user => user !== id));
+    if (selectedUsers!.includes(id)) {
+      setSelectedUsers!(selectedUsers!.filter(user => user !== id));
     } else {
-      setSelectedUsers([...selectedUsers, id]);
+      setSelectedUsers!([...selectedUsers!, id]);
     }
   };
 
@@ -72,11 +75,15 @@ export const UserTable: React.FC<Props> = ({
         </Header>
         {filteredUsers?.map(user => (
           <Row
-            selected={selectedUsers.includes(user.id)}
-            onClick={() => editable && selectUser(user.id)}
+            selected={selectedUsers?.includes(user.id)}
+            onClick={() => {
+              if (editable) {
+                selectUser(user.id);
+              }
+            }}
           >
             <Cell w={27} onClick={() => ({})}>
-              <CheckBox checked={selectedUsers.includes(user.id)} />
+              <CheckBox checked={selectedUsers?.includes(user.id)} />
             </Cell>
             <Cell w={80}>{user.username}</Cell>
             <Cell w={120}>{user.displayName}</Cell>
