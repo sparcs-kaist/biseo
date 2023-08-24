@@ -9,7 +9,7 @@ export const Box = styled.div<{
   round?: number;
   dir?: "row" | "column";
   gap?: number | "auto";
-  align?: "center" | "start" | "end";
+  align?: "center" | "start" | "end" | "flex-start";
   justify?: "center" | "start" | "end" | "space-between";
   pad?: number;
   padHorizontal?: number;
@@ -20,6 +20,7 @@ export const Box = styled.div<{
   padRight?: number;
   zIndex?: number;
   position?: "static" | "absolute";
+  self?: "auto" | "stretch";
 }>(
   ({
     w = "hug",
@@ -40,6 +41,7 @@ export const Box = styled.div<{
     theme,
     zIndex = 0,
     position = "static",
+    self="auto",
   }) => css`
     width: ${size(w)};
     height: ${size(h)};
@@ -56,6 +58,7 @@ export const Box = styled.div<{
     padding-right: ${padRight}px;
     z-index: ${zIndex};
     position: ${position};
+    align-self: ${self};
   `,
 );
 

@@ -9,3 +9,4 @@ export * from "./AdminAgendaSection";
 export * from "./UserTable";
 export * from "./AdminUserSection";
 export * from "./EditUserTagModal";
+export * from "./CreateUserTagModal";
