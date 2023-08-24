@@ -7,7 +7,7 @@ import {
   isTerminatedAgenda,
   isPreparingAgenda,
 } from "@/utils/agenda";
-import { AgendaStatus } from "biseo-interface/agenda";
+import { AgendaStatus } from "@biseo/interface/agenda";
 
 export const AgendaSection: React.FC = () => {
   const { preparingAgendas, ongoingAgendas, terminatedAgendas } = useAgenda(

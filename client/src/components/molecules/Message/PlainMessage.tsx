@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Text } from "@/components/atoms";
 import { formatTime } from "@/utils/format";
 
-import type { Message } from "biseo-interface/chat";
+import type { Message } from "@biseo/interface/chat";
 
 interface Props {
   message: Message;

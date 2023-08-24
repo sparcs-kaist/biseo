@@ -10,7 +10,7 @@ import {
 } from "@/components/molecules";
 import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgenda } from "biseo-interface/admin/agenda";
+import { AdminAgenda } from "@biseo/interface/admin/agenda";
 
 export const TerminatedAgendaModal: React.FC = () => {
   const location = useLocation();

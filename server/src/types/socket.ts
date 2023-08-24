@@ -3,7 +3,7 @@ import type { DefaultEventsMap } from "socket.io/dist/typed-events";
 import type {
   ClientToServerEvents,
   ServerToClientEvents,
-} from "biseo-interface";
+} from "@biseo/interface";
 import type { User } from "@prisma/client";
 
 interface ServerData {

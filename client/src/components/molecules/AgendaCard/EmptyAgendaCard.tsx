@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Card } from "@/components/atoms";
-import { AgendaStatus } from "biseo-interface/agenda";
+import { AgendaStatus } from "@biseo/interface/agenda";
 
 const mention = {
   ongoing: "진행중인",

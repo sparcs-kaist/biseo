@@ -1,4 +1,4 @@
-import * as schema from "biseo-interface/agenda";
+import * as schema from "@biseo/interface/agenda";
 import { retrieveAll, vote } from "@/service/agenda";
 
 import { Router } from "@/lib/listener";
