@@ -1,9 +1,8 @@
 import React, { PropsWithChildren } from "react";
-import type { UserTag as UserTagType } from "biseo-interface/user";
 import styled from "@emotion/styled";
 
 interface Props extends PropsWithChildren {
-  tag?: UserTagType;
+  tag?: string;
 }
 
 const Container = styled.div`
@@ -21,5 +20,5 @@ const Container = styled.div`
 `;
 
 export const UserTag: React.FC<Props> = ({ tag, children }) => (
-  <Container>{tag ? tag.title : children}</Container>
+  <Container>{tag ? tag : children}</Container>
 );

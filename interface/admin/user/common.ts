@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { User } from "../../user";
-import { UserTag } from "../../user/tag";
 
 /**
  * AdminUser
@@ -8,6 +7,6 @@ import { UserTag } from "../../user/tag";
  */
 export const AdminUser = User.extend({
   isAdmin: z.boolean(),
-  tags: z.array(UserTag),
+  tags: z.array(z.string()), // tag name
 });
 export type AdminUser = z.infer<typeof AdminUser>;
