@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import * as schema from "biseo-interface/agenda/template";
+import * as schema from "@biseo/interface/agenda/template";
 import { prisma } from "@/db/prisma";
 
 export const createTemplate = async ({

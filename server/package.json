@@ -11,7 +11,7 @@
     "typegen": "prisma generate",
     "migrate": "pnpm db up -d && prisma migrate dev",
     "studio": "pnpm db up -d && prisma studio",
-    "build": "prisma generate && tsc && tsc-alias",
+    "build": "prisma generate && tsc",
     "env": "echo $NODE_ENV"
   },
   "dependencies": {

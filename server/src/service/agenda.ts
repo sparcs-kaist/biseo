@@ -48,6 +48,10 @@ export const retrieveAll = async (
           user: {
             votable: userVotable,
           },
+          choices: agenda.choices.map(choice => ({
+            id: choice.id,
+            name: choice.name,
+          })),
         }
       : !agenda.endAt
       ? {

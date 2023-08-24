@@ -15,16 +15,26 @@ export const createMessage = async (
     createdAt: new Date(),
   };
 
-  return prisma.chat.create({
+  const { createdAt, ...createdMessage } = await prisma.chat.create({
     data: sendQuery,
     select: {
       id: true,
-      user: true,
+      user: {
+        select: {
+          id: true,
+          displayName: true,
+        },
+      },
       type: true,
       message: true,
       createdAt: true,
     },
   });
+
+  return {
+    ...createdMessage,
+    createdAt: createdAt.toISOString(),
+  };
 };
 
 export const createNotice = async (
@@ -40,7 +50,7 @@ export const createNotice = async (
     createdAt: new Date(),
   };
 
-  return prisma.chat.create({
+  const { createdAt, ...message } = await prisma.chat.create({
     data: sendQuery,
     select: {
       id: true,
@@ -50,13 +60,18 @@ export const createNotice = async (
       createdAt: true,
     },
   });
+
+  return {
+    ...message,
+    createdAt: createdAt.toISOString(),
+  };
 };
 
 export const retrieve = async ({
   lastChatId,
   limit,
 }: schema.Retrieve): Promise<schema.Message[]> => {
-  return prisma.chat.findMany({
+  const messages = await prisma.chat.findMany({
     orderBy: {
       id: "desc",
     },
@@ -76,4 +91,9 @@ export const retrieve = async ({
       createdAt: true,
     },
   });
+
+  return messages.map(({ createdAt, ...message }) => ({
+    ...message,
+    createdAt: createdAt.toISOString(),
+  }));
 };
