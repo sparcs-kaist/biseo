@@ -91,7 +91,9 @@ export const TerminatedAgendaModal: React.FC = () => {
               round={5}
               borderStyle="solid"
             >
-              <UserTable />
+              <UserTable
+                selectedUsers={targetAgenda?.voters.total.map(user => user.id)}
+              />
             </BorderedBox>
           </ModalInner>
           <Box
