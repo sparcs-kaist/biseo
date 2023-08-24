@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AdminAgendaCreate } from "biseo-interface/admin/agenda";
+import { AdminAgendaCreate } from "@biseo/interface/admin/agenda";
 
 import {
   Button,
@@ -57,7 +57,7 @@ export const CreateAgendaModal: React.FC = () => {
     setNewchoiceState(e.target.value);
   };
   const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChoicesState([...choicesState, newchoiceStaomte]);
+    setChoicesState([...choicesState, newchoiceState]);
     setNewchoiceState("");
   };
 
