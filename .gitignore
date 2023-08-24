@@ -9,3 +9,6 @@
 
 # File system
 **/.DS_Store
+
+.yarn
+.yarnrc.yml
