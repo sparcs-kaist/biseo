@@ -1,10 +1,10 @@
-import { AdminAgenda } from "biseo-interface/admin/agenda";
+import { AdminAgenda } from "@biseo/interface/admin/agenda";
 import type {
   Agenda,
   OngoingAgenda,
   PreparingAgenda,
   TerminatedAgenda,
-} from "biseo-interface/agenda";
+} from "@biseo/interface/agenda";
 
 export const isPreparingAgenda = (
   agenda: Agenda | AdminAgenda,
