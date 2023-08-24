@@ -82,7 +82,9 @@ export const TerminatedAgendaModal: React.FC = () => {
           <ModalInner title="투표 대상" count={3}>
             <Box h={354}>
               <UserTable
-                selectedUsers={targetAgenda?.voters.total.map(user => user.id)}
+                selectedUsers={
+                  targetAgenda?.voters.total.map(user => user.id) || []
+                }
               />
             </Box>
           </ModalInner>

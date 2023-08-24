@@ -16,16 +16,15 @@ export const OngoingAgendaModal: React.FC = () => {
   const modalParams = new URLSearchParams(location.search);
   const agendaId = parseInt(modalParams.get("agendaId") as string);
 
-  const { targetAgenda } = useAdminAgenda(state => ({
-    targetAgenda: state.adminAgendas.find(
-      agenda => agenda.id === agendaId && agenda.status === "ongoing",
-    ),
-  }));
-
-  const { remindAgenda, terminateAgenda } = useAdminAgenda(state => ({
-    remindAgenda: state.remindAgenda,
-    terminateAgenda: state.statusUpdate,
-  }));
+  const { targetAgenda, remindAgenda, terminateAgenda } = useAdminAgenda(
+    state => ({
+      targetAgenda: state.adminAgendas.find(
+        agenda => agenda.id === agendaId && agenda.status === "ongoing",
+      ),
+      remindAgenda: state.remindAgenda,
+      terminateAgenda: state.statusUpdate,
+    }),
+  );
 
   const remind = () => {
     targetAgenda && remindAgenda(targetAgenda.id);
@@ -95,7 +94,9 @@ export const OngoingAgendaModal: React.FC = () => {
           <ModalInner title="투표 대상" count={3}>
             <Box h={277}>
               <UserTable
-                selectedUsers={targetAgenda?.voters.total.map(user => user.id)}
+                selectedUsers={
+                  targetAgenda?.voters.total.map(user => user.id) || []
+                }
               />
             </Box>
           </ModalInner>
