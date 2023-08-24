@@ -194,9 +194,7 @@ const VoteChoice: React.FC<PropsWithChildren> = ({ children }) => (
     <Text color="gray500" variant="subtitle">
       {children}
     </Text>
-    <Button>
-      <TrashIcon />
-    </Button>
+    <TrashIcon />
   </BorderedBox>
 );
 ModalInner.VoteChoice = VoteChoice;

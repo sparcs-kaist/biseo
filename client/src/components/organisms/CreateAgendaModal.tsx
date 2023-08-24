@@ -9,8 +9,8 @@ import { useLocation } from "react-router-dom";
 import { UserTable } from "./UserTable";
 import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
 import { useAgendaTemplate } from "@/services/agenda-template";
-import { AgendaTemplate } from "biseo-interface/agenda/template";
-import { Agenda } from "biseo-interface/agenda";
+import { AgendaTemplate } from "@biseo/interface/agenda/template";
+import { Agenda } from "@biseo/interface/agenda";
 
 export const CreateAgendaModal: React.FC = () => {
   const [agendaCreate, setAgendaCreate] = useState<AdminAgendaCreate>();
