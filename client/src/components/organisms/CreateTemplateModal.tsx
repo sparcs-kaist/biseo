@@ -12,7 +12,6 @@ export const CreateTemplateModal: React.FC = () => {
   const [agendaResolutionState, setAgendaResolutionState] = useState("");
   const [newChoiceState, setNewChoiceState] = useState("");
   const [choiceState, setChoiceState] = useState<string[]>([]);
-  const newChoiceRef = useRef(null);
 
   const onChangeTemplateTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTemplateTitleState(e.target.value);
@@ -179,7 +178,6 @@ export const CreateTemplateModal: React.FC = () => {
                 align="center"
               >
                 <input
-                  ref={newChoiceRef}
                   type="text"
                   placeholder="새로운 항목"
                   value={newChoiceState}

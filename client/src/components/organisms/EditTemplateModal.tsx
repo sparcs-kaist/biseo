@@ -16,6 +16,7 @@ export const EditTemplateModal: React.FC = () => {
       template => template.id === templateId,
     ),
   }));
+  console.log(targetTemplate?.choices);
 
   const agendaTitle = targetTemplate != undefined ? targetTemplate.title : "";
   const templateTitle =
@@ -24,7 +25,7 @@ export const EditTemplateModal: React.FC = () => {
     targetTemplate != undefined ? targetTemplate.content : "";
   const agendaResolution =
     targetTemplate != undefined ? targetTemplate.resolution : "";
-  const agendaChoices =
+  const agendaChoices: string[] =
     targetTemplate != undefined ? targetTemplate.choices : [];
 
   const [templateTitleState, setTemplateTitleState] = useState(templateTitle);
@@ -184,7 +185,7 @@ export const EditTemplateModal: React.FC = () => {
                     align="center"
                   >
                     <Text variant="subtitle" color="gray500">
-                      {choice}
+                      {choice.name}
                     </Text>
                     <Button
                       color="white"
