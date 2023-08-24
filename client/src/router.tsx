@@ -7,6 +7,7 @@ import {
   EditTemplateModal,
   OngoingAgendaModal,
   TerminatedAgendaModal,
+  CreateTemplateModal,
 } from "@/components/organisms";
 import {
   MainPage,
@@ -58,7 +59,7 @@ export default createBrowserRouter([
               },
               {
                 path: "templateCreate",
-                element: <EditTemplateModal />,
+                element: <CreateTemplateModal />,
               },
             ],
           },
