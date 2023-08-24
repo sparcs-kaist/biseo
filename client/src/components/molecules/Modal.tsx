@@ -6,18 +6,20 @@ import { Box, Text } from "@/components/atoms";
 
 interface Props extends PropsWithChildren {
   title: string;
+  width: number;
+  height: number;
 }
 
-const Container = styled.dialog`
+const Container = styled.dialog<{ w: number; h: number }>`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   gap: 15px;
-  width: 680px;
-  max-height: 597px;
+  width: ${props => props.w}px;
+  height: ${props => props.h}px;
   padding: 20px 25px;
-  overflow-y: hidden;
+  overflow: hidden;
   border: none;
   border-radius: 10px;
   &::backdrop {
@@ -26,7 +28,7 @@ const Container = styled.dialog`
 `;
 
 const InnerContainer = styled.div`
-  overflow-y: scroll;
+  overflow: hidden;
 `;
 
 const CloseButton = styled.button`
@@ -42,7 +44,7 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-export const Modal: React.FC<Props> = ({ title, children }) => {
+export const Modal: React.FC<Props> = ({ title, children, width, height }) => {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -53,8 +55,8 @@ export const Modal: React.FC<Props> = ({ title, children }) => {
   }, []);
 
   return (
-    <Container ref={ref}>
-      <Box gap={20}>
+    <Container w={width} h={height} ref={ref}>
+      <Box>
         <Box w="fill" dir="row" align="center" justify="space-between">
           <Text variant="title1">{title}</Text>
           <Link to=".." relative="path" replace>

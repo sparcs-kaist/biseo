@@ -59,7 +59,7 @@ export const BorderedBox = styled.div<{
     position = "static",
   }) => css`
     width: ${size(w)};
-    height: ${size(h)};
+    min-height: ${size(h)};
     background-color: ${bg ? theme.colors[bg] : "transparent"};
     border-radius: ${roundTop}px ${roundTop}px ${roundBot}px ${roundBot}px;
     display: flex;
