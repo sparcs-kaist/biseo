@@ -14,14 +14,14 @@ import { useUserTag } from "@/services/user-tag";
 
 interface Props {
   selectedUsers: number[];
-  setSelectedUsers: (userIds: number[]) => void;
+  setSelectedUsers?: (userIds: number[]) => void;
   editable?: boolean;
 }
 
 export const UserTable: React.FC<Props> = ({
   selectedUsers,
-  setSelectedUsers,
-  editable = false,
+  setSelectedUsers = () => {},
+  editable,
 }) => {
   const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,

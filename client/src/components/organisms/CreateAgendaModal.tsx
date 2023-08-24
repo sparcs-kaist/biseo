@@ -12,7 +12,7 @@ export const CreateAgendaModal: React.FC = () => {
   const [contentState, setContentState] = useState("");
   const [resolutionState, setResolutionState] = useState("");
 
-  const [choicesState, setChoicesState] = useState<String[]>([]);
+  const [choicesState, setChoicesState] = useState<string[]>([]);
   const [votersState, setVotersState] = useState<number[]>([]);
   const [newchoiceState, setNewchoiceState] = useState("");
 

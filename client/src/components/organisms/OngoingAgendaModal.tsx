@@ -6,7 +6,7 @@ import {
   ParticipantBar,
   ModalInner,
 } from "@/components/molecules";
-import { Button, Box, Text, BorderedBox } from "@/components/atoms";
+import { Button, Box, Text } from "@/components/atoms";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { UserTable } from "./UserTable";
 
@@ -93,19 +93,11 @@ export const OngoingAgendaModal: React.FC = () => {
             participant={targetAgenda?.voters.voted.length}
           ></ParticipantBar>
           <ModalInner title="투표 대상" count={3}>
-            <BorderedBox
-              borderColor="gray200"
-              bg="white"
-              w={298}
-              h={277}
-              borderSize={1}
-              round={5}
-              borderStyle="solid"
-            >
+            <Box h={277}>
               <UserTable
                 selectedUsers={targetAgenda?.voters.total.map(user => user.id)}
               />
-            </BorderedBox>
+            </Box>
           </ModalInner>
         </Box>
       </Box>
