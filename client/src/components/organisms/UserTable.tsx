@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo } from "react";
-import type { UserTag as UserTagType } from "@biseo/interface/user/tag";
 import {
   Box,
   Body,
@@ -101,14 +100,7 @@ export const UserTable: React.FC<Props> = ({
               <Cell>
                 {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
                 {user.tags.map(tag => (
-                  <UserTag
-                    key={
-                      tags.filter(
-                        (userTag: UserTagType) => tag === userTag.title,
-                      )[0].id
-                    }
-                    tag={tag}
-                  />
+                  <UserTag key={tag} tag={tag} />
                 ))}
               </Cell>
             </Row>
