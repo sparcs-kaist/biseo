@@ -125,7 +125,7 @@ const OptionResultsBox: React.FC<PropsWithChildren> = ({ children }) => (
     </Text>
     <BorderedBox
       w={300}
-      h={177}
+      h={170}
       borderColor="gray200"
       borderSize={1}
       borderStyle="solid"
