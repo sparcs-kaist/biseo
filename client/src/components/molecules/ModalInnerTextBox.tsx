@@ -68,7 +68,7 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
             </Text>
           )}
         </Box>
-        {count && (
+        {count !== undefined && (
           <Box
             bg="blue200"
             round={5}
