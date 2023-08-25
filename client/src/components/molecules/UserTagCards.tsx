@@ -1,6 +1,6 @@
 import { Box, Card, Text, UserTag } from "@/components/atoms";
 import { AdminTag } from "@/components/molecules";
-import { UserTag as IUserTag } from "@biseo/interface/user/tag";
+import type { UserTag as IUserTag } from "@biseo/interface/user/tag";
 import { useNavigate } from "react-router-dom";
 
 const _tags = {

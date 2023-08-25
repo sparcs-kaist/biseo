@@ -8,7 +8,6 @@ import {
 } from "@/components/molecules";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useNavigate } from "react-router-dom";
-import { User } from "@biseo/interface/user";
 import { useUserTag } from "@/services/user-tag";
 
 export const AdminUserSection: React.FC = () => {
