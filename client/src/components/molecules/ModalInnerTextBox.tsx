@@ -117,11 +117,15 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
 ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
   <BorderedBox
+    w={300}
+    h={35}
     borderColor="gray200"
     bg="gray100"
     borderSize={1}
     round={5}
     borderStyle="solid"
+    dir="row"
+    align="center"
   >
     <TextInput
       placeholder={children?.toString()}
