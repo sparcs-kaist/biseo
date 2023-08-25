@@ -48,7 +48,7 @@ export const CreateAgendaModal: React.FC = () => {
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleState(e.target.value);
   };
-  const onChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContentState(e.target.value);
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,12 +113,11 @@ export const CreateAgendaModal: React.FC = () => {
               </ModalInner.InputBox>
             </ModalInner>
             <ModalInner title="투표 설명">
-              <ModalInner.InputBox
-                onClick={() => {} /*onChangeContent*/}
+              <ModalInner.TextAreaInputBox
+                placeholder="내용을 입력하세요"
                 value={contentState}
-              >
-                내용을 입력하세요
-              </ModalInner.InputBox>
+                onChange={onChangeContent}
+              />
             </ModalInner>
             <ModalInner title="의결 문안">
               <ModalInner.InputBox

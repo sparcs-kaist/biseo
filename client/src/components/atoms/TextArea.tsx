@@ -7,4 +7,5 @@ export const TextArea = styled(TextareaAutosize)`
   outline: none;
   resize: none;
   border: none;
+  background: transparent;
 `;
