@@ -7,7 +7,7 @@ export const EditUserTagModal: React.FC = () => {
   return (
     <Modal title="태그 수정하기">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
-        <Box w={300} gap={20}>
+        <Box w={300} gap={20} align="flex-start" self="stretch">
           <Box gap={10}>
             <ModalInner title="태그 제목 *">
               {/*<ModalInner.InputBox> */}

@@ -21,6 +21,7 @@ export const Box = styled.div<{
   zIndex?: number;
   position?: "static" | "absolute";
   self?: "auto" | "stretch";
+  wrap?: "wrap"|"nowrap";
 }>(
   ({
     w = "hug",
@@ -42,6 +43,8 @@ export const Box = styled.div<{
     zIndex = 0,
     position = "static",
     self="auto",
+    wrap="nowrap",
+
   }) => css`
     width: ${size(w)};
     height: ${size(h)};
@@ -59,6 +62,7 @@ export const Box = styled.div<{
     z-index: ${zIndex};
     position: ${position};
     align-self: ${self};
+    flex-wrap: ${wrap};
   `,
 );
 

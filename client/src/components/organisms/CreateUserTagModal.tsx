@@ -16,17 +16,26 @@ export const CreateUserTagModal: React.FC = () => {
             </ModalInner>
             <ModalInner title="태그 설명 *">
               {/*<ModalInner.InputBox> */}
-              <ModalInner.TextBox>
-                내용을 입력하세요
-              </ModalInner.TextBox>
+              <ModalInner.TextBox>내용을 입력하세요</ModalInner.TextBox>
               {/*</ModalInner.TextBox> */}
             </ModalInner>
 
             <ModalInner title="태그 대상 보기" count={1}>
-              <Box gap={8} dir="row">
-                <ModalInner.TagChoice>
-                    이혜원
-                </ModalInner.TagChoice>
+              <Box
+                gap={8}
+                dir="row"
+                justify="start"
+                align="flex-start"
+                wrap="wrap"
+              >
+                <ModalInner.TagChoice>이혜원</ModalInner.TagChoice>
+                <ModalInner.TagChoice>김지연</ModalInner.TagChoice>
+                <ModalInner.TagChoice>장하준</ModalInner.TagChoice>
+                <ModalInner.TagChoice>김민주</ModalInner.TagChoice>
+                <ModalInner.TagChoice>이지윤</ModalInner.TagChoice>
+                <ModalInner.TagChoice>권순호</ModalInner.TagChoice>
+                <ModalInner.TagChoice>방동효</ModalInner.TagChoice>
+                <ModalInner.TagChoice>기민준</ModalInner.TagChoice>
               </Box>
             </ModalInner>
           </Box>
