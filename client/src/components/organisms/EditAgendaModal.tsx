@@ -108,13 +108,6 @@ export const EditAgendaModal: React.FC = () => {
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>
-          <Box
-            gap={10}
-            bg="blue100"
-            padVertical={12}
-            padHorizontal={15}
-            round={5}
-          ></Box>
         </Box>
         <Box w={300} gap={20}>
           <ModalInner title="태그 선택">
