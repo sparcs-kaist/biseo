@@ -78,7 +78,12 @@ export const OngoingAgendaModal: React.FC = () => {
                   투표 독촉하기
                 </Text>
               </Button>
-              <Link to=".." relative="path" replace>
+              <Link
+                to=".."
+                relative="path"
+                replace
+                style={{ textDecoration: "none" }}
+              >
                 <Button w={130} h={38} onClick={terminate}>
                   <Text variant="boldtitle3" color="blue600">
                     투표 종료하기

@@ -134,7 +134,12 @@ export const EditAgendaModal: React.FC = () => {
           >
             <AdminAgendaTagsSelect />
             <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Link to=".." relative="path" replace>
+              <Link
+                to=".."
+                relative="path"
+                replace
+                style={{ textDecoration: "none" }}
+              >
                 <Button
                   w={130}
                   h={38}
@@ -156,7 +161,12 @@ export const EditAgendaModal: React.FC = () => {
                   </Text>
                 </Button>
               </Link>
-              <Link to=".." relative="path" replace>
+              <Link
+                to=".."
+                relative="path"
+                replace
+                style={{ textDecoration: "none" }}
+              >
                 <Button
                   w={130}
                   h={38}

@@ -184,7 +184,12 @@ export const CreateAgendaModal: React.FC = () => {
             <Box dir="row" w={270} h={28} justify="space-between">
               <AdminAgendaTagsSelect />
             </Box>
-            <Link to=".." relative="path" replace>
+            <Link
+              to=".."
+              relative="path"
+              replace
+              style={{ textDecoration: "none" }}
+            >
               <Button
                 w={270}
                 h={38}
