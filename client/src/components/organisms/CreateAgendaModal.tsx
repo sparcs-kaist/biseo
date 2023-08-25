@@ -57,8 +57,13 @@ export const CreateAgendaModal: React.FC = () => {
     setNewchoiceState(e.target.value);
   };
   const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChoicesState([...choicesState, newchoiceState]);
-    setNewchoiceState("");
+    if (newchoiceState !== "") {
+      setChoicesState([...choicesState, newchoiceState]);
+    }
+  };
+  const onDeleteChoice = (targetChoice: String) => {
+    console.log(targetChoice);
+    setChoicesState(choicesState.filter(choice => choice !== targetChoice));
   };
   const { findTemplate } = useAgendaTemplate(state => ({
     findTemplate: state.findTemplate,
@@ -133,7 +138,12 @@ export const CreateAgendaModal: React.FC = () => {
                 onSubmit={onSubmitChoice}
               >
                 {choicesState.map(opt => (
-                  <ModalInner.VoteChoice key={opt}>{opt}</ModalInner.VoteChoice>
+                  <ModalInner.VoteChoice
+                    onClick={() => onDeleteChoice(opt)}
+                    key={opt}
+                  >
+                    {opt}
+                  </ModalInner.VoteChoice>
                 ))}
               </ModalInner.AddVoteOptionArea>
             </ModalInner>

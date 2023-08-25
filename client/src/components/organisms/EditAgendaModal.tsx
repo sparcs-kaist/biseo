@@ -57,6 +57,10 @@ export const EditAgendaModal: React.FC = () => {
     setChoicesState([...choicesState!, newchoiceState]);
   };
 
+  const onDeleteChoice = (targetChoice: String) => {
+    console.log(targetChoice);
+    setChoicesState(choicesState.filter(choice => choice !== targetChoice));
+  };
   const update = (AgendaParam: AdminAgendaUpdate) => {
     targetAgenda &&
       updateAgenda({
@@ -104,7 +108,9 @@ export const EditAgendaModal: React.FC = () => {
               onSubmit={onSubmitChoice}
             >
               {choicesState.map(opt => (
-                <ModalInner.VoteChoice>{opt}</ModalInner.VoteChoice>
+                <ModalInner.VoteChoice onClick={() => onDeleteChoice(opt)}>
+                  {opt}
+                </ModalInner.VoteChoice>
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>

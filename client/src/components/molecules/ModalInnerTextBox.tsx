@@ -225,10 +225,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
 );
 ModalInner.AddVoteOptionArea = AddVoteOptionArea;
 
-const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
-  children,
-  onClick = () => {},
-}) => (
+const VoteChoice: React.FC<ButtonProps> = ({ children, onClick }) => (
   <BorderedBox
     borderColor="gray200"
     bg="white"
@@ -242,12 +239,15 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
     justify="space-between"
     dir="row"
     align="center"
-    onClick={onClick}
   >
     <Text color="gray500" variant="subtitle">
       {children}
     </Text>
-    <TrashIcon />
+
+    <TrashIcon
+      // @ts-ignore
+      onClick={onClick}
+    />
   </BorderedBox>
 );
 ModalInner.VoteChoice = VoteChoice;
