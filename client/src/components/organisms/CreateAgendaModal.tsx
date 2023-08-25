@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   Button,
   Box,
@@ -17,8 +18,6 @@ import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
-
-import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 
 export const CreateAgendaModal: React.FC = () => {
   const [titleState, setTitleState] = useState("");
@@ -159,7 +158,7 @@ export const CreateAgendaModal: React.FC = () => {
               onChange={onChangeSelectedTags}
             />
           </ModalInner>
-          <ModalInner title="투표 대상" count={3}>
+          <ModalInner title="투표 대상" count={votersState.length}>
             <UserTable
               setSelectedUsers={setVotersState}
               selectedUsers={votersState}
