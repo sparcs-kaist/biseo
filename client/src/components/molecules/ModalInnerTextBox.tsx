@@ -95,7 +95,6 @@ const TextBox: React.FC<PropsWithChildren> = ({ children }) => (
     borderColor="gray200"
     bg="gray100"
     w={300}
-    h={35}
     borderSize={1}
     padVertical={10}
     padHorizontal={15}
@@ -114,7 +113,6 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
     borderColor="gray200"
     bg="white"
     w={300}
-    h={35}
     borderSize={1}
     padVertical={10}
     padHorizontal={15}
