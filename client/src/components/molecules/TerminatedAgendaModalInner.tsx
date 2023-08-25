@@ -4,6 +4,9 @@ import { BorderedBox, Box, Scroll, Text } from "@/components/atoms";
 interface BoxWithTitle extends PropsWithChildren {
   title: string;
 }
+interface BoxWithCount extends PropsWithChildren {
+  count: number | undefined;
+}
 interface SubComponents {
   BoxWithTitle: typeof BoxWithTitle;
   TextBoxWithTitle: typeof TextBoxWithTitle;
@@ -118,11 +121,26 @@ const ParticipantBar: React.FC<PropsForParticipant> = ({
   </Box>
 );
 
-const OptionResultsBox: React.FC<PropsWithChildren> = ({ children }) => (
+const OptionResultsBox: React.FC<BoxWithCount> = ({ children, count = 0 }) => (
   <Box w={300} h={177} dir="column" gap={8}>
-    <Text variant="body" color="black">
-      투표 결과
-    </Text>
+    <Box dir="row" gap={8}>
+      <Text variant="body" color="black" dir="row">
+        투표 결과
+      </Text>
+      {count !== undefined && (
+        <Box
+          bg="blue200"
+          round={5}
+          align="center"
+          justify="center"
+          w={20}
+          h={20}
+        >
+          <Text color="blue600">{count}</Text>
+        </Box>
+      )}
+    </Box>
+
     <BorderedBox
       w={300}
       h={170}

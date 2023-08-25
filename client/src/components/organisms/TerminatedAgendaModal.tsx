@@ -64,7 +64,9 @@ export const TerminatedAgendaModal: React.FC = () => {
               participant={totalVoterCount}
             />
             <Box w={300} h={177} dir="column" gap={8}>
-              <TerminatedModalInner.OptionResultsBox>
+              <TerminatedModalInner.OptionResultsBox
+                count={targetAgenda?.choices.length}
+              >
                 {targetAgenda?.choices.map(choice => (
                   <TerminatedModalInner.OptionVoteResult
                     name={choice.name}
