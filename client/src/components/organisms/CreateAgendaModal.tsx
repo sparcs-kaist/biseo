@@ -62,7 +62,6 @@ export const CreateAgendaModal: React.FC = () => {
     }
   };
   const onDeleteChoice = (targetChoice: String) => {
-    console.log(targetChoice);
     setChoicesState(choicesState.filter(choice => choice !== targetChoice));
   };
   const { findTemplate } = useAgendaTemplate(state => ({
