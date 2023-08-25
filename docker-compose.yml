@@ -22,7 +22,7 @@ services:
     environment:
       - NODE_ENV=production
       - SERVER_PORT=8000
-      - DATABASE_URL="mysql://root:${DB_PASSWORD:?}@db:3306/${DB_NAME:?}"
+      - DATABASE_URL=mysql://root:${DB_PASSWORD:?}@db:3306/${DB_NAME:?}
       - SECRET_KEY=${SECRET_KEY:?}
     build:
       context: .

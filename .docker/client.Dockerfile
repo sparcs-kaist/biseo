@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18-alpine as builder
 
 WORKDIR /app
 
@@ -13,7 +13,15 @@ COPY interface/package.json ./interface/
 
 RUN pnpm --filter @biseo/client install --frozen-lockfile
 
-CMD pnpm --filter @biseo/server dev
+COPY client ./client
+COPY interface ./interface
 
-#FROM nginx:1.22-alpine
+RUN pnpm --filter @biseo/client build
 
+FROM nginx:1.22-alpine
+
+COPY nginx.conf /etc/nginx/templates/default.conf.template
+
+COPY --from=builder /app/client/dist /usr/share/nginx/html
+
+EXPOSE 80

@@ -6,6 +6,12 @@
     "paths": {
       "@/*": [
         "*"
+      ],
+      "@biseo/interface": [
+        "../../interface/src"
+      ],
+      "@biseo/interface/*": [
+        "../../interface/src/*"
       ]
     },
     "lib": [

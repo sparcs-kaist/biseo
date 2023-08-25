@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@biseo/interface/*": [
+        "interface/src/*"
+      ],
+      "@biseo/client/*": [
+        "client/src/*"
+      ],
+      "@biseo/server/*": [
+        "server/src/*"
+      ]
+    },
+    "noEmit": true
+  }
+}
