@@ -57,19 +57,8 @@ export const EditAgendaModal: React.FC = () => {
   const onSubmitChoice = () => {
     setChoicesState([...choicesState!, newchoiceState]);
   };
-
-  const update = (AgendaParam: AdminAgendaUpdate) => {
-    targetAgenda &&
-      updateAgenda({
-        id: AgendaParam.id,
-        title: AgendaParam.title,
-        content: AgendaParam.content,
-        resolution: AgendaParam.resolution,
-        voters: {
-          total: AgendaParam.voters.total,
-        },
-        choices: AgendaParam.choices,
-      });
+  const deleteChoice = (choice: string) => {
+    setChoicesState(choicesState.filter(c => c !== choice));
   };
 
   return (
@@ -99,14 +88,19 @@ export const EditAgendaModal: React.FC = () => {
             </ModalInner>
           </Box>
 
-          <ModalInner title="투표 항목" count={1}>
+          <ModalInner title="투표 항목" count={choicesState.length}>
             <ModalInner.AddVoteOptionArea
               value={newchoiceState}
               onClick={onChangeChoice}
               onSubmit={onSubmitChoice}
             >
               {choicesState.map(opt => (
-                <ModalInner.VoteChoice>{opt}</ModalInner.VoteChoice>
+                <ModalInner.VoteChoice
+                  key={opt}
+                  onClick={() => deleteChoice(opt)}
+                >
+                  {opt}
+                </ModalInner.VoteChoice>
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>
