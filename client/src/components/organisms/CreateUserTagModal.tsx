@@ -28,27 +28,26 @@ export const CreateUserTagModal: React.FC = () => {
     retrieveUsers: state.retrieveAll,
   }));
 
-  // tagerState에 있는 number[]에 있는 유저들의 id와 같은 유저들의 이름을 하나씩 보여준다.
-
   return (
     <Modal title="태그 생성하기" width={680} height={431}>
-      <Box w={630} justify="space-between" padVertical={15} dir="row">
-        <Box w={300} gap={20} align="flex-start" self="stretch">
-          <Box gap={10}>
-            <ModalInner title="태그 제목 *">
-              <ModalInner.InputBox onClick={onChangeTitle} value={titleState}>
-                내용을 입력하세요
-              </ModalInner.InputBox>
-            </ModalInner>
-            <ModalInner title="태그 설명 *">
-              <ModalInner.InputBox
-                onClick={onChangeDescription}
-                value={descriptionState}
-              >
-                내용을 입력하세요
-              </ModalInner.InputBox>
-            </ModalInner>
+      <Box w={630} dir="row" justify="space-between" padVertical={15}>
+        <Box w={300} gap={20}>
+          <ModalInner title="태그 제목" required>
+            <ModalInner.InputBox onClick={onChangeTitle} value={titleState}>
+              내용을 입력하세요
+            </ModalInner.InputBox>
+          </ModalInner>
 
+          <ModalInner title="태그 설명" required>
+            <ModalInner.InputBox
+              onClick={onChangeDescription}
+              value={descriptionState}
+            >
+              내용을 입력하세요
+            </ModalInner.InputBox>
+          </ModalInner>
+
+          <Box w={300} h={101} dir="column" justify="space-between">
             <ModalInner title="태그 대상 보기" count={1}>
               <Box
                 gap={8}
@@ -64,6 +63,7 @@ export const CreateUserTagModal: React.FC = () => {
           <Box dir="row" w="fill" gap={10} justify="space-between">
             <Link to=".." relative="path" replace>
               <Button
+                w={300}
                 h={42}
                 onClick={() =>
                   createTag({

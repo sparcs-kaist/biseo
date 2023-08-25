@@ -49,19 +49,21 @@ export const EditUserTagModal: React.FC = () => {
   };
   return (
     <Modal title="태그 수정하기" width={680} height={431}>
-      <Box w={630} justify="space-between" padVertical={15} dir="row">
-        <Box w={300} gap={20} align="flex-start" self="stretch">
-          <Box gap={10}>
-            <ModalInner title="태그 제목 *">
-              <ModalInner.InputBox onClick={onChangeTagTitle}>
-                {tagTitleState}
-              </ModalInner.InputBox>
-            </ModalInner>
-            <ModalInner title="태그 설명 *">
-              <ModalInner.InputBox onClick={onChangeTagDescription}>
-                {tagDescriptionState}
-              </ModalInner.InputBox>
-            </ModalInner>
+      <Box w={630} dir="row" justify="space-between" padVertical={15}>
+        <Box w={300} dir="column" gap={20}>
+          <ModalInner title="태그 제목" required>
+            <ModalInner.InputBox onClick={onChangeTagTitle}>
+              {tagTitleState}
+            </ModalInner.InputBox>
+          </ModalInner>
+
+          <ModalInner title="태그 설명" required>
+            <ModalInner.InputBox onClick={onChangeTagDescription}>
+              {tagDescriptionState}
+            </ModalInner.InputBox>
+          </ModalInner>
+
+          <Box w={300} h={101} dir="column" justify="space-between">
             <ModalInner title="태그 대상 보기" count={4}>
               <Box gap={8} dir="row">
                 <ModalInner.TagChoice>이혜원</ModalInner.TagChoice>
