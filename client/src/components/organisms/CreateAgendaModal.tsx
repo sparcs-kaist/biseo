@@ -63,7 +63,7 @@ export const CreateAgendaModal: React.FC = () => {
     setNewchoice(e.target.value);
   };
   const addChoice = () => {
-    if (!choices.includes(newchoice)) {
+    if (newchoice.length > 0 && !choices.includes(newchoice)) {
       setChoices([...choices, newchoice]);
       setNewchoice("");
     }

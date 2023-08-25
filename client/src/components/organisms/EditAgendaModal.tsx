@@ -64,7 +64,10 @@ export const EditAgendaModal: React.FC = () => {
     setNewchoice(e.target.value);
   };
   const addChoice = () => {
-    setChoices([...choices!, newchoice]);
+    if (newchoice.length > 0 && !choices.includes(newchoice)) {
+      setChoices([...choices, newchoice]);
+      setNewchoice("");
+    }
   };
   const deleteChoice = (choice: string) => {
     setChoices(choices.filter(c => c !== choice));
