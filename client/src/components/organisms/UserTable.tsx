@@ -102,7 +102,7 @@ export const UserTable: React.FC<Props> = ({
                 {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
                 {user.tags.map(tag => (
                   <UserTag
-                    key={tags.filter(userTag => tag === userTag.title)[0].id}
+                    key={tags.filter(userTag => tag === userTag.title)[0]?.id}
                     tag={tag}
                   />
                 ))}
