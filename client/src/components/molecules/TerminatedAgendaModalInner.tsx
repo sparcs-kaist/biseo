@@ -1,8 +1,11 @@
 import React, { PropsWithChildren } from "react";
-import { BorderedBox, Box, Text } from "@/components/atoms";
+import { BorderedBox, Box, Scroll, Text } from "@/components/atoms";
 
 interface BoxWithTitle extends PropsWithChildren {
   title: string;
+}
+interface BoxWithCount extends PropsWithChildren {
+  count: number | undefined;
 }
 interface SubComponents {
   BoxWithTitle: typeof BoxWithTitle;
@@ -118,22 +121,41 @@ const ParticipantBar: React.FC<PropsForParticipant> = ({
   </Box>
 );
 
-const OptionResultsBox: React.FC<PropsWithChildren> = ({ children }) => (
+const OptionResultsBox: React.FC<BoxWithCount> = ({ children, count = 0 }) => (
   <Box w={300} h={177} dir="column" gap={8}>
-    <Text variant="body" color="black">
-      투표 결과
-    </Text>
+    <Box dir="row" gap={8}>
+      <Text variant="body" color="black" dir="row">
+        투표 결과
+      </Text>
+      {count !== undefined && (
+        <Box
+          bg="blue200"
+          round={5}
+          align="center"
+          justify="center"
+          w={20}
+          h={20}
+        >
+          <Text color="blue600">{count}</Text>
+        </Box>
+      )}
+    </Box>
+
     <BorderedBox
       w={300}
+      h={170}
       borderColor="gray200"
       borderSize={1}
       borderStyle="solid"
       round={5}
       pad={10}
+      padRight={0}
       gap={10}
       dir="column"
     >
-      {children}
+      <Scroll>
+        <Box gap={10}>{children}</Box>
+      </Scroll>
     </BorderedBox>
   </Box>
 );
@@ -150,7 +172,7 @@ const OptionVoteResult: React.FC<PropsForOptionVoteResult> = ({
   count,
   totalCount,
   userChoice = true,
-  w = 260,
+  w = 275,
 }) => {
   return (
     <BorderedBox
