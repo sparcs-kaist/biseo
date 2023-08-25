@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import styled from "@emotion/styled";
 
 import { EmoticonIcon, SendIcon } from "@/assets";
@@ -12,10 +12,14 @@ interface Props {
 export const ChatInput: React.FC<Props> = ({ send }) => {
   const { input, setValue } = useInput();
 
+  // TODO: disable send button based on `validated`
+  const validated = useMemo(() => input.value.trim().length > 0, [input.value]);
+
   const sendCurrent = useCallback(() => {
-    send(input.value);
+    if (!validated) return;
+    send(input.value.trim());
     setValue("");
-  }, [input.value]);
+  }, [input.value, validated]);
 
   return (
     <Box w="fill" pad={10} bg="white100">
