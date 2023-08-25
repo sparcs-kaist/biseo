@@ -6,7 +6,7 @@ import { Message } from "./common";
  * description
  */
 export const Send = z.object({
-  message: z.string(),
+  message: z.string().min(1),
 });
 export type Send = z.infer<typeof Send>;
 export const SendCb = Message;
