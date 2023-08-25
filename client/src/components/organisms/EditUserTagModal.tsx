@@ -23,21 +23,21 @@ export const EditUserTagModal: React.FC = () => {
     retrieveUsers();
   }, []);
 
-  const tagTitle = targetTag != undefined ? targetTag.title : "";
-  const tagDescription = targetTag != undefined ? targetTag.description : "";
+  const tagTitleOrigin = targetTag != undefined ? targetTag.title : "";
+  const tagDescriptionOrigin = targetTag != undefined ? targetTag.description : "";
   const taggedUserIds = targetTag?.users || [];
 
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
-  const [tagersState, setTagersState] = useState<number[]>([]);
-  const [tagTitleState, setTagTitleState] = useState(tagTitle);
-  const [tagDescriptionState, setTagDescriptionState] =
-    useState(tagDescription);
+  const [taggers, setTaggers] = useState<number[]>([]);
+  const [tagTitle, setTagTitle] = useState(tagTitleOrigin);
+  const [tagDescription, setTagDescription] =
+    useState(tagDescriptionOrigin);
 
   const onChangeTagTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTagTitleState(e.target.value);
+    setTagTitle(e.target.value);
   };
   const onChangeTagDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTagDescriptionState(e.target.value);
+    setTagDescription(e.target.value);
   };
 
   const { deleteTag, updateTag } = useUserTag(state => ({
@@ -48,9 +48,9 @@ export const EditUserTagModal: React.FC = () => {
   const onTagUpdate = () => {
     updateTag({
       id: tagId,
-      title: tagTitleState,
-      description: tagDescriptionState,
-      users: tagersState,
+      title: tagTitle,
+      description: tagDescription,
+      users: taggers,
     });
   };
 
@@ -59,13 +59,13 @@ export const EditUserTagModal: React.FC = () => {
   };
 
   const filteredUsers = useMemo(() => {
-    if (tagersState.length >= 0) {
+    if (taggers.length >= 0) {
       return users.filter(user =>
-        tagersState.includes(user.id) ? user.username : null,
+        taggers.includes(user.id) ? user.username : null,
       );
     }
     return users;
-  }, [users, tagersState]);
+  }, [users, taggers]);
 
   return (
     <Modal title="태그 수정하기" width={680} height={431}>
@@ -73,18 +73,18 @@ export const EditUserTagModal: React.FC = () => {
         <Box w={300} dir="column" gap={20}>
           <ModalInner title="태그 제목" required>
             <ModalInner.InputBox onClick={onChangeTagTitle}>
-              {tagTitleState}
+              {tagTitle}
             </ModalInner.InputBox>
           </ModalInner>
 
           <ModalInner title="태그 설명" required>
             <ModalInner.InputBox onClick={onChangeTagDescription}>
-              {tagDescriptionState}
+              {tagDescription}
             </ModalInner.InputBox>
           </ModalInner>
 
           <Box w={300} h={101} dir="column" justify="space-between">
-            <ModalInner title="태그 대상 보기" count={tagersState.length}>
+            <ModalInner title="태그 대상 보기" count={taggers.length}>
               <Box
                 gap={8}
                 dir="row"
@@ -116,10 +116,10 @@ export const EditUserTagModal: React.FC = () => {
           </Box>
         </Box>
         <Box w={300} gap={20}>
-          <ModalInner title="태그 대상" count={tagersState.length}>
+          <ModalInner title="태그 대상" count={taggers.length}>
             <UserTable
-              setSelectedUsers={setTagersState}
-              selectedUsers={tagersState}
+              setSelectedUsers={setTaggers}
+              selectedUsers={taggers}
               selected={taggedUserIds ? taggedUserIds : selectedUsers}
               editable
             ></UserTable>

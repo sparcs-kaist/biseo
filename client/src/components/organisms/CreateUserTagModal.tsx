@@ -7,8 +7,8 @@ import { useAdminUser } from "@/services/admin-user";
 import { Link } from "react-router-dom";
 
 export const CreateUserTagModal: React.FC = () => {
-  const [titleState, setTitleState] = useState("");
-  const [descriptionState, setDescriptionState] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
   const { createTag } = useUserTag(state => ({
@@ -16,12 +16,12 @@ export const CreateUserTagModal: React.FC = () => {
   }));
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleState(e.target.value);
+    setTitle(e.target.value);
   };
   const onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDescriptionState(e.target.value);
+    setDescription(e.target.value);
   };
-  const [tagersState, setTagersState] = useState<number[]>([]);
+  const [taggers, settaggers] = useState<number[]>([]);
 
   const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,
@@ -29,20 +29,20 @@ export const CreateUserTagModal: React.FC = () => {
   }));
 
   const filteredUsers = useMemo(() => {
-    if (tagersState.length >= 0) {
+    if (taggers.length >= 0) {
       return users.filter(user =>
-        tagersState.includes(user.id) ? user.username : null,
+        taggers.includes(user.id) ? user.username : null,
       );
     }
     return users;
-  }, [users, tagersState]);
+  }, [users, taggers]);
 
   return (
     <Modal title="태그 생성하기" width={680} height={431}>
       <Box w={630} dir="row" justify="space-between" padVertical={15}>
         <Box w={300} gap={20}>
           <ModalInner title="태그 제목" required>
-            <ModalInner.InputBox onClick={onChangeTitle} value={titleState}>
+            <ModalInner.InputBox onClick={onChangeTitle} value={title}>
               내용을 입력하세요
             </ModalInner.InputBox>
           </ModalInner>
@@ -50,14 +50,14 @@ export const CreateUserTagModal: React.FC = () => {
           <ModalInner title="태그 설명" required>
             <ModalInner.InputBox
               onClick={onChangeDescription}
-              value={descriptionState}
+              value={description}
             >
               내용을 입력하세요
             </ModalInner.InputBox>
           </ModalInner>
 
           <Box w={300} h={101} dir="column" justify="space-between">
-            <ModalInner title="태그 대상 보기" count={tagersState.length}>
+            <ModalInner title="태그 대상 보기" count={taggers.length}>
               <Box
                 gap={8}
                 dir="row"
@@ -78,9 +78,9 @@ export const CreateUserTagModal: React.FC = () => {
                 h={42}
                 onClick={() =>
                   createTag({
-                    title: titleState,
-                    description: descriptionState,
-                    users: tagersState,
+                    title: title,
+                    description: description,
+                    users: taggers,
                   })
                 }
               >
@@ -92,10 +92,10 @@ export const CreateUserTagModal: React.FC = () => {
           </Box>
         </Box>
         <Box w={300} h={354} gap={20}>
-          <ModalInner title="태그 대상" count={tagersState.length}>
+          <ModalInner title="태그 대상" count={taggers.length}>
             <UserTable
-              setSelectedUsers={setTagersState}
-              selectedUsers={tagersState}
+              setSelectedUsers={settaggers}
+              selectedUsers={taggers}
               selected={selectedUsers}
               editable
             ></UserTable>
