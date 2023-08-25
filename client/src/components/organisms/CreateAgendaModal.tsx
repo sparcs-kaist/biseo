@@ -148,6 +148,7 @@ export const CreateAgendaModal: React.FC = () => {
             ></Box>
           </Box>
         </Box>
+
         <Box w={300} gap={20}>
           <ModalInner
             title="태그 선택"
@@ -173,26 +174,24 @@ export const CreateAgendaModal: React.FC = () => {
             <Box dir="row" w={270} h={28} justify="space-between">
               <AdminAgendaTagsSelect />
             </Box>
-            <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Button
-                h={38}
-                onClick={() =>
-                  createAgenda({
-                    title: titleState,
-                    content: contentState,
-                    resolution: resolutionState,
-                    voters: {
-                      total: votersState,
-                    },
-                    choices: choicesState.filter(word => word != ""),
-                  })
-                }
-              >
-                <Text variant="boldtitle3" color="blue600">
-                  투표 생성하기
-                </Text>
-              </Button>
-            </Box>
+            <Button
+              h={38}
+              onClick={() =>
+                createAgenda({
+                  title: titleState,
+                  content: contentState,
+                  resolution: resolutionState,
+                  voters: {
+                    total: votersState,
+                  },
+                  choices: choicesState.filter(word => word != ""),
+                })
+              }
+            >
+              <Text variant="boldtitle3" color="blue600">
+                투표 생성하기
+              </Text>
+            </Button>
           </Box>
         </Box>
       </Box>

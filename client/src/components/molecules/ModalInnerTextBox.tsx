@@ -15,6 +15,7 @@ interface ModalInnerProps extends PropsWithChildren {
   count?: number;
   buttonText?: string;
   buttonOnClick?: React.MouseEventHandler;
+  required?: boolean;
 }
 
 interface ButtonProps extends PropsWithChildren {
@@ -44,13 +45,21 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   buttonText,
   buttonOnClick,
   children,
+  required,
 }) => (
   <Box dir="column" gap={8}>
     <Box w="fill" dir="row" align="end" justify="space-between">
       <Box dir="row" align="center" gap={8}>
-        <Text variant="body" color="black">
-          {title}
-        </Text>
+        <Box dir="row">
+          <Text variant="body" color="black">
+            {title}
+          </Text>
+          {required && (
+            <Text variant="body" color="blue600">
+              *
+            </Text>
+          )}
+        </Box>
         {count && (
           <Box
             bg="blue200"
@@ -170,8 +179,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
       w={300}
       h={152}
       borderSize={1}
-      padVertical={10}
-      padHorizontal={10}
+      pad={10}
       roundBot={0}
       roundTop={5}
       borderStyle="solid"
@@ -186,7 +194,10 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
 );
 ModalInner.AddVoteOptionArea = AddVoteOptionArea;
 
-const VoteChoice: React.FC<PropsWithChildren> = ({ children }) => (
+const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
+  children,
+  onClick = () => {},
+}) => (
   <BorderedBox
     borderColor="gray200"
     bg="white"
@@ -201,6 +212,7 @@ const VoteChoice: React.FC<PropsWithChildren> = ({ children }) => (
     justify="space-between"
     dir="row"
     align="center"
+    onClick={onClick}
   >
     <Text color="gray500" variant="subtitle">
       {children}
@@ -225,6 +237,7 @@ const TextButton: React.FC<SubmitProps> = ({ children, onClick, onSubmit }) => (
     gap={10}
     justify="space-between"
     dir="row"
+    align="center"
   >
     <input
       type="text"

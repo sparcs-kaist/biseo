@@ -19,6 +19,8 @@ const Container = styled.dialog<{ w: number; h: number }>`
   width: ${props => props.w}px;
   height: ${props => props.h}px;
   padding: 20px 25px;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   border: none;
   border-radius: 10px;
@@ -56,17 +58,15 @@ export const Modal: React.FC<Props> = ({ title, children, width, height }) => {
 
   return (
     <Container w={width} h={height} ref={ref}>
-      <Box>
-        <Box w="fill" dir="row" align="center" justify="space-between">
-          <Text variant="title1">{title}</Text>
-          <Link to=".." relative="path" replace>
-            <CloseButton>
-              <CloseIcon />
-            </CloseButton>
-          </Link>
-        </Box>
-        <InnerContainer>{children}</InnerContainer>
+      <Box w="fill" dir="row" align="center" justify="space-between">
+        <Text variant="title1">{title}</Text>
+        <Link to=".." relative="path" replace>
+          <CloseButton>
+            <CloseIcon />
+          </CloseButton>
+        </Link>
       </Box>
+      <InnerContainer>{children}</InnerContainer>
     </Container>
   );
 };
