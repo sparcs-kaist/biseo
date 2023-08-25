@@ -71,7 +71,7 @@ export const UserTable: React.FC<Props> = ({
           onChange={setSelectedTag}
         />
       </Box>
-      <Table w="fill" h={100}>
+      <Table w="fill" h={287}>
         <Header>
           <Row>
             <Cell w={27}>
@@ -100,8 +100,8 @@ export const UserTable: React.FC<Props> = ({
               <Cell w={100}>{user.displayName}</Cell>
               <Cell>
                 {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
-                {user.tags.map((tag, id) => (
-                  <UserTag key={id} tag={tag} />
+                {user.tags.map(tag => (
+                  <UserTag tag={tag} />
                 ))}
               </Cell>
             </Row>
