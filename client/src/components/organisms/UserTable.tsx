@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import {
   Box,
+  Body,
   Header,
   Table,
   Cell,
@@ -8,6 +9,7 @@ import {
   CheckBox,
   UserTag,
   SelectBox,
+  BorderedBox,
 } from "@/components/atoms";
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
@@ -60,7 +62,7 @@ export const UserTable: React.FC<Props> = ({
   }, [users, selectedTag]);
 
   return (
-    <Box gap={5}>
+    <Box w="fill" gap={5}>
       <Box w="fill" dir="row" justify="start">
         <SelectBox
           width={92}
@@ -69,18 +71,18 @@ export const UserTable: React.FC<Props> = ({
           onChange={setSelectedTag}
         />
       </Box>
-      <Table>
+      <Table w="fill" h={100}>
         <Header>
           <Row>
             <Cell w={27}>
               <CheckBox disabled />
             </Cell>
-            <Cell w={80}>이름</Cell>
-            <Cell w={120}>닉네임</Cell>
-            <Cell>태그</Cell>
+            <Cell w={60}>이름</Cell>
+            <Cell w={100}>닉네임</Cell>
+            <Cell scroll>태그</Cell>
           </Row>
         </Header>
-        <tbody>
+        <Body>
           {filteredUsers.map(user => (
             <Row
               key={user.id}
@@ -94,19 +96,17 @@ export const UserTable: React.FC<Props> = ({
               <Cell w={27}>
                 <CheckBox checked={selectedUsers.includes(user.id)} readOnly />
               </Cell>
-              <Cell w={80}>{user.username}</Cell>
-              <Cell w={120}>{user.displayName}</Cell>
+              <Cell w={60}>{user.username}</Cell>
+              <Cell w={100}>{user.displayName}</Cell>
               <Cell>
-                <Box dir="row" gap={5}>
-                  {user.isAdmin ? <UserTag>어드민</UserTag> : <></>}
-                  {user.tags.map(tag => (
-                    <UserTag tag={tag} />
-                  ))}
-                </Box>
+                {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
+                {user.tags.map((tag, id) => (
+                  <UserTag key={id} tag={tag} />
+                ))}
               </Cell>
             </Row>
           ))}
-        </tbody>
+        </Body>
       </Table>
     </Box>
   );
