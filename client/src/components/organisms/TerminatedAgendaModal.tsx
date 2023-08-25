@@ -79,7 +79,7 @@ export const TerminatedAgendaModal: React.FC = () => {
           </Box>
         </Box>
 
-        <Box w={300} h={450} gap={20} justify="space-between">
+        <Box w={300} h={498} justify="space-between">
           <ModalInner
             title="투표 대상"
             count={targetAgenda?.voters.total.length}
@@ -96,6 +96,8 @@ export const TerminatedAgendaModal: React.FC = () => {
             justify="space-between"
             padVertical={15}
             padHorizontal={12}
+            bg="blue100"
+            round={5}
           >
             <AdminAgendaTags />
           </Box>

@@ -118,11 +118,24 @@ export const EditAgendaModal: React.FC = () => {
               editable
             />
           </ModalInner>
-          <Box w="fill" gap={20}>
+          <Box
+            w={270}
+            gap={10}
+            bg="blue100"
+            padVertical={12}
+            padHorizontal={15}
+            round={5}
+          >
             <AdminAgendaTagsSelect />
             <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Link to=".." relative="path" replace>
+              <Link
+                to=".."
+                relative="path"
+                replace
+                style={{ textDecoration: "none" }}
+              >
                 <Button
+                  w={130}
                   h={38}
                   onClick={() =>
                     updateAgenda({
@@ -142,8 +155,17 @@ export const EditAgendaModal: React.FC = () => {
                   </Text>
                 </Button>
               </Link>
-              <Link to=".." relative="path" replace>
-                <Button h={38} onClick={() => deleteAgenda(targetAgenda!.id)}>
+              <Link
+                to=".."
+                relative="path"
+                replace
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  w={130}
+                  h={38}
+                  onClick={() => deleteAgenda(targetAgenda!.id)}
+                >
                   <Text variant="boldtitle3" color="blue600">
                     투표 삭제하기
                   </Text>

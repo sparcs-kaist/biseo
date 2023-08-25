@@ -98,7 +98,12 @@ export const CreateTemplateModal: React.FC = () => {
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>
-          <Link to=".." relative="path" replace>
+          <Link
+            to=".."
+            relative="path"
+            replace
+            style={{ textDecoration: "none" }}
+          >
             <Button w={300} h={40} onClick={onTemplateUpdate}>
               <Text variant="boldtitle3" color="blue600">
                 탬플릿 생성하기
