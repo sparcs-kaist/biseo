@@ -70,7 +70,6 @@ export const TerminatedAgendaModal: React.FC = () => {
                     name={choice.name}
                     count={choice.count}
                     totalCount={totalChoiceCount}
-                    w={280}
                   />
                 ))}
               </TerminatedModalInner.OptionResultsBox>

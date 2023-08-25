@@ -4,6 +4,7 @@ export const Scroll = styled.div`
   width: 100%;
 
   overflow-y: scroll;
+  overflow-x: hidden;
 
   ::-webkit-scrollbar {
     width: 14px;

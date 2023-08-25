@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { BorderedBox, Box, Text } from "@/components/atoms";
+import { BorderedBox, Box, Scroll, Text } from "@/components/atoms";
 
 interface BoxWithTitle extends PropsWithChildren {
   title: string;
@@ -125,15 +125,19 @@ const OptionResultsBox: React.FC<PropsWithChildren> = ({ children }) => (
     </Text>
     <BorderedBox
       w={300}
+      h={177}
       borderColor="gray200"
       borderSize={1}
       borderStyle="solid"
       round={5}
       pad={10}
+      padRight={0}
       gap={10}
       dir="column"
     >
-      {children}
+      <Scroll>
+        <Box gap={10}>{children}</Box>
+      </Scroll>
     </BorderedBox>
   </Box>
 );
@@ -150,7 +154,7 @@ const OptionVoteResult: React.FC<PropsForOptionVoteResult> = ({
   count,
   totalCount,
   userChoice = true,
-  w = 260,
+  w = 275,
 }) => {
   return (
     <BorderedBox
