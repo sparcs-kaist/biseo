@@ -56,7 +56,9 @@ export const CreateUserTagModal: React.FC = () => {
                 align="flex-start"
                 wrap="wrap"
               >
-                <ModalInner.TagChoice>이혜원</ModalInner.TagChoice>
+                {tagersState.map(tager => (
+                  <ModalInner.TagChoice>{tager}</ModalInner.TagChoice>
+                ))}
               </Box>
             </ModalInner>
           </Box>

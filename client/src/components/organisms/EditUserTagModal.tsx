@@ -65,11 +65,16 @@ export const EditUserTagModal: React.FC = () => {
 
           <Box w={300} h={101} dir="column" justify="space-between">
             <ModalInner title="태그 대상 보기" count={4}>
-              <Box gap={8} dir="row">
-                <ModalInner.TagChoice>이혜원</ModalInner.TagChoice>
-                <ModalInner.TagChoice>김민주</ModalInner.TagChoice>
-                <ModalInner.TagChoice>장하준</ModalInner.TagChoice>
-                <ModalInner.TagChoice>김지연</ModalInner.TagChoice>
+              <Box
+                gap={8}
+                dir="row"
+                justify="start"
+                align="flex-start"
+                wrap="wrap"
+              >
+                {tagersState.map(tager => (
+                  <ModalInner.TagChoice>{tager}</ModalInner.TagChoice>
+                ))}
               </Box>
             </ModalInner>
           </Box>
