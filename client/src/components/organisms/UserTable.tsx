@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
+import type { UserTag as UserTagType } from "@biseo/interface/user/tag";
 import {
   Box,
   Body,
@@ -9,7 +10,6 @@ import {
   CheckBox,
   UserTag,
   SelectBox,
-  BorderedBox,
 } from "@/components/atoms";
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
@@ -102,7 +102,11 @@ export const UserTable: React.FC<Props> = ({
                 {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
                 {user.tags.map(tag => (
                   <UserTag
-                    key={tags.filter(userTag => tag === userTag.title)[0]?.id}
+                    key={
+                      tags.filter(
+                        (userTag: UserTagType) => tag === userTag.title,
+                      )[0].id
+                    }
                     tag={tag}
                   />
                 ))}
