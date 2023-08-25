@@ -29,7 +29,7 @@ export const createTag = async ({
     },
   });
 
-  const tagWithUsers: schema.UserTag = {
+  const tagWithUsers: schema.UserTagi = {
     ...createdTag,
     users: createdUsers.map(user => user.userId),
   };
@@ -39,7 +39,7 @@ export const createTag = async ({
   };
 };
 
-export const retrieveAll = async (): Promise<schema.UserTag[]> => {
+export const retrieveAll = async (): Promise<schema.UserTagi[]> => {
   const findTemplates = await prisma.tag.findMany({
     select: {
       id: true,
@@ -90,7 +90,7 @@ export const updateTag = async (tagUpdate: schema.UserTagUpdate) => {
   const result = await prisma.$transaction([deleteUserTag, updateTag]);
   const { users, ...updatedTag } = result[1];
 
-  const tagWithUsers: schema.UserTag = {
+  const tagWithUsers: schema.UserTagi = {
     ...updatedTag,
     users: users.map(user => user.userId),
   };

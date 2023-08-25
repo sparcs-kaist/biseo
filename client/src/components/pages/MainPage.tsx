@@ -3,7 +3,6 @@ import { Box } from "@/components/atoms";
 import {
   AgendaSection,
   ChatSection,
-
 } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
 

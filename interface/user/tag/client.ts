@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UserTag, UserTagCreate, UserTagUpdate } from "./common";
+import { UserTagi, UserTagCreate, UserTagUpdate } from "./common";
 
 /**
  * Create
@@ -16,7 +16,7 @@ export type CreateCb = z.infer<typeof CreateCb>;
  */
 export const RetrieveAll = z.object({});
 export type RetrieveAll = z.infer<typeof RetrieveAll>;
-export const RetrieveAllCb = z.array(UserTag);
+export const RetrieveAllCb = z.array(UserTagi);
 export type RetrieveAllCb = z.infer<typeof RetrieveAllCb>;
 
 /**

@@ -8,11 +8,17 @@ import {
 } from "@/components/molecules";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useNavigate } from "react-router-dom";
+import { User } from "@biseo/interface/user";
+import { useUserTag } from "@/services/user-tag";
 
 export const AdminUserSection: React.FC = () => {
   const { templates } = useAgendaTemplate(state => ({
     templates: state.agendaTemplates,
   }));
+  const { usertags } = useUserTag(state => ({
+    usertags: state.userTags,
+  }));
+
   const navigate = useNavigate();
 
   return (
@@ -32,9 +38,13 @@ export const AdminUserSection: React.FC = () => {
       <Box dir="column" w={380}>
         <SectionHeader count={4}>유저 태그</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
-          <AddButtonCard content="새로운 태그" />
-          <UserTagCards />
-          <UserTagCards />
+          <AddButtonCard
+            content="새로운 태그"
+            onClick={() => navigate("createtag")}
+          />
+          {usertags.map(usertag => (
+            <UserTagCards key={usertag.id} tag={usertag} />
+          ))}
         </Box>
       </Box>
     </Box>

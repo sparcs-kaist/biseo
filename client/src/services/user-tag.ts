@@ -1,13 +1,13 @@
 import { socket } from "@/socket";
 import { create } from "zustand";
 import type {
-  UserTag,
+  UserTagi,
   UserTagCreate,
   UserTagUpdate,
 } from "@biseo/interface/user/tag";
 
 interface UserTagState {
-  userTags: UserTag[];
+  userTags: UserTagi[];
   createTag: (tag: UserTagCreate) => void;
   retrieveAll: () => void;
   updateTag: (tag: UserTagUpdate) => void;
@@ -59,7 +59,7 @@ socket.on("user.tag.created", userTag => {
 
 socket.on("user.tag.updated", userTag => {
   useUserTag.setState(state => {
-    const newTags: UserTag[] = state.userTags.map(tag => {
+    const newTags: UserTagi[] = state.userTags.map(tag => {
       if (tag.id === userTag.id) {
         return userTag;
       }
@@ -73,7 +73,7 @@ socket.on("user.tag.updated", userTag => {
 
 socket.on("user.tag.deleted", userTag => {
   useUserTag.setState(state => {
-    const newTags: UserTag[] = state.userTags.filter(
+    const newTags: UserTagi[] = state.userTags.filter(
       tag => tag.id !== userTag.id,
     );
     return {

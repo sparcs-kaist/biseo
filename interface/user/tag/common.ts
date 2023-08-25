@@ -1,16 +1,16 @@
 import { z } from "zod";
 
 /**
- * UserTag
+ * UserTagi
  * some description about user tag type goes here
  */
-export const UserTag = z.object({
+export const UserTagi = z.object({
   id: z.number(),
   title: z.string(),
   description: z.string(),
   users: z.array(z.number()), // user id
 });
-export type UserTag = z.infer<typeof UserTag>;
+export type UserTagi = z.infer<typeof UserTagi>;
 
 /**
  * AdminAgendaCreate
