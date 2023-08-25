@@ -98,24 +98,24 @@ export const EditAgendaModal: React.FC = () => {
                 탬플릿을 선택하세요
               </SelectTemplateBox>
             </ModalInner>
-            <ModalInner title="투표 제목">
+            <ModalInner title="투표 제목" required>
               <ModalInner.InputBox onClick={onChangeTitle}>
                 {targetAgenda?.title}
               </ModalInner.InputBox>
             </ModalInner>
-            <ModalInner title="투표 설명">
+            <ModalInner title="투표 설명" required>
               <ModalInner.InputBox onClick={onChangeContent}>
                 {targetAgenda?.content}
               </ModalInner.InputBox>
             </ModalInner>
-            <ModalInner title="의결 문안">
+            <ModalInner title="의결 문안" required>
               <ModalInner.InputBox onClick={onChangeResolution}>
                 {targetAgenda?.resolution}
               </ModalInner.InputBox>
             </ModalInner>
           </Box>
 
-          <ModalInner title="투표 항목" count={choices.length}>
+          <ModalInner title="투표 항목" count={choices.length} required>
             <ModalInner.AddVoteOptionArea
               value={newchoice}
               onClick={onChangeChoice}
