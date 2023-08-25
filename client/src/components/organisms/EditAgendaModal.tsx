@@ -53,7 +53,7 @@ export const EditAgendaModal: React.FC = () => {
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewchoiceState(e.target.value);
   };
-  const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSubmitChoice = () => {
     setChoicesState([...choicesState!, newchoiceState]);
   };
 
@@ -100,6 +100,7 @@ export const EditAgendaModal: React.FC = () => {
 
           <ModalInner title="투표 항목" count={1}>
             <ModalInner.AddVoteOptionArea
+              value={newchoiceState}
               onClick={onChangeChoice}
               onSubmit={onSubmitChoice}
             >
