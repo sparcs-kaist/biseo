@@ -8,6 +8,8 @@ export const TextAreaFixedsize = styled.textarea`
   resize: none;
   border: none;
   background: transparent;
+  font-size: 11px;
+  font-weight: 500;
   color: ${props => props.theme.colors.black};
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
@@ -15,13 +17,14 @@ export const TextAreaFixedsize = styled.textarea`
   }
 `;
 
-// TODO: Apply text styles / Relates - #53
 export const TextAreaAutosize = styled(TextareaAutosize)`
   width: 100%;
   outline: none;
   resize: none;
   border: none;
   background: transparent;
+  font-size: 12px;
+  font-weight: 500;
   color: ${props => props.theme.colors.black};
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;

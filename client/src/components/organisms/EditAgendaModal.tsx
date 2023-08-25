@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
-import { Button, Box, Text, BorderedBox } from "@/components/atoms";
-import { ModalInner } from "@/components/molecules";
 import { useLocation } from "react-router-dom";
+import type { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
+import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
+import { Box, Button, SelectTemplateBox, Text } from "@/components/atoms";
+import { ModalInner } from "@/components/molecules";
+import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
-import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
-import { UserTable } from "./UserTable";
 
 export const EditAgendaModal: React.FC = () => {
   const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
@@ -123,22 +122,12 @@ export const EditAgendaModal: React.FC = () => {
               탬플릿을 선택하세요
             </SelectTemplateBox>
           </ModalInner>
-          <ModalInner title="투표 대상" count={3}>
-            <BorderedBox
-              borderColor="gray200"
-              bg="white"
-              w={298}
-              h={304}
-              borderSize={1}
-              round={5}
-              borderStyle="solid"
-            >
-              <UserTable
-                selectedUsers={votersState}
-                setSelectedUsers={setVotersState}
-                editable
-              />
-            </BorderedBox>
+          <ModalInner title="투표 대상" count={votersState.length}>
+            <UserTable
+              selectedUsers={votersState}
+              setSelectedUsers={setVotersState}
+              editable
+            />
           </ModalInner>
           <Box w="fill" gap={20}>
             <AdminAgendaTagsSelect />
