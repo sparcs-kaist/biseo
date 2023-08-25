@@ -26,7 +26,7 @@ interface ButtonProps extends PropsWithChildren {
 
 interface TextAreaProps extends PropsWithChildren {
   placeholder?: string;
-  value: string;
+  value?: string;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
 

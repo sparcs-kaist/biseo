@@ -73,7 +73,7 @@ export const EditAgendaModal: React.FC = () => {
   };
 
   return (
-    <Modal width={680} height={590} title="투표 수정하기">
+    <Modal title="투표 수정하기">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>

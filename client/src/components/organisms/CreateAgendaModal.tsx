@@ -85,7 +85,7 @@ export const CreateAgendaModal: React.FC = () => {
   };
 
   return (
-    <Modal width={680} height={590} title="투표 생성하기">
+    <Modal title="투표 생성하기">
       <Box w={630} justify="space-between" dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>

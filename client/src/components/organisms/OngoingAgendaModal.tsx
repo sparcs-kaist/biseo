@@ -34,7 +34,7 @@ export const OngoingAgendaModal: React.FC = () => {
   };
 
   return (
-    <Modal width={680} height={509} title="진행 중인 투표">
+    <Modal title="진행 중인 투표">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>

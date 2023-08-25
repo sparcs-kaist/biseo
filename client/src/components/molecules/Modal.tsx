@@ -6,18 +6,18 @@ import { Box, Text } from "@/components/atoms";
 
 interface Props extends PropsWithChildren {
   title: string;
-  width: number;
-  height: number;
+  width?: Size;
+  height?: Size;
 }
 
-const Container = styled.dialog<{ w: number; h: number }>`
+const Container = styled.dialog<{ w: Size; h: Size }>`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   gap: 15px;
-  width: ${props => props.w}px;
-  height: ${props => props.h}px;
+  width: ${props => size(props.w)};
+  height: ${props => size(props.h)};
   padding: 20px 25px;
   display: flex;
   flex-direction: column;
@@ -46,7 +46,12 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
-export const Modal: React.FC<Props> = ({ title, children, width, height }) => {
+export const Modal: React.FC<Props> = ({
+  title,
+  children,
+  width = "hug",
+  height = "hug",
+}) => {
   const ref = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -69,4 +74,11 @@ export const Modal: React.FC<Props> = ({ title, children, width, height }) => {
       <InnerContainer>{children}</InnerContainer>
     </Container>
   );
+};
+
+type Size = number | "hug" | "fill";
+const size = (size: Size) => {
+  if (size === "fill") return "100%";
+  if (size === "hug") return "fit-content";
+  return `${size}px`;
 };
