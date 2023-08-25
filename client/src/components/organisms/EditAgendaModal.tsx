@@ -10,11 +10,11 @@ import { useAdminAgenda } from "@/services/admin-agenda";
 
 export const EditAgendaModal: React.FC = () => {
   const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
-  const [titleState, setTitleState] = useState("");
-  const [contentState, setContentState] = useState("");
-  const [resolutionState, setResolutionState] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [resolution, setResolution] = useState("");
 
-  const [newchoiceState, setNewchoiceState] = useState("");
+  const [newchoice, setNewchoice] = useState("");
   const location = useLocation();
 
   const modalParams = new URLSearchParams(location.search);
@@ -25,12 +25,12 @@ export const EditAgendaModal: React.FC = () => {
       agenda => agenda.id === agendaId && agenda.status === "preparing",
     ),
   }));
-  const [choicesState, setChoicesState] = useState(
+  const [choices, setChoices] = useState(
     targetAgenda!.choices.map(choice => {
       return choice.name;
     }),
   );
-  const [votersState, setVotersState] = useState<number[]>(
+  const [voters, setVoters] = useState<number[]>(
     targetAgenda!.voters.total.map(voters => {
       return voters.id;
     }),
@@ -43,22 +43,22 @@ export const EditAgendaModal: React.FC = () => {
     deleteAgenda: state.deleteAgenda,
   }));
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleState(e.target.value);
+    setTitle(e.target.value);
   };
   const onChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setContentState(e.target.value);
+    setContent(e.target.value);
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setResolutionState(e.target.value);
+    setResolution(e.target.value);
   };
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewchoiceState(e.target.value);
+    setNewchoice(e.target.value);
   };
   const onSubmitChoice = () => {
-    setChoicesState([...choicesState!, newchoiceState]);
+    setChoices([...choices!, newchoice]);
   };
   const deleteChoice = (choice: string) => {
-    setChoicesState(choicesState.filter(c => c !== choice));
+    setChoices(choices.filter(c => c !== choice));
   };
 
   return (
@@ -88,13 +88,13 @@ export const EditAgendaModal: React.FC = () => {
             </ModalInner>
           </Box>
 
-          <ModalInner title="투표 항목" count={choicesState.length}>
+          <ModalInner title="투표 항목" count={choices.length}>
             <ModalInner.AddVoteOptionArea
-              value={newchoiceState}
+              value={newchoice}
               onClick={onChangeChoice}
               onSubmit={onSubmitChoice}
             >
-              {choicesState.map(opt => (
+              {choices.map(opt => (
                 <ModalInner.VoteChoice
                   key={opt}
                   onClick={() => deleteChoice(opt)}
@@ -111,10 +111,10 @@ export const EditAgendaModal: React.FC = () => {
               탬플릿을 선택하세요
             </SelectTemplateBox>
           </ModalInner>
-          <ModalInner title="투표 대상" count={votersState.length}>
+          <ModalInner title="투표 대상" count={voters.length}>
             <UserTable
-              selectedUsers={votersState}
-              setSelectedUsers={setVotersState}
+              selectedUsers={voters}
+              setSelectedUsers={setVoters}
               editable
             />
           </ModalInner>
@@ -140,13 +140,13 @@ export const EditAgendaModal: React.FC = () => {
                   onClick={() =>
                     updateAgenda({
                       id: targetAgenda!.id,
-                      title: titleState,
-                      content: contentState,
-                      resolution: resolutionState,
+                      title: title,
+                      content: content,
+                      resolution: resolution,
                       voters: {
-                        total: votersState,
+                        total: voters,
                       },
-                      choices: choicesState,
+                      choices: choices,
                     })
                   }
                 >

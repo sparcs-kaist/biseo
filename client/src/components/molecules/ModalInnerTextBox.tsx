@@ -47,6 +47,7 @@ interface SubComponents {
   VoteChoice: typeof VoteChoice;
   TextButton: typeof TextButton;
   InputBox: typeof InputBox;
+  TagChoice: typeof TagChoice;
   WhiteTextBox: typeof WhiteTextBox;
 }
 
@@ -290,3 +291,24 @@ const TextButton: React.FC<SubmitProps> = ({
   </BorderedBox>
 );
 ModalInner.TextButton = TextButton;
+
+const TagChoice: React.FC<PropsWithChildren> = ({ children }) => (
+  <BorderedBox
+    borderColor="gray200"
+    bg="white"
+    h={30}
+    borderSize={1}
+    padVertical={0}
+    padHorizontal={15}
+    round={5}
+    borderStyle="solid"
+    gap={8}
+    justify="center"
+    align="center"
+  >
+    <Text color="gray600" variant="subtitle">
+      {children}
+    </Text>
+  </BorderedBox>
+);
+ModalInner.TagChoice = TagChoice;
