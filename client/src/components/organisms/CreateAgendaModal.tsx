@@ -108,7 +108,7 @@ export const CreateAgendaModal: React.FC = () => {
             <ModalInner
               title="템플릿 선택"
               buttonOnClick={() => applyTemplate(templateState)}
-              buttonText="탬플릿 적용"
+              buttonText="템플릿 적용"
             >
               <SelectTemplateBox
                 width={300}
