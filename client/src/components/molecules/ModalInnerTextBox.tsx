@@ -6,6 +6,7 @@ import {
   TextArea,
   Button,
   GrayTextButton,
+  TextInput,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
@@ -109,26 +110,11 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="gray100"
-    w={300}
-    h={35}
-    borderSize={1}
-    padVertical={8}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
-    gap={10}
-  >
-    <input
-      type="text"
-      placeholder={children?.toString()}
-      style={{ border: 0, color: "#555555", fontSize: 11 }}
-      onChange={onClick}
-      value={value}
-    />
-  </BorderedBox>
+  <TextInput
+    placeholder={children?.toString()}
+    value={value}
+    onChange={onClick}
+  />
 );
 ModalInner.InputBox = InputBox;
 
