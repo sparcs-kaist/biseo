@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import {
@@ -88,6 +88,29 @@ export const EditAgendaModal: React.FC = () => {
     setSelectedTags(selected);
   };
 
+  const validated = useMemo(
+    () =>
+      title.length > 0 &&
+      content.length > 0 &&
+      resolution.length > 0 &&
+      choices.length > 0,
+    [title, content, resolution, choices],
+  );
+
+  const onSubmit = () => {
+    if (!validated) return;
+    updateAgenda({
+      id: agendaId,
+      title: title,
+      content: content,
+      resolution: resolution,
+      voters: {
+        total: voters,
+      },
+      choices: choices,
+    });
+  };
+
   return (
     <Modal title="투표 수정하기">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
@@ -167,22 +190,7 @@ export const EditAgendaModal: React.FC = () => {
                 replace
                 style={{ textDecoration: "none" }}
               >
-                <Button
-                  w={130}
-                  h={38}
-                  onClick={() =>
-                    updateAgenda({
-                      id: targetAgenda!.id,
-                      title: title,
-                      content: content,
-                      resolution: resolution,
-                      voters: {
-                        total: voters,
-                      },
-                      choices: choices,
-                    })
-                  }
-                >
+                <Button w={130} h={38} onClick={onSubmit} disabled={!validated}>
                   <Text variant="boldtitle3" color="blue600">
                     투표 수정하기
                   </Text>
@@ -194,11 +202,7 @@ export const EditAgendaModal: React.FC = () => {
                 replace
                 style={{ textDecoration: "none" }}
               >
-                <Button
-                  w={130}
-                  h={38}
-                  onClick={() => deleteAgenda(targetAgenda!.id)}
-                >
+                <Button w={130} h={38} onClick={() => deleteAgenda(agendaId)}>
                   <Text variant="boldtitle3" color="blue600">
                     투표 삭제하기
                   </Text>
