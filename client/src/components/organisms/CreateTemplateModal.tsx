@@ -56,28 +56,19 @@ export const CreateTemplateModal: React.FC = () => {
       <Box w={630} dir="row" justify="space-between">
         <Box w={300} dir="column" gap={20}>
           <ModalInner title="템플릿 제목" required>
-            <ModalInner.InputBox onClick={onChangeTemplateTitle}>
-              내용을 입력하세요
-            </ModalInner.InputBox>
+            <ModalInner.InputBox onChange={onChangeTemplateTitle} />
           </ModalInner>
 
           <ModalInner title="투표 제목" required>
-            <ModalInner.InputBox onClick={onChangeAgendaTitle}>
-              내용을 입력하세요
-            </ModalInner.InputBox>
+            <ModalInner.InputBox onChange={onChangeAgendaTitle} />
           </ModalInner>
 
           <ModalInner title="투표 설명" required>
-            <ModalInner.TextAreaInputBox
-              placeholder="내용을 입력하세요"
-              onChange={onChangeAgendaContent}
-            />
+            <ModalInner.TextAreaInputBox onChange={onChangeAgendaContent} />
           </ModalInner>
 
           <ModalInner title="의결 문안" required>
-            <ModalInner.InputBox onClick={onChangeAgendaResolution}>
-              내용을 입력하세요
-            </ModalInner.InputBox>
+            <ModalInner.InputBox onChange={onChangeAgendaResolution} />
           </ModalInner>
         </Box>
 

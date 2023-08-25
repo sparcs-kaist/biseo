@@ -42,18 +42,14 @@ export const CreateUserTagModal: React.FC = () => {
       <Box w={630} dir="row" justify="space-between" padVertical={15}>
         <Box w={300} gap={20}>
           <ModalInner title="태그 제목" required>
-            <ModalInner.InputBox onClick={onChangeTitle} value={title}>
-              내용을 입력하세요
-            </ModalInner.InputBox>
+            <ModalInner.InputBox onChange={onChangeTitle} value={title} />
           </ModalInner>
 
           <ModalInner title="태그 설명" required>
             <ModalInner.InputBox
-              onClick={onChangeDescription}
+              onChange={onChangeDescription}
               value={description}
-            >
-              내용을 입력하세요
-            </ModalInner.InputBox>
+            />
           </ModalInner>
 
           <Box w={300} h={101} dir="column" justify="space-between">
