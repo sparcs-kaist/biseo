@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import {
-  Button,
   Box,
-  Text,
+  Button,
   SelectTagBox,
   SelectTemplateBox,
+  Text,
 } from "@/components/atoms";
 import {
   AdminAgendaTagsSelect,
@@ -14,13 +15,10 @@ import {
 } from "@/components/molecules";
 import { UserTable } from "@/components/organisms";
 
-import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
-
-import type { AgendaTemplate } from "@biseo/interface/agenda/template";
-import { Link } from "react-router-dom";
 
 export const CreateAgendaModal: React.FC = () => {
   const [titleState, setTitleState] = useState("");
@@ -103,6 +101,18 @@ export const CreateAgendaModal: React.FC = () => {
     setSelectedTags(selected);
   };
 
+  const onSubmit = () => {
+    createAgenda({
+      title: titleState,
+      content: contentState,
+      resolution: resolutionState,
+      voters: {
+        total: votersState,
+      },
+      choices: choicesState.filter(word => word != ""),
+    });
+  };
+
   return (
     <Modal title="투표 생성하기">
       <Box w={630} justify="space-between" dir="row">
@@ -123,19 +133,19 @@ export const CreateAgendaModal: React.FC = () => {
                 템플릿을 선택하세요
               </SelectTemplateBox>
             </ModalInner>
-            <ModalInner title="투표 제목">
+            <ModalInner title="투표 제목" required>
               <ModalInner.InputBox onClick={onChangeTitle} value={titleState}>
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
-            <ModalInner title="투표 설명">
+            <ModalInner title="투표 설명" required>
               <ModalInner.TextAreaInputBox
                 placeholder="내용을 입력하세요"
                 value={contentState}
                 onChange={onChangeContent}
               />
             </ModalInner>
-            <ModalInner title="의결 문안">
+            <ModalInner title="의결 문안" required>
               <ModalInner.InputBox
                 onClick={onChangeResolution}
                 value={resolutionState}
@@ -144,7 +154,7 @@ export const CreateAgendaModal: React.FC = () => {
               </ModalInner.InputBox>
             </ModalInner>
 
-            <ModalInner title="투표 항목" count={choicesState.length}>
+            <ModalInner title="투표 항목" count={choicesState.length} required>
               <ModalInner.AddVoteOptionArea
                 onClick={onChangeChoice}
                 onSubmit={onSubmitChoice}
