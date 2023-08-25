@@ -17,7 +17,6 @@ export const TextAreaFixedsize = styled.textarea`
   }
 `;
 
-// TODO: Apply text styles / Relates - #53
 export const TextAreaAutosize = styled(TextareaAutosize)`
   width: 100%;
   outline: none;
