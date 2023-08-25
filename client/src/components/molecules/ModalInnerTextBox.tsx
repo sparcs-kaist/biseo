@@ -110,7 +110,27 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
-  <TextInput
+  <BorderedBox
+    borderColor="gray200"
+    bg="gray100"
+    borderSize={1}
+    round={5}
+    borderStyle="solid"
+  >
+    <TextInput
+      placeholder={children?.toString()}
+      value={value}
+      onChange={onClick}
+    />
+  </BorderedBox>
+);
+ModalInner.InputBox = InputBox;
+const TextAreaInputBox: React.FC<ButtonProps> = ({
+  children,
+  onClick,
+  value,
+}) => (
+  <TextArea
     placeholder={children?.toString()}
     value={value}
     onChange={onClick}

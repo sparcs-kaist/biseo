@@ -6,8 +6,8 @@ export const TextInput = styled.input`
   padding: 0 15px;
   font-size: 11px;
   font-weight: 500;
-  background: ${props => props.theme.colors.gray100};
-  border: solid 1px ${props => props.theme.colors.gray200};
+  background: transparent;
+  border: none;
   border-radius: 5px;
 `;
 TextInput.defaultProps = {
