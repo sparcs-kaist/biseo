@@ -86,7 +86,7 @@ export const CreateAgendaModal: React.FC = () => {
 
   return (
     <Modal width={680} height={590} title="투표 생성하기">
-      <Box w={630} justify="space-between" padVertical={15} dir="row">
+      <Box w={630} justify="space-between" dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>
             <ModalInner title="템플릿 선택">
@@ -128,13 +128,13 @@ export const CreateAgendaModal: React.FC = () => {
               </ModalInner.InputBox>
             </ModalInner>
 
-            <ModalInner title="투표 항목" count={1}>
+            <ModalInner title="투표 항목" count={choicesState.length}>
               <ModalInner.AddVoteOptionArea
                 onClick={onChangeChoice}
                 onSubmit={onSubmitChoice}
               >
                 {choicesState.map(opt => (
-                  <ModalInner.VoteChoice>{opt}</ModalInner.VoteChoice>
+                  <ModalInner.VoteChoice key={opt}>{opt}</ModalInner.VoteChoice>
                 ))}
               </ModalInner.AddVoteOptionArea>
             </ModalInner>
@@ -160,16 +160,14 @@ export const CreateAgendaModal: React.FC = () => {
             />
           </ModalInner>
           <ModalInner title="투표 대상" count={3}>
-            <Box h={277}>
-              <UserTable
-                setSelectedUsers={setVotersState}
-                selectedUsers={votersState}
-                selected={selectedUsers}
-                editable
-              />
-            </Box>
+            <UserTable
+              setSelectedUsers={setVotersState}
+              selectedUsers={votersState}
+              selected={selectedUsers}
+              editable
+            />
           </ModalInner>
-          <Box w={300} h={106} padHorizontal={13} padVertical={15} gap={10}>
+          <Box w={300} h={106} gap={10}>
             <Box dir="row" w={270} h={28} justify="space-between">
               <AdminAgendaTagsSelect />
             </Box>

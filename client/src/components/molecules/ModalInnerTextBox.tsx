@@ -5,6 +5,7 @@ import {
   Text,
   TextArea,
   GrayTextButton,
+  Scroll,
   TextInput,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
@@ -201,16 +202,20 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
     <BorderedBox
       borderColor="gray200"
       bg="white"
-      w={300}
+      w="fill"
       h={152}
       borderSize={1}
       pad={10}
+      padRight={0}
       roundBot={0}
       roundTop={5}
       borderStyle="solid"
-      gap={10}
     >
-      {children}
+      <Scroll>
+        <Box w="fill" gap={10}>
+          {children}
+        </Box>
+      </Scroll>
     </BorderedBox>
     <TextButton onClick={onClick} onSubmit={onSubmit}>
       새로운 항목
@@ -226,14 +231,13 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
   <BorderedBox
     borderColor="gray200"
     bg="white"
-    w={280}
+    w="fill"
     h={32}
     borderSize={1}
     padVertical={6}
     padHorizontal={12}
     round={5}
     borderStyle="solid"
-    gap={10}
     justify="space-between"
     dir="row"
     align="center"
