@@ -21,7 +21,7 @@ export const CreateUserTagModal: React.FC = () => {
   const onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
   };
-  const [taggers, settaggers] = useState<number[]>([]);
+  const [taggers, setTaggers] = useState<number[]>([]);
 
   const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,
@@ -94,7 +94,7 @@ export const CreateUserTagModal: React.FC = () => {
         <Box w={300} h={354} gap={20}>
           <ModalInner title="태그 대상" count={taggers.length}>
             <UserTable
-              setSelectedUsers={settaggers}
+              setSelectedUsers={setTaggers}
               selectedUsers={taggers}
               selected={selectedUsers}
               editable
