@@ -203,7 +203,7 @@ export const CreateAgendaModal: React.FC = () => {
               <AdminAgendaTagsSelect />
             </Box>
             <Link
-              to=".."
+              to={validated ? ".." : "#"}
               relative="path"
               replace
               style={{ textDecoration: "none" }}
