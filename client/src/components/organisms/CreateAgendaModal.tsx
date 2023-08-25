@@ -72,7 +72,18 @@ export const CreateAgendaModal: React.FC = () => {
   const { findTemplate } = useAgendaTemplate(state => ({
     findTemplate: state.findTemplate,
   }));
-
+  const applyTemplate = (templateId: number) => {
+    {
+      const targetTemplate = findTemplate(templateId);
+      if (targetTemplate != undefined) {
+        setTemplateState(templateId);
+        setTitleState(targetTemplate.title);
+        setContentState(targetTemplate.content);
+        setResolutionState(targetTemplate.resolution);
+        setChoicesState(targetTemplate.choices);
+      }
+    }
+  };
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const applySelectedTags = () => {
@@ -97,19 +108,16 @@ export const CreateAgendaModal: React.FC = () => {
       <Box w={630} justify="space-between" dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>
-            <ModalInner title="템플릿 선택">
+            <ModalInner
+              title="템플릿 선택"
+              buttonOnClick={() => applyTemplate(templateState)}
+              buttonText="템플릿 적용"
+            >
               <SelectTemplateBox
                 width={300}
                 height={38}
                 onChange={(templateId: number) => {
-                  const targetTemplate = findTemplate(templateId);
-                  if (targetTemplate != undefined) {
-                    setTemplateState(templateId);
-                    setTitleState(targetTemplate.title);
-                    setContentState(targetTemplate.content);
-                    setResolutionState(targetTemplate.resolution);
-                    setChoicesState(targetTemplate.choices);
-                  }
+                  setTemplateState(templateId);
                 }}
               >
                 템플릿을 선택하세요
@@ -174,12 +182,25 @@ export const CreateAgendaModal: React.FC = () => {
               editable
             />
           </ModalInner>
-          <Box w={300} h={106} gap={10}>
+          <Box
+            w={300}
+            h={106}
+            gap={10}
+            align="center"
+            justify="center"
+            bg="blue100"
+          >
             <Box dir="row" w={270} h={28} justify="space-between">
               <AdminAgendaTagsSelect />
             </Box>
-            <Link to=".." relative="path" replace>
+            <Link
+              to=".."
+              relative="path"
+              replace
+              style={{ textDecoration: "none" }}
+            >
               <Button
+                w={270}
                 h={38}
                 onClick={() =>
                   createAgenda({

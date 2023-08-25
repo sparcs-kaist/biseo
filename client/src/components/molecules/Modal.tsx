@@ -65,7 +65,12 @@ export const Modal: React.FC<Props> = ({
     <Container w={width} h={height} ref={ref}>
       <Box w="fill" dir="row" align="center" justify="space-between">
         <Text variant="title1">{title}</Text>
-        <Link to=".." relative="path" replace>
+        <Link
+          to=".."
+          relative="path"
+          replace
+          style={{ textDecoration: "none" }}
+        >
           <CloseButton>
             <CloseIcon />
           </CloseButton>

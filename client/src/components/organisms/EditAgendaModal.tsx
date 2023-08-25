@@ -57,19 +57,8 @@ export const EditAgendaModal: React.FC = () => {
   const onSubmitChoice = () => {
     setChoices([...choices!, newchoice]);
   };
-
-  const update = (AgendaParam: AdminAgendaUpdate) => {
-    targetAgenda &&
-      updateAgenda({
-        id: AgendaParam.id,
-        title: AgendaParam.title,
-        content: AgendaParam.content,
-        resolution: AgendaParam.resolution,
-        voters: {
-          total: AgendaParam.voters.total,
-        },
-        choices: AgendaParam.choices,
-      });
+  const deleteChoice = (choice: string) => {
+    setChoices(choices.filter(c => c !== choice));
   };
 
   return (
@@ -99,14 +88,19 @@ export const EditAgendaModal: React.FC = () => {
             </ModalInner>
           </Box>
 
-          <ModalInner title="투표 항목" count={1}>
+          <ModalInner title="투표 항목" count={choices.length}>
             <ModalInner.AddVoteOptionArea
               value={newchoice}
               onClick={onChangeChoice}
               onSubmit={onSubmitChoice}
             >
               {choices.map(opt => (
-                <ModalInner.VoteChoice>{opt}</ModalInner.VoteChoice>
+                <ModalInner.VoteChoice
+                  key={opt}
+                  onClick={() => deleteChoice(opt)}
+                >
+                  {opt}
+                </ModalInner.VoteChoice>
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>
@@ -124,11 +118,24 @@ export const EditAgendaModal: React.FC = () => {
               editable
             />
           </ModalInner>
-          <Box w="fill" gap={20}>
+          <Box
+            w={270}
+            gap={10}
+            bg="blue100"
+            padVertical={12}
+            padHorizontal={15}
+            round={5}
+          >
             <AdminAgendaTagsSelect />
             <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Link to=".." relative="path" replace>
+              <Link
+                to=".."
+                relative="path"
+                replace
+                style={{ textDecoration: "none" }}
+              >
                 <Button
+                  w={130}
                   h={38}
                   onClick={() =>
                     updateAgenda({
@@ -148,8 +155,17 @@ export const EditAgendaModal: React.FC = () => {
                   </Text>
                 </Button>
               </Link>
-              <Link to=".." relative="path" replace>
-                <Button h={38} onClick={() => deleteAgenda(targetAgenda!.id)}>
+              <Link
+                to=".."
+                relative="path"
+                replace
+                style={{ textDecoration: "none" }}
+              >
+                <Button
+                  w={130}
+                  h={38}
+                  onClick={() => deleteAgenda(targetAgenda!.id)}
+                >
                   <Text variant="boldtitle3" color="blue600">
                     투표 삭제하기
                   </Text>

@@ -39,7 +39,7 @@ export const TerminatedAgendaModal: React.FC = () => {
 
   return (
     <Modal title="종료된 투표">
-      <Box h={498} w={630} justify="space-between" padVertical={15} dir="row">
+      <Box h={498} w={630} justify="space-between" dir="row">
         <Box w={300} h={498} gap={20}>
           <Box w={300} gap={10}>
             <ModalInner title="투표 제목">
@@ -64,13 +64,14 @@ export const TerminatedAgendaModal: React.FC = () => {
               participant={totalVoterCount}
             />
             <Box w={300} h={177} dir="column" gap={8}>
-              <TerminatedModalInner.OptionResultsBox>
+              <TerminatedModalInner.OptionResultsBox
+                count={targetAgenda?.choices.length}
+              >
                 {targetAgenda?.choices.map(choice => (
                   <TerminatedModalInner.OptionVoteResult
                     name={choice.name}
                     count={choice.count}
                     totalCount={totalChoiceCount}
-                    w={280}
                   />
                 ))}
               </TerminatedModalInner.OptionResultsBox>
@@ -78,7 +79,7 @@ export const TerminatedAgendaModal: React.FC = () => {
           </Box>
         </Box>
 
-        <Box w={300} h={450} gap={20} justify="space-between">
+        <Box w={300} h={498} justify="space-between">
           <ModalInner
             title="투표 대상"
             count={targetAgenda?.voters.total.length}
@@ -95,6 +96,8 @@ export const TerminatedAgendaModal: React.FC = () => {
             justify="space-between"
             padVertical={15}
             padHorizontal={12}
+            bg="blue100"
+            round={5}
           >
             <AdminAgendaTags />
           </Box>
