@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -18,33 +18,27 @@ import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminUser } from "@/services/admin-user";
-import { useUserTag } from "@/services/user-tag";
 
 export const CreateAgendaModal: React.FC = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [resolution, setResolution] = useState("");
-
-  const [choices, setChoices] = useState<string[]>([]);
-  const [voters, setVoters] = useState<number[]>([]);
-  const [newchoice, setNewchoice] = useState("");
-  const [template, setTemplate] = useState(0);
   const { createAgenda } = useAdminAgenda(state => ({
     createAgenda: state.createAgenda,
   }));
-  const { tags, retrieveTags } = useUserTag(state => ({
-    tags: state.userTags,
-    retrieveTags: state.retrieveAll,
+  const { findTemplate } = useAgendaTemplate(state => ({
+    findTemplate: state.findTemplate,
   }));
   const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,
     retrieveUsers: state.retrieveAll,
   }));
   useEffect(() => {
-    retrieveTags();
     retrieveUsers();
   }, []);
 
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [resolution, setResolution] = useState("");
+  const [choices, setChoices] = useState<string[]>([]);
+  const [voters, setVoters] = useState<number[]>([]);
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -54,10 +48,24 @@ export const CreateAgendaModal: React.FC = () => {
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResolution(e.target.value);
   };
+
+  const [template, setTemplate] = useState(0);
+  const applyTemplate = (templateId: number) => {
+    const targetTemplate = findTemplate(templateId);
+    if (targetTemplate != undefined) {
+      setTemplate(templateId);
+      setTitle(targetTemplate.title);
+      setContent(targetTemplate.content);
+      setResolution(targetTemplate.resolution);
+      setChoices(targetTemplate.choices);
+    }
+  };
+
+  const [newchoice, setNewchoice] = useState("");
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewchoice(e.target.value);
   };
-  const onSubmitChoice = () => {
+  const addChoice = () => {
     if (!choices.includes(newchoice)) {
       setChoices([...choices, newchoice]);
       setNewchoice("");
@@ -67,21 +75,6 @@ export const CreateAgendaModal: React.FC = () => {
     setChoices(choices.filter(c => c !== choice));
   };
 
-  const { findTemplate } = useAgendaTemplate(state => ({
-    findTemplate: state.findTemplate,
-  }));
-  const applyTemplate = (templateId: number) => {
-    {
-      const targetTemplate = findTemplate(templateId);
-      if (targetTemplate != undefined) {
-        setTemplate(templateId);
-        setTitle(targetTemplate.title);
-        setContent(targetTemplate.content);
-        setResolution(targetTemplate.resolution);
-        setChoices(targetTemplate.choices);
-      }
-    }
-  };
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const applySelectedTags = () => {
@@ -89,7 +82,6 @@ export const CreateAgendaModal: React.FC = () => {
     const selected = users.filter(user => user.tags.some(tagIsSelected));
     setSelectedUsers(selected.map(user => user.id));
   };
-
   const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { options } = e.target;
     const optionNum = options.length;
@@ -101,7 +93,17 @@ export const CreateAgendaModal: React.FC = () => {
     setSelectedTags(selected);
   };
 
+  const validated = useMemo(
+    () =>
+      title.length > 0 &&
+      content.length > 0 &&
+      resolution.length > 0 &&
+      choices.length > 0,
+    [title, content, resolution, choices],
+  );
+
   const onSubmit = () => {
+    if (!validated) return;
     createAgenda({
       title: title,
       content: content,
@@ -157,7 +159,7 @@ export const CreateAgendaModal: React.FC = () => {
             <ModalInner title="투표 항목" count={choices.length} required>
               <ModalInner.AddVoteOptionArea
                 onClick={onChangeChoice}
-                onSubmit={onSubmitChoice}
+                onSubmit={addChoice}
                 value={newchoice}
               >
                 {choices.map(opt => (
@@ -209,21 +211,7 @@ export const CreateAgendaModal: React.FC = () => {
               replace
               style={{ textDecoration: "none" }}
             >
-              <Button
-                w={270}
-                h={38}
-                onClick={() =>
-                  createAgenda({
-                    title: title,
-                    content: content,
-                    resolution: resolution,
-                    voters: {
-                      total: voters,
-                    },
-                    choices: choices.filter(word => word != ""),
-                  })
-                }
-              >
+              <Button w={270} h={38} onClick={onSubmit} disabled={!validated}>
                 <Text variant="boldtitle3" color="blue600">
                   투표 생성하기
                 </Text>
