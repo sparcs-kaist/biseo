@@ -128,7 +128,6 @@ ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
   <BorderedBox
     w={300}
-    h={35}
     borderColor="gray200"
     bg="gray100"
     borderSize={1}
