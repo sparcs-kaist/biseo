@@ -8,7 +8,7 @@ export const Button = styled.button<{
   color?: Color;
   padHorizontal?: number;
 }>(
-  ({ w = "fill", h = 28, color = "blue200", padHorizontal = 15, theme }) => css`
+  ({ w = "fill", h = 28, color = "blue200", padHorizontal = 0, theme }) => css`
     display: flex;
     width: ${size(w)};
     height: ${size(h)};

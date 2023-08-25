@@ -56,10 +56,11 @@ export const CreateAgendaModal: React.FC = () => {
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewchoiceState(e.target.value);
   };
-  const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSubmitChoice = () => {
     setChoicesState([...choicesState, newchoiceState]);
     setNewchoiceState("");
   };
+
   const { findTemplate } = useAgendaTemplate(state => ({
     findTemplate: state.findTemplate,
   }));

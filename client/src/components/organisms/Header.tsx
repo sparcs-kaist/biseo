@@ -54,7 +54,7 @@ export const Header: React.FC = () => {
           <></>
         )}
       </Box>
-      <Button w="hug" onClick={handleLogout}>
+      <Button w="hug" padHorizontal={15} onClick={handleLogout}>
         <Text variant="boldtitle3" color="blue600">
           {displayName == undefined ? "SPARCS ANON" : displayName}
         </Text>
