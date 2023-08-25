@@ -3,7 +3,7 @@ import { Modal, ModalInner } from "@/components/molecules";
 import { Button, Box, Text } from "@/components/atoms";
 import { UserTable } from "@/components/organisms";
 import { Link, useLocation } from "react-router-dom";
-import { useUserTag } from "@/services/user-tag";
+import { useUserTagi } from "@/services/user-tag";
 import { useAdminUser } from "@/services/admin-user";
 
 export const EditUserTagModal: React.FC = () => {
@@ -11,7 +11,7 @@ export const EditUserTagModal: React.FC = () => {
   const modalParams = new URLSearchParams(location.search);
   const tagId = parseInt(modalParams.get("tagId") as string);
 
-  const { targetTag } = useUserTag(state => ({
+  const { targetTag } = useUserTagi(state => ({
     targetTag: state.userTags.find(tag => tag.id === tagId),
   }));
 
@@ -40,7 +40,7 @@ export const EditUserTagModal: React.FC = () => {
     setTagDescriptionState(e.target.value);
   };
 
-  const { deleteTag, updateTag } = useUserTag(state => ({
+  const { deleteTag, updateTag } = useUserTagi(state => ({
     deleteTag: state.deleteTag,
     updateTag: state.updateTag,
   }));

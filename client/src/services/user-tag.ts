@@ -14,7 +14,7 @@ interface UserTagState {
   deleteTag: (id: number) => void;
 }
 
-export const useUserTag = create<UserTagState>(set => ({
+export const useUserTagi = create<UserTagState>(set => ({
   userTags: [],
 
   createTag: async tag => {
@@ -52,13 +52,13 @@ export const useUserTag = create<UserTagState>(set => ({
 }));
 
 socket.on("user.tag.created", userTag => {
-  useUserTag.setState(state => ({
+  useUserTagi.setState(state => ({
     userTags: [...state.userTags, userTag],
   }));
 });
 
 socket.on("user.tag.updated", userTag => {
-  useUserTag.setState(state => {
+  useUserTagi.setState(state => {
     const newTags: UserTagi[] = state.userTags.map(tag => {
       if (tag.id === userTag.id) {
         return userTag;
@@ -72,7 +72,7 @@ socket.on("user.tag.updated", userTag => {
 });
 
 socket.on("user.tag.deleted", userTag => {
-  useUserTag.setState(state => {
+  useUserTagi.setState(state => {
     const newTags: UserTagi[] = state.userTags.filter(
       tag => tag.id !== userTag.id,
     );

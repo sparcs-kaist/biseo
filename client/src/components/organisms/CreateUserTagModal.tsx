@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Modal, ModalInner } from "@/components/molecules";
 import { Button, Box, Text } from "@/components/atoms";
 import { UserTable } from "@/components/organisms";
-import { useUserTag } from "@/services/user-tag";
+import { useUserTagi } from "@/services/user-tag";
 import { useAdminUser } from "@/services/admin-user";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ export const CreateUserTagModal: React.FC = () => {
   const [descriptionState, setDescriptionState] = useState("");
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
 
-  const { createTag } = useUserTag(state => ({
+  const { createTag } = useUserTagi(state => ({
     createTag: state.createTag,
   }));
 

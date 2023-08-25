@@ -4,7 +4,7 @@ import {
   SelectWrapper,
   TagSelect,
 } from "@/components/atoms";
-import { useUserTag } from "@/services/user-tag";
+import { useUserTagi } from "@/services/user-tag";
 
 interface Props {
   selected: string[];
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const SelectTagBox: React.FC<Props> = ({ selected, onChange }) => {
-  const { tags } = useUserTag(state => ({
+  const { tags } = useUserTagi(state => ({
     tags: state.userTags,
   }));
 
