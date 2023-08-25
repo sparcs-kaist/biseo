@@ -19,8 +19,8 @@ export const SelectTagBox: React.FC<Props> = ({ selected, onChange }) => {
   return (
     <>
       <SelectWrapper>
-        <TagSelect onChange={onChange}>
-          <option value="" selected disabled>
+        <TagSelect defaultValue={[]} onChange={onChange}>
+          <option value="" disabled>
             태그를 선택하세요
           </option>
           {tags.map(tag => (
