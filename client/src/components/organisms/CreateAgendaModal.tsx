@@ -173,12 +173,20 @@ export const CreateAgendaModal: React.FC = () => {
               editable
             />
           </ModalInner>
-          <Box w={300} h={106} gap={10}>
+          <Box
+            w={300}
+            h={106}
+            gap={10}
+            align="center"
+            justify="center"
+            bg="blue100"
+          >
             <Box dir="row" w={270} h={28} justify="space-between">
               <AdminAgendaTagsSelect />
             </Box>
             <Link to=".." relative="path" replace>
               <Button
+                w={270}
                 h={38}
                 onClick={() =>
                   createAgenda({

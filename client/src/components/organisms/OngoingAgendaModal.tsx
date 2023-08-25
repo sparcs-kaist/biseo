@@ -72,14 +72,14 @@ export const OngoingAgendaModal: React.FC = () => {
             round={5}
           >
             <AdminAgendaTags />
-            <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Button h={38} onClick={remind}>
+            <Box dir="row" w={270} gap={10} justify="space-between">
+              <Button w={130} h={38} onClick={remind}>
                 <Text variant="boldtitle3" color="blue600">
                   투표 독촉하기
                 </Text>
               </Button>
               <Link to=".." relative="path" replace>
-                <Button h={38} onClick={terminate}>
+                <Button w={130} h={38} onClick={terminate}>
                   <Text variant="boldtitle3" color="blue600">
                     투표 종료하기
                   </Text>
