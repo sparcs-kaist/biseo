@@ -69,7 +69,18 @@ export const CreateAgendaModal: React.FC = () => {
   const { findTemplate } = useAgendaTemplate(state => ({
     findTemplate: state.findTemplate,
   }));
-
+  const applyTemplate = (templateId: number) => {
+    {
+      const targetTemplate = findTemplate(templateId);
+      if (targetTemplate != undefined) {
+        setTemplateState(templateId);
+        setTitleState(targetTemplate.title);
+        setContentState(targetTemplate.content);
+        setResolutionState(targetTemplate.resolution);
+        setChoicesState(targetTemplate.choices);
+      }
+    }
+  };
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const applySelectedTags = () => {
@@ -94,19 +105,16 @@ export const CreateAgendaModal: React.FC = () => {
       <Box w={630} justify="space-between" dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>
-            <ModalInner title="템플릿 선택">
+            <ModalInner
+              title="템플릿 선택"
+              buttonOnClick={() => applyTemplate(templateState)}
+              buttonText="탬플릿 적용"
+            >
               <SelectTemplateBox
                 width={300}
                 height={38}
                 onChange={(templateId: number) => {
-                  const targetTemplate = findTemplate(templateId);
-                  if (targetTemplate != undefined) {
-                    setTemplateState(templateId);
-                    setTitleState(targetTemplate.title);
-                    setContentState(targetTemplate.content);
-                    setResolutionState(targetTemplate.resolution);
-                    setChoicesState(targetTemplate.choices);
-                  }
+                  setTemplateState(templateId);
                 }}
               >
                 템플릿을 선택하세요
