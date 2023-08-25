@@ -26,7 +26,6 @@ export const Header = styled.thead`
 
 export const Body = styled.tbody`
   width: 100%;
-  height: 50px;
   background-color: ${props => props.theme.colors.white};
 
   > tr {
