@@ -93,7 +93,7 @@ const ParticipantBar: React.FC<PropsForParticipant> = ({
       position="relative"
     >
       <Box
-        w={(300 * participant) / total}
+        w={total ? (300 * participant) / total : 0}
         bg="blue300"
         h={30}
         z-index={0}
