@@ -1,47 +1,54 @@
-import React, { useState } from "react";
-import type { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
-import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
-import { Box, Button, SelectTemplateBox, Text } from "@/components/atoms";
-import { ModalInner } from "@/components/molecules";
+import React, { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+
+import {
+  Box,
+  Button,
+  SelectTagBox,
+  SelectTemplateBox,
+  Text,
+} from "@/components/atoms";
+import {
+  AdminAgendaTagsSelect,
+  Modal,
+  ModalInner,
+} from "@/components/molecules";
 import { UserTable } from "@/components/organisms";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { useAdminUser } from "@/services/admin-user";
 
 export const EditAgendaModal: React.FC = () => {
-  const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [resolution, setResolution] = useState("");
-
-  const [newchoice, setNewchoice] = useState("");
   const location = useLocation();
-
   const modalParams = new URLSearchParams(location.search);
   const agendaId = parseInt(modalParams.get("agendaId") as string);
 
-  const { targetAgenda } = useAdminAgenda(state => ({
-    targetAgenda: state.adminAgendas.find(
-      agenda => agenda.id === agendaId && agenda.status === "preparing",
-    ),
+  const { targetAgenda, updateAgenda, deleteAgenda } = useAdminAgenda(
+    state => ({
+      targetAgenda: state.adminAgendas.find(
+        agenda => agenda.id === agendaId && agenda.status === "preparing",
+      ),
+      updateAgenda: state.updateAgenda,
+      deleteAgenda: state.deleteAgenda,
+    }),
+  );
+  const { users } = useAdminUser(state => ({
+    users: state.adminUsers,
   }));
+
+  const [title, setTitle] = useState(targetAgenda?.title || "");
+  const [content, setContent] = useState(targetAgenda?.content || "");
+  const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
   const [choices, setChoices] = useState(
     targetAgenda!.choices.map(choice => {
       return choice.name;
-    }),
+    }) || [],
   );
-  const [voters, setVoters] = useState<number[]>(
-    targetAgenda!.voters.total.map(voters => {
+  const [voters, setVoters] = useState(
+    targetAgenda?.voters.total.map(voters => {
       return voters.id;
-    }),
+    }) || [],
   );
-
-  const { updateAgenda } = useAdminAgenda(state => ({
-    updateAgenda: state.updateAgenda,
-  }));
-  const { deleteAgenda } = useAdminAgenda(state => ({
-    deleteAgenda: state.deleteAgenda,
-  }));
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -51,14 +58,60 @@ export const EditAgendaModal: React.FC = () => {
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResolution(e.target.value);
   };
+
+  const [newchoice, setNewchoice] = useState("");
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewchoice(e.target.value);
   };
-  const onSubmitChoice = () => {
-    setChoices([...choices!, newchoice]);
+  const addChoice = () => {
+    if (newchoice.length > 0 && !choices.includes(newchoice)) {
+      setChoices([...choices, newchoice]);
+      setNewchoice("");
+    }
   };
   const deleteChoice = (choice: string) => {
     setChoices(choices.filter(c => c !== choice));
+  };
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState(voters);
+  const applySelectedTags = () => {
+    const tagIsSelected = (tag: string) => selectedTags.includes(tag);
+    const selected = users.filter(user => user.tags.some(tagIsSelected));
+    setSelectedUsers(selected.map(user => user.id));
+  };
+  const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { options } = e.target;
+    const optionNum = options.length;
+
+    const selected = [];
+    for (var i = 0; i < optionNum; i++) {
+      if (options[i].selected) selected.push(options[i].value);
+    }
+    setSelectedTags(selected);
+  };
+
+  const validated = useMemo(
+    () =>
+      title.length > 0 &&
+      content.length > 0 &&
+      resolution.length > 0 &&
+      choices.length > 0,
+    [title, content, resolution, choices],
+  );
+
+  const onSubmit = () => {
+    if (!validated) return;
+    updateAgenda({
+      id: agendaId,
+      title: title,
+      content: content,
+      resolution: resolution,
+      voters: {
+        total: voters,
+      },
+      choices: choices,
+    });
   };
 
   return (
@@ -71,28 +124,25 @@ export const EditAgendaModal: React.FC = () => {
                 탬플릿을 선택하세요
               </SelectTemplateBox>
             </ModalInner>
-            <ModalInner title="투표 제목">
-              <ModalInner.InputBox onClick={onChangeTitle}>
-                {targetAgenda?.title}
-              </ModalInner.InputBox>
+            <ModalInner title="투표 제목" required>
+              <ModalInner.InputBox value={title} onChange={onChangeTitle} />
             </ModalInner>
-            <ModalInner title="투표 설명">
-              <ModalInner.InputBox onClick={onChangeContent}>
-                {targetAgenda?.content}
-              </ModalInner.InputBox>
+            <ModalInner title="투표 설명" required>
+              <ModalInner.InputBox value={content} onChange={onChangeContent} />
             </ModalInner>
-            <ModalInner title="의결 문안">
-              <ModalInner.InputBox onClick={onChangeResolution}>
-                {targetAgenda?.resolution}
-              </ModalInner.InputBox>
+            <ModalInner title="의결 문안" required>
+              <ModalInner.InputBox
+                value={resolution}
+                onChange={onChangeResolution}
+              />
             </ModalInner>
           </Box>
 
-          <ModalInner title="투표 항목" count={choices.length}>
+          <ModalInner title="투표 항목" count={choices.length} required>
             <ModalInner.AddVoteOptionArea
               value={newchoice}
               onClick={onChangeChoice}
-              onSubmit={onSubmitChoice}
+              onSubmit={addChoice}
             >
               {choices.map(opt => (
                 <ModalInner.VoteChoice
@@ -106,13 +156,19 @@ export const EditAgendaModal: React.FC = () => {
           </ModalInner>
         </Box>
         <Box w={300} gap={20}>
-          <ModalInner title="태그 선택">
-            <SelectTemplateBox width={300} height={38} onChange={() => {}}>
-              탬플릿을 선택하세요
-            </SelectTemplateBox>
+          <ModalInner
+            title="태그 선택"
+            buttonText="선택된 태그 적용하기"
+            buttonOnClick={applySelectedTags}
+          >
+            <SelectTagBox
+              selected={selectedTags}
+              onChange={onChangeSelectedTags}
+            />
           </ModalInner>
           <ModalInner title="투표 대상" count={voters.length}>
             <UserTable
+              selected={selectedUsers}
               selectedUsers={voters}
               setSelectedUsers={setVoters}
               editable
@@ -129,27 +185,12 @@ export const EditAgendaModal: React.FC = () => {
             <AdminAgendaTagsSelect />
             <Box dir="row" w="fill" gap={10} justify="space-between">
               <Link
-                to=".."
+                to={validated ? ".." : `?agendaId=${agendaId}`}
                 relative="path"
                 replace
                 style={{ textDecoration: "none" }}
               >
-                <Button
-                  w={130}
-                  h={38}
-                  onClick={() =>
-                    updateAgenda({
-                      id: targetAgenda!.id,
-                      title: title,
-                      content: content,
-                      resolution: resolution,
-                      voters: {
-                        total: voters,
-                      },
-                      choices: choices,
-                    })
-                  }
-                >
+                <Button w={130} h={38} onClick={onSubmit} disabled={!validated}>
                   <Text variant="boldtitle3" color="blue600">
                     투표 수정하기
                   </Text>
@@ -161,11 +202,7 @@ export const EditAgendaModal: React.FC = () => {
                 replace
                 style={{ textDecoration: "none" }}
               >
-                <Button
-                  w={130}
-                  h={38}
-                  onClick={() => deleteAgenda(targetAgenda!.id)}
-                >
+                <Button w={130} h={38} onClick={() => deleteAgenda(agendaId)}>
                   <Text variant="boldtitle3" color="blue600">
                     투표 삭제하기
                   </Text>

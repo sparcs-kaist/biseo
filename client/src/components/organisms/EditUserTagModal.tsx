@@ -24,14 +24,14 @@ export const EditUserTagModal: React.FC = () => {
   }, []);
 
   const tagTitleOrigin = targetTag != undefined ? targetTag.title : "";
-  const tagDescriptionOrigin = targetTag != undefined ? targetTag.description : "";
+  const tagDescriptionOrigin =
+    targetTag != undefined ? targetTag.description : "";
   const taggedUserIds = targetTag?.users || [];
 
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [taggers, setTaggers] = useState<number[]>([]);
   const [tagTitle, setTagTitle] = useState(tagTitleOrigin);
-  const [tagDescription, setTagDescription] =
-    useState(tagDescriptionOrigin);
+  const [tagDescription, setTagDescription] = useState(tagDescriptionOrigin);
 
   const onChangeTagTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTagTitle(e.target.value);
@@ -72,15 +72,14 @@ export const EditUserTagModal: React.FC = () => {
       <Box w={630} dir="row" justify="space-between" padVertical={15}>
         <Box w={300} dir="column" gap={20}>
           <ModalInner title="태그 제목" required>
-            <ModalInner.InputBox onClick={onChangeTagTitle}>
-              {tagTitle}
-            </ModalInner.InputBox>
+            <ModalInner.InputBox value={tagTitle} onChange={onChangeTagTitle} />
           </ModalInner>
 
           <ModalInner title="태그 설명" required>
-            <ModalInner.InputBox onClick={onChangeTagDescription}>
-              {tagDescription}
-            </ModalInner.InputBox>
+            <ModalInner.InputBox
+              value={tagDescription}
+              onChange={onChangeTagDescription}
+            />
           </ModalInner>
 
           <Box w={300} h={101} dir="column" justify="space-between">
