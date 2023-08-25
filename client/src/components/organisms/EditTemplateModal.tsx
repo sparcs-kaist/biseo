@@ -86,154 +86,50 @@ export const EditTemplateModal: React.FC = () => {
   };
 
   return (
-    <Modal width={680} height={590} title="템플릿 수정하기">
+    <Modal width={680} height={392} title="템플릿 수정하기">
       <Box w={630} dir="row" justify="space-between">
         <Box w={300} dir="column" gap={20}>
-          <Box dir="column" gap={8}>
-            <Box dir="row">
-              <Text variant="body" color="black">
-                탬플릿 제목
-              </Text>
-              <Text variant="body" color="blue600">
-                *
-              </Text>
-            </Box>
+          <ModalInner title="템플릿 제목" required>
             <ModalInner.InputBox onClick={onChangeTemplateTitle}>
               {templateTitleState}
             </ModalInner.InputBox>
-          </Box>
+          </ModalInner>
 
-          <Box dir="column" gap={8}>
-            <Box dir="row">
-              <Text variant="body" color="black">
-                투표 제목
-              </Text>
-              <Text variant="body" color="blue600">
-                *
-              </Text>
-            </Box>
+          <ModalInner title="투표 제목" required>
             <ModalInner.InputBox onClick={onChangeAgendaTitle}>
               {agendaTitleState}
             </ModalInner.InputBox>
-          </Box>
+          </ModalInner>
 
-          <Box dir="column" gap={8}>
-            <Box dir="row">
-              <Text variant="body" color="black">
-                투표 설명
-              </Text>
-              <Text variant="body" color="blue600">
-                *
-              </Text>
-            </Box>
+          <ModalInner title="투표 설명" required>
             <ModalInner.InputBox onClick={onChangeAgendaContent}>
               {agendaContentState}
             </ModalInner.InputBox>
-          </Box>
+          </ModalInner>
 
-          <Box dir="column" gap={8}>
-            <Box dir="row">
-              <Text variant="body" color="black">
-                의결 문안
-              </Text>
-              <Text variant="body" color="blue600">
-                *
-              </Text>
-            </Box>
+          <ModalInner title="의결 문안" required>
             <ModalInner.InputBox onClick={onChangeAgendaResolution}>
               {agendaResolutionState}
             </ModalInner.InputBox>
-          </Box>
+          </ModalInner>
         </Box>
+
         <Box w={300} h={313} dir="column" justify="space-between">
-          <Box w={300} dir="column" gap={8}>
-            <Box dir="row" gap={8}>
-              <Text variant="body" color="black">
-                투표 항목
-              </Text>
-              <Box w={20} h={20} round={5} bg="blue200">
-                <Text variant="boldtitle4" color="blue600">
-                  123
-                </Text>
-              </Box>
-            </Box>
-            <Box dir="column" gap={0}>
-              <BorderedBox
-                w={300}
-                borderColor="gray200"
-                borderSize={1}
-                borderStyle="solid"
-                roundTop={5}
-                roundBot={0}
-                bg="white"
-                pad={10}
-                gap={10}
-              >
-                {choiceState.map(choice => (
-                  <BorderedBox
-                    w={280}
-                    h={32}
-                    padVertical={6}
-                    padHorizontal={12}
-                    borderColor="gray200"
-                    borderSize={1}
-                    borderStyle="solid"
-                    round={5}
-                    justify="space-between"
-                    dir="row"
-                    align="center"
-                  >
-                    <Text variant="subtitle" color="gray500">
-                      {choice}
-                    </Text>
-                    <Button
-                      color="white"
-                      w={13}
-                      h={13}
-                      padHorizontal={0}
-                      onClick={() => deleteChoice(choice)}
-                    >
-                      <Text variant="subtitle" color="gray500">
-                        쓰
-                      </Text>
-                    </Button>
-                  </BorderedBox>
-                ))}
-              </BorderedBox>
-              <BorderedBox
-                w={300}
-                h={38}
-                borderColor="gray200"
-                borderSize={1}
-                borderStyle="solid"
-                roundTop={0}
-                roundBot={5}
-                bg="gray100"
-                padHorizontal={15}
-                dir="row"
-                justify="space-between"
-                align="center"
-              >
-                <input
-                  type="text"
-                  placeholder="새로운 항목"
-                  value={newChoiceState}
-                  style={{ border: 0 }}
-                  onChange={onNewChoiceState}
-                />
-                <Button
-                  w={20}
-                  h={20}
-                  padHorizontal={0}
-                  onClick={onNewChoiceSubmit}
+          <ModalInner title="투표 항목" count={1}>
+            <ModalInner.AddVoteOptionArea
+              onClick={onNewChoiceState}
+              onSubmit={onNewChoiceSubmit}
+            >
+              {choiceState.map(opt => (
+                <ModalInner.VoteChoice
+                  key={opt}
+                  onClick={() => deleteChoice(opt)}
                 >
-                  <Text variant="boldtitle4" color="blue600">
-                    +
-                  </Text>
-                </Button>
-              </BorderedBox>
-            </Box>
-          </Box>
+                  {opt}
+                </ModalInner.VoteChoice>
+              ))}
+            </ModalInner.AddVoteOptionArea>
+          </ModalInner>
 
           <Box dir="row" w={300} gap={10}>
             <Button w={145} h={40} onClick={onTemplateUpdate}>
