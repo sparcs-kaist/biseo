@@ -9,7 +9,7 @@ export const TextInput = styled.input`
   background: transparent;
   border: none;
   border-radius: 5px;
-  color: ${props => props.theme.colors.gray600};
+  color: ${props => props.theme.colors.black};
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
     color: ${props => props.theme.colors.gray300};

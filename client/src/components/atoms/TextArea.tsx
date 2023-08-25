@@ -8,7 +8,7 @@ export const TextArea = styled(TextareaAutosize)`
   resize: none;
   border: none;
   background: transparent;
-  color: ${props => props.theme.colors.gray600};
+  color: ${props => props.theme.colors.black};
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
     color: ${props => props.theme.colors.gray300};
