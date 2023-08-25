@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 
 import { EmoticonIcon, SendIcon } from "@/assets";
-import { Box, Divider, TextArea } from "@/components/atoms";
+import { Box, Divider, TextAreaAutosize } from "@/components/atoms";
 import { useInput } from "@/common/hooks";
 
 interface Props {
@@ -20,7 +20,7 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
   return (
     <Box w="fill" pad={10} bg="white100">
       <InputForm>
-        <TextArea
+        <TextAreaAutosize
           onKeyPress={e => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();

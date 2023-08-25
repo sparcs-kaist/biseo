@@ -38,7 +38,7 @@ export const TerminatedAgendaModal: React.FC = () => {
       : targetAgenda?.voters.total.length;
 
   return (
-    <Modal width={680} height={575} title="종료된 투표">
+    <Modal title="종료된 투표">
       <Box h={498} w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} h={498} gap={20}>
           <Box w={300} gap={10}>

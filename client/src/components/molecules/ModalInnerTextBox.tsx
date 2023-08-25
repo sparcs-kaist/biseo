@@ -3,10 +3,10 @@ import {
   BorderedBox,
   Box,
   Text,
-  TextArea,
   GrayTextButton,
   Scroll,
   TextInput,
+  TextAreaFixedsize,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
@@ -26,7 +26,7 @@ interface ButtonProps extends PropsWithChildren {
 
 interface TextAreaProps extends PropsWithChildren {
   placeholder?: string;
-  value: string;
+  value?: string;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
 
@@ -156,12 +156,14 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
     borderColor="gray200"
     bg="gray100"
     borderSize={1}
-    padHorizontal={15}
-    padVertical={10}
     round={5}
     borderStyle="solid"
   >
-    <TextArea placeholder={placeholder} value={value} onChange={onChange} />
+    <TextAreaFixedsize
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+    />
   </BorderedBox>
 );
 ModalInner.TextAreaInputBox = TextAreaInputBox;
