@@ -4,9 +4,9 @@ import {
   Box,
   Text,
   TextArea,
-  Button,
   GrayTextButton,
   Scroll,
+  TextInput,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
@@ -24,6 +24,12 @@ interface ButtonProps extends PropsWithChildren {
   value?: string;
 }
 
+interface TextAreaProps extends PropsWithChildren {
+  placeholder?: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+}
+
 interface SubmitProps extends PropsWithChildren {
   onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -31,6 +37,7 @@ interface SubmitProps extends PropsWithChildren {
 
 interface SubComponents {
   TextBox: typeof TextBox;
+  TextAreaInputBox: typeof TextAreaInputBox;
   VoteOption: typeof VoteOption;
   VoteOptions: typeof VoteOptions;
   AddVoteOptionArea: typeof AddVoteOptionArea;
@@ -120,27 +127,45 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
 ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
   <BorderedBox
-    borderColor="gray200"
-    bg="gray100"
     w={300}
     h={35}
+    borderColor="gray200"
+    bg="gray100"
     borderSize={1}
-    padVertical={8}
-    padHorizontal={15}
     round={5}
     borderStyle="solid"
-    gap={10}
+    dir="row"
+    align="center"
   >
-    <input
-      type="text"
+    <TextInput
       placeholder={children?.toString()}
-      style={{ border: 0, color: "#555555", fontSize: 11 }}
-      onChange={onClick}
       value={value}
+      onChange={onClick}
     />
   </BorderedBox>
 );
 ModalInner.InputBox = InputBox;
+
+const TextAreaInputBox: React.FC<TextAreaProps> = ({
+  placeholder,
+  value,
+  onChange,
+}) => (
+  <BorderedBox
+    w={300}
+    h={68}
+    borderColor="gray200"
+    bg="gray100"
+    borderSize={1}
+    padHorizontal={15}
+    padVertical={10}
+    round={5}
+    borderStyle="solid"
+  >
+    <TextArea placeholder={placeholder} value={value} onChange={onChange} />
+  </BorderedBox>
+);
+ModalInner.TextAreaInputBox = TextAreaInputBox;
 
 const VoteOptions: React.FC<PropsWithChildren> = ({ children }) => (
   <Box dir="row" gap={8}>

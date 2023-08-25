@@ -5,7 +5,15 @@
     "module": "commonjs",
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": [
+        "*"
+      ],
+      "@biseo/interface": [
+        "../../interface/src"
+      ],
+      "@biseo/interface/*": [
+        "../../interface/src/*"
+      ]
     },
     "resolveJsonModule": true,
     "allowJs": true,
@@ -15,5 +23,7 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }
