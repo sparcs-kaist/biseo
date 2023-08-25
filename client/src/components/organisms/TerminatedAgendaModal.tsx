@@ -39,7 +39,7 @@ export const TerminatedAgendaModal: React.FC = () => {
 
   return (
     <Modal title="종료된 투표">
-      <Box h={498} w={630} justify="space-between" padVertical={15} dir="row">
+      <Box h={498} w={630} justify="space-between" dir="row">
         <Box w={300} h={498} gap={20}>
           <Box w={300} gap={10}>
             <ModalInner title="투표 제목">
