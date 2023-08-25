@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import type { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
-
-import { Box, Button, SelectTemplateBox, Text } from "@/components/atoms";
+import {
+  Box,
+  Button,
+  SelectTagBox,
+  SelectTemplateBox,
+  Text,
+} from "@/components/atoms";
 import {
   AdminAgendaTagsSelect,
   Modal,
@@ -12,6 +16,7 @@ import {
 import { UserTable } from "@/components/organisms";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { useAdminUser } from "@/services/admin-user";
 
 export const EditAgendaModal: React.FC = () => {
   const location = useLocation();
@@ -27,6 +32,10 @@ export const EditAgendaModal: React.FC = () => {
       deleteAgenda: state.deleteAgenda,
     }),
   );
+  const { users, retrieveUsers } = useAdminUser(state => ({
+    users: state.adminUsers,
+    retrieveUsers: state.retrieveAll,
+  }));
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -60,6 +69,24 @@ export const EditAgendaModal: React.FC = () => {
   };
   const deleteChoice = (choice: string) => {
     setChoices(choices.filter(c => c !== choice));
+  };
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState(voters);
+  const applySelectedTags = () => {
+    const tagIsSelected = (tag: string) => selectedTags.includes(tag);
+    const selected = users.filter(user => user.tags.some(tagIsSelected));
+    setSelectedUsers(selected.map(user => user.id));
+  };
+  const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { options } = e.target;
+    const optionNum = options.length;
+
+    const selected = [];
+    for (var i = 0; i < optionNum; i++) {
+      if (options[i].selected) selected.push(options[i].value);
+    }
+    setSelectedTags(selected);
   };
 
   return (
@@ -107,13 +134,19 @@ export const EditAgendaModal: React.FC = () => {
           </ModalInner>
         </Box>
         <Box w={300} gap={20}>
-          <ModalInner title="태그 선택">
-            <SelectTemplateBox width={300} height={38} onChange={() => {}}>
-              탬플릿을 선택하세요
-            </SelectTemplateBox>
+          <ModalInner
+            title="태그 선택"
+            buttonText="선택된 태그 적용하기"
+            buttonOnClick={applySelectedTags}
+          >
+            <SelectTagBox
+              selected={selectedTags}
+              onChange={onChangeSelectedTags}
+            />
           </ModalInner>
           <ModalInner title="투표 대상" count={voters.length}>
             <UserTable
+              selected={selectedUsers}
               selectedUsers={voters}
               setSelectedUsers={setVoters}
               editable
