@@ -17,7 +17,7 @@ import { UserTable } from "@/components/organisms";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAdminUser } from "@/services/admin-user";
-import { useUserTagi } from "@/services/user-tag";
+import { useUserTag } from "@/services/user-tag";
 
 import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 import { Link } from "react-router-dom";
@@ -34,7 +34,7 @@ export const CreateAgendaModal: React.FC = () => {
   const { createAgenda } = useAdminAgenda(state => ({
     createAgenda: state.createAgenda,
   }));
-  const { tags, retrieveTags } = useUserTagi(state => ({
+  const { tags, retrieveTags } = useUserTag(state => ({
     tags: state.userTags,
     retrieveTags: state.retrieveAll,
   }));

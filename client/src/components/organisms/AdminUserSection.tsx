@@ -9,13 +9,13 @@ import {
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useNavigate } from "react-router-dom";
 import { User } from "@biseo/interface/user";
-import { useUserTagi } from "@/services/user-tag";
+import { useUserTag } from "@/services/user-tag";
 
 export const AdminUserSection: React.FC = () => {
   const { templates } = useAgendaTemplate(state => ({
     templates: state.agendaTemplates,
   }));
-  const { usertags } = useUserTagi(state => ({
+  const { usertags } = useUserTag(state => ({
     usertags: state.userTags,
   }));
 

@@ -32,7 +32,7 @@ model User {
   chats       Chat[]
   choices     UserChoice[]
   agendas     UserAgendaVotable[]
-  tags        UserTagi[]
+  tags        UserTag[]
 
   @@map("user")
 }
@@ -62,7 +62,7 @@ model Tag {
   id          Int       @id @default(autoincrement())
   title       String    @unique
   description String
-  users       UserTagi[]
+  users       UserTag[]
 
   @@map("tag")
 }
@@ -107,7 +107,7 @@ model UserAgendaVotable {
   @@map("user_agenda_votable")
 }
 
-model UserTagi {
+model UserTag {
   user     User   @relation(fields: [userId], references: [id])
   userId   Int    @map("user_id")
   tag      Tag    @relation(fields: [tagId], references: [id])

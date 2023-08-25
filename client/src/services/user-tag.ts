@@ -1,20 +1,20 @@
 import { socket } from "@/socket";
 import { create } from "zustand";
 import type {
-  UserTagi,
+  UserTag,
   UserTagCreate,
   UserTagUpdate,
 } from "@biseo/interface/user/tag";
 
 interface UserTagState {
-  userTags: UserTagi[];
+  userTags: UserTag[];
   createTag: (tag: UserTagCreate) => void;
   retrieveAll: () => void;
   updateTag: (tag: UserTagUpdate) => void;
   deleteTag: (id: number) => void;
 }
 
-export const useUserTagi = create<UserTagState>(set => ({
+export const useUserTag = create<UserTagState>(set => ({
   userTags: [],
 
   createTag: async tag => {
@@ -52,14 +52,14 @@ export const useUserTagi = create<UserTagState>(set => ({
 }));
 
 socket.on("user.tag.created", userTag => {
-  useUserTagi.setState(state => ({
+  useUserTag.setState(state => ({
     userTags: [...state.userTags, userTag],
   }));
 });
 
 socket.on("user.tag.updated", userTag => {
-  useUserTagi.setState(state => {
-    const newTags: UserTagi[] = state.userTags.map(tag => {
+  useUserTag.setState(state => {
+    const newTags: UserTag[] = state.userTags.map(tag => {
       if (tag.id === userTag.id) {
         return userTag;
       }
@@ -72,8 +72,8 @@ socket.on("user.tag.updated", userTag => {
 });
 
 socket.on("user.tag.deleted", userTag => {
-  useUserTagi.setState(state => {
-    const newTags: UserTagi[] = state.userTags.filter(
+  useUserTag.setState(state => {
+    const newTags: UserTag[] = state.userTags.filter(
       tag => tag.id !== userTag.id,
     );
     return {

@@ -3,7 +3,7 @@ import { Modal, ModalInner } from "@/components/molecules";
 import { Button, Box, Text } from "@/components/atoms";
 import { UserTable } from "@/components/organisms";
 import { Link, useLocation } from "react-router-dom";
-import { useUserTagi } from "@/services/user-tag";
+import { useUserTag } from "@/services/user-tag";
 import { useAdminUser } from "@/services/admin-user";
 
 export const EditUserTagModal: React.FC = () => {
@@ -11,7 +11,7 @@ export const EditUserTagModal: React.FC = () => {
   const modalParams = new URLSearchParams(location.search);
   const tagId = parseInt(modalParams.get("tagId") as string);
 
-  const { targetTag } = useUserTagi(state => ({
+  const { targetTag } = useUserTag(state => ({
     targetTag: state.userTags.find(tag => tag.id === tagId),
   }));
 
@@ -40,7 +40,7 @@ export const EditUserTagModal: React.FC = () => {
     setTagDescriptionState(e.target.value);
   };
 
-  const { deleteTag, updateTag } = useUserTagi(state => ({
+  const { deleteTag, updateTag } = useUserTag(state => ({
     deleteTag: state.deleteTag,
     updateTag: state.updateTag,
   }));
@@ -60,7 +60,9 @@ export const EditUserTagModal: React.FC = () => {
 
   const filteredUsers = useMemo(() => {
     if (tagersState.length >= 0) {
-      return users.filter(user => tagersState.includes(user.id) ? user.username : null);
+      return users.filter(user =>
+        tagersState.includes(user.id) ? user.username : null,
+      );
     }
     return users;
   }, [users, tagersState]);

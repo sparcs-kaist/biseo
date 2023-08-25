@@ -1,6 +1,6 @@
 import { Box, Card, Text, UserTag } from "@/components/atoms";
 import { AdminTag } from "@/components/molecules";
-import { UserTagi } from "@biseo/interface/user/tag";
+import { UserTag as IUserTag } from "@biseo/interface/user/tag";
 import { useNavigate } from "react-router-dom";
 
 const _tags = {
@@ -9,10 +9,10 @@ const _tags = {
 };
 
 interface Props {
-  tag: UserTagi;
+  tag: IUserTag;
 }
 
-export const UserTagCards: React.FC<Props> = ({tag}) => {
+export const UserTagCards: React.FC<Props> = ({ tag }) => {
   const navigate = useNavigate();
   const openModal = () => navigate(`edittag?tagId=${tag.id}`);
   return (

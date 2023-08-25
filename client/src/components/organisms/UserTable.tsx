@@ -11,7 +11,7 @@ import {
   SelectBox,
 } from "@/components/atoms";
 import { useAdminUser } from "@/services/admin-user";
-import { useUserTagi } from "@/services/user-tag";
+import { useUserTag } from "@/services/user-tag";
 
 interface Props {
   selectedUsers: number[];
@@ -30,7 +30,7 @@ export const UserTable: React.FC<Props> = ({
     users: state.adminUsers,
     retrieveUsers: state.retrieveAll,
   }));
-  const { tags, retrieveTags } = useUserTagi(state => ({
+  const { tags, retrieveTags } = useUserTag(state => ({
     tags: state.userTags,
     retrieveTags: state.retrieveAll,
   }));
