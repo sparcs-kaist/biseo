@@ -26,13 +26,10 @@ export const CreateAgendaModal: React.FC = () => {
   const { findTemplate } = useAgendaTemplate(state => ({
     findTemplate: state.findTemplate,
   }));
-  const { users, retrieveUsers } = useAdminUser(state => ({
+  const { users } = useAdminUser(state => ({
     users: state.adminUsers,
-    retrieveUsers: state.retrieveAll,
   }));
-  useEffect(() => {
-    retrieveUsers();
-  }, []);
+  useEffect(() => {}, []);
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");

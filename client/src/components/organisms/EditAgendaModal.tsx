@@ -32,9 +32,8 @@ export const EditAgendaModal: React.FC = () => {
       deleteAgenda: state.deleteAgenda,
     }),
   );
-  const { users, retrieveUsers } = useAdminUser(state => ({
+  const { users } = useAdminUser(state => ({
     users: state.adminUsers,
-    retrieveUsers: state.retrieveAll,
   }));
 
   const [title, setTitle] = useState("");
