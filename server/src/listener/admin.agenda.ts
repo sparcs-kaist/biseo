@@ -76,11 +76,12 @@ router.on("admin.agenda.delete", schema.Delete, async (req, { io }) => {
 router.on("admin.agenda.remind", schema.Remind, async (req, { io }) => {
   const res = await remind(req);
   if (!res) throw new BiseoError("failed to remind about agenda");
-
-  io.to(res.unvotedUsers).emit("agenda.reminded", {
-    message: res.message,
-    agendaId: res.agendaId,
-  });
+  if (res.unvotedUsers.length > 0) {
+    io.to(res.unvotedUsers).emit("agenda.reminded", {
+      message: res.message,
+      agendaId: res.agendaId,
+    });
+  }
   return {};
 });
 
