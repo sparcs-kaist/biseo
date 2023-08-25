@@ -3,7 +3,9 @@ import { protect } from "@/utils/routes";
 import { PageLayout } from "@/components/templates";
 import {
   CreateAgendaModal,
+  CreateUserTagModal,
   EditAgendaModal,
+  EditUserTagModal,
   OngoingAgendaModal,
   TerminatedAgendaModal,
 } from "@/components/organisms";
@@ -47,7 +49,14 @@ export default createBrowserRouter([
             ],
           },
           { path: "users", element: <AdminUserPage /> },
-          { path: "settings", element: <AdminSettingPage /> },
+          {
+            path: "settings",
+            element: <AdminSettingPage />,
+            children: [
+              { path: "edittag", element: <EditUserTagModal /> },
+              { path: "createtag", element: <CreateUserTagModal /> },
+            ],
+          },
         ],
         ...protect({ to: "/", when: user => !user?.isAdmin }),
       },
