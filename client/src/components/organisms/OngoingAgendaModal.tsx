@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AdminAgendaTags,
   Modal,
@@ -78,11 +78,13 @@ export const OngoingAgendaModal: React.FC = () => {
                   투표 독촉하기
                 </Text>
               </Button>
-              <Button h={38} onClick={terminate}>
-                <Text variant="boldtitle3" color="blue600">
-                  투표 종료하기
-                </Text>
-              </Button>
+              <Link to=".." relative="path" replace>
+                <Button h={38} onClick={terminate}>
+                  <Text variant="boldtitle3" color="blue600">
+                    투표 종료하기
+                  </Text>
+                </Button>
+              </Link>
             </Box>
           </Box>
         </Box>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
 import { Button, Box, Text, BorderedBox } from "@/components/atoms";
 import { ModalInner } from "@/components/molecules";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
 import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
@@ -143,30 +143,34 @@ export const EditAgendaModal: React.FC = () => {
           <Box w="fill" gap={20}>
             <AdminAgendaTagsSelect />
             <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Button
-                h={38}
-                onClick={() =>
-                  updateAgenda({
-                    id: targetAgenda!.id,
-                    title: titleState,
-                    content: contentState,
-                    resolution: resolutionState,
-                    voters: {
-                      total: votersState,
-                    },
-                    choices: choicesState,
-                  })
-                }
-              >
-                <Text variant="boldtitle3" color="blue600">
-                  투표 수정하기
-                </Text>
-              </Button>
-              <Button h={38} onClick={() => deleteAgenda(targetAgenda!.id)}>
-                <Text variant="boldtitle3" color="blue600">
-                  투표 삭제하기
-                </Text>
-              </Button>
+              <Link to=".." relative="path" replace>
+                <Button
+                  h={38}
+                  onClick={() =>
+                    updateAgenda({
+                      id: targetAgenda!.id,
+                      title: titleState,
+                      content: contentState,
+                      resolution: resolutionState,
+                      voters: {
+                        total: votersState,
+                      },
+                      choices: choicesState,
+                    })
+                  }
+                >
+                  <Text variant="boldtitle3" color="blue600">
+                    투표 수정하기
+                  </Text>
+                </Button>
+              </Link>
+              <Link to=".." relative="path" replace>
+                <Button h={38} onClick={() => deleteAgenda(targetAgenda!.id)}>
+                  <Text variant="boldtitle3" color="blue600">
+                    투표 삭제하기
+                  </Text>
+                </Button>
+              </Link>
             </Box>
           </Box>
         </Box>
