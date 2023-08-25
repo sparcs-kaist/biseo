@@ -9,7 +9,6 @@ import {
   CheckBox,
   UserTag,
   SelectBox,
-  BorderedBox,
 } from "@/components/atoms";
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
@@ -101,10 +100,7 @@ export const UserTable: React.FC<Props> = ({
               <Cell>
                 {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
                 {user.tags.map(tag => (
-                  <UserTag
-                    key={tags.filter(userTag => tag === userTag.title)[0]?.id}
-                    tag={tag}
-                  />
+                  <UserTag key={tag} tag={tag} />
                 ))}
               </Cell>
             </Row>

@@ -59,8 +59,8 @@ model Chat {
 }
 
 model Tag {
-  id          Int    @id @default(autoincrement())
-  title       String
+  id          Int       @id @default(autoincrement())
+  title       String    @unique
   description String
   users       UserTag[]
 

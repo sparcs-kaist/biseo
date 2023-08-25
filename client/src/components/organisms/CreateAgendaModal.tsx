@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   Button,
   Box,
@@ -17,7 +18,6 @@ import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
-
 import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 import { Link } from "react-router-dom";
 
@@ -58,10 +58,16 @@ export const CreateAgendaModal: React.FC = () => {
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewchoiceState(e.target.value);
   };
-  const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChoicesState([...choicesState, newchoiceState]);
-    setNewchoiceState("");
+  const onSubmitChoice = () => {
+    if (!choicesState.includes(newchoiceState)) {
+      setChoicesState([...choicesState, newchoiceState]);
+      setNewchoiceState("");
+    }
   };
+  const deleteChoice = (choice: string) => {
+    setChoicesState(choicesState.filter(c => c !== choice));
+  };
+
   const { findTemplate } = useAgendaTemplate(state => ({
     findTemplate: state.findTemplate,
   }));
@@ -133,19 +139,18 @@ export const CreateAgendaModal: React.FC = () => {
               <ModalInner.AddVoteOptionArea
                 onClick={onChangeChoice}
                 onSubmit={onSubmitChoice}
+                value={newchoiceState}
               >
                 {choicesState.map(opt => (
-                  <ModalInner.VoteChoice key={opt}>{opt}</ModalInner.VoteChoice>
+                  <ModalInner.VoteChoice
+                    key={opt}
+                    onClick={() => deleteChoice(opt)}
+                  >
+                    {opt}
+                  </ModalInner.VoteChoice>
                 ))}
               </ModalInner.AddVoteOptionArea>
             </ModalInner>
-            <Box
-              gap={10}
-              bg="blue100"
-              padVertical={12}
-              padHorizontal={15}
-              round={5}
-            ></Box>
           </Box>
         </Box>
 
@@ -160,7 +165,7 @@ export const CreateAgendaModal: React.FC = () => {
               onChange={onChangeSelectedTags}
             />
           </ModalInner>
-          <ModalInner title="투표 대상" count={3}>
+          <ModalInner title="투표 대상" count={votersState.length}>
             <UserTable
               setSelectedUsers={setVotersState}
               selectedUsers={votersState}

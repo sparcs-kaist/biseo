@@ -1,12 +1,12 @@
 import React, { useState } from "react";
+import type { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
 import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
-import { Button, Box, Text, BorderedBox } from "@/components/atoms";
+import { Box, Button, SelectTemplateBox, Text } from "@/components/atoms";
 import { ModalInner } from "@/components/molecules";
 import { Link, useLocation } from "react-router-dom";
+import { UserTable } from "@/components/organisms";
+
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
-import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
-import { UserTable } from "./UserTable";
 
 export const EditAgendaModal: React.FC = () => {
   const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
@@ -54,7 +54,7 @@ export const EditAgendaModal: React.FC = () => {
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewchoiceState(e.target.value);
   };
-  const onSubmitChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSubmitChoice = () => {
     setChoicesState([...choicesState!, newchoiceState]);
   };
 
@@ -101,6 +101,7 @@ export const EditAgendaModal: React.FC = () => {
 
           <ModalInner title="투표 항목" count={1}>
             <ModalInner.AddVoteOptionArea
+              value={newchoiceState}
               onClick={onChangeChoice}
               onSubmit={onSubmitChoice}
             >
@@ -109,13 +110,6 @@ export const EditAgendaModal: React.FC = () => {
               ))}
             </ModalInner.AddVoteOptionArea>
           </ModalInner>
-          <Box
-            gap={10}
-            bg="blue100"
-            padVertical={12}
-            padHorizontal={15}
-            round={5}
-          ></Box>
         </Box>
         <Box w={300} gap={20}>
           <ModalInner title="태그 선택">
@@ -123,22 +117,12 @@ export const EditAgendaModal: React.FC = () => {
               탬플릿을 선택하세요
             </SelectTemplateBox>
           </ModalInner>
-          <ModalInner title="투표 대상" count={3}>
-            <BorderedBox
-              borderColor="gray200"
-              bg="white"
-              w={298}
-              h={304}
-              borderSize={1}
-              round={5}
-              borderStyle="solid"
-            >
-              <UserTable
-                selectedUsers={votersState}
-                setSelectedUsers={setVotersState}
-                editable
-              />
-            </BorderedBox>
+          <ModalInner title="투표 대상" count={votersState.length}>
+            <UserTable
+              selectedUsers={votersState}
+              setSelectedUsers={setVotersState}
+              editable
+            />
           </ModalInner>
           <Box w="fill" gap={20}>
             <AdminAgendaTagsSelect />

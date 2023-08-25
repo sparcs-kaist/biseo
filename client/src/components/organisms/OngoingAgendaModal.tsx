@@ -3,12 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import {
   AdminAgendaTags,
   Modal,
-  ParticipantBar,
   ModalInner,
+  ParticipantBar,
 } from "@/components/molecules";
-import { Button, Box, Text } from "@/components/atoms";
+import { Box, Button, Text } from "@/components/atoms";
+import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { UserTable } from "./UserTable";
 
 export const OngoingAgendaModal: React.FC = () => {
   const location = useLocation();
@@ -93,14 +93,15 @@ export const OngoingAgendaModal: React.FC = () => {
             total={targetAgenda?.voters.total.length}
             participant={targetAgenda?.voters.voted.length}
           ></ParticipantBar>
-          <ModalInner title="투표 대상" count={3}>
-            <Box h={277}>
-              <UserTable
-                selectedUsers={
-                  targetAgenda?.voters.total.map(user => user.id) || []
-                }
-              />
-            </Box>
+          <ModalInner
+            title="투표 대상"
+            count={targetAgenda?.voters.total.length}
+          >
+            <UserTable
+              selectedUsers={
+                targetAgenda?.voters.total.map(user => user.id) || []
+              }
+            />
           </ModalInner>
         </Box>
       </Box>
