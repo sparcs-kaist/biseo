@@ -1,30 +1,36 @@
 import React, { useState } from "react";
-import type { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
-import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
-import { Box, Button, SelectTemplateBox, Text } from "@/components/atoms";
-import { ModalInner } from "@/components/molecules";
 import { Link, useLocation } from "react-router-dom";
+
+import type { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
+
+import { Box, Button, SelectTemplateBox, Text } from "@/components/atoms";
+import {
+  AdminAgendaTagsSelect,
+  Modal,
+  ModalInner,
+} from "@/components/molecules";
 import { UserTable } from "@/components/organisms";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
 
 export const EditAgendaModal: React.FC = () => {
-  const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [resolution, setResolution] = useState("");
-
-  const [newchoice, setNewchoice] = useState("");
   const location = useLocation();
-
   const modalParams = new URLSearchParams(location.search);
   const agendaId = parseInt(modalParams.get("agendaId") as string);
 
-  const { targetAgenda } = useAdminAgenda(state => ({
-    targetAgenda: state.adminAgendas.find(
-      agenda => agenda.id === agendaId && agenda.status === "preparing",
-    ),
-  }));
+  const { targetAgenda, updateAgenda, deleteAgenda } = useAdminAgenda(
+    state => ({
+      targetAgenda: state.adminAgendas.find(
+        agenda => agenda.id === agendaId && agenda.status === "preparing",
+      ),
+      updateAgenda: state.updateAgenda,
+      deleteAgenda: state.deleteAgenda,
+    }),
+  );
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [resolution, setResolution] = useState("");
   const [choices, setChoices] = useState(
     targetAgenda!.choices.map(choice => {
       return choice.name;
@@ -35,13 +41,6 @@ export const EditAgendaModal: React.FC = () => {
       return voters.id;
     }),
   );
-
-  const { updateAgenda } = useAdminAgenda(state => ({
-    updateAgenda: state.updateAgenda,
-  }));
-  const { deleteAgenda } = useAdminAgenda(state => ({
-    deleteAgenda: state.deleteAgenda,
-  }));
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
@@ -51,10 +50,12 @@ export const EditAgendaModal: React.FC = () => {
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResolution(e.target.value);
   };
+
+  const [newchoice, setNewchoice] = useState("");
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewchoice(e.target.value);
   };
-  const onSubmitChoice = () => {
+  const addChoice = () => {
     setChoices([...choices!, newchoice]);
   };
   const deleteChoice = (choice: string) => {
@@ -92,7 +93,7 @@ export const EditAgendaModal: React.FC = () => {
             <ModalInner.AddVoteOptionArea
               value={newchoice}
               onClick={onChangeChoice}
-              onSubmit={onSubmitChoice}
+              onSubmit={addChoice}
             >
               {choices.map(opt => (
                 <ModalInner.VoteChoice
