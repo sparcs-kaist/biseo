@@ -182,7 +182,7 @@ export const EditAgendaModal: React.FC = () => {
             <AdminAgendaTagsSelect />
             <Box dir="row" w="fill" gap={10} justify="space-between">
               <Link
-                to={validated ? ".." : "#"}
+                to={validated ? ".." : `?agendaId=${agendaId}`}
                 relative="path"
                 replace
                 style={{ textDecoration: "none" }}
