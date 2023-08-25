@@ -36,18 +36,18 @@ export const EditAgendaModal: React.FC = () => {
     users: state.adminUsers,
   }));
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [resolution, setResolution] = useState("");
+  const [title, setTitle] = useState(targetAgenda?.title || "");
+  const [content, setContent] = useState(targetAgenda?.content || "");
+  const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
   const [choices, setChoices] = useState(
     targetAgenda!.choices.map(choice => {
       return choice.name;
-    }),
+    }) || [],
   );
-  const [voters, setVoters] = useState<number[]>(
-    targetAgenda!.voters.total.map(voters => {
+  const [voters, setVoters] = useState(
+    targetAgenda?.voters.total.map(voters => {
       return voters.id;
-    }),
+    }) || [],
   );
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -122,19 +122,16 @@ export const EditAgendaModal: React.FC = () => {
               </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목" required>
-              <ModalInner.InputBox onClick={onChangeTitle}>
-                {targetAgenda?.title}
-              </ModalInner.InputBox>
+              <ModalInner.InputBox value={title} onChange={onChangeTitle} />
             </ModalInner>
             <ModalInner title="투표 설명" required>
-              <ModalInner.InputBox onClick={onChangeContent}>
-                {targetAgenda?.content}
-              </ModalInner.InputBox>
+              <ModalInner.InputBox value={content} onChange={onChangeContent} />
             </ModalInner>
             <ModalInner title="의결 문안" required>
-              <ModalInner.InputBox onClick={onChangeResolution}>
-                {targetAgenda?.resolution}
-              </ModalInner.InputBox>
+              <ModalInner.InputBox
+                value={resolution}
+                onChange={onChangeResolution}
+              />
             </ModalInner>
           </Box>
 

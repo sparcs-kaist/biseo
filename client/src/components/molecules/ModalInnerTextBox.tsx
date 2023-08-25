@@ -21,13 +21,12 @@ interface ModalInnerProps extends PropsWithChildren {
   required?: boolean;
 }
 
-interface ButtonProps extends PropsWithChildren {
-  onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+interface InputProps {
   value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface TextAreaProps extends PropsWithChildren {
-  placeholder?: string;
   value?: string;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
@@ -127,7 +126,7 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
   </BorderedBox>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
-const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
+const InputBox: React.FC<InputProps> = ({ value, onChange }) => (
   <BorderedBox
     w={300}
     borderColor="gray200"
@@ -139,19 +138,15 @@ const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
     align="center"
   >
     <TextInput
-      placeholder={children?.toString()}
+      placeholder="내용을 입력하세요"
       value={value}
-      onChange={onClick}
+      onChange={onChange}
     />
   </BorderedBox>
 );
 ModalInner.InputBox = InputBox;
 
-const TextAreaInputBox: React.FC<TextAreaProps> = ({
-  placeholder,
-  value,
-  onChange,
-}) => (
+const TextAreaInputBox: React.FC<TextAreaProps> = ({ value, onChange }) => (
   <BorderedBox
     w={300}
     h={68}
@@ -162,7 +157,7 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
     borderStyle="solid"
   >
     <TextAreaFixedsize
-      placeholder={placeholder}
+      placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
     />

@@ -133,24 +133,19 @@ export const CreateAgendaModal: React.FC = () => {
               </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목" required>
-              <ModalInner.InputBox onClick={onChangeTitle} value={title}>
-                내용을 입력하세요
-              </ModalInner.InputBox>
+              <ModalInner.InputBox onChange={onChangeTitle} value={title} />
             </ModalInner>
             <ModalInner title="투표 설명" required>
               <ModalInner.TextAreaInputBox
-                placeholder="내용을 입력하세요"
                 value={content}
                 onChange={onChangeContent}
               />
             </ModalInner>
             <ModalInner title="의결 문안" required>
               <ModalInner.InputBox
-                onClick={onChangeResolution}
+                onChange={onChangeResolution}
                 value={resolution}
-              >
-                내용을 입력하세요
-              </ModalInner.InputBox>
+              />
             </ModalInner>
 
             <ModalInner title="투표 항목" count={choices.length} required>
