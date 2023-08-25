@@ -55,8 +55,8 @@ export default createBrowserRouter([
             path: "settings",
             element: <AdminSettingPage />,
             children: [
-              { path: "edittag", element: <EditUserTagModal /> },
-              { path: "createtag", element: <CreateUserTagModal /> },
+              { path: "tagEdit", element: <EditUserTagModal /> },
+              { path: "tagCreate", element: <CreateUserTagModal /> },
               {
                 path: "templateEdit",
                 element: <EditTemplateModal />,

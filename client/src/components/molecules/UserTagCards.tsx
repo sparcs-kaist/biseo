@@ -14,7 +14,7 @@ interface Props {
 
 export const UserTagCards: React.FC<Props> = ({ tag }) => {
   const navigate = useNavigate();
-  const openModal = () => navigate(`edittag?tagId=${tag.id}`);
+  const openModal = () => navigate(`tagEdit?tagId=${tag.id}`);
   return (
     <Card primary={false} round={5} onClick={openModal}>
       <Box gap={8}>

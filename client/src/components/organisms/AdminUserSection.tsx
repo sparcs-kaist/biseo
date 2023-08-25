@@ -40,7 +40,7 @@ export const AdminUserSection: React.FC = () => {
         <Box dir="column" w="fill" gap={15}>
           <AddButtonCard
             content="새로운 태그"
-            onClick={() => navigate("createtag")}
+            onClick={() => navigate("tagCreate")}
           />
           {usertags.map(usertag => (
             <UserTagCards key={usertag.id} tag={usertag} />
