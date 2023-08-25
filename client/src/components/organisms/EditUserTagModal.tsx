@@ -5,7 +5,7 @@ import { UserTable } from "@/components/organisms";
 
 export const EditUserTagModal: React.FC = () => {
   return (
-    <Modal title="태그 수정하기">
+    <Modal title="태그 수정하기" width={680} height={431}>
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20} align="flex-start" self="stretch">
           <Box gap={10}>
@@ -53,7 +53,7 @@ export const EditUserTagModal: React.FC = () => {
         </Box>
         <Box w={300} gap={20}>
           <ModalInner title="태그 대상" count={3}>
-            <UserTable></UserTable>
+            <UserTable selectedUsers={[]}></UserTable>
           </ModalInner>
         </Box>
       </Box>

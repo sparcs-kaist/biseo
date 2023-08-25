@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, ModalInner } from "@/components/molecules";
 import { Button, Box, Text } from "@/components/atoms";
 import { UserTable } from "@/components/organisms";
+import { useUserTag } from "@/services/user-tag";
 
 export const CreateUserTagModal: React.FC = () => {
   return (
-    <Modal title="태그 생성하기">
+    <Modal title="태그 생성하기" width={680} height={431}>
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20} align="flex-start" self="stretch">
           <Box gap={10}>
@@ -49,7 +50,7 @@ export const CreateUserTagModal: React.FC = () => {
         </Box>
         <Box w={300} h={354} gap={20}>
           <ModalInner title="태그 대상" count={3}>
-            <UserTable></UserTable>
+            <UserTable selectedUsers={[]}></UserTable>
           </ModalInner>
         </Box>
       </Box>
