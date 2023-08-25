@@ -30,6 +30,12 @@ export const Button = styled.button<{
   `,
 );
 
+export const Clickable = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 type Size = number | "hug" | "fill";
 const size = (size: Size) => {
   if (size === "fill") return "100%";

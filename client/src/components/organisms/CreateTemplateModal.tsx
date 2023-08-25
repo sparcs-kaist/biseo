@@ -35,14 +35,9 @@ export const CreateTemplateModal: React.FC = () => {
     }
   };
   const deleteChoice = (choice: string) => {
-    const index = choiceState.indexOf(choice);
-    const list = choiceState;
-    if (index > -1) {
-      // only splice array whe n item is found
-      list.splice(index, 1);
-      setChoiceState(list); // 2nd parameter means remove one item only
-    }
+    setChoiceState(choiceState.filter(c => c !== choice));
   };
+
   const { createTemplate } = useAgendaTemplate(state => ({
     createTemplate: state.createTemplate,
   }));
@@ -87,10 +82,11 @@ export const CreateTemplateModal: React.FC = () => {
         </Box>
 
         <Box w={300} h={313} dir="column" justify="space-between">
-          <ModalInner title="투표 항목" count={1}>
+          <ModalInner title="투표 항목" count={choiceState.length}>
             <ModalInner.AddVoteOptionArea
               onClick={onNewChoiceState}
               onSubmit={onNewChoiceSubmit}
+              value={newChoiceState}
             >
               {choiceState.map(opt => (
                 <ModalInner.VoteChoice

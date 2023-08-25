@@ -100,6 +100,7 @@ export const EditAgendaModal: React.FC = () => {
 
           <ModalInner title="투표 항목" count={1}>
             <ModalInner.AddVoteOptionArea
+              value={newchoiceState}
               onClick={onChangeChoice}
               onSubmit={onSubmitChoice}
             >

@@ -8,6 +8,7 @@ import {
   TextInput,
   TextAreaFixedsize,
   Button,
+  Clickable,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
@@ -32,6 +33,7 @@ interface TextAreaProps extends PropsWithChildren {
 }
 
 interface SubmitProps extends PropsWithChildren {
+  value: string;
   onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: () => void;
 }
@@ -197,6 +199,7 @@ ModalInner.VoteOption = VoteOption;
 
 const AddVoteOptionArea: React.FC<SubmitProps> = ({
   children,
+  value,
   onClick,
   onSubmit,
 }) => (
@@ -219,7 +222,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
         </Box>
       </Scroll>
     </BorderedBox>
-    <TextButton onClick={onClick} onSubmit={onSubmit}>
+    <TextButton onClick={onClick} onSubmit={onSubmit} value={value}>
       새로운 항목
     </TextButton>
   </Box>
@@ -237,23 +240,32 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
     h={32}
     borderSize={1}
     padVertical={6}
-    padHorizontal={12}
+    padLeft={12}
+    padRight={0}
     round={5}
     borderStyle="solid"
     justify="space-between"
     dir="row"
     align="center"
-    onClick={onClick}
   >
     <Text color="gray500" variant="subtitle">
       {children}
     </Text>
-    <TrashIcon />
+    <Clickable>
+      <Box pad={10} onClick={onClick}>
+        <TrashIcon />
+      </Box>
+    </Clickable>
   </BorderedBox>
 );
 ModalInner.VoteChoice = VoteChoice;
 
-const TextButton: React.FC<SubmitProps> = ({ children, onClick, onSubmit }) => (
+const TextButton: React.FC<SubmitProps> = ({
+  children,
+  value,
+  onClick,
+  onSubmit,
+}) => (
   <BorderedBox
     w={300}
     borderColor="gray200"
@@ -267,6 +279,7 @@ const TextButton: React.FC<SubmitProps> = ({ children, onClick, onSubmit }) => (
     padRight={15}
   >
     <TextInput
+      value={value}
       placeholder={children?.toString()}
       onChange={onClick}
       style={{ outline: "none" }}

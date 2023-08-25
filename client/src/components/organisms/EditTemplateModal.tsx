@@ -117,6 +117,7 @@ export const EditTemplateModal: React.FC = () => {
         <Box w={300} h={313} dir="column" justify="space-between">
           <ModalInner title="투표 항목" count={1}>
             <ModalInner.AddVoteOptionArea
+              value={newChoiceState}
               onClick={onNewChoiceState}
               onSubmit={onNewChoiceSubmit}
             >
