@@ -21,14 +21,14 @@ import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
 
 export const CreateAgendaModal: React.FC = () => {
-  const [titleState, setTitleState] = useState("");
-  const [contentState, setContentState] = useState("");
-  const [resolutionState, setResolutionState] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [resolution, setResolution] = useState("");
 
-  const [choicesState, setChoicesState] = useState<string[]>([]);
-  const [votersState, setVotersState] = useState<number[]>([]);
-  const [newchoiceState, setNewchoiceState] = useState("");
-  const [templateState, setTemplateState] = useState(0);
+  const [choices, setChoices] = useState<string[]>([]);
+  const [voters, setVoters] = useState<number[]>([]);
+  const [newchoice, setNewchoice] = useState("");
+  const [template, setTemplate] = useState(0);
   const { createAgenda } = useAdminAgenda(state => ({
     createAgenda: state.createAgenda,
   }));
@@ -46,25 +46,25 @@ export const CreateAgendaModal: React.FC = () => {
   }, []);
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleState(e.target.value);
+    setTitle(e.target.value);
   };
   const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContentState(e.target.value);
+    setContent(e.target.value);
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setResolutionState(e.target.value);
+    setResolution(e.target.value);
   };
   const onChangeChoice = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewchoiceState(e.target.value);
+    setNewchoice(e.target.value);
   };
   const onSubmitChoice = () => {
-    if (!choicesState.includes(newchoiceState)) {
-      setChoicesState([...choicesState, newchoiceState]);
-      setNewchoiceState("");
+    if (!choices.includes(newchoice)) {
+      setChoices([...choices, newchoice]);
+      setNewchoice("");
     }
   };
   const deleteChoice = (choice: string) => {
-    setChoicesState(choicesState.filter(c => c !== choice));
+    setChoices(choices.filter(c => c !== choice));
   };
 
   const { findTemplate } = useAgendaTemplate(state => ({
@@ -74,11 +74,11 @@ export const CreateAgendaModal: React.FC = () => {
     {
       const targetTemplate = findTemplate(templateId);
       if (targetTemplate != undefined) {
-        setTemplateState(templateId);
-        setTitleState(targetTemplate.title);
-        setContentState(targetTemplate.content);
-        setResolutionState(targetTemplate.resolution);
-        setChoicesState(targetTemplate.choices);
+        setTemplate(templateId);
+        setTitle(targetTemplate.title);
+        setContent(targetTemplate.content);
+        setResolution(targetTemplate.resolution);
+        setChoices(targetTemplate.choices);
       }
     }
   };
@@ -103,13 +103,13 @@ export const CreateAgendaModal: React.FC = () => {
 
   const onSubmit = () => {
     createAgenda({
-      title: titleState,
-      content: contentState,
-      resolution: resolutionState,
+      title: title,
+      content: content,
+      resolution: resolution,
       voters: {
-        total: votersState,
+        total: voters,
       },
-      choices: choicesState.filter(word => word != ""),
+      choices: choices.filter(word => word != ""),
     });
   };
 
@@ -120,47 +120,47 @@ export const CreateAgendaModal: React.FC = () => {
           <Box gap={10}>
             <ModalInner
               title="템플릿 선택"
-              buttonOnClick={() => applyTemplate(templateState)}
+              buttonOnClick={() => applyTemplate(template)}
               buttonText="템플릿 적용"
             >
               <SelectTemplateBox
                 width={300}
                 height={38}
                 onChange={(templateId: number) => {
-                  setTemplateState(templateId);
+                  setTemplate(templateId);
                 }}
               >
                 템플릿을 선택하세요
               </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목" required>
-              <ModalInner.InputBox onClick={onChangeTitle} value={titleState}>
+              <ModalInner.InputBox onClick={onChangeTitle} value={title}>
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
             <ModalInner title="투표 설명" required>
               <ModalInner.TextAreaInputBox
                 placeholder="내용을 입력하세요"
-                value={contentState}
+                value={content}
                 onChange={onChangeContent}
               />
             </ModalInner>
             <ModalInner title="의결 문안" required>
               <ModalInner.InputBox
                 onClick={onChangeResolution}
-                value={resolutionState}
+                value={resolution}
               >
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
 
-            <ModalInner title="투표 항목" count={choicesState.length} required>
+            <ModalInner title="투표 항목" count={choices.length} required>
               <ModalInner.AddVoteOptionArea
                 onClick={onChangeChoice}
                 onSubmit={onSubmitChoice}
-                value={newchoiceState}
+                value={newchoice}
               >
-                {choicesState.map(opt => (
+                {choices.map(opt => (
                   <ModalInner.VoteChoice
                     key={opt}
                     onClick={() => deleteChoice(opt)}
@@ -184,10 +184,10 @@ export const CreateAgendaModal: React.FC = () => {
               onChange={onChangeSelectedTags}
             />
           </ModalInner>
-          <ModalInner title="투표 대상" count={votersState.length}>
+          <ModalInner title="투표 대상" count={voters.length}>
             <UserTable
-              setSelectedUsers={setVotersState}
-              selectedUsers={votersState}
+              setSelectedUsers={setVoters}
+              selectedUsers={voters}
               selected={selectedUsers}
               editable
             />
@@ -214,13 +214,13 @@ export const CreateAgendaModal: React.FC = () => {
                 h={38}
                 onClick={() =>
                   createAgenda({
-                    title: titleState,
-                    content: contentState,
-                    resolution: resolutionState,
+                    title: title,
+                    content: content,
+                    resolution: resolution,
                     voters: {
-                      total: votersState,
+                      total: voters,
                     },
-                    choices: choicesState.filter(word => word != ""),
+                    choices: choices.filter(word => word != ""),
                   })
                 }
               >
