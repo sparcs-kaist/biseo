@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Modal } from "@/components/molecules";
+import { AdminAgendaTagsSelect, Modal } from "@/components/molecules";
 import { Button, Box, Text, BorderedBox } from "@/components/atoms";
-import { ModalInner } from "../molecules/ModalInnerTextBox";
+import { ModalInner } from "@/components/molecules";
 import { useLocation } from "react-router-dom";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgendaUpdate } from "biseo-interface/admin/agenda";
+import { AdminAgendaUpdate } from "@biseo/interface/admin/agenda";
+import { SelectTemplateBox } from "../atoms/SelectTemplateBox";
+import { UserTable } from "./UserTable";
 
 export const EditAgendaModal: React.FC = () => {
   const [agendaUpdate, setAgendaUpdate] = useState<AdminAgendaUpdate>();
@@ -26,6 +28,11 @@ export const EditAgendaModal: React.FC = () => {
   const [choicesState, setChoicesState] = useState(
     targetAgenda!.choices.map(choice => {
       return choice.name;
+    }),
+  );
+  const [votersState, setVotersState] = useState<number[]>(
+    targetAgenda!.voters.total.map(voters => {
+      return voters.id;
     }),
   );
 
@@ -66,12 +73,14 @@ export const EditAgendaModal: React.FC = () => {
   };
 
   return (
-    <Modal title="투표 수정하기">
+    <Modal width={680} height={590} title="투표 수정하기">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>
             <ModalInner title="템플릿 선택">
-              <ModalInner.TextBox></ModalInner.TextBox>
+              <SelectTemplateBox width={300} height={38} onChange={() => {}}>
+                탬플릿을 선택하세요
+              </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목">
               <ModalInner.InputBox onClick={onChangeTitle}>
@@ -110,38 +119,29 @@ export const EditAgendaModal: React.FC = () => {
         </Box>
         <Box w={300} gap={20}>
           <ModalInner title="태그 선택">
-            <ModalInner.TextBox>태그를 선택하세요</ModalInner.TextBox>
+            <SelectTemplateBox width={300} height={38} onChange={() => {}}>
+              탬플릿을 선택하세요
+            </SelectTemplateBox>
           </ModalInner>
           <ModalInner title="투표 대상" count={3}>
             <BorderedBox
               borderColor="gray200"
               bg="white"
               w={298}
-              h={277}
+              h={304}
               borderSize={1}
               round={5}
               borderStyle="solid"
-            ></BorderedBox>
+            >
+              <UserTable
+                selectedUsers={votersState}
+                setSelectedUsers={setVotersState}
+                editable
+              />
+            </BorderedBox>
           </ModalInner>
           <Box w="fill" gap={20}>
-            <Box dir="row" w="fill" justify="space-between">
-              <Box gap={20} dir="row" w="fill">
-                <Text variant="body" color="black">
-                  투표 결과
-                </Text>
-                <Text variant="body" color="gray600">
-                  비공개
-                </Text>
-              </Box>
-              <Box gap={20} dir="row" w="fill">
-                <Text variant="body" color="black">
-                  투표 상세
-                </Text>
-                <Text variant="body" color="gray600">
-                  무기명
-                </Text>
-              </Box>
-            </Box>
+            <AdminAgendaTagsSelect />
             <Box dir="row" w="fill" gap={10} justify="space-between">
               <Button
                 h={38}
@@ -152,7 +152,7 @@ export const EditAgendaModal: React.FC = () => {
                     content: contentState,
                     resolution: resolutionState,
                     voters: {
-                      total: [],
+                      total: votersState,
                     },
                     choices: choicesState,
                   })

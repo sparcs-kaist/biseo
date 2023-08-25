@@ -13,7 +13,7 @@ import {
   isPreparingAgenda,
   isTerminatedAgenda,
 } from "@/utils/agenda";
-import { AdminAgendaStatus } from "biseo-interface/admin/agenda";
+import { AdminAgendaStatus } from "@biseo/interface/admin/agenda";
 
 export const AdminAgendaSection: React.FC = () => {
   const navigate = useNavigate();

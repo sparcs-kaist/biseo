@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Box, Card, Text, Button } from "@/components/atoms";
-import type { OngoingAgenda } from "biseo-interface/agenda";
+import type { OngoingAgenda } from "@biseo/interface/agenda";
 import {
   AgendaTag,
   ChoiceComponent,

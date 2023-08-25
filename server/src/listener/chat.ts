@@ -1,4 +1,4 @@
-import * as schema from "biseo-interface/chat";
+import * as schema from "@biseo/interface/chat";
 import { createMessage, retrieve } from "@/service/chat";
 
 import { Router } from "@/lib/listener";

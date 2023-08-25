@@ -3,14 +3,18 @@ import { Outlet } from "react-router-dom";
 import { Box } from "@/components/atoms";
 import { AdminAgendaSection } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { useAgendaTemplate } from "@/services/agenda-template";
 
 export const AdminAgendaPage: React.FC = () => {
   const { retrieveAgendas } = useAdminAgenda(state => ({
     retrieveAgendas: state.retrieveAll,
   }));
-
+  const { retrieveTemplates } = useAgendaTemplate(state => ({
+    retrieveTemplates: state.retrieveAll,
+  }));
   useEffect(() => {
     retrieveAgendas();
+    retrieveTemplates();
   }, []);
 
   return (

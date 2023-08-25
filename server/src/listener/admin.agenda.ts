@@ -1,4 +1,4 @@
-import * as schema from "biseo-interface/admin/agenda";
+import * as schema from "@biseo/interface/admin/agenda";
 
 import {
   createAgenda,
@@ -9,6 +9,8 @@ import {
   remind,
   retrieveAll,
 } from "@/service/admin.agenda";
+import { createNotice } from "@/service/chat";
+
 import { BiseoError } from "@/lib/error";
 
 import { Router } from "@/lib/listener";
@@ -33,10 +35,16 @@ router.on(
       case "ongoing":
         const ongoingAgenda = await startAgenda(req.id, user);
         io.emit("agenda.started", ongoingAgenda);
+
+        const startNotice = await createNotice(ongoingAgenda, user);
+        io.emit("chat.received", startNotice);
         break;
       case "terminated":
         const terminatedAgenda = await terminateAgenda(req.id, user);
         io.emit("agenda.terminated", terminatedAgenda);
+
+        const terminateNotice = await createNotice(terminatedAgenda, user);
+        io.emit("chat.received", terminateNotice);
         break;
       default:
         return {};

@@ -1,4 +1,4 @@
-import { Init } from "biseo-interface/init";
+import { Init } from "@biseo/interface/init";
 import { useAuth } from "@/services/auth";
 import { redirect } from "react-router-dom";
 

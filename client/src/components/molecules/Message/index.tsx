@@ -1,5 +1,5 @@
 import React from "react";
-import type { Message as IMessage } from "biseo-interface/chat";
+import type { Message as IMessage } from "@biseo/interface/chat";
 
 import { List } from "./List";
 import { NoticeMessage } from "./NoticeMessage";

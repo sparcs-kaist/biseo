@@ -1,24 +1,49 @@
-import React, { ReactNode, useState } from "react";
-import { Modal } from "@/components/molecules";
-import { Button, Box, Text, BorderedBox } from "@/components/atoms";
-import { ModalInner } from "../molecules/ModalInnerTextBox";
+import React, { useEffect, useState } from "react";
+import {
+  Button,
+  Box,
+  Text,
+  SelectTagBox,
+  SelectTemplateBox,
+} from "@/components/atoms";
+import {
+  AdminAgendaTagsSelect,
+  Modal,
+  ModalInner,
+} from "@/components/molecules";
+import { UserTable } from "@/components/organisms";
 
+import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { AdminAgendaCreate } from "biseo-interface/admin/agenda";
-import { useLocation } from "react-router-dom";
-const voteOptions: string[] = ["찬성"];
+import { useAdminUser } from "@/services/admin-user";
+import { useUserTag } from "@/services/user-tag";
+
+import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 
 export const CreateAgendaModal: React.FC = () => {
-  const [agendaCreate, setAgendaCreate] = useState<AdminAgendaCreate>();
   const [titleState, setTitleState] = useState("");
   const [contentState, setContentState] = useState("");
   const [resolutionState, setResolutionState] = useState("");
-  const [choicesState, setChoicesState] = useState([""]);
-  const [newchoiceState, setNewchoiceState] = useState("");
 
+  const [choicesState, setChoicesState] = useState<string[]>([]);
+  const [votersState, setVotersState] = useState<number[]>([]);
+  const [newchoiceState, setNewchoiceState] = useState("");
+  const [templateState, setTemplateState] = useState(0);
   const { createAgenda } = useAdminAgenda(state => ({
     createAgenda: state.createAgenda,
   }));
+  const { tags, retrieveTags } = useUserTag(state => ({
+    tags: state.userTags,
+    retrieveTags: state.retrieveAll,
+  }));
+  const { users, retrieveUsers } = useAdminUser(state => ({
+    users: state.adminUsers,
+    retrieveUsers: state.retrieveAll,
+  }));
+  useEffect(() => {
+    retrieveTags();
+    retrieveUsers();
+  }, []);
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleState(e.target.value);
@@ -36,27 +61,70 @@ export const CreateAgendaModal: React.FC = () => {
     setChoicesState([...choicesState, newchoiceState]);
     setNewchoiceState("");
   };
+  const { findTemplate } = useAgendaTemplate(state => ({
+    findTemplate: state.findTemplate,
+  }));
+
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const applySelectedTags = () => {
+    const tagIsSelected = (tag: string) => selectedTags.includes(tag);
+    const selected = users.filter(user => user.tags.some(tagIsSelected));
+    setSelectedUsers(selected.map(user => user.id));
+  };
+
+  const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { options } = e.target;
+    const optionNum = options.length;
+
+    const selected = [];
+    for (var i = 0; i < optionNum; i++) {
+      if (options[i].selected) selected.push(options[i].value);
+    }
+    setSelectedTags(selected);
+  };
 
   return (
-    <Modal title="투표 생성하기">
+    <Modal width={680} height={590} title="투표 생성하기">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>
             <ModalInner title="템플릿 선택">
-              <ModalInner.TextBox></ModalInner.TextBox>
+              <SelectTemplateBox
+                width={300}
+                height={38}
+                onChange={(templateId: number) => {
+                  const targetTemplate = findTemplate(templateId);
+                  if (targetTemplate != undefined) {
+                    setTemplateState(templateId);
+                    setTitleState(targetTemplate.title);
+                    setContentState(targetTemplate.content);
+                    setResolutionState(targetTemplate.resolution);
+                    setChoicesState(targetTemplate.choices);
+                  }
+                }}
+              >
+                템플릿을 선택하세요
+              </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목">
-              <ModalInner.InputBox onClick={onChangeTitle}>
+              <ModalInner.InputBox onClick={onChangeTitle} value={titleState}>
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
             <ModalInner title="투표 설명">
-              <ModalInner.InputBox onClick={onChangeContent}>
+              <ModalInner.InputBox
+                onClick={() => {} /*onChangeContent*/}
+                value={contentState}
+              >
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
             <ModalInner title="의결 문안">
-              <ModalInner.InputBox onClick={onChangeResolution}>
+              <ModalInner.InputBox
+                onClick={onChangeResolution}
+                value={resolutionState}
+              >
                 내용을 입력하세요
               </ModalInner.InputBox>
             </ModalInner>
@@ -80,60 +148,50 @@ export const CreateAgendaModal: React.FC = () => {
             ></Box>
           </Box>
         </Box>
+
         <Box w={300} gap={20}>
-          <ModalInner title="태그 선택">
-            <ModalInner.TextBox>태그를 선택하세요</ModalInner.TextBox>
+          <ModalInner
+            title="태그 선택"
+            buttonText="선택된 태그 적용하기"
+            buttonOnClick={applySelectedTags}
+          >
+            <SelectTagBox
+              selected={selectedTags}
+              onChange={onChangeSelectedTags}
+            />
           </ModalInner>
           <ModalInner title="투표 대상" count={3}>
-            <BorderedBox
-              borderColor="gray200"
-              bg="white"
-              w={298}
-              h={277}
-              borderSize={1}
-              round={5}
-              borderStyle="solid"
-            ></BorderedBox>
+            <Box h={277}>
+              <UserTable
+                setSelectedUsers={setVotersState}
+                selectedUsers={votersState}
+                selected={selectedUsers}
+                editable
+              />
+            </Box>
           </ModalInner>
-          <Box w="fill" gap={20}>
-            <Box dir="row" w="fill" justify="space-between">
-              <Box gap={20} dir="row" w="fill">
-                <Text variant="body" color="black">
-                  투표 결과
-                </Text>
-                <Text variant="body" color="gray600">
-                  비공개
-                </Text>
-              </Box>
-              <Box gap={20} dir="row" w="fill">
-                <Text variant="body" color="black">
-                  투표 상세
-                </Text>
-                <Text variant="body" color="gray600">
-                  무기명
-                </Text>
-              </Box>
+          <Box w={300} h={106} padHorizontal={13} padVertical={15} gap={10}>
+            <Box dir="row" w={270} h={28} justify="space-between">
+              <AdminAgendaTagsSelect />
             </Box>
-            <Box dir="row" w="fill" gap={10} justify="space-between">
-              <Button
-                h={38}
-                onClick={() =>
-                  createAgenda({
-                    title: titleState,
-                    content: contentState,
-                    resolution: resolutionState,
-                    voters: {
-                      total: [],
-                    },
-                    choices: choicesState.filter(word => word != ""),
-                  })
-                }
-              >
-                <Text variant="boldtitle3" color="blue600">
-                  투표 생성하기
-                </Text>
-              </Button>
-            </Box>
+            <Button
+              h={38}
+              onClick={() =>
+                createAgenda({
+                  title: titleState,
+                  content: contentState,
+                  resolution: resolutionState,
+                  voters: {
+                    total: votersState,
+                  },
+                  choices: choicesState.filter(word => word != ""),
+                })
+              }
+            >
+              <Text variant="boldtitle3" color="blue600">
+                투표 생성하기
+              </Text>
+            </Button>
           </Box>
         </Box>
       </Box>

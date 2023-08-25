@@ -1,4 +1,4 @@
-import * as schema from "biseo-interface/admin/user";
+import * as schema from "@biseo/interface/admin/user";
 import { retrieveAll } from "@/service/admin.user";
 
 import { Router } from "@/lib/listener";

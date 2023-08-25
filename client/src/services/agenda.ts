@@ -1,6 +1,6 @@
 import { socket } from "@/socket";
 import { create } from "zustand";
-import type { Agenda } from "biseo-interface/agenda";
+import type { Agenda } from "@biseo/interface/agenda";
 
 interface AgendaState {
   agendas: Agenda[];

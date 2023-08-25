@@ -6,12 +6,13 @@ export const Button = styled.button<{
   w?: Size;
   h?: Size;
   color?: Color;
+  padHorizontal?: number;
 }>(
-  ({ w = "fill", h = 28, color = "blue200", theme }) => css`
+  ({ w = "fill", h = 28, color = "blue200", padHorizontal = 15, theme }) => css`
     display: flex;
     width: ${size(w)};
     height: ${size(h)};
-    padding: 0px 15px;
+    padding: 0px ${padHorizontal}px;
     border-radius: 5px;
     border: none;
     justify-content: center;

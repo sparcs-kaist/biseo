@@ -6,8 +6,10 @@ import {
   CreateUserTagModal,
   EditAgendaModal,
   EditUserTagModal,
+  EditTemplateModal,
   OngoingAgendaModal,
   TerminatedAgendaModal,
+  CreateTemplateModal,
 } from "@/components/organisms";
 import {
   MainPage,
@@ -55,6 +57,14 @@ export default createBrowserRouter([
             children: [
               { path: "edittag", element: <EditUserTagModal /> },
               { path: "createtag", element: <CreateUserTagModal /> },
+              {
+                path: "templateEdit",
+                element: <EditTemplateModal />,
+              },
+              {
+                path: "templateCreate",
+                element: <CreateTemplateModal />,
+              },
             ],
           },
         ],
