@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Modal, ModalInner } from "@/components/molecules";
 import { Button, Box, Text } from "@/components/atoms";
 import { UserTable } from "@/components/organisms";
 import { Link, useLocation } from "react-router-dom";
 import { useUserTag } from "@/services/user-tag";
+import { useAdminUser } from "@/services/admin-user";
 
 export const EditUserTagModal: React.FC = () => {
   const location = useLocation();
@@ -14,8 +15,17 @@ export const EditUserTagModal: React.FC = () => {
     targetTag: state.userTags.find(tag => tag.id === tagId),
   }));
 
+  const { users, retrieveUsers } = useAdminUser(state => ({
+    users: state.adminUsers,
+    retrieveUsers: state.retrieveAll,
+  }));
+  useEffect(() => {
+    retrieveUsers();
+  }, []);
+
   const tagTitle = targetTag != undefined ? targetTag.title : "";
   const tagDescription = targetTag != undefined ? targetTag.description : "";
+  const taggedUserIds = targetTag?.users || [];
 
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [tagersState, setTagersState] = useState<number[]>([]);
@@ -47,6 +57,14 @@ export const EditUserTagModal: React.FC = () => {
   const onTagDelete = () => {
     deleteTag(tagId);
   };
+
+  const filteredUsers = useMemo(() => {
+    if (tagersState.length >= 0) {
+      return users.filter(user => tagersState.includes(user.id) ? user.username : null);
+    }
+    return users;
+  }, [users, tagersState]);
+
   return (
     <Modal title="태그 수정하기" width={680} height={431}>
       <Box w={630} dir="row" justify="space-between" padVertical={15}>
@@ -64,7 +82,7 @@ export const EditUserTagModal: React.FC = () => {
           </ModalInner>
 
           <Box w={300} h={101} dir="column" justify="space-between">
-            <ModalInner title="태그 대상 보기" count={4}>
+            <ModalInner title="태그 대상 보기" count={tagersState.length}>
               <Box
                 gap={8}
                 dir="row"
@@ -72,8 +90,8 @@ export const EditUserTagModal: React.FC = () => {
                 align="flex-start"
                 wrap="wrap"
               >
-                {tagersState.map(tager => (
-                  <ModalInner.TagChoice>{tager}</ModalInner.TagChoice>
+                {filteredUsers.map(user => (
+                  <ModalInner.TagChoice>{user.username}</ModalInner.TagChoice>
                 ))}
               </Box>
             </ModalInner>
@@ -96,11 +114,11 @@ export const EditUserTagModal: React.FC = () => {
           </Box>
         </Box>
         <Box w={300} gap={20}>
-          <ModalInner title="태그 대상" count={1}>
+          <ModalInner title="태그 대상" count={tagersState.length}>
             <UserTable
               setSelectedUsers={setTagersState}
               selectedUsers={tagersState}
-              selected={selectedUsers}
+              selected={taggedUserIds ? taggedUserIds : selectedUsers}
               editable
             ></UserTable>
           </ModalInner>
