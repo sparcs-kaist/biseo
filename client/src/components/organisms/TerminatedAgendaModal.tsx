@@ -38,7 +38,7 @@ export const TerminatedAgendaModal: React.FC = () => {
       : targetAgenda?.voters.total.length;
 
   return (
-    <Modal width={680} height={575} title="종료된 투표">
+    <Modal title="종료된 투표">
       <Box h={498} w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} h={498} gap={20}>
           <Box w={300} gap={10}>
@@ -79,14 +79,15 @@ export const TerminatedAgendaModal: React.FC = () => {
         </Box>
 
         <Box w={300} h={450} gap={20} justify="space-between">
-          <ModalInner title="투표 대상" count={3}>
-            <Box h={354}>
-              <UserTable
-                selectedUsers={
-                  targetAgenda?.voters.total.map(user => user.id) || []
-                }
-              />
-            </Box>
+          <ModalInner
+            title="투표 대상"
+            count={targetAgenda?.voters.total.length}
+          >
+            <UserTable
+              selectedUsers={
+                targetAgenda?.voters.total.map(user => user.id) || []
+              }
+            />
           </ModalInner>
           <Box
             w={300}

@@ -19,7 +19,7 @@ export const CreateTemplateModal: React.FC = () => {
   const onChangeAgendaTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAgendaTitleState(e.target.value);
   };
-  const onChangeAgendaContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeAgendaContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setAgendaContentState(e.target.value);
   };
   const onChangeAgendaResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,14 +35,9 @@ export const CreateTemplateModal: React.FC = () => {
     }
   };
   const deleteChoice = (choice: string) => {
-    const index = choiceState.indexOf(choice);
-    const list = choiceState;
-    if (index > -1) {
-      // only splice array whe n item is found
-      list.splice(index, 1);
-      setChoiceState(list); // 2nd parameter means remove one item only
-    }
+    setChoiceState(choiceState.filter(c => c !== choice));
   };
+
   const { createTemplate } = useAgendaTemplate(state => ({
     createTemplate: state.createTemplate,
   }));
@@ -57,7 +52,7 @@ export const CreateTemplateModal: React.FC = () => {
   };
 
   return (
-    <Modal width={680} height={392} title="템플릿 생성하기">
+    <Modal title="템플릿 생성하기">
       <Box w={630} dir="row" justify="space-between">
         <Box w={300} dir="column" gap={20}>
           <ModalInner title="템플릿 제목" required>
@@ -73,9 +68,10 @@ export const CreateTemplateModal: React.FC = () => {
           </ModalInner>
 
           <ModalInner title="투표 설명" required>
-            <ModalInner.InputBox onClick={onChangeAgendaContent}>
-              내용을 입력하세요
-            </ModalInner.InputBox>
+            <ModalInner.TextAreaInputBox
+              placeholder="내용을 입력하세요"
+              onChange={onChangeAgendaContent}
+            />
           </ModalInner>
 
           <ModalInner title="의결 문안" required>
@@ -86,10 +82,11 @@ export const CreateTemplateModal: React.FC = () => {
         </Box>
 
         <Box w={300} h={313} dir="column" justify="space-between">
-          <ModalInner title="투표 항목" count={1}>
+          <ModalInner title="투표 항목" count={choiceState.length}>
             <ModalInner.AddVoteOptionArea
               onClick={onNewChoiceState}
               onSubmit={onNewChoiceSubmit}
+              value={newChoiceState}
             >
               {choiceState.map(opt => (
                 <ModalInner.VoteChoice

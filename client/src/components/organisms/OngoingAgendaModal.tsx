@@ -1,14 +1,14 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AdminAgendaTags,
   Modal,
-  ParticipantBar,
   ModalInner,
+  ParticipantBar,
 } from "@/components/molecules";
-import { Button, Box, Text } from "@/components/atoms";
+import { Box, Button, Text } from "@/components/atoms";
+import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
-import { UserTable } from "./UserTable";
 
 export const OngoingAgendaModal: React.FC = () => {
   const location = useLocation();
@@ -34,7 +34,7 @@ export const OngoingAgendaModal: React.FC = () => {
   };
 
   return (
-    <Modal width={680} height={509} title="진행 중인 투표">
+    <Modal title="진행 중인 투표">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>
@@ -78,11 +78,13 @@ export const OngoingAgendaModal: React.FC = () => {
                   투표 독촉하기
                 </Text>
               </Button>
-              <Button h={38} onClick={terminate}>
-                <Text variant="boldtitle3" color="blue600">
-                  투표 종료하기
-                </Text>
-              </Button>
+              <Link to=".." relative="path" replace>
+                <Button h={38} onClick={terminate}>
+                  <Text variant="boldtitle3" color="blue600">
+                    투표 종료하기
+                  </Text>
+                </Button>
+              </Link>
             </Box>
           </Box>
         </Box>
@@ -91,14 +93,15 @@ export const OngoingAgendaModal: React.FC = () => {
             total={targetAgenda?.voters.total.length}
             participant={targetAgenda?.voters.voted.length}
           ></ParticipantBar>
-          <ModalInner title="투표 대상" count={3}>
-            <Box h={277}>
-              <UserTable
-                selectedUsers={
-                  targetAgenda?.voters.total.map(user => user.id) || []
-                }
-              />
-            </Box>
+          <ModalInner
+            title="투표 대상"
+            count={targetAgenda?.voters.total.length}
+          >
+            <UserTable
+              selectedUsers={
+                targetAgenda?.voters.total.map(user => user.id) || []
+              }
+            />
           </ModalInner>
         </Box>
       </Box>

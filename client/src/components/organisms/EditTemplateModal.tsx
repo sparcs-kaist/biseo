@@ -86,7 +86,7 @@ export const EditTemplateModal: React.FC = () => {
   };
 
   return (
-    <Modal width={680} height={392} title="템플릿 수정하기">
+    <Modal title="템플릿 수정하기">
       <Box w={630} dir="row" justify="space-between">
         <Box w={300} dir="column" gap={20}>
           <ModalInner title="템플릿 제목" required>
@@ -117,6 +117,7 @@ export const EditTemplateModal: React.FC = () => {
         <Box w={300} h={313} dir="column" justify="space-between">
           <ModalInner title="투표 항목" count={1}>
             <ModalInner.AddVoteOptionArea
+              value={newChoiceState}
               onClick={onNewChoiceState}
               onSubmit={onNewChoiceSubmit}
             >

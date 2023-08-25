@@ -8,7 +8,7 @@ export const Button = styled.button<{
   color?: Color;
   padHorizontal?: number;
 }>(
-  ({ w = "fill", h = 28, color = "blue200", padHorizontal = 15, theme }) => css`
+  ({ w = "fill", h = 28, color = "blue200", padHorizontal = 0, theme }) => css`
     display: flex;
     width: ${size(w)};
     height: ${size(h)};
@@ -29,6 +29,12 @@ export const Button = styled.button<{
     }
   `,
 );
+
+export const Clickable = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 type Size = number | "hug" | "fill";
 const size = (size: Size) => {

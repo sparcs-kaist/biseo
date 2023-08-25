@@ -3,9 +3,12 @@ import {
   BorderedBox,
   Box,
   Text,
-  TextArea,
-  Button,
   GrayTextButton,
+  Scroll,
+  TextInput,
+  TextAreaFixedsize,
+  Button,
+  Clickable,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
@@ -23,13 +26,21 @@ interface ButtonProps extends PropsWithChildren {
   value?: string;
 }
 
+interface TextAreaProps extends PropsWithChildren {
+  placeholder?: string;
+  value?: string;
+  onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+}
+
 interface SubmitProps extends PropsWithChildren {
+  value: string;
   onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: () => void;
 }
 
 interface SubComponents {
   TextBox: typeof TextBox;
+  TextAreaInputBox: typeof TextAreaInputBox;
   VoteOption: typeof VoteOption;
   VoteOptions: typeof VoteOptions;
   AddVoteOptionArea: typeof AddVoteOptionArea;
@@ -48,7 +59,7 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   children,
   required,
 }) => (
-  <Box dir="column" gap={8}>
+  <Box dir="column" w="fill" gap={8}>
     <Box w="fill" dir="row" align="end" justify="space-between">
       <Box dir="row" align="center" gap={8}>
         <Box dir="row">
@@ -61,7 +72,7 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
             </Text>
           )}
         </Box>
-        {count && (
+        {count !== undefined && (
           <Box
             bg="blue200"
             round={5}
@@ -120,27 +131,46 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
 ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
   <BorderedBox
+    w={300}
     borderColor="gray200"
     bg="gray100"
-    w={300}
-    h={35}
     borderSize={1}
-    padVertical={8}
-    padHorizontal={15}
     round={5}
     borderStyle="solid"
-    gap={10}
+    dir="row"
+    align="center"
   >
-    <input
-      type="text"
+    <TextInput
       placeholder={children?.toString()}
-      style={{ border: 0, color: "#555555", fontSize: 11 }}
-      onChange={onClick}
       value={value}
+      onChange={onClick}
     />
   </BorderedBox>
 );
 ModalInner.InputBox = InputBox;
+
+const TextAreaInputBox: React.FC<TextAreaProps> = ({
+  placeholder,
+  value,
+  onChange,
+}) => (
+  <BorderedBox
+    w={300}
+    h={68}
+    borderColor="gray200"
+    bg="gray100"
+    borderSize={1}
+    round={5}
+    borderStyle="solid"
+  >
+    <TextAreaFixedsize
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+    />
+  </BorderedBox>
+);
+ModalInner.TextAreaInputBox = TextAreaInputBox;
 
 const VoteOptions: React.FC<PropsWithChildren> = ({ children }) => (
   <Box dir="row" gap={8}>
@@ -170,6 +200,7 @@ ModalInner.VoteOption = VoteOption;
 
 const AddVoteOptionArea: React.FC<SubmitProps> = ({
   children,
+  value,
   onClick,
   onSubmit,
 }) => (
@@ -177,18 +208,22 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
     <BorderedBox
       borderColor="gray200"
       bg="white"
-      w={300}
+      w="fill"
       h={152}
       borderSize={1}
       pad={10}
+      padRight={0}
       roundBot={0}
       roundTop={5}
       borderStyle="solid"
-      gap={10}
     >
-      {children}
+      <Scroll>
+        <Box w="fill" gap={10}>
+          {children}
+        </Box>
+      </Scroll>
     </BorderedBox>
-    <TextButton onClick={onClick} onSubmit={onSubmit}>
+    <TextButton onClick={onClick} onSubmit={onSubmit} value={value}>
       새로운 항목
     </TextButton>
   </Box>
@@ -202,64 +237,59 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
   <BorderedBox
     borderColor="gray200"
     bg="white"
-    w={280}
+    w="fill"
     h={32}
     borderSize={1}
     padVertical={6}
-    padHorizontal={12}
+    padLeft={12}
+    padRight={0}
     round={5}
     borderStyle="solid"
-    gap={10}
     justify="space-between"
     dir="row"
     align="center"
-    onClick={onClick}
   >
     <Text color="gray500" variant="subtitle">
       {children}
     </Text>
-    <TrashIcon />
+    <Clickable>
+      <Box pad={10} onClick={onClick}>
+        <TrashIcon />
+      </Box>
+    </Clickable>
   </BorderedBox>
 );
 ModalInner.VoteChoice = VoteChoice;
 
-const TextButton: React.FC<SubmitProps> = ({ children, onClick, onSubmit }) => (
+const TextButton: React.FC<SubmitProps> = ({
+  children,
+  value,
+  onClick,
+  onSubmit,
+}) => (
   <BorderedBox
+    w={300}
     borderColor="gray200"
     bg="gray100"
-    w={300}
-    h={38}
     borderSize={1}
-    padVertical={10}
-    padHorizontal={15}
     roundBot={5}
     roundTop={0}
     borderStyle="solid"
-    gap={10}
-    justify="space-between"
     dir="row"
     align="center"
+    padRight={15}
   >
-    <input
-      type="text"
+    <TextInput
+      value={value}
       placeholder={children?.toString()}
-      style={{ border: 0 }}
       onChange={onClick}
+      style={{ outline: "none" }}
     />
-    <Box
-      bg="blue200"
-      round={5}
-      align="center"
-      justify="center"
-      w={20}
-      h={20}
-      // @ts-ignore
-      onClick={onSubmit}
-    >
+    <Button w={20} h={20} onClick={onSubmit}>
       <Text color="blue600" variant="boldtitle2">
         +
       </Text>
-    </Box>
+    </Button>
   </BorderedBox>
 );
 ModalInner.TextButton = TextButton;

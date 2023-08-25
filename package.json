@@ -7,8 +7,12 @@
   "scripts": {
     "prepare": "husky install",
     "postinstall": "pnpm typegen",
+    "web": "pnpm -F @biseo/client",
+    "api": "dotenv -- pnpm -F @biseo/server",
+    "interface": "pnpm -F @biseo/interface",
     "dev": "dotenv -- pnpm -r --stream dev",
     "db": "dotenv -- pnpm -F @biseo/server db",
+    "migrate": "dotenv -- pnpm -F @biseo/server migrate",
     "typegen": "dotenv -- pnpm -F @biseo/server typegen",
     "studio": "dotenv -- pnpm -F @biseo/server studio",
     "typecheck": "pnpm -r typecheck",

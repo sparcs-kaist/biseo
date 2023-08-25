@@ -59,7 +59,7 @@ export const BorderedBox = styled.div<{
     position = "static",
   }) => css`
     width: ${size(w)};
-    min-height: ${size(h)};
+    height: ${size(h)};
     background-color: ${bg ? theme.colors[bg] : "transparent"};
     border-radius: ${roundTop}px ${roundTop}px ${roundBot}px ${roundBot}px;
     display: flex;
@@ -73,7 +73,6 @@ export const BorderedBox = styled.div<{
     padding-right: ${padRight}px;
     border: ${borderSize}px ${borderStyle};
     border-color: ${borderColor ? theme.colors[borderColor] : "transparent"};
-    overflow: hidden;
     position: ${position};
   `,
 );

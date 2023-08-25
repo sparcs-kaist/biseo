@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Scroll = styled.div`
+  width: 100%;
+
   overflow-y: scroll;
 
   ::-webkit-scrollbar {
