@@ -49,7 +49,7 @@ export const CreateAgendaModal: React.FC = () => {
   const [template, setTemplate] = useState(0);
   const applyTemplate = (templateId: number) => {
     const targetTemplate = findTemplate(templateId);
-    if (targetTemplate != undefined) {
+    if (targetTemplate !== undefined) {
       setTemplate(templateId);
       setTitle(targetTemplate.title);
       setContent(targetTemplate.content);
@@ -107,7 +107,7 @@ export const CreateAgendaModal: React.FC = () => {
       voters: {
         total: voters,
       },
-      choices: choices.filter(word => word != ""),
+      choices: choices.filter(word => word !== ""),
     });
   };
 
