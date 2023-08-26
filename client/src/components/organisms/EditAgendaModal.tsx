@@ -74,11 +74,10 @@ export const EditAgendaModal: React.FC = () => {
   };
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState(voters);
   const applySelectedTags = () => {
     const tagIsSelected = (tag: string) => selectedTags.includes(tag);
     const selected = users.filter(user => user.tags.some(tagIsSelected));
-    setSelectedUsers(selected.map(user => user.id));
+    setVoters(selected.map(user => user.id));
   };
   const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { options } = e.target;
@@ -168,7 +167,6 @@ export const EditAgendaModal: React.FC = () => {
           </ModalInner>
           <ModalInner title="투표 대상" count={voters.length}>
             <UserTable
-              selected={selectedUsers}
               selectedUsers={voters}
               setSelectedUsers={setVoters}
               editable

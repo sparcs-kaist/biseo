@@ -17,14 +17,14 @@ import { useUserTag } from "@/services/user-tag";
 
 interface Props {
   userList?: number[];
-  selectedUsers: number[];
+  selectedUsers?: number[];
   setSelectedUsers?: (userIds: number[]) => void;
   editable?: boolean;
 }
 
 export const UserTable: React.FC<Props> = ({
   userList,
-  selectedUsers,
+  selectedUsers = [],
   setSelectedUsers = () => {},
   editable,
 }) => {

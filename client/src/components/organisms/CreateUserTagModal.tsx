@@ -101,7 +101,6 @@ export const CreateUserTagModal: React.FC = () => {
             <UserTable
               setSelectedUsers={setTaggers}
               selectedUsers={taggers}
-              selected={selectedUsers}
               editable
             ></UserTable>
           </ModalInner>
