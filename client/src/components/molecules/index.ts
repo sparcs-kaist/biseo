@@ -21,3 +21,4 @@ export * from "./UserTagCards";
 export * from "./AdminTag";
 export * from "./AddButtonCard";
 export * from "./AgendaCard";
+export * from "./VoteParticipate";

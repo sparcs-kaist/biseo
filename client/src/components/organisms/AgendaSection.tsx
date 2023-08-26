@@ -8,7 +8,6 @@ import {
   isPreparingAgenda,
 } from "@/utils/agenda";
 import { AgendaStatus } from "@biseo/interface/agenda";
-import styled from "@emotion/styled";
 
 export const AgendaSection: React.FC = () => {
   const { preparingAgendas, ongoingAgendas, terminatedAgendas } = useAgenda(
