@@ -47,7 +47,11 @@ export const Header: React.FC = () => {
               key={index}
               name={item.name}
               path={item.path}
-              selected={window.location.pathname === "/" + item.path}
+              selected={
+                item.path === ""
+                  ? window.location.pathname === "/" + item.path
+                  : window.location.pathname.startsWith("/" + item.path)
+              }
             />
           ))
         ) : (
