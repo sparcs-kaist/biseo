@@ -20,6 +20,7 @@ interface Props {
   selectedUsers?: number[];
   setSelectedUsers?: (userIds: number[]) => void;
   editable?: boolean;
+  filterBy?: "tag" | "voted";
 }
 
 export const UserTable: React.FC<Props> = ({
@@ -27,6 +28,7 @@ export const UserTable: React.FC<Props> = ({
   selectedUsers = [],
   setSelectedUsers = () => {},
   editable,
+  filterBy,
 }) => {
   const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,
@@ -45,7 +47,7 @@ export const UserTable: React.FC<Props> = ({
     () => (userList ? users.filter(user => userList.includes(user.id)) : users),
     [userList, users],
   );
-  const [selectedTag, setSelectedTag] = useState("");
+  const [selectedFilterOption, setSelectedFilterOption] = useState("");
 
   const selectUser = (id: number) => {
     if (selectedUsers.includes(id)) {
@@ -56,24 +58,40 @@ export const UserTable: React.FC<Props> = ({
   };
 
   const filteredUsers = useMemo(() => {
-    if (selectedTag) {
+    if (filterBy === "tag" && selectedFilterOption) {
       return displayUsers.filter(user =>
-        user.tags.some(tag => tag === selectedTag),
+        user.tags.some(tag => tag === selectedFilterOption),
       );
     }
+    if (filterBy === "voted") {
+      if (selectedFilterOption === "투표 완료자")
+        return displayUsers.filter(user => selectedUsers.includes(user.id));
+      else if (selectedFilterOption === "투표 미완료자")
+        return displayUsers.filter(user => !selectedUsers.includes(user.id));
+    }
     return displayUsers;
-  }, [displayUsers, selectedTag]);
+  }, [displayUsers, selectedFilterOption]);
 
   return (
     <Box w="fill" gap={5}>
-      <Box w="fill" dir="row" justify="flex-start">
-        <SelectBox
-          width={92}
-          height={26}
-          options={tags.map(tag => ({ id: tag.id, name: tag.title }))}
-          onChange={setSelectedTag}
-        />
-      </Box>
+      {filterBy ? (
+        <Box w="fill" dir="row" justify="flex-start">
+          <SelectBox
+            width={92}
+            height={26}
+            options={
+              filterBy === "tag"
+                ? tags.map(tag => tag.title)
+                : filterBy === "voted"
+                ? ["투표 완료자", "투표 미완료자"]
+                : []
+            }
+            onChange={setSelectedFilterOption}
+          />
+        </Box>
+      ) : (
+        <></>
+      )}
       <Table w="fill" h={287}>
         <Header>
           <Row>

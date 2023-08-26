@@ -109,6 +109,7 @@ export const OngoingAgendaModal: React.FC = () => {
               selectedUsers={
                 targetAgenda?.voters.voted.map(user => user.id) || []
               }
+              filterBy="voted"
             />
           </ModalInner>
         </Box>
