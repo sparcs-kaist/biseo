@@ -23,7 +23,7 @@ export const AdminUserSection: React.FC = () => {
   return (
     <Box dir="row" gap={20}>
       <Box dir="column" w={380}>
-        <SectionHeader count={3}>투표 템플릿</SectionHeader>
+        <SectionHeader count={templates.length}>투표 템플릿</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           <AddButtonCard
             content="새로운 템플릿"
@@ -35,7 +35,7 @@ export const AdminUserSection: React.FC = () => {
         </Box>
       </Box>
       <Box dir="column" w={380}>
-        <SectionHeader count={4}>유저 태그</SectionHeader>
+        <SectionHeader count={usertags.length}>유저 태그</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           <AddButtonCard
             content="새로운 태그"
