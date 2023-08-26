@@ -102,6 +102,7 @@ export const CreateUserTagModal: React.FC = () => {
               setSelectedUsers={setTaggers}
               selectedUsers={taggers}
               editable
+              filterBy="tag"
             />
           </ModalInner>
         </Box>
