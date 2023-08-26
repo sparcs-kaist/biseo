@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { Box, Card, Text, Button } from "@/components/atoms";
 import type { OngoingAgenda } from "@biseo/interface/agenda";
 import {
@@ -29,7 +29,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
     voteAgenda(chosenChoiceId, agenda.id);
   }, [chosenChoiceId]);
 
-  const chosen = chosenChoiceId !== 0;
+  const chosen = useMemo(() => chosenChoiceId !== 0, [chosenChoiceId]);
 
   const choose = useCallback(
     (choiceId: number) => {
@@ -87,13 +87,15 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
           </Text>
           {choices}
         </Box>
-        <Box dir="row" justify="end" w="fill">
-          <Button w={90} disabled={!chosen} onClick={() => vote()}>
-            <Text variant="option1" color={chosen ? "blue600" : "blue300"}>
-              투표하기
-            </Text>
-          </Button>
-        </Box>
+        {agenda.user.votable && !agenda.user.voted && (
+          <Box dir="row" justify="end" w="fill">
+            <Button w={90} disabled={!chosen} onClick={() => vote()}>
+              <Text variant="option1" color={chosen ? "blue600" : "blue300"}>
+                투표하기
+              </Text>
+            </Button>
+          </Box>
+        )}
       </Box>
     </Card>
   );
