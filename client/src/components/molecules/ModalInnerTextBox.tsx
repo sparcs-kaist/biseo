@@ -59,7 +59,7 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   required,
 }) => (
   <Box dir="column" w="fill" gap={8}>
-    <Box w="fill" dir="row" align="end" justify="space-between">
+    <Box w="fill" dir="row" align="flex-end" justify="space-between">
       <Box dir="row" align="center" gap={8}>
         <Box dir="row" gap={2}>
           <Text variant="body" color="black">

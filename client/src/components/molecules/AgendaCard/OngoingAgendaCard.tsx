@@ -87,7 +87,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
           </Text>
           {choices}
         </Box>
-        <Box dir="row" justify="end" w="fill">
+        <Box dir="row" justify="flex-end" w="fill">
           <Button w={90} disabled={!chosen} onClick={() => vote()}>
             <Text variant="option1" color={chosen ? "blue600" : "blue300"}>
               투표하기

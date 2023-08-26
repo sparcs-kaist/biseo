@@ -14,7 +14,14 @@ export const AdminSettingPage: React.FC = () => {
   }, []);
 
   return (
-    <Box dir="row" padTop={20} padBottom={30} gap={20}>
+    <Box
+      dir="row"
+      w="fill"
+      justify="center"
+      padTop={20}
+      padBottom={30}
+      gap={20}
+    >
       <AdminUserSection />
       <Outlet />
     </Box>

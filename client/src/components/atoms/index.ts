@@ -17,6 +17,3 @@ export * from "./Text";
 export * from "./TextArea";
 export * from "./TextInput";
 export * from "./UserTag";
-export * from "./Label";
-export * from "./SelectBox";
-export * from "./SelectTemplateBox";

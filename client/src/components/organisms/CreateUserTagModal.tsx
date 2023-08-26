@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Modal, ModalInner } from "@/components/molecules";
 import { Button, Box, Text } from "@/components/atoms";
 import { UserTable } from "@/components/organisms";
@@ -57,7 +57,7 @@ export const CreateUserTagModal: React.FC = () => {
               <Box
                 gap={8}
                 dir="row"
-                justify="start"
+                justify="flex-start"
                 align="flex-start"
                 wrap="wrap"
               >

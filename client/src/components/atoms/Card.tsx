@@ -8,16 +8,6 @@ export const Card = styled.div<{
   clickable?: boolean;
   small?: boolean;
   round?: number;
-  borderStyle?:
-    | "solid"
-    | "dotted"
-    | "dashed"
-    | "double"
-    | "groove"
-    | "groove"
-    | "ridge"
-    | "hidden"
-    | "none";
   align?: "center" | "start" | "end";
   justify?: "center" | "start" | "end" | "space-between";
   height?: number;
@@ -28,13 +18,12 @@ export const Card = styled.div<{
     clickable,
     small,
     round = 5,
-    borderStyle = "solid",
     align = "start",
     justify = "start",
   }) => css`
     border-radius: ${round}px;
     background-color: ${primary ? theme.colors.blue100 : theme.colors.white};
-    border: 1px ${borderStyle}
+    border: 1px solid
       ${bold
         ? primary
           ? theme.colors.blue600
@@ -51,7 +40,7 @@ export const Card = styled.div<{
     justify-content: ${justify};
 
     ${clickable &&
-    `
+    css`
       cursor: pointer;
 
       &:hover {
