@@ -7,9 +7,11 @@ import styled from "@emotion/styled";
 export const PageLayout: React.FC = () => (
   <Page>
     <Header />
-    <Box as="main" align="center" justify="flex-start" w="fill">
+    {/*<Box as="main" align="center" justify="flex-start" w="fill">*/}
+    <main>
       <Outlet />
-    </Box>
+    </main>
+    {/*</Box>*/}
   </Page>
 );
 

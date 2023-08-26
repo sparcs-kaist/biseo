@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 
-export const Scroll = styled.div`
-  width: 100%;
+export const Scroll = styled.div<{ hide?: boolean }>`
+  height: 100%;
 
   overflow-y: scroll;
   overflow-x: hidden;
@@ -17,7 +18,11 @@ export const Scroll = styled.div`
   ::-webkit-scrollbar-thumb {
     border: 4px solid transparent;
     background-clip: padding-box;
-    background-color: ${props => props.theme.colors.gray400};
+    ${props =>
+      !props.hide &&
+      css`
+        background-color: ${props.theme.colors.gray400};
+      `}
     border-radius: 100px;
   }
 `;

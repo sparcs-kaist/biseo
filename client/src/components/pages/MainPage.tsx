@@ -13,7 +13,16 @@ export const MainPage: React.FC = () => {
   }, []);
 
   return (
-    <Box dir="row" h="fill" padTop={10} padBottom={30} gap={20} align="stretch">
+    <Box
+      dir="row"
+      justify="center"
+      w="fill"
+      h="fill"
+      padTop={10}
+      padBottom={30}
+      gap={20}
+      align="stretch"
+    >
       <AgendaSection />
       <ChatSection />
     </Box>
