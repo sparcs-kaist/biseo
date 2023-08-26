@@ -123,7 +123,7 @@ export const EditUserTagModal: React.FC = () => {
               setSelectedUsers={setTaggers}
               selectedUsers={taggers}
               editable
-            ></UserTable>
+            />
           </ModalInner>
         </Box>
       </Box>

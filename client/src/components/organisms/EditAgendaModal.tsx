@@ -174,6 +174,7 @@ export const EditAgendaModal: React.FC = () => {
               selectedUsers={voters}
               setSelectedUsers={setVoters}
               editable
+              filterBy="tag"
             />
           </ModalInner>
           <Box
