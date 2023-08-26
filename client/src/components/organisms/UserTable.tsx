@@ -47,7 +47,7 @@ export const UserTable: React.FC<Props> = ({
     () => (userList ? users.filter(user => userList.includes(user.id)) : users),
     [userList, users],
   );
-  const [selectedTag, setSelectedTag] = useState("");
+  const [selectedFilterOption, setSelectedFilterOption] = useState("");
 
   const selectUser = (id: number) => {
     if (selectedUsers.includes(id)) {
@@ -58,13 +58,19 @@ export const UserTable: React.FC<Props> = ({
   };
 
   const filteredUsers = useMemo(() => {
-    if (selectedTag) {
+    if (filterBy === "tag" && selectedFilterOption) {
       return displayUsers.filter(user =>
-        user.tags.some(tag => tag === selectedTag),
+        user.tags.some(tag => tag === selectedFilterOption),
       );
     }
+    if (filterBy === "voted") {
+      if (selectedFilterOption === "투표 완료자")
+        return displayUsers.filter(user => selectedUsers.includes(user.id));
+      else if (selectedFilterOption === "투표 미완료자")
+        return displayUsers.filter(user => !selectedUsers.includes(user.id));
+    }
     return displayUsers;
-  }, [displayUsers, selectedTag]);
+  }, [displayUsers, selectedFilterOption]);
 
   return (
     <Box w="fill" gap={5}>
@@ -80,7 +86,7 @@ export const UserTable: React.FC<Props> = ({
                 ? ["투표 완료자", "투표 미완료자"]
                 : []
             }
-            onChange={setSelectedTag}
+            onChange={setSelectedFilterOption}
           />
         </Box>
       ) : (

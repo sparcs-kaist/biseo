@@ -27,7 +27,6 @@ export const CreateUserTagModal: React.FC = () => {
     setDescription(e.target.value);
   };
 
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const filteredUsers = useMemo(() => {
     if (taggers.length >= 0) {
       return users.filter(user =>
