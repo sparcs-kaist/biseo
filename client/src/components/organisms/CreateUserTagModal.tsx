@@ -37,6 +37,20 @@ export const CreateUserTagModal: React.FC = () => {
     return users;
   }, [users, taggers]);
 
+  const validated = useMemo(
+    () => title.length > 0 && description.length > 0,
+    [title, description],
+  );
+
+  const onSubmit = () => {
+    if (!validated) return;
+    createTag({
+      title: title,
+      description: description,
+      users: taggers,
+    });
+  };
+
   return (
     <Modal title="태그 생성하기" width={680} height={431}>
       <Box w={630} dir="row" justify="space-between" padVertical={15}>
@@ -68,18 +82,13 @@ export const CreateUserTagModal: React.FC = () => {
             </ModalInner>
           </Box>
           <Box dir="row" w="fill" gap={10} justify="space-between">
-            <Link to=".." relative="path" replace>
-              <Button
-                w={300}
-                h={42}
-                onClick={() =>
-                  createTag({
-                    title: title,
-                    description: description,
-                    users: taggers,
-                  })
-                }
-              >
+            <Link
+              to={validated ? ".." : "#"}
+              relative="path"
+              replace
+              style={{ textDecoration: "none" }}
+            >
+              <Button w={300} h={42} onClick={onSubmit} disabled={!validated}>
                 <Text variant="boldtitle3" color="blue600">
                   태그 생성하기
                 </Text>
