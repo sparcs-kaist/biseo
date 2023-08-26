@@ -44,7 +44,11 @@ export const UserTable: React.FC<Props> = ({
   }, []);
 
   const displayUsers = useMemo(
-    () => (userList ? users.filter(user => userList.includes(user.id)) : users),
+    () =>
+      (userList
+        ? users.filter(user => userList.includes(user.id))
+        : users
+      ).sort((a, b) => (a.username < b.username ? -1 : 1)),
     [userList, users],
   );
   const [selectedFilterOption, setSelectedFilterOption] = useState("");
@@ -128,8 +132,8 @@ export const UserTable: React.FC<Props> = ({
               ) : (
                 <Cell w={0} />
               )}
-              <Cell w={60}>{user.username}</Cell>
-              <Cell w={100}>{user.displayName}</Cell>
+              <Cell w={60}>{user.displayName}</Cell>
+              <Cell w={100}>{user.username}</Cell>
               <Cell>
                 {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
                 {user.tags.map(tag => (
