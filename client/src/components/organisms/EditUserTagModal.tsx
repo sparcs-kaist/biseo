@@ -87,7 +87,7 @@ export const EditUserTagModal: React.FC = () => {
               <Box
                 gap={8}
                 dir="row"
-                justify="start"
+                justify="flex-start"
                 align="flex-start"
                 wrap="wrap"
               >

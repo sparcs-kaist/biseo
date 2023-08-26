@@ -62,7 +62,7 @@ export const UserTable: React.FC<Props> = ({
 
   return (
     <Box w="fill" gap={5}>
-      <Box w="fill" dir="row" justify="start">
+      <Box w="fill" dir="row" justify="flex-start">
         <SelectBox
           width={92}
           height={26}

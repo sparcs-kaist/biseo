@@ -9,8 +9,8 @@ export const Box = styled.div<{
   round?: number;
   dir?: "row" | "column";
   gap?: number | "auto";
-  align?: "center" | "flex-start" | "flex-end" | "stretch";
-  justify?: "center" | "flex-start" | "flex-end" | "stretch";
+  align?: "center" | "flex-start" | "flex-end" | "stretch" | "space-between";
+  justify?: "center" | "flex-start" | "flex-end" | "stretch" | "space-between";
   pad?: number;
   padHorizontal?: number;
   padVertical?: number;
