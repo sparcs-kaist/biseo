@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { Box, Scroll } from "@/components/atoms";
-import { AdminUserSection } from "@/components/organisms";
+import { AdminSettingSection } from "@/components/organisms";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useUserTag } from "@/services/user-tag";
 
@@ -28,7 +28,7 @@ export const AdminSettingPage: React.FC = () => {
         padBottom={30}
         gap={20}
       >
-        <AdminUserSection />
+        <AdminSettingSection />
         <Outlet />
       </Box>
     </Scroll>

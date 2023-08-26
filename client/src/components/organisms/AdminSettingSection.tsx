@@ -10,12 +10,12 @@ import { useAgendaTemplate } from "@/services/agenda-template";
 import { useNavigate } from "react-router-dom";
 import { useUserTag } from "@/services/user-tag";
 
-export const AdminUserSection: React.FC = () => {
+export const AdminSettingSection: React.FC = () => {
   const { templates } = useAgendaTemplate(state => ({
     templates: state.agendaTemplates,
   }));
-  const { usertags } = useUserTag(state => ({
-    usertags: state.userTags,
+  const { tags } = useUserTag(state => ({
+    tags: state.userTags,
   }));
 
   const navigate = useNavigate();
@@ -35,13 +35,13 @@ export const AdminUserSection: React.FC = () => {
         </Box>
       </Box>
       <Box dir="column" w={380}>
-        <SectionHeader count={usertags.length}>유저 태그</SectionHeader>
+        <SectionHeader count={tags.length}>유저 태그</SectionHeader>
         <Box dir="column" w="fill" gap={15}>
           <AddButtonCard
             content="새로운 태그"
             onClick={() => navigate("tagCreate")}
           />
-          {usertags.map(usertag => (
+          {tags.map(usertag => (
             <UserTagCards key={usertag.id} tag={usertag} />
           ))}
         </Box>
