@@ -72,6 +72,21 @@ export const UserTable: React.FC<Props> = ({
     return displayUsers;
   }, [displayUsers, selectedFilterOption]);
 
+  const allSelected = useMemo(
+    () =>
+      filteredUsers.filter(user => selectedUsers.includes(user.id)).length ===
+      filteredUsers.length,
+    [filteredUsers, selectedUsers],
+  );
+  const toggleHeaderCheckbox = () => {
+    if (allSelected) {
+      setSelectedFilterOption("");
+      setSelectedUsers([]);
+    } else {
+      setSelectedUsers(filteredUsers.map(user => user.id));
+    }
+  };
+
   return (
     <Box w="fill" gap={5}>
       {filterBy ? (
@@ -97,7 +112,10 @@ export const UserTable: React.FC<Props> = ({
           <Row>
             {editable ? (
               <Cell w={27}>
-                <CheckBox disabled />
+                <CheckBox
+                  checked={allSelected}
+                  onChange={toggleHeaderCheckbox}
+                />
               </Cell>
             ) : (
               <Cell w={0} />
