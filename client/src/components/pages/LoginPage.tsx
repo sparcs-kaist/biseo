@@ -5,6 +5,7 @@ import { useAuth } from "@/services/auth";
 import { useInput } from "@/common/hooks";
 import styled from "@emotion/styled";
 import { theme } from "@/theme";
+import { Text } from "../atoms";
 
 export const LoginPage: React.FC = () => {
   const { login, isLoggedIn } = useAuth(state => ({
@@ -30,7 +31,7 @@ export const LoginPage: React.FC = () => {
 
   return (
     <Page>
-      <h1>Login Page</h1>
+      <LoginTitle>쉽고 빠른 의사결정은, Biseo</LoginTitle>
       <form onSubmit={handleLogin}>
         <InputWrapper>
           <InputContainer
@@ -43,22 +44,33 @@ export const LoginPage: React.FC = () => {
             placeholder="비밀번호를 입력하세요"
             {...password}
           />
-        </InputWrapper>
 
-        <button>Login</button>
+          <LoginButton>
+            <Text variant="body" color="blue600">
+              로그인
+            </Text>
+          </LoginButton>
+        </InputWrapper>
       </form>
     </Page>
   );
 };
 
 const Page = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  gap: 20px;
+`;
+
+const LoginTitle = styled.div`
+  font-size: 30px;
+  font-weight: 700;
 `;
 
 const InputWrapper = styled.div`
@@ -90,4 +102,26 @@ const InputContainer = styled.input`
   &::placeholder {
     font-size: 13px;
   }
+`;
+
+const LoginButton = styled.button`
+  width: 310px;
+  height: 40px;
+
+  background-color: ${theme.colors["blue200"]};
+  border: none;
+  border-radius: 5px;
+  outline: none;
+
+  &:hover {
+    background-color: ${theme.colors["blue300"]};
+  }
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  transition: all 0.2s;
 `;
