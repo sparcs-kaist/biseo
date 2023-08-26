@@ -19,7 +19,7 @@ export const UserTagCards: React.FC<Props> = ({ tag }) => {
     <Card primary={false} round={5} onClick={openModal}>
       <Box gap={8}>
         <Box gap={8} dir="row">
-          <AdminTag tags={_tags} suffix={23} />
+          <AdminTag tags={_tags} suffix={tag.users.length} />
           <UserTag>{tag.title}</UserTag>
         </Box>
         <Box w={340}>
