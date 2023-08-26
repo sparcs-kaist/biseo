@@ -75,7 +75,9 @@ export const CreateUserTagModal: React.FC = () => {
                 wrap="wrap"
               >
                 {filteredUsers.map(user => (
-                  <ModalInner.TagChoice>{user.username}</ModalInner.TagChoice>
+                  <ModalInner.TagChoice key={user.id}>
+                    {user.username}
+                  </ModalInner.TagChoice>
                 ))}
               </Box>
             </ModalInner>
