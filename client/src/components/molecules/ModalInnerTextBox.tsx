@@ -209,6 +209,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
       roundBot={0}
       roundTop={5}
       borderStyle="solid"
+      align="stretch"
     >
       <Scroll>
         <Box w="fill" gap={10}>
