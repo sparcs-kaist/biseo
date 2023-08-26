@@ -9,6 +9,7 @@ import {
   TextAreaFixedsize,
   Button,
   Clickable,
+  TaggersBox,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
@@ -48,6 +49,7 @@ interface SubComponents {
   InputBox: typeof InputBox;
   TagChoice: typeof TagChoice;
   WhiteTextBox: typeof WhiteTextBox;
+  TaggerBox: typeof TaggerBox;
 }
 
 export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
@@ -308,3 +310,12 @@ const TagChoice: React.FC<PropsWithChildren> = ({ children }) => (
   </BorderedBox>
 );
 ModalInner.TagChoice = TagChoice;
+
+const TaggerBox: React.FC<PropsWithChildren> = ({ children }) => (
+  <TaggersBox w={300} h={73}>
+    <Scroll>
+      <TaggersBox>{children}</TaggersBox>
+    </Scroll>
+  </TaggersBox>
+);
+ModalInner.TaggerBox = TaggerBox;

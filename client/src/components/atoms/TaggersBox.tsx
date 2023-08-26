@@ -1,23 +1,20 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import type { Color } from "@/theme";
 
 export const TaggersBox = styled.div<{
-  w?: number;
-  h?: number;
+  w?: Size;
+  h?: Size;
   justify?: "center" | "flex-start" | "flex-end" | "stretch" | "space-between";
   position?: "static" | "absolute";
-  self?: "auto" | "stretch";
 }>(
   ({
-    w = 300,
-    h = 73,
+    w = "hug",
+    h = "hug",
     justify = "start",
     position = "static",
-    self = "auto",
   }) => css`
-    width: ${w}px;
-    height: ${h}px;
+    width: ${size(w)};
+    height: ${size(h)};
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -29,13 +26,14 @@ export const TaggersBox = styled.div<{
     padding-right: 0px;
     z-index: 0;
     position: ${position};
-    align-self: ${self};
+    align-self: auto;
     flex-wrap: wrap;
-    overflow-x: hidden;
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   `,
 );
+
+type Size = number | "hug" | "fill";
+const size = (size: Size) => {
+  if (size === "fill") return "100%";
+  if (size === "hug") return "fit-content";
+  return `${size}px`;
+};

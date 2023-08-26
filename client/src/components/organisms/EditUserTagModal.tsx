@@ -77,11 +77,11 @@ export const EditUserTagModal: React.FC = () => {
 
           <Box w={300} h={101} dir="column" justify="space-between">
             <ModalInner title="태그 대상 보기" count={taggers.length}>
-              <TaggersBox>
+              <ModalInner.TaggerBox>
                 {filteredUsers.map(user => (
                   <ModalInner.TagChoice>{user.username}</ModalInner.TagChoice>
                 ))}
-              </TaggersBox>
+              </ModalInner.TaggerBox>
             </ModalInner>
           </Box>
           <Box dir="row" w="fill" gap={10} justify="space-between">
