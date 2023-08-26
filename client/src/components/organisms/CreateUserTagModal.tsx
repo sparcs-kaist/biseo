@@ -1,33 +1,33 @@
 import React, { useState, useMemo } from "react";
-import { Modal, ModalInner } from "@/components/molecules";
-import { Button, Box, Text } from "@/components/atoms";
-import { UserTable } from "@/components/organisms";
-import { useUserTag } from "@/services/user-tag";
-import { useAdminUser } from "@/services/admin-user";
 import { Link } from "react-router-dom";
 
-export const CreateUserTagModal: React.FC = () => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+import { Button, Box, Text } from "@/components/atoms";
+import { Modal, ModalInner } from "@/components/molecules";
+import { UserTable } from "@/components/organisms";
 
+import { useAdminUser } from "@/services/admin-user";
+import { useUserTag } from "@/services/user-tag";
+
+export const CreateUserTagModal: React.FC = () => {
+  const { users, retrieveUsers } = useAdminUser(state => ({
+    users: state.adminUsers,
+    retrieveUsers: state.retrieveAll,
+  }));
   const { createTag } = useUserTag(state => ({
     createTag: state.createTag,
   }));
 
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [taggers, setTaggers] = useState<number[]>([]);
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
   const onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
   };
-  const [taggers, setTaggers] = useState<number[]>([]);
 
-  const { users, retrieveUsers } = useAdminUser(state => ({
-    users: state.adminUsers,
-    retrieveUsers: state.retrieveAll,
-  }));
-
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const filteredUsers = useMemo(() => {
     if (taggers.length >= 0) {
       return users.filter(user =>
