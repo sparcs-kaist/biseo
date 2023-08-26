@@ -77,9 +77,13 @@ export const UserTable: React.FC<Props> = ({
       <Table w="fill" h={287}>
         <Header>
           <Row>
-            <Cell w={27}>
-              <CheckBox disabled />
-            </Cell>
+            {editable ? (
+              <Cell w={27}>
+                <CheckBox disabled />
+              </Cell>
+            ) : (
+              <Cell w={0} />
+            )}
             <Cell w={60}>이름</Cell>
             <Cell w={100}>닉네임</Cell>
             <Cell scroll>태그</Cell>
@@ -96,9 +100,16 @@ export const UserTable: React.FC<Props> = ({
                 }
               }}
             >
-              <Cell w={27}>
-                <CheckBox checked={selectedUsers.includes(user.id)} readOnly />
-              </Cell>
+              {editable ? (
+                <Cell w={27}>
+                  <CheckBox
+                    checked={selectedUsers.includes(user.id)}
+                    readOnly
+                  />
+                </Cell>
+              ) : (
+                <Cell w={0} />
+              )}
               <Cell w={60}>{user.username}</Cell>
               <Cell w={100}>{user.displayName}</Cell>
               <Cell>
