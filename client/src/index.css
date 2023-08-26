@@ -10,3 +10,7 @@
 :root {
     background-color: #FAFBFC; /* white100 */
 }
+
+html, body, #root {
+    height: 100%;
+}

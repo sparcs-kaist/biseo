@@ -9,8 +9,8 @@ export const Box = styled.div<{
   round?: number;
   dir?: "row" | "column";
   gap?: number | "auto";
-  align?: "center" | "start" | "end" | "flex-start";
-  justify?: "center" | "start" | "end" | "space-between";
+  align?: "center" | "flex-start" | "flex-end" | "stretch";
+  justify?: "center" | "flex-start" | "flex-end" | "stretch";
   pad?: number;
   padHorizontal?: number;
   padVertical?: number;
@@ -21,7 +21,7 @@ export const Box = styled.div<{
   zIndex?: number;
   position?: "static" | "absolute";
   self?: "auto" | "stretch";
-  wrap?: "wrap"|"nowrap";
+  wrap?: "wrap" | "nowrap";
 }>(
   ({
     w = "hug",
@@ -42,9 +42,8 @@ export const Box = styled.div<{
     theme,
     zIndex = 0,
     position = "static",
-    self="auto",
-    wrap="nowrap",
-
+    self = "auto",
+    wrap = "nowrap",
   }) => css`
     width: ${size(w)};
     height: ${size(h)};
