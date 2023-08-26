@@ -6,3 +6,7 @@
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+:root {
+    background-color: #FAFBFC; /* white100 */
+}
