@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import {
@@ -32,15 +32,19 @@ export const EditAgendaModal: React.FC = () => {
       deleteAgenda: state.deleteAgenda,
     }),
   );
-  const { users } = useAdminUser(state => ({
+  const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,
+    retrieveUsers: state.retrieveAll,
   }));
+  useEffect(() => {
+    retrieveUsers();
+  }, []);
 
   const [title, setTitle] = useState(targetAgenda?.title || "");
   const [content, setContent] = useState(targetAgenda?.content || "");
   const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
   const [choices, setChoices] = useState(
-    targetAgenda!.choices.map(choice => {
+    targetAgenda?.choices.map(choice => {
       return choice.name;
     }) || [],
   );
