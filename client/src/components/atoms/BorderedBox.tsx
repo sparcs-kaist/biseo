@@ -11,8 +11,8 @@ export const BorderedBox = styled.div<{
   roundBot?: number;
   dir?: "row" | "column";
   gap?: number | "auto";
-  align?: "center" | "start" | "end";
-  justify?: "center" | "start" | "end" | "space-between";
+  align?: "center" | "flex-start" | "flex-end" | "stretch" | "space-between";
+  justify?: "center" | "flex-start" | "flex-end" | "stretch" | "space-between";
   pad?: number;
   padHorizontal?: number;
   padVertical?: number;
@@ -27,7 +27,6 @@ export const BorderedBox = styled.div<{
     | "dotted"
     | "dashed"
     | "double"
-    | "groove"
     | "groove"
     | "ridge"
     | "hidden"
