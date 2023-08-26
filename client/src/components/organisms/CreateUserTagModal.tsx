@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-import { Button, Box, Text } from "@/components/atoms";
+import { Button, Box, Text, TaggersBox } from "@/components/atoms";
 import { Modal, ModalInner } from "@/components/molecules";
 import { UserTable } from "@/components/organisms";
 
@@ -67,17 +67,11 @@ export const CreateUserTagModal: React.FC = () => {
 
           <Box w={300} h={101} dir="column" justify="space-between">
             <ModalInner title="태그 대상 보기" count={taggers.length}>
-              <Box
-                gap={8}
-                dir="row"
-                justify="flex-start"
-                align="flex-start"
-                wrap="wrap"
-              >
+              <TaggersBox>
                 {filteredUsers.map(user => (
                   <ModalInner.TagChoice>{user.username}</ModalInner.TagChoice>
                 ))}
-              </Box>
+              </TaggersBox>
             </ModalInner>
           </Box>
           <Box dir="row" w="fill" gap={10} justify="space-between">
