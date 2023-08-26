@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Modal } from "@/components/molecules";
 import { Button, Box, Text, BorderedBox } from "@/components/atoms";
 import { ModalInner } from "../molecules/ModalInnerTextBox";
@@ -56,6 +56,14 @@ export const EditTemplateModal: React.FC = () => {
       setNewChoiceState("");
     }
   };
+  const validated = useMemo(
+    () =>
+      agendaTitleState.length > 0 &&
+      agendaContentState.length > 0 &&
+      agendaResolutionState.length > 0 &&
+      choiceState.length > 0,
+    [agendaTitleState, agendaContentState, agendaResolutionState, choiceState],
+  );
   const deleteChoice = (choice: string) => {
     const index = choiceState.indexOf(choice);
     const list = choiceState;
@@ -91,35 +99,35 @@ export const EditTemplateModal: React.FC = () => {
         <Box w={300} dir="column" gap={20}>
           <ModalInner title="템플릿 제목" required>
             <ModalInner.InputBox
-              value={templateTitleState}
               onChange={onChangeTemplateTitle}
+              value={templateTitleState}
             />
           </ModalInner>
 
           <ModalInner title="투표 제목" required>
             <ModalInner.InputBox
-              value={agendaTitleState}
               onChange={onChangeAgendaTitle}
+              value={agendaTitleState}
             />
           </ModalInner>
 
           <ModalInner title="투표 설명" required>
             <ModalInner.InputBox
-              value={agendaContentState}
               onChange={onChangeAgendaContent}
+              value={agendaContentState}
             />
           </ModalInner>
 
           <ModalInner title="의결 문안" required>
             <ModalInner.InputBox
-              value={agendaResolutionState}
               onChange={onChangeAgendaResolution}
+              value={agendaResolutionState}
             />
           </ModalInner>
         </Box>
 
         <Box w={300} h={313} dir="column" justify="space-between">
-          <ModalInner title="투표 항목" count={1}>
+          <ModalInner title="투표 항목" count={1} required>
             <ModalInner.AddVoteOptionArea
               value={newChoiceState}
               onClick={onNewChoiceState}
@@ -137,12 +145,22 @@ export const EditTemplateModal: React.FC = () => {
           </ModalInner>
 
           <Box dir="row" w={300} gap={10}>
-            <Button w={145} h={40} onClick={onTemplateUpdate}>
+            <Button
+              w={145}
+              h={40}
+              onClick={onTemplateUpdate}
+              disabled={!validated}
+            >
               <Text variant="boldtitle3" color="blue600">
                 탬플릿 수정하기
               </Text>
             </Button>
-            <Link to=".." relative="path" replace>
+            <Link
+              to=".."
+              relative="path"
+              replace
+              style={{ textDecoration: "none" }}
+            >
               <Button w={145} h={40} onClick={onTemplateDelete}>
                 <Text variant="boldtitle3" color="blue600">
                   탬플릿 삭제하기

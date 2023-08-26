@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Modal } from "@/components/molecules";
 import { Button, Box, Text } from "@/components/atoms";
 import { ModalInner } from "@/components/molecules";
@@ -50,7 +50,14 @@ export const CreateTemplateModal: React.FC = () => {
       choices: choiceState,
     });
   };
-
+  const validated = useMemo(
+    () =>
+      agendaTitleState.length > 0 &&
+      agendaContentState.length > 0 &&
+      agendaResolutionState.length > 0 &&
+      choiceState.length > 0,
+    [agendaTitleState, agendaContentState, agendaResolutionState, choiceState],
+  );
   return (
     <Modal title="템플릿 생성하기">
       <Box w={630} dir="row" justify="space-between">
@@ -95,7 +102,12 @@ export const CreateTemplateModal: React.FC = () => {
             replace
             style={{ textDecoration: "none" }}
           >
-            <Button w={300} h={40} onClick={onTemplateUpdate}>
+            <Button
+              w={300}
+              h={40}
+              onClick={onTemplateUpdate}
+              disabled={!validated}
+            >
               <Text variant="boldtitle3" color="blue600">
                 탬플릿 생성하기
               </Text>
