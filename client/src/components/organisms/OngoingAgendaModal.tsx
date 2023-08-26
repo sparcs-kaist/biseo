@@ -105,8 +105,9 @@ export const OngoingAgendaModal: React.FC = () => {
             count={targetAgenda?.voters.total.length}
           >
             <UserTable
+              userList={targetAgenda?.voters.total.map(user => user.id) || []}
               selectedUsers={
-                targetAgenda?.voters.total.map(user => user.id) || []
+                targetAgenda?.voters.voted.map(user => user.id) || []
               }
             />
           </ModalInner>

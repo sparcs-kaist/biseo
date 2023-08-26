@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
+
 import {
   Box,
   Body,
@@ -10,20 +11,21 @@ import {
   UserTag,
   SelectBox,
 } from "@/components/atoms";
+
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
 
 interface Props {
+  userList?: number[];
   selectedUsers: number[];
   setSelectedUsers?: (userIds: number[]) => void;
-  selected?: number[];
   editable?: boolean;
 }
 
 export const UserTable: React.FC<Props> = ({
+  userList,
   selectedUsers,
   setSelectedUsers = () => {},
-  selected = [],
   editable,
 }) => {
   const { users, retrieveUsers } = useAdminUser(state => ({
@@ -34,16 +36,16 @@ export const UserTable: React.FC<Props> = ({
     tags: state.userTags,
     retrieveTags: state.retrieveAll,
   }));
-  const [selectedTag, setSelectedTag] = useState("");
-
   useEffect(() => {
     retrieveUsers();
     retrieveTags();
   }, []);
 
-  useEffect(() => {
-    setSelectedUsers(selected);
-  }, [selected]);
+  const displayUsers = useMemo(
+    () => (userList ? users.filter(user => userList.includes(user.id)) : users),
+    [userList, users],
+  );
+  const [selectedTag, setSelectedTag] = useState("");
 
   const selectUser = (id: number) => {
     if (selectedUsers.includes(id)) {
@@ -55,10 +57,12 @@ export const UserTable: React.FC<Props> = ({
 
   const filteredUsers = useMemo(() => {
     if (selectedTag) {
-      return users.filter(user => user.tags.some(tag => tag === selectedTag));
+      return displayUsers.filter(user =>
+        user.tags.some(tag => tag === selectedTag),
+      );
     }
-    return users;
-  }, [users, selectedTag]);
+    return displayUsers;
+  }, [displayUsers, selectedTag]);
 
   return (
     <Box w="fill" gap={5}>
