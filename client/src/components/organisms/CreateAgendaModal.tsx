@@ -49,7 +49,7 @@ export const CreateAgendaModal: React.FC = () => {
   const [template, setTemplate] = useState(0);
   const applyTemplate = (templateId: number) => {
     const targetTemplate = findTemplate(templateId);
-    if (targetTemplate != undefined) {
+    if (targetTemplate !== undefined) {
       setTemplate(templateId);
       setTitle(targetTemplate.title);
       setContent(targetTemplate.content);
@@ -73,11 +73,10 @@ export const CreateAgendaModal: React.FC = () => {
   };
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const applySelectedTags = () => {
     const tagIsSelected = (tag: string) => selectedTags.includes(tag);
     const selected = users.filter(user => user.tags.some(tagIsSelected));
-    setSelectedUsers(selected.map(user => user.id));
+    setVoters(selected.map(user => user.id));
   };
   const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { options } = e.target;
@@ -108,7 +107,7 @@ export const CreateAgendaModal: React.FC = () => {
       voters: {
         total: voters,
       },
-      choices: choices.filter(word => word != ""),
+      choices: choices.filter(word => word !== ""),
     });
   };
 
@@ -182,7 +181,6 @@ export const CreateAgendaModal: React.FC = () => {
             <UserTable
               setSelectedUsers={setVoters}
               selectedUsers={voters}
-              selected={selectedUsers}
               editable
             />
           </ModalInner>
