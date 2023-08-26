@@ -20,7 +20,7 @@ export const AgendaTemplateCard: React.FC<Props> = ({ template }) => {
   return (
     <Card onClick={openModal}>
       <Box gap={8} w="fill">
-        <AdminTag tags={_tags} suffix={3} />
+        <AdminTag tags={_tags} suffix={template.choices.length} />
         <Box gap={11}>
           <Text variant="title2" color="gray600">
             {template.templateName}
