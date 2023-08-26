@@ -1,11 +1,12 @@
 import React, { FormEvent, useCallback } from "react";
 import { Navigate } from "react-router-dom";
 
+import { LogoLargeIcon } from "@/assets";
 import { useAuth } from "@/services/auth";
 import { useInput } from "@/common/hooks";
 import styled from "@emotion/styled";
 import { theme } from "@/theme";
-import { Text } from "../atoms";
+import { Box, Text } from "../atoms";
 
 export const LoginPage: React.FC = () => {
   const { login, isLoggedIn } = useAuth(state => ({
@@ -31,9 +32,13 @@ export const LoginPage: React.FC = () => {
 
   return (
     <Page>
-      <LoginTitle>쉽고 빠른 의사결정은, Biseo</LoginTitle>
+      <Box dir="column" align="center">
+        <LogoLargeIcon width={116} />
+        <LoginTitle>쉽고 빠른 의사결정은, Biseo</LoginTitle>
+      </Box>
+
       <form onSubmit={handleLogin}>
-        <InputWrapper>
+        <Box dir="column" gap={12}>
           <InputContainer
             type="text"
             placeholder="아이디를 입력하세요"
@@ -50,7 +55,7 @@ export const LoginPage: React.FC = () => {
               로그인
             </Text>
           </LoginButton>
-        </InputWrapper>
+        </Box>
       </form>
     </Page>
   );
@@ -60,28 +65,21 @@ const Page = styled.div`
   width: 100vw;
   height: 100vh;
 
+  box-sizing: border-box;
+  padding-bottom: 75px;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  gap: 20px;
+  gap: 22px;
 `;
 
 const LoginTitle = styled.div`
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 700;
-`;
-
-const InputWrapper = styled.div`
-  width: fit-content;
-  height: fit-content;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  color: ${theme.colors["black"]};
 `;
 
 const InputContainer = styled.input`
@@ -95,12 +93,17 @@ const InputContainer = styled.input`
   border-radius: 5px;
   outline: none;
 
+  &:hover {
+    border: 1px solid ${theme.colors["gray400"]};
+  }
+
   &:focus {
     border: 1px solid ${theme.colors["blue300"]};
     box-shadow: 0px 0px 0px 3px ${theme.colors["blue200"]};
   }
   &::placeholder {
-    font-size: 13px;
+    font-size: 12px;
+    color: ${theme.colors["gray300"]};
   }
 `;
 
