@@ -8,6 +8,7 @@
 }
 
 :root {
+    min-width: 1280px;
     background-color: #FAFBFC; /* white100 */
 }
 
