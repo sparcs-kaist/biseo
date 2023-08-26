@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@/components/atoms";
+import { Box, Scroll } from "@/components/atoms";
 import {
   SectionHeader,
   UserTagCards,
@@ -21,29 +21,42 @@ export const AdminSettingSection: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Box dir="row" gap={20}>
-      <Box dir="column" w={380}>
+    <Box dir="row" h="fill" gap={20}>
+      <Box dir="column" w={380} h="fill">
         <SectionHeader count={templates.length}>투표 템플릿</SectionHeader>
-        <Box dir="column" w="fill" gap={15}>
+        <Box dir="column" w="fill" h="fill" gap={15}>
           <AddButtonCard
             content="새로운 템플릿"
             onClick={() => navigate("templateCreate")}
           />
-          {templates.map(template => (
-            <AgendaTemplateCard key={template.id} template={template} />
-          ))}
+          <Box dir="column" h={600}>
+            <Scroll>
+              <Box dir="column" gap={15}>
+                {templates.map(template => (
+                  <AgendaTemplateCard key={template.id} template={template} />
+                ))}
+              </Box>
+            </Scroll>
+          </Box>
         </Box>
       </Box>
-      <Box dir="column" w={380}>
+
+      <Box dir="column" w={380} h="fill">
         <SectionHeader count={tags.length}>유저 태그</SectionHeader>
-        <Box dir="column" w="fill" gap={15}>
+        <Box dir="column" w="fill" h="fill" gap={15}>
           <AddButtonCard
             content="새로운 태그"
             onClick={() => navigate("tagCreate")}
           />
-          {tags.map(usertag => (
-            <UserTagCards key={usertag.id} tag={usertag} />
-          ))}
+          <Box dir="column" h={600}>
+            <Scroll>
+              <Box dir="column" gap={15}>
+                {tags.map(usertag => (
+                  <UserTagCards key={usertag.id} tag={usertag} />
+                ))}
+              </Box>
+            </Scroll>
+          </Box>
         </Box>
       </Box>
     </Box>
