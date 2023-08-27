@@ -6,7 +6,7 @@ import { useAuth } from "@/services/auth";
 import { useInput } from "@/common/hooks";
 import styled from "@emotion/styled";
 import { theme } from "@/theme";
-import { Box, Text } from "../atoms";
+import { Box, Text } from "@/components/atoms";
 
 export const LoginPage: React.FC = () => {
   const { login, isLoggedIn } = useAuth(state => ({
@@ -66,7 +66,7 @@ const Page = styled.div`
   height: 100vh;
 
   box-sizing: border-box;
-  padding-bottom: 75px;
+  padding-bottom: 80px;
 
   display: flex;
   flex-direction: column;
@@ -77,21 +77,22 @@ const Page = styled.div`
 `;
 
 const LoginTitle = styled.div`
-  font-size: 28px;
+  font-size: 35px;
   font-weight: 700;
   color: ${theme.colors["black"]};
 `;
 
 const InputContainer = styled.input`
-  width: 310px;
-  height: 40px;
+  width: 320px;
+  height: 45px;
 
   box-sizing: border-box;
-  padding: 9px 12px;
+  padding: 9px 14px;
 
   border: 1px solid ${theme.colors["gray300"]};
   border-radius: 5px;
   outline: none;
+  font-size: 13px;
 
   &:hover {
     border: 1px solid ${theme.colors["gray400"]};
@@ -102,14 +103,14 @@ const InputContainer = styled.input`
     box-shadow: 0px 0px 0px 3px ${theme.colors["blue200"]};
   }
   &::placeholder {
-    font-size: 12px;
+    font-size: 13px;
     color: ${theme.colors["gray300"]};
   }
 `;
 
 const LoginButton = styled.button`
-  width: 310px;
-  height: 40px;
+  width: 320px;
+  height: 45px;
 
   background-color: ${theme.colors["blue200"]};
   border: none;
