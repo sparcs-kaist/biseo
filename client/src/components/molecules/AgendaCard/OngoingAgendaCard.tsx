@@ -14,7 +14,7 @@ interface OngoingAgendaProps {
 }
 
 const _tags = {
-  public: false,
+  public: true,
   identified: false,
   votable: true,
 };
