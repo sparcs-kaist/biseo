@@ -29,8 +29,6 @@ export const Body = styled.tbody`
   width: 100%;
   height: 100%;
   background-color: ${props => props.theme.colors.white};
-  overflow-x: hidden;
-  overflow-y: scroll;
 
   > * tr {
     color: ${props => props.theme.colors.gray600};

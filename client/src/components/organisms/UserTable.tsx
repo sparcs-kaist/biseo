@@ -10,6 +10,7 @@ import {
   CheckBox,
   UserTag,
   SelectBox,
+  Scroll,
 } from "@/components/atoms";
 
 import { useAdminUser } from "@/services/admin-user";
@@ -129,38 +130,40 @@ export const UserTable: React.FC<Props> = ({
             <Cell scroll>태그</Cell>
           </Row>
         </Header>
-        <Body>
-          {filteredUsers.map(user => (
-            <Row
-              key={user.id}
-              selected={selectedUsers.includes(user.id)}
-              onClick={() => {
-                if (editable) {
-                  selectUser(user.id);
-                }
-              }}
-            >
-              {editable ? (
-                <Cell w={27}>
-                  <CheckBox
-                    checked={selectedUsers.includes(user.id)}
-                    readOnly
-                  />
+        <Scroll>
+          <Body>
+            {filteredUsers.map(user => (
+              <Row
+                key={user.id}
+                selected={selectedUsers.includes(user.id)}
+                onClick={() => {
+                  if (editable) {
+                    selectUser(user.id);
+                  }
+                }}
+              >
+                {editable ? (
+                  <Cell w={27}>
+                    <CheckBox
+                      checked={selectedUsers.includes(user.id)}
+                      readOnly
+                    />
+                  </Cell>
+                ) : (
+                  <Cell w={0} />
+                )}
+                <Cell w={60}>{user.displayName}</Cell>
+                <Cell w={100}>{user.username}</Cell>
+                <Cell>
+                  {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
+                  {user.tags.map(tag => (
+                    <UserTag key={tag} tag={tag} />
+                  ))}
                 </Cell>
-              ) : (
-                <Cell w={0} />
-              )}
-              <Cell w={60}>{user.displayName}</Cell>
-              <Cell w={100}>{user.username}</Cell>
-              <Cell>
-                {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
-                {user.tags.map(tag => (
-                  <UserTag key={tag} tag={tag} />
-                ))}
-              </Cell>
-            </Row>
-          ))}
-        </Body>
+              </Row>
+            ))}
+          </Body>
+        </Scroll>
       </Table>
     </Box>
   );
