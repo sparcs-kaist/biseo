@@ -48,6 +48,13 @@ export const CreateAgendaModal: React.FC = () => {
 
   const [template, setTemplate] = useState(0);
   const applyTemplate = (templateId: number) => {
+    if (templateId === 0) {
+      setTemplate(0);
+      setTitle("");
+      setContent("");
+      setResolution("");
+      setChoices([]);
+    }
     const targetTemplate = findTemplate(templateId);
     if (targetTemplate !== undefined) {
       setTemplate(templateId);

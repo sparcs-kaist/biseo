@@ -17,6 +17,7 @@ import { UserTable } from "@/components/organisms";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAdminUser } from "@/services/admin-user";
+import { useAgendaTemplate } from "@/services/agenda-template";
 
 export const EditAgendaModal: React.FC = () => {
   const location = useLocation();
@@ -43,6 +44,7 @@ export const EditAgendaModal: React.FC = () => {
   const [title, setTitle] = useState(targetAgenda?.title || "");
   const [content, setContent] = useState(targetAgenda?.content || "");
   const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
+  const [template, setTemplate] = useState(0);
   const [choices, setChoices] = useState(
     targetAgenda?.choices.map(choice => {
       return choice.name;
@@ -93,7 +95,26 @@ export const EditAgendaModal: React.FC = () => {
     }
     setSelectedTags(selected);
   };
-
+  const { findTemplate } = useAgendaTemplate(state => ({
+    findTemplate: state.findTemplate,
+  }));
+  const applyTemplate = (templateId: number) => {
+    if (templateId === 0) {
+      setTemplate(0);
+      setTitle("");
+      setContent("");
+      setResolution("");
+      setChoices([]);
+    }
+    const targetTemplate = findTemplate(templateId);
+    if (targetTemplate !== undefined) {
+      setTemplate(templateId);
+      setTitle(targetTemplate.title);
+      setContent(targetTemplate.content);
+      setResolution(targetTemplate.resolution);
+      setChoices(targetTemplate.choices);
+    }
+  };
   const validated = useMemo(
     () =>
       title.length > 0 &&
@@ -122,9 +143,19 @@ export const EditAgendaModal: React.FC = () => {
       <Box w={630} justify="space-between" padVertical={15} dir="row">
         <Box w={300} gap={20}>
           <Box gap={10}>
-            <ModalInner title="템플릿 선택">
-              <SelectTemplateBox width={300} height={38} onChange={() => {}}>
-                탬플릿을 선택하세요
+            <ModalInner
+              title="템플릿 선택"
+              buttonOnClick={() => applyTemplate(template)}
+              buttonText="템플릿 적용"
+            >
+              <SelectTemplateBox
+                width={300}
+                height={38}
+                onChange={(templateId: number) => {
+                  setTemplate(templateId);
+                }}
+              >
+                템플릿을 선택하세요
               </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목" required>
