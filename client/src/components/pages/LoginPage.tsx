@@ -1,11 +1,12 @@
 import React, { FormEvent, useCallback } from "react";
 import { Navigate } from "react-router-dom";
+import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
 import { LogoLargeIcon } from "@/assets";
 import { useAuth } from "@/services/auth";
+
 import { useInput } from "@/common/hooks";
-import styled from "@emotion/styled";
 import { theme } from "@/theme";
 import { Box, Text } from "@/components/atoms";
 
@@ -90,7 +91,7 @@ const Page = styled.div`
 const LoginTitle = styled(motion.div)`
   font-size: 35px;
   font-weight: 700;
-  color: ${theme.colors["black"]};
+  color: ${theme.colors.black};
 `;
 
 const InputContainer = styled.input`
@@ -100,18 +101,18 @@ const InputContainer = styled.input`
   box-sizing: border-box;
   padding: 9px 14px;
 
-  border: 1px solid ${theme.colors["gray300"]};
+  border: 1px solid ${theme.colors.gray300};
   border-radius: 5px;
   outline: none;
   font-size: 13px;
 
   &:hover {
-    border: 1px solid ${theme.colors["gray400"]};
+    border: 1px solid ${theme.colors.gray400};
   }
 
   &:focus {
-    border: 1px solid ${theme.colors["blue300"]};
-    box-shadow: 0px 0px 0px 3px ${theme.colors["blue200"]};
+    border: 1px solid ${theme.colors.blue300};
+    box-shadow: 0px 0px 0px 3px ${theme.colors.blue200};
   }
   &::placeholder {
     font-size: 13px;
@@ -123,13 +124,13 @@ const LoginButton = styled.button`
   width: 320px;
   height: 45px;
 
-  background-color: ${theme.colors["blue200"]};
+  background-color: ${theme.colors.blue200};
   border: none;
   border-radius: 5px;
   outline: none;
 
   &:hover {
-    background-color: ${theme.colors["blue300"]};
+    background-color: ${theme.colors.blue300};
   }
 
   display: flex;
