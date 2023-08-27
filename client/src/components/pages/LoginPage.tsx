@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback } from "react";
+import React, { FormEvent, useCallback, useState } from "react";
 import { Navigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
@@ -15,6 +15,7 @@ export const LoginPage: React.FC = () => {
     login: state.login,
     isLoggedIn: !!state.userInfo,
   }));
+  const [error, setError] = useState<boolean>(false);
 
   const { input: username } = useInput();
   const { input: password } = useInput();
@@ -35,7 +36,7 @@ export const LoginPage: React.FC = () => {
 
       login(username.value, password.value)
         .then(() => console.log("Login success!"))
-        .catch(err => alert(err));
+        .catch(err => setError(true));
     },
     [username.value, password.value],
   );
@@ -50,7 +51,7 @@ export const LoginPage: React.FC = () => {
       </Box>
 
       <form onSubmit={handleLogin}>
-        <Box dir="column" gap={12}>
+        <Box dir="column" gap={12} align="center">
           <InputContainer
             type="text"
             placeholder="아이디를 입력하세요"
@@ -61,12 +62,19 @@ export const LoginPage: React.FC = () => {
             placeholder="비밀번호를 입력하세요"
             {...password}
           />
+          <Box dir="column" gap={8} align="flex-start">
+            {error && (
+              <Text variant="subtitle" color="blue600">
+                아이디 또는 비밀번호가 올바르지 않습니다.
+              </Text>
+            )}
 
-          <LoginButton>
-            <Text variant="body" color="blue600">
-              로그인
-            </Text>
-          </LoginButton>
+            <LoginButton>
+              <Text variant="body" color="blue600">
+                로그인
+              </Text>
+            </LoginButton>
+          </Box>
         </Box>
       </form>
     </Page>
