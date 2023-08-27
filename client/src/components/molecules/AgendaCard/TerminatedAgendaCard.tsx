@@ -63,6 +63,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             type={_tags.public}
             clickHandler={switchRevealChoice}
             revealChoice={revealChoice}
+            voted={agenda.user.voted != null}
           />
           <Box gap={12}>
             {agenda.choices.map(choice => (
