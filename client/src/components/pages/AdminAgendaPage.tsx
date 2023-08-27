@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { Box } from "@/components/atoms";
+import { Box, Scroll } from "@/components/atoms";
 import { AdminAgendaSection } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAgendaTemplate } from "@/services/agenda-template";
@@ -18,9 +18,18 @@ export const AdminAgendaPage: React.FC = () => {
   }, []);
 
   return (
-    <Box dir="row" padTop={20} padBottom={30} gap={20}>
-      <AdminAgendaSection />
-      <Outlet />
-    </Box>
+    <Scroll>
+      <Box
+        dir="row"
+        w="fill"
+        justify="center"
+        padTop={20}
+        padBottom={30}
+        gap={20}
+      >
+        <AdminAgendaSection />
+        <Outlet />
+      </Box>
+    </Scroll>
   );
 };

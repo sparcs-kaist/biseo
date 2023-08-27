@@ -9,6 +9,7 @@ import {
   TextAreaFixedsize,
   Button,
   Clickable,
+  TaggersBox,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
@@ -48,6 +49,7 @@ interface SubComponents {
   InputBox: typeof InputBox;
   TagChoice: typeof TagChoice;
   WhiteTextBox: typeof WhiteTextBox;
+  TaggerBox: typeof TaggerBox;
 }
 
 export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
@@ -59,7 +61,7 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   required,
 }) => (
   <Box dir="column" w="fill" gap={8}>
-    <Box w="fill" dir="row" align="end" justify="space-between">
+    <Box w="fill" dir="row" align="flex-end" justify="space-between">
       <Box dir="row" align="center" gap={8}>
         <Box dir="row" gap={2}>
           <Text variant="body" color="black">
@@ -209,6 +211,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
       roundBot={0}
       roundTop={5}
       borderStyle="solid"
+      align="stretch"
     >
       <Scroll>
         <Box w="fill" gap={10}>
@@ -307,3 +310,12 @@ const TagChoice: React.FC<PropsWithChildren> = ({ children }) => (
   </BorderedBox>
 );
 ModalInner.TagChoice = TagChoice;
+
+const TaggerBox: React.FC<PropsWithChildren> = ({ children }) => (
+  <TaggersBox w={300} h={73}>
+    <Scroll>
+      <TaggersBox>{children}</TaggersBox>
+    </Scroll>
+  </TaggersBox>
+);
+ModalInner.TaggerBox = TaggerBox;
