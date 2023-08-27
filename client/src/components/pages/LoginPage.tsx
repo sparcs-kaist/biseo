@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { motion } from "framer-motion";
 
 import { LogoLargeIcon } from "@/assets";
+import LandingImg from "@/assets/landing.png";
 import { useAuth } from "@/services/auth";
 
 import { useInput } from "@/common/hooks";
@@ -77,6 +78,7 @@ export const LoginPage: React.FC = () => {
           </Box>
         </Box>
       </form>
+      <LoginBackground src={LandingImg} />
     </Page>
   );
 };
@@ -86,7 +88,7 @@ const Page = styled.div`
   height: 100vh;
 
   box-sizing: border-box;
-  padding-bottom: 80px;
+  padding-bottom: 90px;
 
   display: flex;
   flex-direction: column;
@@ -94,6 +96,7 @@ const Page = styled.div`
   justify-content: center;
 
   gap: 22px;
+  overflow: hidden;
 `;
 
 const LoginTitle = styled(motion.div)`
@@ -148,4 +151,15 @@ const LoginButton = styled.button`
 
   cursor: pointer;
   transition: all 0.2s;
+`;
+
+const LoginBackground = styled.img`
+  width: 100%;
+  max-width: 1700px;
+
+  position: absolute;
+  opacity: 30%;
+  bottom: 20px;
+
+  overflow: hidden;
 `;
