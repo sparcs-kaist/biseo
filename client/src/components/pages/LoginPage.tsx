@@ -1,5 +1,6 @@
 import React, { FormEvent, useCallback } from "react";
 import { Navigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { LogoLargeIcon } from "@/assets";
 import { useAuth } from "@/services/auth";
@@ -16,6 +17,16 @@ export const LoginPage: React.FC = () => {
 
   const { input: username } = useInput();
   const { input: password } = useInput();
+
+  const easeMotion = {
+    initial: { opacity: 0, scale: 0.5 },
+    animate: { opacity: 1, scale: 1 },
+    transition: {
+      duration: 0.8,
+      delay: 0.5,
+      ease: [0, 0.71, 0.2, 1.01],
+    },
+  };
 
   const handleLogin = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
@@ -34,7 +45,7 @@ export const LoginPage: React.FC = () => {
     <Page>
       <Box dir="column" align="center">
         <LogoLargeIcon width={116} />
-        <LoginTitle>쉽고 빠른 의사결정은, Biseo</LoginTitle>
+        <LoginTitle {...easeMotion}>쉽고 빠른 의사결정은, Biseo</LoginTitle>
       </Box>
 
       <form onSubmit={handleLogin}>
@@ -76,7 +87,7 @@ const Page = styled.div`
   gap: 22px;
 `;
 
-const LoginTitle = styled.div`
+const LoginTitle = styled(motion.div)`
   font-size: 35px;
   font-weight: 700;
   color: ${theme.colors["black"]};
