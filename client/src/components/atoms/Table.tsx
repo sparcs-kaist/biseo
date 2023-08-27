@@ -19,7 +19,7 @@ export const Header = styled.thead`
   text-align: left;
   background-color: ${props => props.theme.colors.gray100};
 
-  > tr {
+  > * tr {
     color: ${props => props.theme.colors.gray500};
   }
 `;
@@ -32,7 +32,7 @@ export const Body = styled.tbody`
   overflow-x: hidden;
   overflow-y: scroll;
 
-  > tr {
+  > * tr {
     color: ${props => props.theme.colors.gray600};
   }
 `;
