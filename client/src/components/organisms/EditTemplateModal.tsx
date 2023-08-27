@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Modal } from "@/components/molecules";
-import { Button, Box, Text, BorderedBox } from "@/components/atoms";
-import { ModalInner } from "../molecules/ModalInnerTextBox";
+import React, { useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { Button, Box, Text } from "@/components/atoms";
+import { Modal, ModalInner } from "@/components/molecules";
 import { useAgendaTemplate } from "@/services/agenda-template";
 
 export const EditTemplateModal: React.FC = () => {
@@ -17,52 +16,62 @@ export const EditTemplateModal: React.FC = () => {
     ),
   }));
 
-  const agendaTitle = targetTemplate != undefined ? targetTemplate.title : "";
-  const templateTitle =
+  const agendaTitleFormatted =
+    targetTemplate != undefined ? targetTemplate.title : "";
+  const templateTitleFormatted =
     targetTemplate != undefined ? targetTemplate.templateName : "";
-  const agendaContent =
+  const agendaContentFormatted =
     targetTemplate != undefined ? targetTemplate.content : "";
-  const agendaResolution =
+  const agendaResolutionFormatted =
     targetTemplate != undefined ? targetTemplate.resolution : "";
-  const agendaChoices: string[] =
+  const agendaChoicesFormatted: string[] =
     targetTemplate != undefined ? targetTemplate.choices : [];
 
-  const [templateTitleState, setTemplateTitleState] = useState(templateTitle);
-  const [agendaTitleState, setAgendaTitleState] = useState(agendaTitle);
-  const [agendaContentState, setAgendaContentState] = useState(agendaContent);
-  const [newChoiceState, setNewChoiceState] = useState("");
-  const [choiceState, setChoiceState] = useState(agendaChoices);
-  const [agendaResolutionState, setAgendaResolutionState] =
-    useState(agendaResolution);
+  const [templateTitle, setTemplateTitle] = useState(templateTitleFormatted);
+  const [agendaTitle, setAgendaTitle] = useState(agendaTitleFormatted);
+  const [agendaContent, setAgendaContent] = useState(agendaContentFormatted);
+  const [agendaNewChoice, setAgendaNewChoice] = useState("");
+  const [agendaChoice, setAgendaChoice] = useState(agendaChoicesFormatted);
+  const [agendaResolution, setAgendaResolution] = useState(
+    agendaResolutionFormatted,
+  );
 
   const onChangeTemplateTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTemplateTitleState(e.target.value);
+    setTemplateTitle(e.target.value);
   };
   const onChangeAgendaTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAgendaTitleState(e.target.value);
+    setAgendaTitle(e.target.value);
   };
   const onChangeAgendaContent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAgendaContentState(e.target.value);
+    setAgendaContent(e.target.value);
   };
   const onChangeAgendaResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAgendaResolutionState(e.target.value);
+    setAgendaResolution(e.target.value);
   };
   const onNewChoiceState = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewChoiceState(e.target.value);
+    setAgendaNewChoice(e.target.value);
   };
   const onNewChoiceSubmit = () => {
-    if (!choiceState.includes(newChoiceState)) {
-      setChoiceState([...choiceState, newChoiceState]);
-      setNewChoiceState("");
+    if (!agendaChoice.includes(agendaNewChoice)) {
+      setAgendaChoice([...agendaChoice, agendaNewChoice]);
+      setAgendaNewChoice("");
     }
   };
+  const validated = useMemo(
+    () =>
+      agendaTitle.length > 0 &&
+      agendaContent.length > 0 &&
+      agendaResolution.length > 0 &&
+      agendaChoice.length > 0,
+    [agendaTitle, agendaContent, agendaResolution, agendaChoice],
+  );
   const deleteChoice = (choice: string) => {
-    const index = choiceState.indexOf(choice);
-    const list = choiceState;
+    const index = agendaChoice.indexOf(choice);
+    const list = agendaChoice;
     if (index > -1) {
       // only splice array whe n item is found
       list.splice(index, 1);
-      setChoiceState(list); // 2nd parameter means remove one item only
+      setAgendaChoice(list); // 2nd parameter means remove one item only
     }
   };
   const { deleteTemplate, updateTemplate } = useAgendaTemplate(state => ({
@@ -73,11 +82,11 @@ export const EditTemplateModal: React.FC = () => {
   const onTemplateUpdate = () => {
     updateTemplate({
       id: templateId,
-      templateName: templateTitleState,
-      title: agendaTitleState,
-      content: agendaContentState,
-      resolution: agendaResolutionState,
-      choices: choiceState,
+      templateName: templateTitle,
+      title: agendaTitle,
+      content: agendaContent,
+      resolution: agendaResolution,
+      choices: agendaChoice,
     });
   };
 
@@ -91,41 +100,41 @@ export const EditTemplateModal: React.FC = () => {
         <Box w={300} dir="column" gap={20}>
           <ModalInner title="템플릿 제목" required>
             <ModalInner.InputBox
-              value={templateTitleState}
               onChange={onChangeTemplateTitle}
+              value={templateTitle}
             />
           </ModalInner>
 
           <ModalInner title="투표 제목" required>
             <ModalInner.InputBox
-              value={agendaTitleState}
               onChange={onChangeAgendaTitle}
+              value={agendaTitle}
             />
           </ModalInner>
 
           <ModalInner title="투표 설명" required>
             <ModalInner.InputBox
-              value={agendaContentState}
               onChange={onChangeAgendaContent}
+              value={agendaContent}
             />
           </ModalInner>
 
           <ModalInner title="의결 문안" required>
             <ModalInner.InputBox
-              value={agendaResolutionState}
               onChange={onChangeAgendaResolution}
+              value={agendaResolution}
             />
           </ModalInner>
         </Box>
 
         <Box w={300} h={313} dir="column" justify="space-between">
-          <ModalInner title="투표 항목" count={choiceState.length}>
+          <ModalInner title="투표 항목" count={agendaChoice.length}>
             <ModalInner.AddVoteOptionArea
-              value={newChoiceState}
+              value={agendaNewChoice}
               onClick={onNewChoiceState}
               onSubmit={onNewChoiceSubmit}
             >
-              {choiceState.map(opt => (
+              {agendaChoice.map(opt => (
                 <ModalInner.VoteChoice
                   key={opt}
                   onClick={() => deleteChoice(opt)}
@@ -137,15 +146,25 @@ export const EditTemplateModal: React.FC = () => {
           </ModalInner>
 
           <Box dir="row" w={300} gap={10}>
-            <Button w={145} h={40} onClick={onTemplateUpdate}>
+            <Button
+              w={145}
+              h={40}
+              onClick={onTemplateUpdate}
+              disabled={!validated}
+            >
               <Text variant="boldtitle3" color="blue600">
-                탬플릿 수정하기
+                템플릿 수정하기
               </Text>
             </Button>
-            <Link to=".." relative="path" replace>
+            <Link
+              to={validated ? ".." : "#"}
+              relative="path"
+              replace
+              style={{ textDecoration: "none" }}
+            >
               <Button w={145} h={40} onClick={onTemplateDelete}>
                 <Text variant="boldtitle3" color="blue600">
-                  탬플릿 삭제하기
+                  템플릿 삭제하기
                 </Text>
               </Button>
             </Link>
