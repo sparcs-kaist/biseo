@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import {
@@ -32,15 +32,19 @@ export const EditAgendaModal: React.FC = () => {
       deleteAgenda: state.deleteAgenda,
     }),
   );
-  const { users } = useAdminUser(state => ({
+  const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,
+    retrieveUsers: state.retrieveAll,
   }));
+  useEffect(() => {
+    retrieveUsers();
+  }, []);
 
   const [title, setTitle] = useState(targetAgenda?.title || "");
   const [content, setContent] = useState(targetAgenda?.content || "");
   const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
   const [choices, setChoices] = useState(
-    targetAgenda!.choices.map(choice => {
+    targetAgenda?.choices.map(choice => {
       return choice.name;
     }) || [],
   );
@@ -74,11 +78,10 @@ export const EditAgendaModal: React.FC = () => {
   };
 
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectedUsers, setSelectedUsers] = useState(voters);
   const applySelectedTags = () => {
     const tagIsSelected = (tag: string) => selectedTags.includes(tag);
     const selected = users.filter(user => user.tags.some(tagIsSelected));
-    setSelectedUsers(selected.map(user => user.id));
+    setVoters(selected.map(user => user.id));
   };
   const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { options } = e.target;
@@ -168,10 +171,10 @@ export const EditAgendaModal: React.FC = () => {
           </ModalInner>
           <ModalInner title="투표 대상" count={voters.length}>
             <UserTable
-              selected={selectedUsers}
               selectedUsers={voters}
               setSelectedUsers={setVoters}
               editable
+              filterBy="tag"
             />
           </ModalInner>
           <Box

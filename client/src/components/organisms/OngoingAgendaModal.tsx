@@ -57,7 +57,9 @@ export const OngoingAgendaModal: React.FC = () => {
           <ModalInner title="투표 항목" count={targetAgenda?.choices.length}>
             <ModalInner.VoteOptions>
               {targetAgenda?.choices.map(c => (
-                <ModalInner.VoteOption>{c.name}</ModalInner.VoteOption>
+                <ModalInner.VoteOption key={c.id}>
+                  {c.name}
+                </ModalInner.VoteOption>
               ))}
             </ModalInner.VoteOptions>
             {/* this approach could be better
@@ -103,9 +105,11 @@ export const OngoingAgendaModal: React.FC = () => {
             count={targetAgenda?.voters.total.length}
           >
             <UserTable
+              userList={targetAgenda?.voters.total.map(user => user.id) || []}
               selectedUsers={
-                targetAgenda?.voters.total.map(user => user.id) || []
+                targetAgenda?.voters.voted.map(user => user.id) || []
               }
+              filterBy="voted"
             />
           </ModalInner>
         </Box>

@@ -6,8 +6,8 @@ import { z } from "zod";
  */
 export const UserTag = z.object({
   id: z.number(),
-  title: z.string(),
-  description: z.string(),
+  title: z.string().min(1),
+  description: z.string().min(1),
   users: z.array(z.number()), // user id
 });
 export type UserTag = z.infer<typeof UserTag>;

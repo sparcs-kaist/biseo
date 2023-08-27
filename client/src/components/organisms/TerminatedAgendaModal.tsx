@@ -12,8 +12,6 @@ import { useAdminAgenda } from "@/services/admin-agenda";
 
 export const TerminatedAgendaModal: React.FC = () => {
   const location = useLocation();
-  // location.state로 접근해서 필요한 데이터 사용
-  console.log(location.state);
   const modalParams = new URLSearchParams(location.search);
   const agendaId = parseInt(modalParams.get("agendaId") as string);
 
@@ -69,6 +67,7 @@ export const TerminatedAgendaModal: React.FC = () => {
               >
                 {targetAgenda?.choices.map(choice => (
                   <TerminatedModalInner.OptionVoteResult
+                    key={choice.id}
                     name={choice.name}
                     count={choice.count}
                     totalCount={totalChoiceCount}
@@ -85,9 +84,11 @@ export const TerminatedAgendaModal: React.FC = () => {
             count={targetAgenda?.voters.total.length}
           >
             <UserTable
+              userList={targetAgenda?.voters.total.map(user => user.id) || []}
               selectedUsers={
-                targetAgenda?.voters.total.map(user => user.id) || []
+                targetAgenda?.voters.voted.map(user => user.id) || []
               }
+              filterBy="voted"
             />
           </ModalInner>
           <Box

@@ -4,7 +4,7 @@ import type { AdminAgenda } from "@biseo/interface/admin/agenda";
 import { useNavigate } from "react-router-dom";
 
 const _tags = {
-  public: false,
+  public: true,
   identified: false,
   votable: false,
 };

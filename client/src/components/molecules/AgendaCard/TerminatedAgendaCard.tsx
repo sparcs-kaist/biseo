@@ -5,12 +5,13 @@ import {
   OptionVoteResult,
   VoteResult,
   VoteDetail,
+  VoteParticipate,
 } from "@/components/molecules";
 
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
 
 const _tags = {
-  public: false,
+  public: true,
   identified: false,
   votable: true,
 };
@@ -39,7 +40,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       }}
     >
       {enabled ? (
-        <Box gap={15}>
+        <Box w="fill" gap={15}>
           <Box gap={2}>
             <Text variant="title2" color="black">
               {agenda.title}
@@ -54,6 +55,10 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             </Text>
           </Box>
           <Divider />
+          <VoteParticipate
+            voted={agenda.voters.voted}
+            total={agenda.voters.total}
+          />
           <VoteResult
             type={_tags.public}
             clickHandler={switchRevealChoice}
