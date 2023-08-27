@@ -11,7 +11,7 @@ import {
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
 
 const _tags = {
-  public: false,
+  public: true,
   identified: false,
   votable: true,
 };

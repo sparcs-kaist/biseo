@@ -7,7 +7,7 @@ import type { AdminAgenda } from "@biseo/interface/admin/agenda";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
 const _tags = {
-  public: false,
+  public: true,
   identified: false,
   votable: true,
 };
