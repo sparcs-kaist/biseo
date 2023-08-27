@@ -17,9 +17,11 @@ const Container = styled.header`
   position: relative;
   display: flex;
   flex-direction: row;
+  align-items: center;
+
   height: 60px;
   padding: 0 50px;
-  padding-top: 10px;
+  padding-top: 5px;
   border-bottom: 1px solid ${props => props.theme.colors.gray300};
 `;
 
@@ -58,9 +60,11 @@ export const Header: React.FC = () => {
           <></>
         )}
       </Box>
-      <Button w="hug" padHorizontal={15} onClick={handleLogout}>
+      <Button h={28} w={28} onClick={handleLogout}>
         <Text variant="boldtitle3" color="blue600">
-          {displayName == undefined ? "SPARCS ANON" : displayName}
+          {displayName == undefined
+            ? "?"
+            : displayName.slice(0, 1).toUpperCase()}
         </Text>
       </Button>
     </Container>
