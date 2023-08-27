@@ -97,7 +97,7 @@ export const CreateTemplateModal: React.FC = () => {
           >
             <Button w={300} h={40} onClick={onTemplateUpdate}>
               <Text variant="boldtitle3" color="blue600">
-                탬플릿 생성하기
+                템플릿 생성하기
               </Text>
             </Button>
           </Link>

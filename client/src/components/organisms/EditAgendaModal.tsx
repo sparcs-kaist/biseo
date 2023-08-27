@@ -155,7 +155,7 @@ export const EditAgendaModal: React.FC = () => {
                   setTemplate(templateId);
                 }}
               >
-                탬플릿을 선택하세요
+                템플릿을 선택하세요
               </SelectTemplateBox>
             </ModalInner>
             <ModalInner title="투표 제목" required>

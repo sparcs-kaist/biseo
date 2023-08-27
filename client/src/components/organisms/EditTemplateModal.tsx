@@ -139,13 +139,13 @@ export const EditTemplateModal: React.FC = () => {
           <Box dir="row" w={300} gap={10}>
             <Button w={145} h={40} onClick={onTemplateUpdate}>
               <Text variant="boldtitle3" color="blue600">
-                탬플릿 수정하기
+                템플릿 수정하기
               </Text>
             </Button>
             <Link to=".." relative="path" replace>
               <Button w={145} h={40} onClick={onTemplateDelete}>
                 <Text variant="boldtitle3" color="blue600">
-                  탬플릿 삭제하기
+                  템플릿 삭제하기
                 </Text>
               </Button>
             </Link>
