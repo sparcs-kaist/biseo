@@ -41,7 +41,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 458px;
-  height: 690px;
   border: solid 1px ${props => props.theme.colors.gray300};
   border-radius: 5px;
   overflow: hidden;

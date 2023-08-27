@@ -34,7 +34,7 @@ export const ParticipantBar: React.FC<Props> = ({
       position="relative"
     >
       <Box
-        w={(300 * participant) / total}
+        w={total ? (300 * participant) / total : 0}
         bg="blue300"
         h={30}
         z-index={0}
@@ -52,7 +52,7 @@ export const ParticipantBar: React.FC<Props> = ({
         padVertical={6}
       >
         <Text color="black" variant="option1">
-          {total ? (participant * 100) / total : 0}%
+          {total ? ((participant * 100) / total).toFixed(1) : 0}%
         </Text>
         <Text color="black" variant="option1">
           {participant}/{total}

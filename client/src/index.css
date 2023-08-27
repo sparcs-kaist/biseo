@@ -6,3 +6,12 @@
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+:root {
+    min-width: 1280px;
+    background-color: #FAFBFC; /* white100 */
+}
+
+html, body, #root {
+    height: 100%;
+}

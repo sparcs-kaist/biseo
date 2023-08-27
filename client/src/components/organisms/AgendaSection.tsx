@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { Box } from "@/components/atoms";
+import { Box, Scroll } from "@/components/atoms";
 import { SectionHeader, AgendaCard } from "@/components/molecules";
 import { useAgenda } from "@/services/agenda";
 import {
@@ -48,23 +48,25 @@ export const AgendaSection: React.FC = () => {
   );
 
   return (
-    <Box dir="row" gap={20}>
-      <Box dir="column" w={380}>
-        <SectionHeader count={ongoingAgendas.length}>
-          진행중인 투표
-        </SectionHeader>
-        {getAgendaCards("ongoing")}
-        <SectionHeader count={preparingAgendas.length}>
-          예정된 투표
-        </SectionHeader>
-        {getAgendaCards("preparing")}
+    <Scroll hide>
+      <Box dir="row" gap={20}>
+        <Box dir="column" w={380}>
+          <SectionHeader count={ongoingAgendas.length}>
+            진행중인 투표
+          </SectionHeader>
+          {getAgendaCards("ongoing")}
+          <SectionHeader count={preparingAgendas.length}>
+            예정된 투표
+          </SectionHeader>
+          {getAgendaCards("preparing")}
+        </Box>
+        <Box dir="column" w={300}>
+          <SectionHeader count={terminatedAgendas.length}>
+            종료된 투표
+          </SectionHeader>
+          {getAgendaCards("terminated")}
+        </Box>
       </Box>
-      <Box dir="column" w={300}>
-        <SectionHeader count={terminatedAgendas.length}>
-          종료된 투표
-        </SectionHeader>
-        {getAgendaCards("terminated")}
-      </Box>
-    </Box>
+    </Scroll>
   );
 };

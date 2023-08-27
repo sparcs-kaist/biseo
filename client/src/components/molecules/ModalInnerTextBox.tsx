@@ -9,6 +9,7 @@ import {
   TextAreaFixedsize,
   Button,
   Clickable,
+  TaggersBox,
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
@@ -21,13 +22,12 @@ interface ModalInnerProps extends PropsWithChildren {
   required?: boolean;
 }
 
-interface ButtonProps extends PropsWithChildren {
-  onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+interface InputProps {
   value?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 interface TextAreaProps extends PropsWithChildren {
-  placeholder?: string;
   value?: string;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
@@ -47,7 +47,9 @@ interface SubComponents {
   VoteChoice: typeof VoteChoice;
   TextButton: typeof TextButton;
   InputBox: typeof InputBox;
+  TagChoice: typeof TagChoice;
   WhiteTextBox: typeof WhiteTextBox;
+  TaggerBox: typeof TaggerBox;
 }
 
 export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
@@ -59,9 +61,9 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   required,
 }) => (
   <Box dir="column" w="fill" gap={8}>
-    <Box w="fill" dir="row" align="end" justify="space-between">
+    <Box w="fill" dir="row" align="flex-end" justify="space-between">
       <Box dir="row" align="center" gap={8}>
-        <Box dir="row">
+        <Box dir="row" gap={2}>
           <Text variant="body" color="black">
             {title}
           </Text>
@@ -95,7 +97,6 @@ const TextBox: React.FC<PropsWithChildren> = ({ children }) => (
     borderColor="gray200"
     bg="gray100"
     w={300}
-    h={35}
     borderSize={1}
     padVertical={10}
     padHorizontal={15}
@@ -114,7 +115,6 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
     borderColor="gray200"
     bg="white"
     w={300}
-    h={35}
     borderSize={1}
     padVertical={10}
     padHorizontal={15}
@@ -128,7 +128,7 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
   </BorderedBox>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
-const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
+const InputBox: React.FC<InputProps> = ({ value, onChange }) => (
   <BorderedBox
     w={300}
     borderColor="gray200"
@@ -140,19 +140,15 @@ const InputBox: React.FC<ButtonProps> = ({ children, onClick, value }) => (
     align="center"
   >
     <TextInput
-      placeholder={children?.toString()}
+      placeholder="내용을 입력하세요"
       value={value}
-      onChange={onClick}
+      onChange={onChange}
     />
   </BorderedBox>
 );
 ModalInner.InputBox = InputBox;
 
-const TextAreaInputBox: React.FC<TextAreaProps> = ({
-  placeholder,
-  value,
-  onChange,
-}) => (
+const TextAreaInputBox: React.FC<TextAreaProps> = ({ value, onChange }) => (
   <BorderedBox
     w={300}
     h={68}
@@ -163,7 +159,7 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
     borderStyle="solid"
   >
     <TextAreaFixedsize
-      placeholder={placeholder}
+      placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
     />
@@ -215,6 +211,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
       roundBot={0}
       roundTop={5}
       borderStyle="solid"
+      align="stretch"
     >
       <Scroll>
         <Box w="fill" gap={10}>
@@ -292,3 +289,33 @@ const TextButton: React.FC<SubmitProps> = ({
   </BorderedBox>
 );
 ModalInner.TextButton = TextButton;
+
+const TagChoice: React.FC<PropsWithChildren> = ({ children }) => (
+  <BorderedBox
+    borderColor="gray200"
+    bg="white"
+    h={30}
+    borderSize={1}
+    padVertical={0}
+    padHorizontal={15}
+    round={5}
+    borderStyle="solid"
+    gap={8}
+    justify="center"
+    align="center"
+  >
+    <Text color="gray600" variant="subtitle">
+      {children}
+    </Text>
+  </BorderedBox>
+);
+ModalInner.TagChoice = TagChoice;
+
+const TaggerBox: React.FC<PropsWithChildren> = ({ children }) => (
+  <TaggersBox w={300} h={73}>
+    <Scroll>
+      <TaggersBox>{children}</TaggersBox>
+    </Scroll>
+  </TaggersBox>
+);
+ModalInner.TaggerBox = TaggerBox;

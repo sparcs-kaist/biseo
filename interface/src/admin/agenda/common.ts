@@ -31,10 +31,10 @@ export type AdminAgenda = z.infer<typeof AdminAgenda>;
  * some description about admin agenda create schema goes here
  */
 export const AdminAgendaCreate = z.object({
-  title: z.string(),
-  content: z.string(),
-  resolution: z.string(),
-  choices: z.array(z.string()),
+  title: z.string().min(1),
+  content: z.string().min(1),
+  resolution: z.string().min(1),
+  choices: z.array(z.string().min(1)).min(1),
   voters: z.object({
     total: z.array(z.number()),
   }),

@@ -1,6 +1,7 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import cors from "cors";
 
 import type { BiseoServer } from "@/types/socket";
 import { authRouter } from "@/auth/router";
@@ -25,6 +26,7 @@ const io: BiseoServer = new Server(httpServer, {
 const port = env.SERVER_PORT ?? 8000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/api", (req, res) => {
   res.send("Hello World!");

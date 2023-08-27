@@ -90,32 +90,36 @@ export const EditTemplateModal: React.FC = () => {
       <Box w={630} dir="row" justify="space-between">
         <Box w={300} dir="column" gap={20}>
           <ModalInner title="템플릿 제목" required>
-            <ModalInner.InputBox onClick={onChangeTemplateTitle}>
-              {templateTitleState}
-            </ModalInner.InputBox>
+            <ModalInner.InputBox
+              value={templateTitleState}
+              onChange={onChangeTemplateTitle}
+            />
           </ModalInner>
 
           <ModalInner title="투표 제목" required>
-            <ModalInner.InputBox onClick={onChangeAgendaTitle}>
-              {agendaTitleState}
-            </ModalInner.InputBox>
+            <ModalInner.InputBox
+              value={agendaTitleState}
+              onChange={onChangeAgendaTitle}
+            />
           </ModalInner>
 
           <ModalInner title="투표 설명" required>
-            <ModalInner.InputBox onClick={onChangeAgendaContent}>
-              {agendaContentState}
-            </ModalInner.InputBox>
+            <ModalInner.InputBox
+              value={agendaContentState}
+              onChange={onChangeAgendaContent}
+            />
           </ModalInner>
 
           <ModalInner title="의결 문안" required>
-            <ModalInner.InputBox onClick={onChangeAgendaResolution}>
-              {agendaResolutionState}
-            </ModalInner.InputBox>
+            <ModalInner.InputBox
+              value={agendaResolutionState}
+              onChange={onChangeAgendaResolution}
+            />
           </ModalInner>
         </Box>
 
         <Box w={300} h={313} dir="column" justify="space-between">
-          <ModalInner title="투표 항목" count={1}>
+          <ModalInner title="투표 항목" count={choiceState.length}>
             <ModalInner.AddVoteOptionArea
               value={newChoiceState}
               onClick={onNewChoiceState}

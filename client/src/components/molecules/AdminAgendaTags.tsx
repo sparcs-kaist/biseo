@@ -10,7 +10,7 @@ import {
 } from "@/components/atoms";
 
 export const AdminAgendaTags: React.FC = () => (
-  <Box w={300} h={28} gap={16} dir="row">
+  <Box w={270} h={28} gap={16} dir="row" justify="center">
     <Box dir="row" w={122} h={28} gap={10} align="center">
       <Text variant="body" color="black">
         투표 결과
@@ -57,7 +57,7 @@ export const AdminAgendaTags: React.FC = () => (
 );
 
 export const AdminAgendaTagsSelect: React.FC = () => (
-  <Box w={300} h={28} justify="space-between" dir="row">
+  <Box w={270} h={28} justify="space-between" dir="row">
     <Box dir="row" w={130} h={28} gap={8} align="center">
       <Text variant="body" color="black">
         투표 결과
