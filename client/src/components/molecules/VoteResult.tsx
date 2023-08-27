@@ -19,16 +19,18 @@ export const VoteResult: React.FC<Props> = ({
       <Text variant="subtitle" color="black">
         투표 결과
       </Text>
-      <Text
-        variant="option2"
-        color="gray500"
-        onClick={e => {
-          clickHandler(revealChoice);
-          e.stopPropagation();
-        }}
-      >
-        {voted ? (!revealChoice ? "내 투표 보기" : "내 투표 가리기") : ""}
-      </Text>
+      {voted ? (
+        <Text
+          variant="option2"
+          color="gray500"
+          onClick={e => {
+            clickHandler(revealChoice);
+            e.stopPropagation();
+          }}
+        >
+          {!revealChoice ? "내 투표 보기" : "내 투표 가리기"}
+        </Text>
+      ) : <></>}
     </Box>
     <Tag type={type ? "public" : "private"} />
   </Box>
