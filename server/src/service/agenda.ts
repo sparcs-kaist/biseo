@@ -158,7 +158,7 @@ export const vote = async (
       },
     },
   });
-  io.emit("agenda.voted", {
+  io.to(`user/${user.username}`).emit("agenda.voted", {
     id: agendaId,
     user: {
       voted: choiceId,
