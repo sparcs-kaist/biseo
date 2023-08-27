@@ -31,7 +31,13 @@ export const AgendaSection: React.FC = () => {
   const getAgendaCards = useCallback(
     (agendaStatus: AgendaStatus) => {
       const agendas = getAgendas(agendaStatus);
-
+      if (agendaStatus == "ongoing") {
+        agendas.sort((a, b) => {
+          if (a.voters.voted === 0) return -1;
+          if (b.voters.voted === 0) return 1;
+          return 0;
+        });
+      }
       return (
         <AgendaCard.List>
           {agendas.length === 0 ? (
