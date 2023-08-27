@@ -5,6 +5,8 @@ import {
   AdminAgendaTags,
   Modal,
   ModalInner,
+  OptionVoteResult,
+  ParticipantBar,
   TerminatedModalInner,
 } from "@/components/molecules";
 import { UserTable } from "@/components/organisms";
@@ -57,7 +59,7 @@ export const TerminatedAgendaModal: React.FC = () => {
             </ModalInner>
           </Box>
           <Box w={300} h={245} gap={10}>
-            <TerminatedModalInner.ParticipantBar
+            <ParticipantBar
               total={totalVotableCount}
               participant={totalVoterCount}
             />
@@ -66,7 +68,7 @@ export const TerminatedAgendaModal: React.FC = () => {
                 count={targetAgenda?.choices.length}
               >
                 {targetAgenda?.choices.map(choice => (
-                  <TerminatedModalInner.OptionVoteResult
+                  <OptionVoteResult
                     key={choice.id}
                     name={choice.name}
                     count={choice.count}

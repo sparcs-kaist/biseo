@@ -36,7 +36,9 @@ export const ParticipantBar: React.FC<Props> = ({
         투표 참여
       </Text>
       <Box bg="blue200" round={5} align="center" justify="center" w={20} h={20}>
-        <Text color="blue600">{participant}</Text>
+        <Text variant="boldtitle4" color="blue600">
+          {participant}
+        </Text>
       </Box>
     </Box>
     <Box w={300} h={30}>

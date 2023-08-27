@@ -7,7 +7,6 @@ interface Props {
   name: string;
   count: number;
   totalCount: number;
-  w?: number;
   userChoice?: boolean;
 }
 
@@ -34,10 +33,9 @@ export const OptionVoteResult: React.FC<Props> = ({
   count,
   totalCount,
   userChoice,
-  w = 260,
 }) => {
   return (
-    <Box w={w} h={30}>
+    <Box w="fill" h={30}>
       <Background
         percent={(count / totalCount) * 100}
         color={userChoice ? "blue200" : "blue100"}
