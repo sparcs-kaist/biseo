@@ -16,24 +16,24 @@ export const EditTemplateModal: React.FC = () => {
     ),
   }));
 
-  const agendaTitleFormated =
+  const agendaTitleFormatted =
     targetTemplate != undefined ? targetTemplate.title : "";
-  const templateTitleFormated =
+  const templateTitleFormatted =
     targetTemplate != undefined ? targetTemplate.templateName : "";
-  const agendaContentFormated =
+  const agendaContentFormatted =
     targetTemplate != undefined ? targetTemplate.content : "";
-  const agendaResolutionFormated =
+  const agendaResolutionFormatted =
     targetTemplate != undefined ? targetTemplate.resolution : "";
-  const agendaChoicesFormated: string[] =
+  const agendaChoicesFormatted: string[] =
     targetTemplate != undefined ? targetTemplate.choices : [];
 
-  const [templateTitle, setTemplateTitle] = useState(templateTitleFormated);
-  const [agendaTitle, setAgendaTitle] = useState(agendaTitleFormated);
-  const [agendaContent, setAgendaContent] = useState(agendaContentFormated);
+  const [templateTitle, setTemplateTitle] = useState(templateTitleFormatted);
+  const [agendaTitle, setAgendaTitle] = useState(agendaTitleFormatted);
+  const [agendaContent, setAgendaContent] = useState(agendaContentFormatted);
   const [agendaNewChoice, setAgendaNewChoice] = useState("");
-  const [agendaChoice, setAgendaChoice] = useState(agendaChoicesFormated);
+  const [agendaChoice, setAgendaChoice] = useState(agendaChoicesFormatted);
   const [agendaResolution, setAgendaResolution] = useState(
-    agendaResolutionFormated,
+    agendaResolutionFormatted,
   );
 
   const onChangeTemplateTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
