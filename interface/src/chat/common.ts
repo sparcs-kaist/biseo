@@ -9,7 +9,7 @@ export const Message = z.object({
   id: z.number(),
   user: ChatUser,
   type: z.enum(["message", "notice"]),
-  message: z.string(),
+  message: z.string().min(1).max(500),
   createdAt: z.string().datetime(),
 });
 export type Message = z.infer<typeof Message>;
