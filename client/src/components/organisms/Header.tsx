@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const adminPathList = [
   { name: "유저 모드", path: "" },
   { name: "투표 관리", path: "admin/agendas" },
-  { name: "유저 관리", path: "admin/users" },
+  //{ name: "유저 관리", path: "admin/users" },
   { name: "설정", path: "admin/settings" },
 ];
 
