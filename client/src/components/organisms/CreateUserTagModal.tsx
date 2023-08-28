@@ -52,7 +52,7 @@ export const CreateUserTagModal: React.FC = () => {
 
   return (
     <Modal title="태그 생성하기" width={680} height={431}>
-      <Box w={630} dir="row" justify="space-between" padVertical={15}>
+      <Box w={630} dir="row" justify="space-between">
         <Box w={300} gap={20}>
           <ModalInner title="태그 제목" required>
             <ModalInner.InputBox onChange={onChangeTitle} value={title} />
