@@ -1,63 +1,63 @@
 import React from "react";
-import { Box, Text, BorderedBox } from "@/components/atoms";
+import { Box, Text } from "@/components/atoms";
+import styled from "@emotion/styled";
+import { Color } from "@/theme";
 
 interface Props {
   name: string;
   count: number;
   totalCount: number;
-  w?: number;
   userChoice?: boolean;
 }
+
+const Background = styled.div<{
+  percent: number;
+  color: Color;
+  borderColor: Color;
+}>`
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid ${props => props.theme.colors[props.borderColor]};
+  border-radius: 5px;
+
+  background: linear-gradient(
+    to right,
+    ${props => props.theme.colors[props.color]} ${props => props.percent}%,
+    #ffffff ${props => props.percent}%
+  );
+`;
 
 export const OptionVoteResult: React.FC<Props> = ({
   name,
   count,
   totalCount,
-  userChoice = true,
-  w = 260,
+  userChoice,
 }) => {
   return (
-    <BorderedBox
-      w={w}
-      h={30}
-      bg="white"
-      round={5}
-      dir="row"
-      align="center"
-      justify="space-between"
-      // padHorizontal={13}
-      // padVertical={6}
-      borderSize={1}
-      borderStyle="solid"
-      borderColor={userChoice ? "blue300" : "gray200"}
-      color="gray200"
-      position="relative"
-    >
-      <Box
-        w={(w * count) / totalCount}
-        bg={userChoice ? "blue200" : "blue100"}
-        h={30}
-        z-index={0}
-        position="absolute"
-      ></Box>
-      <Box
-        z-index={2}
-        position="absolute"
-        w={w}
-        h={30}
-        dir="row"
-        align="center"
-        justify="space-between"
-        padHorizontal={13}
-        padVertical={6}
+    <Box w="fill" h={30}>
+      <Background
+        percent={(count / totalCount) * 100}
+        color={userChoice ? "blue200" : "blue100"}
+        borderColor={userChoice ? "blue300" : "gray200"}
       >
-        <Text color="gray500" variant="option1">
-          {name}
-        </Text>
-        <Text color="gray500" variant="option1">
-          {count}
-        </Text>
-      </Box>
-    </BorderedBox>
+        <Box
+          w="fill"
+          h="fill"
+          dir="row"
+          align="center"
+          justify="space-between"
+          padHorizontal={13}
+          padVertical={6}
+        >
+          <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
+            {name}
+          </Text>
+          <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
+            {count}
+          </Text>
+        </Box>
+      </Background>
+    </Box>
   );
 };
