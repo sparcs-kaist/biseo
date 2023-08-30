@@ -4,21 +4,11 @@
     "useDefineForClassFields": true,
     "baseUrl": "src",
     "paths": {
-      "@/*": [
-        "*"
-      ],
-      "@biseo/interface": [
-        "../../interface/src"
-      ],
-      "@biseo/interface/*": [
-        "../../interface/src/*"
-      ]
+      "@/*": ["*"],
+      "@biseo/interface": ["../../interface/src"],
+      "@biseo/interface/*": ["../../interface/src/*"]
     },
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -31,13 +21,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": [
-      "vite-plugin-svgr/client"
-    ]
+    "types": ["vite-plugin-svgr/client"]
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src", "vite.config.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"

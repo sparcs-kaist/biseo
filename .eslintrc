@@ -9,11 +9,14 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "airbnb",
-    "airbnb-typescript"
+    "airbnb-typescript",
+    "plugin:prettier/recommended",
+    "prettier"
   ],
   "overrides": [
     {
       "env": {
+        "browser": true,
         "node": true
       },
       "files": [".eslintrc.{js,cjs}"],
@@ -32,5 +35,6 @@
     "project": ["./server/tsconfig.json", "./client/tsconfig.json"]
   },
   "plugins": ["@typescript-eslint", "react"],
+  "ignorePatterns": ["node_modules/", "dist/"],
   "rules": {}
 }
