@@ -1,9 +1,18 @@
 {
-  "name": "biseo-interface",
+  "name": "@biseo/interface",
   "version": "2.0.0",
   "license": "MIT",
+  "main": "dist/index.js",
+  "module": "src/index.ts",
   "devDependencies": {
-    "typescript": "^5.0.4",
     "zod": "^3.21.4"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc"
   }
 }

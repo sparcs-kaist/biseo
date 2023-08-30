@@ -1,21 +1,47 @@
-import type { Prisma } from "@prisma/client";
-import * as schema from "biseo-interface/admin/agenda";
+import type { Prisma, User } from "@prisma/client";
+import * as schema from "@biseo/interface/admin/agenda";
+import type {
+  OngoingAgenda,
+  PreparingAgenda,
+  TerminatedAgenda,
+} from "@biseo/interface/agenda";
 import { prisma } from "@/db/prisma";
-import { AgendaStatus } from "biseo-interface/agenda";
+import { BiseoError } from "@/lib/error";
 
-import { logger } from "@/utils/logger";
+const selectSomeUserFields = {
+  select: {
+    id: true,
+    username: true,
+    displayName: true,
+  },
+};
 
-export const agendaCreate = async ({
+const selectOnlyUser = {
+  select: {
+    user: selectSomeUserFields,
+  },
+};
+
+const selectAgendaDefaultFields = {
+  select: {
+    id: true,
+    title: true,
+    resolution: true,
+    content: true,
+  },
+};
+
+export const createAgenda = async ({
   title,
   resolution,
   content,
   choices,
   voters,
-}: schema.AdminAgendaCreate): Promise<schema.AdminAgenda | null> => {
+}: schema.AdminAgendaCreate) => {
   const createAgendaQuery: Prisma.AgendaCreateInput = {
-    title: title,
-    subtitle: resolution,
-    content: content,
+    title,
+    resolution,
+    content,
     choices: {
       create: choices.map(name => ({ name: name })),
     },
@@ -24,366 +50,373 @@ export const agendaCreate = async ({
     },
   };
 
-  try {
-    const { subtitle, choices, voters, ...agendaProps } =
-      await prisma.agenda.create({
-        data: createAgendaQuery,
-        select: {
-          id: true,
-          title: true,
-          subtitle: true,
-          content: true,
-          choices: true,
-          voters: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  username: true,
-                  displayName: true,
-                },
-              },
+  const {
+    voters: createdVoters,
+    choices: createdChoices,
+    ...createdAgenda
+  } = await prisma.agenda.create({
+    data: createAgendaQuery,
+    select: {
+      ...selectAgendaDefaultFields.select,
+      choices: true,
+      voters: selectOnlyUser,
+    },
+  });
+
+  const agendaVotable: PreparingAgenda = {
+    ...createdAgenda,
+    status: "preparing",
+    choices: createdChoices,
+    voters: {
+      voted: 0,
+      total: createdVoters.length,
+    },
+    user: {
+      votable: true,
+    },
+  };
+
+  const agendaNotVotable: PreparingAgenda = {
+    ...agendaVotable,
+    user: {
+      votable: false,
+    },
+  };
+
+  const agendaWithVoters: schema.AdminAgenda = {
+    ...agendaVotable,
+    choices: createdChoices.map(choice => ({
+      id: choice.id,
+      name: choice.name,
+      count: 0,
+    })),
+    voters: {
+      voted: [],
+      total: createdVoters.map(voter => voter.user),
+    },
+  };
+
+  return {
+    voters: createdVoters.map(voter => `user/${voter.user.username}`),
+    agendaVotable,
+    agendaNotVotable,
+    agendaWithVoters,
+  };
+};
+
+export const startAgenda = async (agendaId: number, user: User) => {
+  const { voters: updatedVoters, ...updatedAgenda } =
+    await prisma.agenda.update({
+      data: {
+        startAt: new Date(),
+      },
+      where: {
+        id: agendaId,
+        startAt: null,
+        deletedAt: null,
+      },
+      select: {
+        ...selectAgendaDefaultFields.select,
+        choices: {
+          include: {
+            users: true,
+          },
+        },
+        voters: selectOnlyUser,
+      },
+    });
+
+  const userVotable = updatedVoters.some(v => v.user.id == user.id);
+
+  const ongoingAgenda: OngoingAgenda = {
+    ...updatedAgenda,
+    status: "ongoing",
+    voters: {
+      voted: 0,
+      total: updatedVoters.length,
+    },
+    user: {
+      voted: null,
+      votable: userVotable,
+    },
+  };
+
+  return ongoingAgenda;
+};
+
+export const terminateAgenda = async (agendaId: number, user: User) => {
+  const {
+    voters: updatedVoters,
+    choices: updatedChoices,
+    ...updatedAgenda
+  } = await prisma.agenda.update({
+    data: {
+      endAt: new Date(),
+    },
+    where: {
+      id: agendaId,
+      endAt: null,
+      deletedAt: null,
+      NOT: {
+        startAt: null,
+      },
+    },
+    select: {
+      ...selectAgendaDefaultFields.select,
+      choices: {
+        include: {
+          users: true,
+          _count: {
+            select: {
+              users: true,
             },
           },
         },
-      });
-
-    return {
-      ...agendaProps,
-      resolution: subtitle,
-      status: "preparing",
-      choices: choices.map(choice => ({
-        id: choice.id,
-        name: choice.name,
-        count: 0,
-      })),
-      voters: {
-        voted: [],
-        total: voters.map(voter => voter.user),
       },
-    };
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
+      voters: selectOnlyUser,
+    },
+  });
+
+  const userVotable = updatedVoters.some(v => v.user.id == user.id);
+  const userVoted = userVotable
+    ? updatedChoices.find(c => c.users.some(u => u.userId == user.id))?.id ||
+      null
+    : null;
+
+  const terminatedAgenda: TerminatedAgenda = {
+    ...updatedAgenda,
+    status: "terminated",
+    choices: updatedChoices.map(choice => ({
+      id: choice.id,
+      name: choice.name,
+      count: choice._count.users,
+    })),
+    voters: {
+      voted: updatedChoices.reduce(
+        (acc, choice) => acc + choice.users.length,
+        0,
+      ),
+      total: updatedVoters.length,
+    },
+    user: {
+      voted: userVoted,
+      votable: userVotable,
+    },
+  };
+
+  return terminatedAgenda;
 };
 
-export const agendaStatusUpdate = async ({
-  id,
-  status,
-}: schema.StatusUpdate): Promise<schema.StatusUpdated | null> => {
-  if (status == "ongoing") {
-    const updateAgendaQuery: Prisma.AgendaUpdateInput = {
-      startAt: new Date(),
-    };
+export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
+  //Delete prior choices and voters
+  const deleteChoices = prisma.choice.deleteMany({
+    where: {
+      agendaId: agendaUpdate.id,
+      agenda: {
+        startAt: null,
+        deletedAt: null,
+      },
+    },
+  });
 
-    try {
-      const updatedAgendaId = await prisma.agenda.update({
-        data: updateAgendaQuery,
-        where: {
-          id: id,
-          startAt: null,
-          deletedAt: null,
+  const deleteUserAgendaVotable = prisma.userAgendaVotable.deleteMany({
+    where: {
+      agendaId: agendaUpdate.id,
+      agenda: {
+        startAt: null,
+        deletedAt: null,
+      },
+    },
+  });
+
+  //Update agenda info, choice DB and voter DB
+  const updateAgenda = prisma.agenda.update({
+    where: {
+      id: agendaUpdate.id,
+    },
+    data: {
+      title: agendaUpdate.title,
+      resolution: agendaUpdate.resolution,
+      content: agendaUpdate.content,
+      choices: {
+        createMany: {
+          data: agendaUpdate.choices.map(it => ({ name: it })),
         },
-        select: {
-          id: true,
+      },
+      voters: {
+        createMany: {
+          data: agendaUpdate.voters.total.map(it => ({
+            userId: it,
+          })),
         },
-      });
+      },
+    },
+    select: {
+      ...selectAgendaDefaultFields.select,
+      choices: true,
+      voters: selectOnlyUser,
+    },
+  });
 
-      return { id: updatedAgendaId.id, status: "ongoing" };
-    } catch (err) {
-      logger.error(err);
-      return null;
-    }
-  }
+  const result = await prisma.$transaction([
+    deleteChoices,
+    deleteUserAgendaVotable,
+    updateAgenda,
+  ]);
 
-  if (status == "terminated") {
-    const updateAgendaQuery: Prisma.AgendaUpdateInput = {
-      endAt: new Date(),
-    };
+  const { choices, voters, ...updatedAgenda } = result[2];
 
-    try {
-      const updatedAgendaId = await prisma.agenda.update({
-        data: updateAgendaQuery,
-        where: {
-          id: id,
-          endAt: null,
-          deletedAt: null,
-          NOT: {
-            startAt: null,
-          },
-        },
-        select: {
-          id: true,
-        },
-      });
+  const agendaVotable: PreparingAgenda = {
+    ...updatedAgenda,
+    status: "preparing",
+    choices: choices.map(choice => ({
+      id: choice.id,
+      name: choice.name,
+    })),
+    voters: {
+      voted: 0,
+      total: voters.length,
+    },
+    user: {
+      votable: true,
+    },
+  };
 
-      return { id: updatedAgendaId.id, status: "terminated" };
-    } catch (err) {
-      logger.error(err);
-      return null;
-    }
-  }
+  const agendaNotVotable: PreparingAgenda = {
+    ...agendaVotable,
+    user: {
+      votable: false,
+    },
+  };
 
-  return null;
+  const agendaWithVoters: schema.AdminAgenda = {
+    ...updatedAgenda,
+    status: "preparing",
+    choices: choices.map(choice => ({
+      id: choice.id,
+      name: choice.name,
+      count: 0,
+    })),
+    voters: {
+      voted: [],
+      total: voters.map(voter => voter.user),
+    },
+  };
+  return {
+    voters: voters.map(voter => `user/${voter.user.username}`),
+    agendaVotable,
+    agendaNotVotable,
+    agendaWithVoters,
+  };
 };
 
-export const agendaDelete = async ({
+export const deleteAgenda = async ({
   id,
-}: schema.Delete): Promise<schema.Deleted | null> => {
-  try {
-    const agenda = await prisma.agenda.findUnique({
+}: schema.Delete): Promise<schema.Deleted> => {
+  const agenda = await prisma.agenda.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      startAt: true,
+      endAt: true,
+      deletedAt: true,
+    },
+  });
+  //Only delete agenda if it is not soft deleted yet, not started yet, or already terminated only.
+  if (agenda && !agenda?.deletedAt && (!agenda?.startAt || agenda?.endAt)) {
+    await prisma.agenda.update({
       where: {
         id: id,
       },
-      select: {
-        startAt: true,
-        endAt: true,
-        deletedAt: true,
+      data: {
+        deletedAt: new Date(),
       },
     });
-    //Only delete agenda if it is not soft deleted yet, not started yet, or already terminated only.
-    if (agenda && !agenda?.deletedAt && (!agenda?.startAt || agenda?.endAt)) {
-      await prisma.agenda.update({
-        where: {
-          id: id,
-        },
-        data: {
-          deletedAt: new Date(),
-        },
-      });
-    }
-  } catch (err) {
-    logger.error(err);
   }
-  return null;
+
+  return { id };
 };
 
-export const agendaUpdate = async (
-  agendaUpdate: schema.AdminAgendaUpdate,
-): Promise<schema.Updated | null> => {
-  try {
-    //Delete prior choices and voters
-    await prisma.choice.deleteMany({
-      where: {
-        agendaId: agendaUpdate.id,
-      },
-    });
-    await prisma.userAgendaVotable.deleteMany({
-      where: {
-        agendaId: agendaUpdate.id,
-      },
-    });
-    //Update agenda info, choice DB and voter DB
-    await prisma.agenda.update({
-      where: {
-        id: agendaUpdate.id,
-      },
-      data: {
-        title: agendaUpdate.title,
-        subtitle: agendaUpdate.resolution,
-        content: agendaUpdate.content,
-        choices: {
-          createMany: {
-            data: agendaUpdate.choices.map(it => ({ name: it })),
-          },
-        },
-        voters: {
-          createMany: {
-            data: agendaUpdate.voters.total.map(it => ({
-              userId: it,
-            })),
-          },
+export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
+  const agendaFromDB = await prisma.agenda.findMany({
+    where: { deletedAt: null },
+    select: {
+      ...selectAgendaDefaultFields.select,
+      startAt: true,
+      endAt: true,
+      deletedAt: true,
+      choices: {
+        include: {
+          users: selectOnlyUser,
         },
       },
-    });
-    const { subtitle, choices, voters, ...agendaProps } =
-      await prisma.agenda.update({
-        where: {
-          id: agendaUpdate.id,
-        },
-        data: {
-          title: agendaUpdate.title,
-          subtitle: agendaUpdate.resolution,
-          content: agendaUpdate.content,
-          choices: {
-            createMany: {
-              data: agendaUpdate.choices.map((it) => ({ name: it })),
-            },
-          },
-          voters: {
-            createMany: {
-              data: agendaUpdate.voters.total.map((it) => ({
-                userId: it,
-              })),
-            },
-          },
-        },
-        select: {
-          id: true,
-          title: true,
-          subtitle: true,
-          content: true,
-          choices: true,
-          voters: {
-            include: {
-              user: {
-                select: {
-                  id: true,
-                  username: true,
-                  displayName: true,
-                },
-              },
-            },
-          },
-        },
-      });
+      voters: selectOnlyUser,
+    },
+  });
+
+  const res = agendaFromDB.map(agenda => {
+    let status: schema.AdminAgendaStatus = "ongoing";
+    if (agenda.startAt && !agenda.endAt) status = "ongoing";
+    else if (!agenda.startAt && !agenda.endAt) status = "preparing";
+    else if (agenda.endAt) status = "terminated";
+
+    const voted = agenda.choices.flatMap(choice =>
+      choice.users.map(userChoice => userChoice.user),
+    );
+
     return {
-      ...agendaProps,
-      resolution: subtitle,
-      status: "preparing",
-      choices: choices.map((choice) => ({
+      id: agenda.id,
+      title: agenda.title,
+      content: agenda.content,
+      resolution: agenda.resolution,
+      status: status,
+      choices: agenda.choices.map(choice => ({
         id: choice.id,
         name: choice.name,
-        voters: [],
-        count: 0,
+        count: choice.users.length,
       })),
       voters: {
-        voted: [],
-        total: voters.map((voter) => voter.user),
+        total: agenda.voters.map(user => user.user),
+        voted: voted,
       },
     };
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
-};
+  });
 
-export const retrieveAll = async (): Promise<schema.AdminAgenda[] | null> => {
-  try {
-    const agendaFromDB = await prisma.agenda.findMany({
-      where: { deletedAt: null },
-
-      select: {
-        id: true,
-        title: true,
-        subtitle: true,
-        content: true,
-        startAt: true,
-        endAt: true,
-        deletedAt: true,
-
-        choices: {
-          select: {
-            id: true,
-            name: true,
-            users: {
-              select: {
-                user: {
-                  select: {
-                    id: true,
-                    username: true,
-                    displayName: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-        voters: {
-          select: {
-            user: {
-              select: {
-                id: true,
-                username: true,
-                displayName: true,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    const res = agendaFromDB.map((agenda) => {
-      const status: schema.AdminAgendaStatus = !agenda.startAt
-        ? "preparing"
-        : !agenda.endAt
-        ? "ongoing"
-        : "terminated";
-      let voted: { id: number; username: string; displayName: string }[] = [];
-      for (const choice of agenda.choices) {
-        for (const voter of choice.users) {
-          voted = [...voted, voter.user];
-        }
-      }
-      return {
-        id: agenda.id,
-        title: agenda.title,
-        content: agenda.content,
-        resolution: agenda.subtitle,
-        status: status,
-        choices: agenda.choices.map((choice) => ({
-          id: choice.id,
-          name: choice.name,
-          count: choice.users.length,
-        })),
-        voters: {
-          total: agenda.voters.map(user => user.user),
-          voted: voted,
-        },
-      };
-    });
-    return res;
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
+  return res;
 };
 
 export const remind = async ({
   id,
 }: schema.Remind): Promise<{
-  usernames: string[];
+  unvotedUsers: string[];
   agendaId: number;
   message: string;
-} | null> => {
-  try {
-    // Validate if id is existing
-    const agenda = await prisma.agenda.findUnique({
-      where: {
-        id: id,
-      },
-      select: {
-        title: true,
-      },
-    });
-    const unvotedUsers = await prisma.user.findMany({
-      select: { username: true },
-      where: {
-        agendas: { some: { agendaId: id } },
-        NOT: { choices: { some: { choice: { agendaId: id } } } },
-      },
-    });
-    const message = "관리자가 투표를 독촉합니다";
-    if (!agenda) return null;
-    if (!unvotedUsers) return { usernames: [], agendaId: id, message: message };
-    // let votedId: number[] = [];
-    // const totalId = agenda.voters.map((votableId) => votableId.user);
-    // for (const choice of agenda.choices) {
-    //   const user: number[] = choice.users.map((user) => user.user.id);
-    //   votedId = [...votedId, ...user];
-    // }
-    // const unvoters = totalId
-    //   .filter((user) => !votedId.includes(user.id))
-    //   .map((person) => person.username);
+}> => {
+  // Validate if id is existing
+  const agenda = await prisma.agenda.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      title: true,
+    },
+  });
+  if (!agenda) throw new BiseoError(`아젠다(id: ${id})가 존재하지 않습니다.`);
 
-    return {
-      usernames: unvotedUsers.map((user) => user.username),
-      agendaId: id,
-      message: message,
-    };
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
+  const unvotedUsers = await prisma.user.findMany({
+    select: { username: true },
+    where: {
+      agendas: { some: { agendaId: id } },
+      NOT: { choices: { some: { choice: { agendaId: id } } } },
+    },
+  });
+
+  const message = "관리자가 투표를 독촉합니다";
+
+  return {
+    unvotedUsers: unvotedUsers.map(user => `user/${user.username}`),
+    agendaId: id,
+    message: message,
+  };
 };

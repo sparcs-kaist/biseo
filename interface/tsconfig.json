@@ -3,15 +3,10 @@
     /* Visit https://aka.ms/tsconfig to read more about this file */
     "target": "es2016",
     "module": "commonjs",
-    "baseUrl": "src",
-    "paths": {
-      "@/*": [
-        "*"
-      ]
-    },
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": "dist",
+    "rootDir": "./src",
+    "outDir": "./dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

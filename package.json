@@ -6,27 +6,24 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
-    "dev": "yarn dev:db:up && yarn dev:db:migrate && yarn dev:app",
-    "dev:app": "yarn all dev",
-    "dev:db": "yarn server dev:db",
-    "dev:db:up": "yarn server dev:db:up",
-    "dev:db:migrate": "yarn server dev:db:migrate",
-    "all": "dotenv -- nx run-many -t",
-    "client": "dotenv yarn workspace biseo-client",
-    "server": "dotenv yarn workspace biseo-server",
-    "interface": "dotenv yarn workspace biseo-interface"
+    "postinstall": "pnpm typegen",
+    "web": "pnpm -F @biseo/client",
+    "api": "dotenv -- pnpm -F @biseo/server",
+    "interface": "pnpm -F @biseo/interface",
+    "dev": "dotenv -- pnpm -r --stream dev",
+    "db": "dotenv -- pnpm -F @biseo/server db",
+    "migrate": "dotenv -- pnpm -F @biseo/server migrate",
+    "typegen": "dotenv -- pnpm -F @biseo/server typegen",
+    "studio": "dotenv -- pnpm -F @biseo/server studio",
+    "typecheck": "pnpm -r typecheck",
+    "build": "pnpm -r build"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "yarn eslint",
+      "pnpm eslint",
       "prettier --config ./.prettierrc --write -u"
     ]
   },
-  "workspaces": [
-    "server",
-    "client",
-    "interface"
-  ],
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
@@ -42,10 +39,11 @@
     "eslint-plugin-react": "^7.33.1",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.3",
-    "nx": "^15.9.2",
-    "prettier": "^2.8.7"
+    "prettier": "^2.8.7",
+    "typescript": "^5.1.6"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": "^18.0.0",
+    "pnpm": "^8.0.0"
   }
 }

@@ -9,17 +9,17 @@ datasource db {
 }
 
 model Agenda {
-  id        Int                 @id @default(autoincrement())
-  title     String
-  subtitle  String
-  content   String
-  startAt   DateTime?           @map("start_at")
-  endAt     DateTime?           @map("end_at")
-  createdAt DateTime            @default(now()) @map("created_at")
-  updatedAt DateTime            @updatedAt @map("updated_at")
-  deletedAt DateTime?           @map("deleted_at")
-  choices   Choice[]
-  voters    UserAgendaVotable[]
+  id         Int                 @id @default(autoincrement())
+  title      String
+  resolution String
+  content    String
+  startAt    DateTime?           @map("start_at")
+  endAt      DateTime?           @map("end_at")
+  createdAt  DateTime            @default(now()) @map("created_at")
+  updatedAt  DateTime            @updatedAt @map("updated_at")
+  deletedAt  DateTime?           @map("deleted_at")
+  choices    Choice[]
+  voters     UserAgendaVotable[]
 
   @@map("agenda")
 }
@@ -32,6 +32,7 @@ model User {
   chats       Chat[]
   choices     UserChoice[]
   agendas     UserAgendaVotable[]
+  tags        UserTag[]
 
   @@map("user")
 }
@@ -51,10 +52,39 @@ model Chat {
   user      User     @relation(fields: [userId], references: [id])
   userId    Int      @map("user_id")
   type      ChatType
-  message   String
+  message   String   @db.VarChar(500)
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("chat")
+}
+
+model Tag {
+  id          Int       @id @default(autoincrement())
+  title       String    @unique
+  description String
+  users       UserTag[]
+
+  @@map("tag")
+}
+
+model TemplateChoice {
+  id         Int      @id @default(autoincrement())
+  template   Template @relation(fields: [templateId], references: [id])
+  templateId Int      @map("template_id")
+  name       String
+
+  @@map("template_choice")
+}
+
+model Template {
+  id           Int              @id @default(autoincrement())
+  templateName String
+  title        String
+  content      String
+  resolution   String
+  choices      TemplateChoice[]
+
+  @@map("template")
 }
 
 model UserChoice {
@@ -77,9 +107,19 @@ model UserAgendaVotable {
   @@map("user_agenda_votable")
 }
 
+model UserTag {
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @map("user_id")
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  tagId  Int  @map("tag_id")
+
+  @@id([userId, tagId])
+  @@map("user_tag")
+}
+
 enum ChatType {
-  Message
-  Alarm
+  message
+  notice
 
   @@map("chat_type")
 }

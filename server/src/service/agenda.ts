@@ -1,12 +1,12 @@
 import type { User } from "@prisma/client";
-import * as schema from "biseo-interface/agenda";
+import * as schema from "@biseo/interface/agenda";
 import { prisma } from "@/db/prisma";
 import { BiseoError } from "@/lib/error";
 import { BiseoServer } from "@/types/socket";
 
 export const retrieveAll = async (
   {}: schema.RetrieveAll,
-  user: User
+  user: User,
 ): Promise<schema.RetrieveAllCb> => {
   const agendaDbRes = await prisma.agenda.findMany({
     where: { deletedAt: null },
@@ -22,21 +22,21 @@ export const retrieveAll = async (
     },
   });
   const res = agendaDbRes.map((agenda): schema.Agenda => {
-    const userVotable = agenda.voters.some((v) => v.userId == user.id);
+    const userVotable = agenda.voters.some(v => v.userId == user.id);
     //TODO: possible optimization
     const userVoted = userVotable
-      ? agenda.choices.find((c) => c.users.some((u) => u.userId == user.id))
-          ?.id || null
+      ? agenda.choices.find(c => c.users.some(u => u.userId == user.id))?.id ||
+        null
       : null;
     const commonField = {
       id: agenda.id,
       title: agenda.title,
       content: agenda.content,
-      resolution: agenda.subtitle,
+      resolution: agenda.resolution,
       voters: {
         voted: agenda.choices.reduce(
           (acc, choice) => acc + choice.users.length,
-          0
+          0,
         ),
         total: agenda.voters.length,
       },
@@ -48,6 +48,10 @@ export const retrieveAll = async (
           user: {
             votable: userVotable,
           },
+          choices: agenda.choices.map(choice => ({
+            id: choice.id,
+            name: choice.name,
+          })),
         }
       : !agenda.endAt
       ? {
@@ -57,7 +61,7 @@ export const retrieveAll = async (
             votable: userVotable,
             voted: userVoted,
           },
-          choices: agenda.choices.map((choice) => ({
+          choices: agenda.choices.map(choice => ({
             id: choice.id,
             name: choice.name,
           })),
@@ -69,7 +73,7 @@ export const retrieveAll = async (
             votable: userVotable,
             voted: userVoted,
           },
-          choices: agenda.choices.map((choice) => {
+          choices: agenda.choices.map(choice => {
             return {
               id: choice.id,
               name: choice.name,
@@ -86,7 +90,7 @@ export const retrieveAll = async (
 export const vote = async (
   { choiceId, agendaId }: schema.Vote,
   io: BiseoServer,
-  user: User
+  user: User,
 ) => {
   // validation
   const isUserVotable = !!(await prisma.userAgendaVotable.count({
@@ -122,6 +126,8 @@ export const vote = async (
             select: {
               choices: {
                 select: {
+                  id: true,
+                  name: true,
                   users: {
                     select: {
                       user: {
@@ -152,23 +158,29 @@ export const vote = async (
       },
     },
   });
-  io.emit("agenda.voted", {
+  io.to(`user/${user.username}`).emit("agenda.voted", {
     id: agendaId,
+    user: {
+      voted: choiceId,
+    },
     voters: {
       voted: res.choice.agenda.choices.reduce(
         (acc, choice) => acc + choice.users.length,
-        0
+        0,
       ),
       total: res.choice.agenda.voters.length,
     },
   });
   io.emit("admin.agenda.voted", {
     id: agendaId,
+    choices: res.choice.agenda.choices.map(choice => ({
+      id: choice.id,
+      name: choice.name,
+      count: choice.users.length,
+    })),
     voters: {
-      voted: res.choice.agenda.choices.flatMap((c) =>
-        c.users.map((u) => u.user)
-      ),
-      total: res.choice.agenda.voters.flatMap((v) => v.user),
+      voted: res.choice.agenda.choices.flatMap(c => c.users.map(u => u.user)),
+      total: res.choice.agenda.voters.flatMap(v => v.user),
     },
   });
 };
