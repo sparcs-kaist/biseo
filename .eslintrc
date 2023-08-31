@@ -5,9 +5,7 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
     "airbnb",
     "airbnb-typescript",
     "plugin:prettier/recommended",
@@ -16,7 +14,6 @@
   "overrides": [
     {
       "env": {
-        "browser": true,
         "node": true
       },
       "files": [".eslintrc.{js,cjs}"],
@@ -32,9 +29,41 @@
     "ecmaFeatures": {
       "jsx": true
     },
-    "project": ["./server/tsconfig.json", "./client/tsconfig.json"]
+    "project": ["./*/tsconfig.json"]
   },
-  "plugins": ["@typescript-eslint", "react"],
+  "plugins": ["import", "@typescript-eslint", "react"],
   "ignorePatterns": ["node_modules/", "dist/"],
-  "rules": {}
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "packageDir": ["./server/", "./client/", "./interface/"]
+      }
+    ],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "react": {
+      "version": "^18.2.0"
+    }
+  }
 }

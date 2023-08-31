@@ -1,4 +1,4 @@
 packages:
-  - 'interface'
-  - 'client'
-  - 'server'
+  - "interface"
+  - "client"
+  - "server"
