@@ -16,14 +16,33 @@
     "typegen": "dotenv -- pnpm -F @biseo/server typegen",
     "studio": "dotenv -- pnpm -F @biseo/server studio",
     "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm eslint .",
     "build": "pnpm -r build"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "pnpm eslint",
+      "prettier --config ./.prettierrc --write -u"
+    ]
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.1",
     "dotenv-cli": "^7.2.1",
+    "eslint": "^8.46.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.1",
     "husky": "^8.0.3",
-    "prettier": "^2.8.7",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.3",
     "typescript": "^5.1.6"
   },
   "engines": {
