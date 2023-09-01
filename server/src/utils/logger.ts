@@ -1,6 +1,6 @@
-import { createLogger, format, transports } from "winston";
-import dailyRotateFileTransport from "winston-daily-rotate-file";
 import path from "path";
+import { createLogger, format, transports } from "winston";
+import DailyRotateFileTransport from "winston-daily-rotate-file";
 
 import { env } from "@/env";
 
@@ -54,14 +54,14 @@ const logger =
         defaultMeta: { service: "biseo" },
         transports: [
           // 전체 로그("info", "warn", "error")를 파일로 출력합니다.
-          new dailyRotateFileTransport({
+          new DailyRotateFileTransport({
             level: "info",
             filename: path.resolve("logs/%DATE%-combined.log"),
             datePattern,
             maxSize,
           }),
           // 예외 처리로 핸들링 된 오류 로그("error")를 파일과 콘솔에 출력합니다.
-          new dailyRotateFileTransport({
+          new DailyRotateFileTransport({
             level: "error",
             filename: path.resolve("logs/%DATE%-error.log"),
             datePattern,
@@ -73,7 +73,7 @@ const logger =
         ],
         exceptionHandlers: [
           // 예외 처리가 되지 않은 오류 로그("error")를 파일과 콘솔에 출력합니다.
-          new dailyRotateFileTransport({
+          new DailyRotateFileTransport({
             filename: path.resolve("logs/%DATE%-unhandled.log"),
             datePattern,
             maxSize,
@@ -90,4 +90,4 @@ const logger =
         exceptionHandlers: [new transports.Console()],
       });
 
-export { logger };
+export default logger;

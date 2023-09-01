@@ -1,12 +1,12 @@
-import express from "express";
 import { createServer } from "http";
+import express from "express";
 import { Server } from "socket.io";
 import cors from "cors";
 
 import type { BiseoServer } from "@/types/socket";
 import { authRouter } from "@/auth/router";
 import { env } from "@/env";
-import { logger } from "@/utils/logger";
+import logger from "@/utils/logger";
 
 import { auth } from "@/auth/socket";
 
