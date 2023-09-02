@@ -16,8 +16,7 @@
     "typegen": "dotenv -- pnpm -F @biseo/server typegen",
     "studio": "dotenv -- pnpm -F @biseo/server studio",
     "typecheck": "pnpm -r typecheck",
-    "lint": "pnpm eslint .",
-    "format": "pnpm prettier --config ./.prettierrc --write -u .",
+    "lint": "pnpm eslint . && pnpm prettier --config ./.prettierrc --check -u .",
     "build": "pnpm -r build"
   },
   "lint-staged": {
