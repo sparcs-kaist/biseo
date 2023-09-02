@@ -10,8 +10,8 @@ on:
     branches: ["main"]
 
 jobs:
-  typecheck:
-    name: Typescript type check
+  lint-and-format:
+    name: Lint and Format
     runs-on: ubuntu-latest
 
     strategy:
@@ -31,5 +31,9 @@ jobs:
         with:
           version: ${{ matrix.pnpm-version }}
           run_install: true
-      - name: Server-side & Client-side & Interface type checking
+      - name: Check types
         run: pnpm run typecheck
+      - name: Check coding styles
+        run: pnpm lint
+      - name: Format codes
+        run: pnpm format
