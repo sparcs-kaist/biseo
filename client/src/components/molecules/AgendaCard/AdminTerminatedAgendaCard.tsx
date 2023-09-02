@@ -1,9 +1,11 @@
-import { Box, Card, Text } from "@/components/atoms";
-import { AgendaTag } from "@/components/molecules";
-import type { AdminAgenda } from "@biseo/interface/admin/agenda";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const _tags = {
+import type { AdminAgenda } from "@biseo/interface/admin/agenda";
+import { Box, Card, Text } from "@/components/atoms";
+import { AgendaTag } from "@/components/molecules/AgendaTag";
+
+const agendaTags = {
   public: true,
   identified: false,
   votable: false,
@@ -22,9 +24,9 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       <Box gap={8}>
         <AgendaTag
           tags={{
-            public: _tags.public,
-            identified: _tags.identified,
-            votable: _tags.votable,
+            public: agendaTags.public,
+            identified: agendaTags.identified,
+            votable: agendaTags.votable,
           }}
         />
         <Box gap={2}>
