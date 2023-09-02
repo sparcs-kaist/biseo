@@ -128,7 +128,7 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
   </BorderedBox>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
-const InputBox: React.FC<InputProps> = ({ value = "", onChange }) => (
+const InputBox: React.FC<InputProps> = ({ value = undefined, onChange }) => (
   <BorderedBox
     w={300}
     borderColor="gray200"
@@ -149,7 +149,7 @@ const InputBox: React.FC<InputProps> = ({ value = "", onChange }) => (
 ModalInner.InputBox = InputBox;
 
 const TextAreaInputBox: React.FC<TextAreaProps> = ({
-  value = "",
+  value = undefined,
   onChange,
 }) => (
   <BorderedBox
