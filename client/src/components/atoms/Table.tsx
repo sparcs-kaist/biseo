@@ -1,12 +1,19 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
+type Size = number | "hug" | "fill";
+const calcSize = (size: Size) => {
+  if (size === "fill") return "100%";
+  if (size === "hug") return "fit-content";
+  return `${size}px`;
+};
+
 export const Cell = styled.td<{ w?: Size; scroll?: boolean }>(
-  ({ w = "fill", scroll = false }) => css`
+  ({ w = "fill" }) => css`
     position: relative;
     display: flex;
     gap: 5px;
-    min-width: ${size(w)};
+    min-width: ${calcSize(w)};
     align-items: flex-start;
     padding: 6px 5px;
     font-size: 10px;
@@ -49,18 +56,11 @@ export const Row = styled.tr<{ selected?: boolean }>`
 
 export const Table = styled.table<{ w?: Size; h?: Size }>(
   ({ w = "hug", h = "hug", theme }) => css`
-    width: ${size(w)};
-    height: ${size(h)};
+    width: ${calcSize(w)};
+    height: ${calcSize(h)};
     border: solid 1px ${theme.colors.gray200};
     border-radius: 5px;
     border-spacing: 0;
     overflow: hidden;
   `,
 );
-
-type Size = number | "hug" | "fill";
-const size = (size: Size) => {
-  if (size === "fill") return "100%";
-  if (size === "hug") return "fit-content";
-  return `${size}px`;
-};

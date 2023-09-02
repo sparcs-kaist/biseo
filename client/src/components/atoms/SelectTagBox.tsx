@@ -3,7 +3,7 @@ import {
   PositionedDownArrowIcon,
   SelectWrapper,
   TagSelect,
-} from "@/components/atoms";
+} from "@/components/atoms/Label";
 import { useUserTag } from "@/services/user-tag";
 
 interface Props {

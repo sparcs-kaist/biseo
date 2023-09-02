@@ -26,9 +26,9 @@ const useAuth = create<AuthState>()(
         if (!token) return null;
 
         try {
-          const userInfo = await initSocket(token);
-          set({ userInfo });
-          return userInfo;
+          const initialUserInfo = await initSocket(token);
+          set({ userInfo: initialUserInfo });
+          return initialUserInfo;
         } catch (e) {
           set({ token: null, userInfo: null });
           return null;

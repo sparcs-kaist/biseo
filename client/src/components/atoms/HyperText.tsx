@@ -30,7 +30,7 @@ export const HyperText = styled.a<{
 }>(({ variant = "body", color = "black", theme, position = "static" }) => [
   css({
     color: theme.colors[color],
-    position: position,
+    position,
     whiteSpace: "pre-line",
   }),
   textStyles[variant],

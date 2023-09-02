@@ -24,13 +24,14 @@ export const Card = styled.div<{
     border-radius: ${round}px;
     background-color: ${primary ? theme.colors.blue100 : theme.colors.white};
     border: 1px solid
-      ${bold
-        ? primary
-          ? theme.colors.blue600
-          : theme.colors.gray500
-        : primary
-        ? theme.colors.blue300
-        : theme.colors.gray300};
+      ${(() => {
+        if (bold) {
+          if (primary) return theme.colors.blue600;
+          return theme.colors.gray500;
+        }
+        if (primary) return theme.colors.blue300;
+        return theme.colors.gray300;
+      })()};
     padding: ${small ? `12px 15px` : `18px 20px`};
     width: 100%;
 

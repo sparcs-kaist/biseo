@@ -4,8 +4,8 @@ import { immer } from "zustand/middleware/immer";
 import type { Message } from "@biseo/interface/chat";
 import type { ChatUser } from "@biseo/interface/user";
 
-import { createDraftMessage, RETRIEVE_CHAT_OFFSET } from "./common";
 import { socket } from "@/socket";
+import { createDraftMessage, RETRIEVE_CHAT_OFFSET } from "./common";
 
 interface ChatState {
   /**
@@ -59,10 +59,13 @@ const useChatStore = create(
         limit: RETRIEVE_CHAT_OFFSET,
       });
 
-      if (messages.length === 0) return set({ hasMore: false, loading: false });
+      if (messages.length === 0) {
+        set({ hasMore: false, loading: false });
+        return;
+      }
 
       set(state => {
-        messages.map(message => {
+        messages.forEach(message => {
           state.messages.set(message.id, message);
         });
         state.loading = false;

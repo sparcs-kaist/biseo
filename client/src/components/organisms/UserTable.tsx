@@ -25,11 +25,11 @@ interface Props {
 }
 
 export const UserTable: React.FC<Props> = ({
-  userList,
+  userList = [],
   selectedUsers = [],
   setSelectedUsers = () => {},
-  editable,
-  filterBy,
+  editable = false,
+  filterBy = undefined,
 }) => {
   const { users, retrieveUsers } = useAdminUser(state => ({
     users: state.adminUsers,
@@ -46,7 +46,7 @@ export const UserTable: React.FC<Props> = ({
 
   const displayUsers = useMemo(
     () =>
-      (userList
+      (userList.length > 0
         ? users.filter(user => userList.includes(user.id))
         : users
       ).sort((a, b) => (a.username < b.username ? -1 : 1)),
@@ -71,7 +71,7 @@ export const UserTable: React.FC<Props> = ({
     if (filterBy === "voted") {
       if (selectedFilterOption === "투표 완료자")
         return displayUsers.filter(user => selectedUsers.includes(user.id));
-      else if (selectedFilterOption === "투표 미완료자")
+      if (selectedFilterOption === "투표 미완료자")
         return displayUsers.filter(user => !selectedUsers.includes(user.id));
     }
     return displayUsers;
@@ -99,19 +99,20 @@ export const UserTable: React.FC<Props> = ({
           <SelectBox
             width={92}
             height={26}
-            options={
-              filterBy === "tag"
-                ? tags.map(tag => tag.title)
-                : filterBy === "voted"
-                ? ["투표 완료자", "투표 미완료자"]
-                : []
-            }
+            options={(() => {
+              switch (filterBy) {
+                case "tag":
+                  return tags.map(tag => tag.title);
+                case "voted":
+                  return ["투표 완료자", "투표 미완료자"];
+                default:
+                  return [];
+              }
+            })()}
             onChange={setSelectedFilterOption}
           />
         </Box>
-      ) : (
-        <></>
-      )}
+      ) : null}
       <Table w="fill" h={287}>
         <Header>
           <Row>

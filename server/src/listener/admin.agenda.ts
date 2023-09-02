@@ -32,20 +32,22 @@ router.on(
   schema.StatusUpdate,
   async (req, { io, user }) => {
     switch (req.status) {
-      case "ongoing":
+      case "ongoing": {
         const ongoingAgenda = await startAgenda(req.id, user);
         io.emit("agenda.started", ongoingAgenda);
 
         const startNotice = await createNotice(ongoingAgenda, user);
         io.emit("chat.received", startNotice);
         break;
-      case "terminated":
+      }
+      case "terminated": {
         const terminatedAgenda = await terminateAgenda(req.id, user);
         io.emit("agenda.terminated", terminatedAgenda);
 
         const terminateNotice = await createNotice(terminatedAgenda, user);
         io.emit("chat.received", terminateNotice);
         break;
+      }
       default:
         return {};
     }
@@ -85,7 +87,7 @@ router.on("admin.agenda.remind", schema.Remind, async (req, { io }) => {
   return {};
 });
 
-router.on("admin.agenda.retrieveAll", schema.RetrieveAll, async req => {
+router.on("admin.agenda.retrieveAll", schema.RetrieveAll, async () => {
   const res = await retrieveAll();
   if (!res) throw new BiseoError("failed to update the agenda");
 

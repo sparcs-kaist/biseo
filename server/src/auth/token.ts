@@ -6,12 +6,14 @@ import { prisma } from "@/db/prisma";
 import { env } from "@/env";
 
 const MAX_AGE = 60 * 60 * 24 * 7; // 1 week
-export const getToken = (username: string) => {
-  return jwt.sign({
-    username,
-    iat: Math.floor(Date.now() / 1000),
-  }, env.SECRET_KEY);
-};
+export const getToken = (username: string) =>
+  jwt.sign(
+    {
+      username,
+      iat: Math.floor(Date.now() / 1000),
+    },
+    env.SECRET_KEY,
+  );
 
 const decoded = z.object({
   username: z.string(),

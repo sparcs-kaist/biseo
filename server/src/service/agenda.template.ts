@@ -71,21 +71,19 @@ export const updateTemplate = async (
     },
   });
 
-  const updateTemplateQuery: Prisma.TemplateUpdateInput = {
-    templateName: templateUpdate.templateName,
-    title: templateUpdate.title,
-    content: templateUpdate.content,
-    resolution: templateUpdate.resolution,
-    choices: {
-      create: templateUpdate.choices.map(choice => ({ name: choice })),
-    },
-  };
-
-  const updateTemplate = prisma.template.update({
+  const updateTemplateQuery = prisma.template.update({
     where: {
       id: templateUpdate.id,
     },
-    data: updateTemplateQuery,
+    data: {
+      templateName: templateUpdate.templateName,
+      title: templateUpdate.title,
+      content: templateUpdate.content,
+      resolution: templateUpdate.resolution,
+      choices: {
+        create: templateUpdate.choices.map(choice => ({ name: choice })),
+      },
+    },
     select: {
       id: true,
       templateName: true,
@@ -100,7 +98,10 @@ export const updateTemplate = async (
     },
   });
 
-  const result = await prisma.$transaction([deleteChoices, updateTemplate]);
+  const result = await prisma.$transaction([
+    deleteChoices,
+    updateTemplateQuery,
+  ]);
   const { choices: updatedChoices, ...updatedTemplate } = result[1];
 
   const templateWithChoices: schema.AgendaTemplate = {
@@ -114,17 +115,20 @@ export const updateTemplate = async (
 export const deleteTemplate = async ({
   id,
 }: schema.Delete): Promise<schema.Deleted> => {
-  const deleteChoices = prisma.templateChoice.deleteMany({
+  const deleteChoicesQuery = prisma.templateChoice.deleteMany({
     where: {
       templateId: id,
     },
   });
 
-  const deleteTemplate = prisma.template.delete({
-    where: { id: id },
+  const deleteTemplateQuery = prisma.template.delete({
+    where: { id },
   });
 
-  const result = await prisma.$transaction([deleteChoices, deleteTemplate]);
+  const result = await prisma.$transaction([
+    deleteChoicesQuery,
+    deleteTemplateQuery,
+  ]);
   const deletedTemplate = result[1];
 
   return {

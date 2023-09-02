@@ -1,16 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { Header } from "@/components/organisms";
 import styled from "@emotion/styled";
-
-export const PageLayout: React.FC = () => (
-  <Page>
-    <Header />
-    <main>
-      <Outlet />
-    </main>
-  </Page>
-);
+import { Header } from "@/components/organisms";
 
 const Page = styled.div`
   display: flex;
@@ -22,3 +13,12 @@ const Page = styled.div`
     overflow: hidden;
   }
 `;
+
+export const PageLayout: React.FC = () => (
+  <Page>
+    <Header />
+    <main>
+      <Outlet />
+    </main>
+  </Page>
+);

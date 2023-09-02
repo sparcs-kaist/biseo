@@ -6,6 +6,15 @@ import { Text } from "@/components/atoms";
 import { ChatHeader, ChatInput, Message } from "@/components/molecules";
 import { useChat } from "@/services";
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 458px;
+  border: solid 1px ${props => props.theme.colors.gray300};
+  border-radius: 5px;
+  overflow: hidden;
+`;
+
 export const ChatSection: React.FC = () => {
   const { messages, loading, hasMore, sendMessage, loadMore } = useChat();
   const { ref, inView } = useInView();
@@ -36,12 +45,3 @@ export const ChatSection: React.FC = () => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 458px;
-  border: solid 1px ${props => props.theme.colors.gray300};
-  border-radius: 5px;
-  overflow: hidden;
-`;

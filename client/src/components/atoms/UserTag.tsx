@@ -19,6 +19,7 @@ const Container = styled.div`
   border-radius: 5px;
 `;
 
-export const UserTag: React.FC<Props> = ({ tag, children }) => (
-  <Container>{tag ? tag : children}</Container>
-);
+export const UserTag: React.FC<Props> = ({
+  tag = undefined,
+  children = null,
+}) => <Container>{tag || children}</Container>;

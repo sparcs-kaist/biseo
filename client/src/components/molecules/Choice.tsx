@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Color, theme } from "@/theme";
+import React, { useState, PropsWithChildren } from "react";
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
+
 import type { Choice } from "@biseo/interface/agenda";
 import { Text } from "@/components/atoms";
 import { SelectIcon } from "@/assets";
-import { PropsWithChildren } from "react";
-import { css } from "@emotion/react";
+import { Color, theme } from "@/theme";
 
 const Container = styled.div<{
   color: Color;
@@ -33,21 +33,17 @@ interface ChoiceTextProps extends PropsWithChildren {
   color: Color;
 }
 
-const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children }) => {
-  return (
-    <Text variant="body" color={color}>
-      {children}
-    </Text>
-  );
-};
+const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => (
+  <Text variant="body" color={color}>
+    {children}
+  </Text>
+);
 
 const choiceBaseStyle = (
   containerColor: Color,
   selectIconColor: Color,
   textColor: Color,
-) => {
-  return { containerColor, selectIconColor, textColor };
-};
+) => ({ containerColor, selectIconColor, textColor });
 
 const choiceStyles = {
   chosen: choiceBaseStyle("blue600", "blue600", "white"),
@@ -66,22 +62,22 @@ interface ChoiceBaseProps {
 const ChoiceBase: React.FC<ChoiceBaseProps> = ({
   variant,
   text,
-  onClick,
-  onMouseEnter,
-  onMouseLeave,
+  onClick = () => {},
+  onMouseEnter = () => {},
+  onMouseLeave = () => {},
 }) => {
-  const choiceBaseStyle = choiceStyles[variant];
+  const choiceStyle = choiceStyles[variant];
 
   return (
     <Container
-      color={choiceBaseStyle.containerColor}
+      color={choiceStyle.containerColor}
       onClick={onClick}
       clickable={!!onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <SelectIcon stroke={theme.colors[choiceBaseStyle.selectIconColor]} />
-      <ChoiceText color={choiceBaseStyle.textColor}>{text}</ChoiceText>
+      <SelectIcon stroke={theme.colors[choiceStyle.selectIconColor]} />
+      <ChoiceText color={choiceStyle.textColor}>{text}</ChoiceText>
     </Container>
   );
 };
@@ -108,7 +104,9 @@ interface CompletedChoiceProps {
   choice?: Choice;
 }
 
-export const CompletedChoice: React.FC<CompletedChoiceProps> = ({ choice }) => {
+export const CompletedChoice: React.FC<CompletedChoiceProps> = ({
+  choice = undefined,
+}) => {
   const [hover, setHover] = useState(false);
 
   return hover ? (

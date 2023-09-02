@@ -11,11 +11,12 @@ const baseFormat = format.combine(
   format.splat(),
   format.json(),
 );
-const finalFormat = format.printf(({ level, message, timestamp, stack }) => {
-  return `${timestamp} [${level}]: ${message} ${
-    level === "error" && stack !== undefined ? stack : ""
-  }`;
-});
+const finalFormat = format.printf(
+  ({ level, message, timestamp, stack }) =>
+    `${timestamp} [${level}]: ${message} ${
+      level === "error" && stack !== undefined ? stack : ""
+    }`,
+);
 
 // 파일 출력 시 사용될 포맷. 색 관련 특수문자가 파일에 쓰여지는 것을 방지하기 위해 색상이 표시되지 않습니다.
 const uncolorizedFormat = format.combine(

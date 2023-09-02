@@ -1,7 +1,7 @@
-import { Box } from "@/components/atoms";
 import React, { PropsWithChildren } from "react";
+import { Box } from "@/components/atoms";
 
-export const List: React.FC<PropsWithChildren> = ({ children }) => (
+export const List: React.FC<PropsWithChildren> = ({ children = null }) => (
   <Box dir="column" w="fill" gap={15}>
     {children}
   </Box>

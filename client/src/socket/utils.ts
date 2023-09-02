@@ -8,9 +8,8 @@ export function emitAsync<Ev extends ClientEventNames>(
   body: SchemaOf<Ev>,
 ) {
   return new Promise<ResponseOf<Ev>>((resolve, reject) => {
-    this.emit(event, body, (res: Res<ResponseOf<Ev>>) => res.ok
-      ? resolve(res.data)
-      : reject(new Error(res.message)),
+    this.emit(event, body, (res: Res<ResponseOf<Ev>>) =>
+      res.ok ? resolve(res.data) : reject(new Error(res.message)),
     );
   });
 }

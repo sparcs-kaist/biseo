@@ -2,6 +2,13 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import type { Color } from "@/theme";
 
+type Size = number | "hug" | "fill";
+const calcSize = (size: Size) => {
+  if (size === "fill") return "100%";
+  if (size === "hug") return "fit-content";
+  return `${size}px`;
+};
+
 export const Box = styled.div<{
   w?: Size;
   h?: Size;
@@ -45,8 +52,8 @@ export const Box = styled.div<{
     self = "auto",
     wrap = "nowrap",
   }) => css`
-    width: ${size(w)};
-    height: ${size(h)};
+    width: ${calcSize(w)};
+    height: ${calcSize(h)};
     background-color: ${bg ? theme.colors[bg] : "transparent"};
     border-radius: ${round}px;
     display: flex;
@@ -64,10 +71,3 @@ export const Box = styled.div<{
     flex-wrap: ${wrap};
   `,
 );
-
-type Size = number | "hug" | "fill";
-const size = (size: Size) => {
-  if (size === "fill") return "100%";
-  if (size === "hug") return "fit-content";
-  return `${size}px`;
-};

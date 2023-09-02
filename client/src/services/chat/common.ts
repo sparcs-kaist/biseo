@@ -10,8 +10,8 @@ export const createDraftMessage = (
 ): Message => ({
   id: Math.max(...preExistingKeys, 0) + 1,
   type: "message",
-  user: user,
-  message: message,
+  user,
+  message,
   createdAt: new Date().toISOString(),
 });
 

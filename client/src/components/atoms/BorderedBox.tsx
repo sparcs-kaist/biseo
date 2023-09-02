@@ -2,6 +2,13 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import type { Color } from "@/theme";
 
+type Size = number | "hug" | "fill";
+const calcSize = (size: Size) => {
+  if (size === "fill") return "100%";
+  if (size === "hug") return "fit-content";
+  return `${size}px`;
+};
+
 export const BorderedBox = styled.div<{
   w?: Size;
   h?: Size;
@@ -57,8 +64,8 @@ export const BorderedBox = styled.div<{
     borderStyle,
     position = "static",
   }) => css`
-    width: ${size(w)};
-    height: ${size(h)};
+    width: ${calcSize(w)};
+    height: ${calcSize(h)};
     background-color: ${bg ? theme.colors[bg] : "transparent"};
     border-radius: ${roundTop}px ${roundTop}px ${roundBot}px ${roundBot}px;
     display: flex;
@@ -75,10 +82,3 @@ export const BorderedBox = styled.div<{
     position: ${position};
   `,
 );
-
-type Size = number | "hug" | "fill";
-const size = (size: Size) => {
-  if (size === "fill") return "100%";
-  if (size === "hug") return "fit-content";
-  return `${size}px`;
-};

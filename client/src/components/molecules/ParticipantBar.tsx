@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, Text } from "@/components/atoms";
 import styled from "@emotion/styled";
+import { Box, Text } from "@/components/atoms";
 import { Color } from "@/theme";
 
 interface Props {

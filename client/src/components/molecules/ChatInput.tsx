@@ -5,6 +5,18 @@ import { EmoticonIcon, SendIcon } from "@/assets";
 import { Box, Divider, TextAreaAutosize } from "@/components/atoms";
 import { useInput } from "@/common/hooks";
 
+const InputForm = styled.form`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  padding: 10px 15px;
+  background-color: ${props => props.theme.colors.white};
+  border: solid 1px ${props => props.theme.colors.gray300};
+  border-radius: 5px;
+`;
+
 interface Props {
   send: (message: string) => void;
 }
@@ -31,25 +43,14 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
               sendCurrent();
             }
           }}
-          {...input}
+          value={input.value}
+          onChange={input.onChange}
         />
         <Divider dir="vertical" />
         <EmoticonIcon />
         <SendIcon onClick={sendCurrent} />
-        {/*TODO: Replace with button / add hover, actove effect*/}
+        {/* TODO: Replace with button / add hover, actove effect */}
       </InputForm>
     </Box>
   );
 };
-
-const InputForm = styled.form`
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  width: 100%;
-  height: 100%;
-  padding: 10px 15px;
-  background-color: ${props => props.theme.colors.white};
-  border: solid 1px ${props => props.theme.colors.gray300};
-  border-radius: 5px;
-`;

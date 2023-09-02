@@ -1,4 +1,3 @@
-import { socket } from "@/socket";
 import { create } from "zustand";
 import type {
   AdminAgenda,
@@ -6,6 +5,7 @@ import type {
   AdminAgendaUpdate,
 } from "@biseo/interface/admin/agenda";
 import type { AgendaStatus } from "@biseo/interface/agenda";
+import { socket } from "@/socket";
 
 interface AdminAgendaState {
   adminAgendas: AdminAgenda[];
@@ -42,8 +42,8 @@ export const useAdminAgenda = create<AdminAgendaState>(set => ({
   statusUpdate: async (id, status) => {
     try {
       await socket.emitAsync("admin.agenda.statusUpdate", {
-        id: id,
-        status: status,
+        id,
+        status,
       });
     } catch {
       // TODO: handle error
@@ -85,7 +85,7 @@ socket.on("admin.agenda.statusUpdated", ({ id, status }) => {
   useAdminAgenda.setState(state => {
     const newAdminAgendas: AdminAgenda[] = state.adminAgendas.map(agenda => {
       if (agenda.id === id) {
-        return { ...agenda, status: status };
+        return { ...agenda, status };
       }
       return agenda;
     });

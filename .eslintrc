@@ -8,7 +8,6 @@
     "plugin:@typescript-eslint/recommended",
     "airbnb",
     "airbnb-typescript",
-    "plugin:prettier/recommended",
     "prettier"
   ],
   "overrides": [
@@ -38,16 +37,28 @@
       "error",
       "ignorePackages",
       {
+        // Since airbnb javascript rules does not allow to import typescript files without extensions, we need to disable it
         "ts": "never",
         "tsx": "never"
       }
     ],
+    "import/named": "error",
     "import/no-extraneous-dependencies": [
       "error",
       {
         "packageDir": ["./server/", "./client/", "./interface/"]
       }
     ],
+    "import/prefer-default-export": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        // function parameters cannot be reassigned for readability, except for the ones in the array
+        "ignorePropertyModificationsFor": ["socket", "state"]
+      }
+    ],
+    "radix": ["error", "as-needed"],
     "react/function-component-definition": [
       "error",
       {
@@ -56,14 +67,25 @@
       }
     ],
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/jsx-no-useless-fragment": [
+      "error",
+      {
+        // this allows <>{value}</> syntax, where value is a string or a number
+        "allowExpressions": true
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": [
+      "error",
+      {
+        // default values of the optional props must be provided as function arguments
+        "functions": "defaultArguments"
+      }
+    ]
   },
   "settings": {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
-    },
-    "react": {
-      "version": "^18.2.0"
     }
   }
 }

@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
+import type { AdminAgenda } from "@biseo/interface/admin/agenda";
 import {
   Box,
   Text,
@@ -8,12 +10,10 @@ import {
   ProgressBar,
   Button,
 } from "@/components/atoms";
-import { AgendaTag } from "@/components/molecules";
-
-import type { AdminAgenda } from "@biseo/interface/admin/agenda";
+import { AgendaTag } from "@/components/molecules/AgendaTag";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
-const _tags = {
+const agendaTags = {
   public: true,
   identified: false,
   votable: true,
@@ -43,7 +43,7 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
   return (
     <Card onClick={openModal}>
       <Box gap={8} w="fill">
-        <AgendaTag tags={_tags} admin />
+        <AgendaTag tags={agendaTags} admin />
         <Box>
           <Text variant="title2" color="black">
             {agenda.title}

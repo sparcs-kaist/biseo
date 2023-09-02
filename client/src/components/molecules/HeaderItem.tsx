@@ -12,7 +12,7 @@ interface Props {
 const Container = styled.div<{
   selected?: boolean;
 }>(
-  ({ selected = false, theme }) => css`
+  () => css`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -47,6 +47,6 @@ export const HeaderItem: React.FC<Props> = ({
         {name}
       </Text>
     </Link>
-    {selected ? <SelectIndicator /> : <></>}
+    {selected ? <SelectIndicator /> : null}
   </Container>
 );

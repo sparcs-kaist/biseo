@@ -8,18 +8,12 @@ import type {
 
 export const isPreparingAgenda = (
   agenda: Agenda | AdminAgenda,
-): agenda is PreparingAgenda => {
-  return agenda.status === "preparing";
-};
+): agenda is PreparingAgenda => agenda.status === "preparing";
 
 export const isOngoingAgenda = (
   agenda: Agenda | AdminAgenda,
-): agenda is OngoingAgenda => {
-  return agenda.status === "ongoing";
-};
+): agenda is OngoingAgenda => agenda.status === "ongoing";
 
 export const isTerminatedAgenda = (
   agenda: Agenda | AdminAgenda,
-): agenda is TerminatedAgenda => {
-  return agenda.status === "terminated";
-};
+): agenda is TerminatedAgenda => agenda.status === "terminated";

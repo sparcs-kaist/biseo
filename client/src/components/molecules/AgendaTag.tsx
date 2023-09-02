@@ -12,7 +12,7 @@ interface Props {
   tags: Tags;
 }
 
-export const AgendaTag: React.FC<Props> = ({ admin, tags }) => (
+export const AgendaTag: React.FC<Props> = ({ admin = false, tags }) => (
   <Box dir="row" gap={8} align="center">
     <Tag type={tags.public ? "public" : "private"} />
     <Tag type={tags.identified ? "identified" : "anonymous"} />

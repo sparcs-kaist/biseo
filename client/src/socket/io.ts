@@ -1,9 +1,8 @@
 import { io } from "socket.io-client";
+import { API_BASE } from "@/env";
 
 import type { BiseoSocket } from "./types";
 import { emitAsync } from "./utils";
-
-import { API_BASE } from "@/env";
 
 export const socket = Object.assign(
   io(API_BASE, {

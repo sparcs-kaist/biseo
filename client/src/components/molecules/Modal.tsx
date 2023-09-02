@@ -4,6 +4,13 @@ import styled from "@emotion/styled";
 import { CloseIcon } from "@/assets";
 import { Box, Text } from "@/components/atoms";
 
+type Size = number | "hug" | "fill";
+const calcSize = (size: Size) => {
+  if (size === "fill") return "100%";
+  if (size === "hug") return "fit-content";
+  return `${size}px`;
+};
+
 interface Props extends PropsWithChildren {
   title: string;
   width?: Size;
@@ -16,8 +23,8 @@ const Container = styled.dialog<{ w: Size; h: Size }>`
   left: 50%;
   transform: translate(-50%, -50%);
   gap: 15px;
-  width: ${props => size(props.w)};
-  height: ${props => size(props.h)};
+  width: ${props => calcSize(props.w)};
+  height: ${props => calcSize(props.h)};
   padding: 20px 25px;
   display: flex;
   flex-direction: column;
@@ -48,7 +55,7 @@ const CloseButton = styled.button`
 
 export const Modal: React.FC<Props> = ({
   title,
-  children,
+  children = null,
   width = "hug",
   height = "hug",
 }) => {
@@ -79,11 +86,4 @@ export const Modal: React.FC<Props> = ({
       <InnerContainer>{children}</InnerContainer>
     </Container>
   );
-};
-
-type Size = number | "hug" | "fill";
-const size = (size: Size) => {
-  if (size === "fill") return "100%";
-  if (size === "hug") return "fit-content";
-  return `${size}px`;
 };

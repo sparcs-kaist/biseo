@@ -13,7 +13,7 @@ import {
   Modal,
   ModalInner,
 } from "@/components/molecules";
-import { UserTable } from "@/components/organisms";
+import { UserTable } from "@/components/organisms/UserTable";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAdminUser } from "@/services/admin-user";
@@ -46,14 +46,10 @@ export const EditAgendaModal: React.FC = () => {
   const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
   const [template, setTemplate] = useState(0);
   const [choices, setChoices] = useState(
-    targetAgenda?.choices.map(choice => {
-      return choice.name;
-    }) || [],
+    targetAgenda?.choices.map(choice => choice.name) || [],
   );
   const [voters, setVoters] = useState(
-    targetAgenda?.voters.total.map(voters => {
-      return voters.id;
-    }) || [],
+    targetAgenda?.voters.total.map(voter => voter.id) || [],
   );
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -90,7 +86,7 @@ export const EditAgendaModal: React.FC = () => {
     const optionNum = options.length;
 
     const selected = [];
-    for (var i = 0; i < optionNum; i++) {
+    for (let i = 0; i < optionNum; i += 1) {
       if (options[i].selected) selected.push(options[i].value);
     }
     setSelectedTags(selected);
@@ -128,13 +124,13 @@ export const EditAgendaModal: React.FC = () => {
     if (!validated) return;
     updateAgenda({
       id: agendaId,
-      title: title,
-      content: content,
-      resolution: resolution,
+      title,
+      content,
+      resolution,
       voters: {
         total: voters,
       },
-      choices: choices,
+      choices,
     });
   };
 

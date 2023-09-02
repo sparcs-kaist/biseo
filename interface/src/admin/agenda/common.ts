@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare -- A Zod schema name and type should have the same names */
 import { z } from "zod";
 import { AgendaBase, AgendaStatus, ChoiceWithResult } from "../../agenda";
 import { User } from "../../user";

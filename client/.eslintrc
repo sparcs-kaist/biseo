@@ -4,6 +4,9 @@
       "typescript": {
         "project": ["./client/tsconfig.json"]
       }
+    },
+    "react": {
+      "version": "detect"
     }
   }
 }
