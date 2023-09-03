@@ -1,4 +1,4 @@
-import * as schema from "@biseo/interface/admin/user";
+import type * as schema from "@biseo/interface/admin/user";
 import { prisma } from "@/db/prisma";
 
 export const retrieveAll = async (): Promise<schema.AdminUser[]> => {

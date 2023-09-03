@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { AgendaStatus } from "@biseo/interface/agenda";
+import type { AgendaStatus } from "@biseo/interface/agenda";
 import { Text, Card } from "@/components/atoms";
 
 const DashedCard = styled(Card)`

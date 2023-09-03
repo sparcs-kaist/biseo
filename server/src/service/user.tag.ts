@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import * as schema from "@biseo/interface/user/tag";
+import type * as schema from "@biseo/interface/user/tag";
 import { prisma } from "@/db/prisma";
 
 export const createTag = async ({

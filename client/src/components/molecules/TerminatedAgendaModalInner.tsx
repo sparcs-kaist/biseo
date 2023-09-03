@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import { BorderedBox, Box, Scroll, Text } from "@/components/atoms";
 
 interface BoxWithTitleProps extends PropsWithChildren {

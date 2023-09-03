@@ -1,5 +1,5 @@
-import { ClientToServerEvents, ServerToClientEvents } from "./events";
-import { Res } from "./helpers";
+import type { ClientToServerEvents, ServerToClientEvents } from "./events";
+import type { Res } from "./helpers";
 
 type AllEvents = ServerToClientEvents & ClientToServerEvents;
 

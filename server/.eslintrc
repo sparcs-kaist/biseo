@@ -1,4 +1,8 @@
 {
+  "rules": {
+    // prefers to use custom logger instead of console
+    "no-console": "error"
+  },
   "settings": {
     "import/resolver": {
       "typescript": {

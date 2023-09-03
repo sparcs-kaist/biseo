@@ -1,7 +1,7 @@
 import React from "react";
 
-import { AdminAgenda } from "@biseo/interface/admin/agenda";
-import { Agenda } from "@biseo/interface/agenda";
+import type { AdminAgenda } from "@biseo/interface/admin/agenda";
+import type { Agenda } from "@biseo/interface/agenda";
 import { List } from "./List";
 import { EmptyAgendaCard } from "./EmptyAgendaCard";
 import { OngoingAgendaCard } from "./OngoingAgendaCard";

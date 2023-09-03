@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { Color } from "@/theme";
+import type { Color } from "@/theme";
 
 type Size = number | "hug" | "fill";
 const calcSize = (size: Size) => {

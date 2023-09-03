@@ -1,5 +1,5 @@
 import type { Prisma, User } from "@prisma/client";
-import * as schema from "@biseo/interface/admin/agenda";
+import type * as schema from "@biseo/interface/admin/agenda";
 import type {
   OngoingAgenda,
   PreparingAgenda,

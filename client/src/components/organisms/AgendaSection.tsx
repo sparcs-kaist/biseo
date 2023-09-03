@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { AgendaStatus } from "@biseo/interface/agenda";
+import type { AgendaStatus } from "@biseo/interface/agenda";
 import { Box, Scroll } from "@/components/atoms";
 import { SectionHeader, AgendaCard } from "@/components/molecules";
 import { useAgenda } from "@/services/agenda";

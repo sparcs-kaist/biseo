@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useEffect, useRef } from "react";
+import React, { type PropsWithChildren, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import { CloseIcon } from "@/assets";

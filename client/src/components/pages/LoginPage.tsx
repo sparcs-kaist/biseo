@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from "react";
+import React, { type FormEvent, useCallback, useState } from "react";
 import { Navigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";

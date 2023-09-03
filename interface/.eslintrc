@@ -1,4 +1,7 @@
 {
+  "rules": {
+    "no-restricted-imports": "off"
+  },
   "settings": {
     "import/resolver": {
       "typescript": {

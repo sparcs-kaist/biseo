@@ -1,6 +1,6 @@
 import type { ClientEventNames, ResponseOf, SchemaOf } from "@biseo/interface";
 import type { Res } from "@biseo/interface/helpers";
-import { Socket } from "socket.io-client";
+import type { Socket } from "socket.io-client";
 
 export function emitAsync<Ev extends ClientEventNames>(
   this: Socket,

@@ -1,4 +1,4 @@
-import { AdminAgenda } from "@biseo/interface/admin/agenda";
+import type { AdminAgenda } from "@biseo/interface/admin/agenda";
 import type {
   Agenda,
   OngoingAgenda,

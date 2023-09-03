@@ -1,6 +1,6 @@
 import type { Prisma, User } from "@prisma/client";
 import type * as schema from "@biseo/interface/chat";
-import { Agenda } from "@biseo/interface/agenda";
+import type { Agenda } from "@biseo/interface/agenda";
 
 import { prisma } from "@/db/prisma";
 

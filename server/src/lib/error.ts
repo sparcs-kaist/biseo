@@ -1,4 +1,4 @@
-import { Error as ErrorResponse } from "@biseo/interface/helpers";
+import type { Error as ErrorResponse } from "@biseo/interface/helpers";
 import logger from "@/utils/logger";
 
 export class BiseoError extends Error {

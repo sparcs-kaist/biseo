@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Box, Text } from "@/components/atoms";
-import { Color } from "@/theme";
+import type { Color } from "@/theme";
 
 interface Props {
   name: string;

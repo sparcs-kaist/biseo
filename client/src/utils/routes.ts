@@ -1,5 +1,5 @@
 import { redirect } from "react-router-dom";
-import { Init } from "@biseo/interface/init";
+import type { Init } from "@biseo/interface/init";
 import { useAuth } from "@/services/auth";
 
 interface Params {

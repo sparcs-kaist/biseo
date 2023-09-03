@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AdminAgendaStatus } from "@biseo/interface/admin/agenda";
+import type { AdminAgendaStatus } from "@biseo/interface/admin/agenda";
 import { Box } from "@/components/atoms";
 import {
   SectionHeader,

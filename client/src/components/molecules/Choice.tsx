@@ -1,11 +1,11 @@
-import React, { useState, PropsWithChildren } from "react";
+import React, { useState, type PropsWithChildren } from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
 import type { Choice } from "@biseo/interface/agenda";
 import { Text } from "@/components/atoms";
 import { SelectIcon } from "@/assets";
-import { Color, theme } from "@/theme";
+import { type Color, theme } from "@/theme";
 
 const Container = styled.div<{
   color: Color;

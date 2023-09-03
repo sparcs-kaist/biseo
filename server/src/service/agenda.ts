@@ -1,8 +1,8 @@
 import type { User } from "@prisma/client";
-import * as schema from "@biseo/interface/agenda";
+import type * as schema from "@biseo/interface/agenda";
 import { prisma } from "@/db/prisma";
 import { BiseoError } from "@/lib/error";
-import { BiseoServer } from "@/types/socket";
+import { type BiseoServer } from "@/types/socket";
 
 export const retrieveAll = async (
   user: User,

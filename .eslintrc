@@ -58,6 +58,17 @@
         "ignorePropertyModificationsFor": ["socket", "state"]
       }
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": [
+          {
+            "group": ["../*"],
+            "message": "Usage of relative parent imports is not allowed. Use path alias instead."
+          }
+        ]
+      }
+    ],
     "radix": ["error", "as-needed"],
     "react/function-component-definition": [
       "error",
@@ -80,6 +91,12 @@
       {
         // default values of the optional props must be provided as function arguments
         "functions": "defaultArguments"
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
       }
     ]
   },
