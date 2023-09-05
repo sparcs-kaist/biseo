@@ -1,5 +1,5 @@
 import type { Prisma, User } from "@prisma/client";
-import * as schema from "@biseo/interface/admin/agenda";
+import type * as schema from "@biseo/interface/admin/agenda";
 import type {
   OngoingAgenda,
   PreparingAgenda,
@@ -43,7 +43,7 @@ export const createAgenda = async ({
     resolution,
     content,
     choices: {
-      create: choices.map(name => ({ name: name })),
+      create: choices.map(name => ({ name })),
     },
     voters: {
       create: voters.total.map(id => ({ userId: id })),
@@ -126,7 +126,7 @@ export const startAgenda = async (agendaId: number, user: User) => {
       },
     });
 
-  const userVotable = updatedVoters.some(v => v.user.id == user.id);
+  const userVotable = updatedVoters.some(v => v.user.id === user.id);
 
   const ongoingAgenda: OngoingAgenda = {
     ...updatedAgenda,
@@ -177,9 +177,9 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
     },
   });
 
-  const userVotable = updatedVoters.some(v => v.user.id == user.id);
+  const userVotable = updatedVoters.some(v => v.user.id === user.id);
   const userVoted = userVotable
-    ? updatedChoices.find(c => c.users.some(u => u.userId == user.id))?.id ||
+    ? updatedChoices.find(c => c.users.some(u => u.userId === user.id))?.id ||
       null
     : null;
 
@@ -189,6 +189,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
     choices: updatedChoices.map(choice => ({
       id: choice.id,
       name: choice.name,
+      // eslint-disable-next-line no-underscore-dangle
       count: choice._count.users,
     })),
     voters: {
@@ -208,8 +209,8 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
 };
 
 export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
-  //Delete prior choices and voters
-  const deleteChoices = prisma.choice.deleteMany({
+  // Delete prior choices and voters
+  const deleteChoicesQuery = prisma.choice.deleteMany({
     where: {
       agendaId: agendaUpdate.id,
       agenda: {
@@ -219,7 +220,7 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
     },
   });
 
-  const deleteUserAgendaVotable = prisma.userAgendaVotable.deleteMany({
+  const deleteUserAgendaVotableQuery = prisma.userAgendaVotable.deleteMany({
     where: {
       agendaId: agendaUpdate.id,
       agenda: {
@@ -229,8 +230,8 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
     },
   });
 
-  //Update agenda info, choice DB and voter DB
-  const updateAgenda = prisma.agenda.update({
+  // Update agenda info, choice DB and voter DB
+  const updateAgendaQuery = prisma.agenda.update({
     where: {
       id: agendaUpdate.id,
     },
@@ -259,9 +260,9 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
   });
 
   const result = await prisma.$transaction([
-    deleteChoices,
-    deleteUserAgendaVotable,
-    updateAgenda,
+    deleteChoicesQuery,
+    deleteUserAgendaVotableQuery,
+    updateAgendaQuery,
   ]);
 
   const { choices, voters, ...updatedAgenda } = result[2];
@@ -315,7 +316,7 @@ export const deleteAgenda = async ({
 }: schema.Delete): Promise<schema.Deleted> => {
   const agenda = await prisma.agenda.findUnique({
     where: {
-      id: id,
+      id,
     },
     select: {
       startAt: true,
@@ -323,11 +324,11 @@ export const deleteAgenda = async ({
       deletedAt: true,
     },
   });
-  //Only delete agenda if it is not soft deleted yet, not started yet, or already terminated only.
+  // Only delete agenda if it is not soft deleted yet, not started yet, or already terminated only.
   if (agenda && !agenda?.deletedAt && (!agenda?.startAt || agenda?.endAt)) {
     await prisma.agenda.update({
       where: {
-        id: id,
+        id,
       },
       data: {
         deletedAt: new Date(),
@@ -370,7 +371,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
       title: agenda.title,
       content: agenda.content,
       resolution: agenda.resolution,
-      status: status,
+      status,
       choices: agenda.choices.map(choice => ({
         id: choice.id,
         name: choice.name,
@@ -378,7 +379,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
       })),
       voters: {
         total: agenda.voters.map(user => user.user),
-        voted: voted,
+        voted,
       },
     };
   });
@@ -396,7 +397,7 @@ export const remind = async ({
   // Validate if id is existing
   const agenda = await prisma.agenda.findUnique({
     where: {
-      id: id,
+      id,
     },
     select: {
       title: true,
@@ -417,6 +418,6 @@ export const remind = async ({
   return {
     unvotedUsers: unvotedUsers.map(user => `user/${user.username}`),
     agendaId: id,
-    message: message,
+    message,
   };
 };

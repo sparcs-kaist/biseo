@@ -1,6 +1,7 @@
 import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
+import type { AdminAgendaStatus } from "@biseo/interface/admin/agenda";
 import { Box } from "@/components/atoms";
 import {
   SectionHeader,
@@ -13,7 +14,6 @@ import {
   isPreparingAgenda,
   isTerminatedAgenda,
 } from "@/utils/agenda";
-import { AdminAgendaStatus } from "@biseo/interface/admin/agenda";
 
 export const AdminAgendaSection: React.FC = () => {
   const navigate = useNavigate();

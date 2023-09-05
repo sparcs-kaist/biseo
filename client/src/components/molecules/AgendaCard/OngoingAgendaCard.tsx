@@ -1,19 +1,19 @@
 import React, { useState, useCallback, useMemo } from "react";
-import { Box, Card, Text, Button } from "@/components/atoms";
 import type { OngoingAgenda } from "@biseo/interface/agenda";
+import { Box, Card, Text, Button } from "@/components/atoms";
+import { AgendaTag } from "@/components/molecules/AgendaTag";
 import {
-  AgendaTag,
   ChoiceComponent,
   CompletedChoice,
   NotVotableChoice,
-} from "@/components/molecules";
+} from "@/components/molecules/Choice";
 import { useAgenda } from "@/services/agenda";
 
 interface OngoingAgendaProps {
   agenda: OngoingAgenda;
 }
 
-const _tags = {
+const agendaTags = {
   public: true,
   identified: false,
   votable: true,
@@ -42,24 +42,27 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
     [chosenChoiceId],
   );
 
-  const choices = agenda.user.votable ? (
-    agenda.user.voted ? (
-      <CompletedChoice
-        choice={agenda.choices.find(choice => choice.id === agenda.user.voted)}
-      />
-    ) : (
-      agenda.choices.map(choice => (
+  let choices: JSX.Element | JSX.Element[] = <NotVotableChoice />;
+  if (agenda.user.votable) {
+    if (agenda.user.voted) {
+      choices = (
+        <CompletedChoice
+          choice={agenda.choices.find(
+            choice => choice.id === agenda.user.voted,
+          )}
+        />
+      );
+    } else {
+      choices = agenda.choices.map(choice => (
         <ChoiceComponent
           key={choice.id}
           choice={choice}
-          chosen={choice.id == chosenChoiceId}
+          chosen={choice.id === chosenChoiceId}
           onClick={() => choose(choice.id)}
-        ></ChoiceComponent>
-      ))
-    )
-  ) : (
-    <NotVotableChoice />
-  );
+        />
+      ));
+    }
+  }
 
   return (
     <Card primary bold>
@@ -67,8 +70,8 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
         <Box gap={8}>
           <AgendaTag
             tags={{
-              public: _tags.public,
-              identified: _tags.identified,
+              public: agendaTags.public,
+              identified: agendaTags.identified,
               votable: agenda.user.votable,
             }}
           />
@@ -89,12 +92,12 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
         </Box>
         {agenda.user.votable && !agenda.user.voted && (
           <Box dir="row" justify="flex-end" w="fill">
-          <Button w={90} disabled={!chosen} onClick={() => vote()}>
-            <Text variant="option1" color={chosen ? "blue600" : "blue300"}>
-              투표하기
-            </Text>
-          </Button>
-        </Box>
+            <Button w={90} disabled={!chosen} onClick={() => vote()}>
+              <Text variant="option1" color={chosen ? "blue600" : "blue300"}>
+                투표하기
+              </Text>
+            </Button>
+          </Box>
         )}
       </Box>
     </Card>

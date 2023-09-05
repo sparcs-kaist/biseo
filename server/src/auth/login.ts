@@ -19,10 +19,9 @@ export const loginHandler = async (req: Request, res: Response) => {
   const username = await authenticate(result.data);
   if (!username) return res.status(401).send("Unauthorized");
 
-  const user = await prisma.user.findUnique({ where: { username } })
-    || await prisma.user.create({ data: { username, displayName: username } });
+  const user =
+    (await prisma.user.findUnique({ where: { username } })) ||
+    (await prisma.user.create({ data: { username, displayName: username } }));
 
   return res.json({ token: getToken(user.username) });
 };
-
-

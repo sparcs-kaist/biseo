@@ -79,7 +79,7 @@ export const TemplateSelect = styled.select<{ w: number; h: number }>`
   appearance: none;
 `;
 
-export const TagSelect = styled.select<{}>`
+export const TagSelect = styled.select`
   width: 300px;
   /* height: 38px; */
   padding: 5px;

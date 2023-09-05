@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import * as schema from "@biseo/interface/user/tag";
+import type * as schema from "@biseo/interface/user/tag";
 import { prisma } from "@/db/prisma";
 
 export const createTag = async ({
@@ -56,13 +56,13 @@ export const retrieveAll = async (): Promise<schema.UserTag[]> => {
 };
 
 export const updateTag = async (tagUpdate: schema.UserTagUpdate) => {
-  const deleteUserTag = prisma.userTag.deleteMany({
+  const deleteUserTagQuery = prisma.userTag.deleteMany({
     where: {
       tagId: tagUpdate.id,
     },
   });
 
-  const updateTag = prisma.tag.update({
+  const updateTagQuery = prisma.tag.update({
     where: {
       id: tagUpdate.id,
     },
@@ -87,8 +87,10 @@ export const updateTag = async (tagUpdate: schema.UserTagUpdate) => {
     },
   });
 
-  const result = await prisma.$transaction([deleteUserTag, updateTag]);
-  const { users, ...updatedTag } = result[1];
+  const [, { users, ...updatedTag }] = await prisma.$transaction([
+    deleteUserTagQuery,
+    updateTagQuery,
+  ]);
 
   const tagWithUsers: schema.UserTag = {
     ...updatedTag,
@@ -103,17 +105,20 @@ export const updateTag = async (tagUpdate: schema.UserTagUpdate) => {
 export const deleteTag = async ({
   id,
 }: schema.Delete): Promise<schema.Deleted> => {
-  const deleteUserTag = prisma.userTag.deleteMany({
+  const deleteUserTagQuery = prisma.userTag.deleteMany({
     where: {
       tagId: id,
     },
   });
 
-  const deleteTag = prisma.tag.delete({
-    where: { id: id },
+  const deleteTagQuery = prisma.tag.delete({
+    where: { id },
   });
 
-  const result = await prisma.$transaction([deleteUserTag, deleteTag]);
+  const result = await prisma.$transaction([
+    deleteUserTagQuery,
+    deleteTagQuery,
+  ]);
   const deletedTag = result[1];
 
   return {

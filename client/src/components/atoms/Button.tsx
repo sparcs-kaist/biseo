@@ -1,6 +1,13 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { Color } from "@/theme";
+import type { Color } from "@/theme";
+
+type Size = number | "hug" | "fill";
+const calcSize = (size: Size) => {
+  if (size === "fill") return "100%";
+  if (size === "hug") return "fit-content";
+  return `${size}px`;
+};
 
 export const Button = styled.button<{
   w?: Size;
@@ -10,8 +17,8 @@ export const Button = styled.button<{
 }>(
   ({ w = "fill", h = 28, color = "blue200", padHorizontal = 0, theme }) => css`
     display: flex;
-    width: ${size(w)};
-    height: ${size(h)};
+    width: ${calcSize(w)};
+    height: ${calcSize(h)};
     padding: 0px ${padHorizontal}px;
     border-radius: 5px;
     border: none;
@@ -35,10 +42,3 @@ export const Clickable = styled.div`
     cursor: pointer;
   }
 `;
-
-type Size = number | "hug" | "fill";
-const size = (size: Size) => {
-  if (size === "fill") return "100%";
-  if (size === "hug") return "fit-content";
-  return `${size}px`;
-};

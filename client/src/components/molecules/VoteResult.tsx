@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const VoteResult: React.FC<Props> = ({
-  type,
+  type = false,
   clickHandler,
   revealChoice,
   voted,
@@ -30,7 +30,7 @@ export const VoteResult: React.FC<Props> = ({
         >
           {!revealChoice ? "내 투표 보기" : "내 투표 가리기"}
         </Text>
-      ) : <></>}
+      ) : null}
     </Box>
     <Tag type={type ? "public" : "private"} />
   </Box>

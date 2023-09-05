@@ -1,16 +1,14 @@
 import React, { useState, useMemo } from "react";
-import { Box, Card, Divider, Text } from "@/components/atoms";
-import {
-  AgendaTag,
-  OptionVoteResult,
-  VoteResult,
-  VoteDetail,
-  VoteParticipate,
-} from "@/components/molecules";
 
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
+import { Box, Card, Divider, Text } from "@/components/atoms";
+import { AgendaTag } from "@/components/molecules/AgendaTag";
+import { OptionVoteResult } from "@/components/molecules/OptionVoteResult";
+import { VoteResult } from "@/components/molecules/VoteResult";
+import { VoteDetail } from "@/components/molecules/VoteDetail";
+import { VoteParticipate } from "@/components/molecules/VoteParticipate";
 
-const _tags = {
+const agendaTags = {
   public: true,
   identified: false,
   votable: true,
@@ -35,7 +33,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       bold={enabled}
       clickable
       onClick={e => {
-        setEnabled(enabled => !enabled);
+        setEnabled(value => !value);
         e.stopPropagation();
       }}
     >
@@ -60,7 +58,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             total={agenda.voters.total}
           />
           <VoteResult
-            type={_tags.public}
+            type={agendaTags.public}
             clickHandler={switchRevealChoice}
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
@@ -71,19 +69,19 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
                 name={choice.name}
                 count={choice.count}
                 totalCount={totalCount}
-                userChoice={revealChoice && agenda.user.voted == choice.id}
+                userChoice={revealChoice && agenda.user.voted === choice.id}
               />
             ))}
           </Box>
           <Divider />
-          <VoteDetail type={_tags.identified} />
+          <VoteDetail type={agendaTags.identified} />
         </Box>
       ) : (
         <Box gap={8}>
           <AgendaTag
             tags={{
-              public: _tags.public,
-              identified: _tags.identified,
+              public: agendaTags.public,
+              identified: agendaTags.identified,
               votable: agenda.user.votable,
             }}
           />

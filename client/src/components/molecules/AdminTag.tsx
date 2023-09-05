@@ -7,11 +7,11 @@ interface Tags {
 }
 
 interface Props {
-  suffix?: number;
+  suffix?: number | string;
   tags: Tags;
 }
 
-export const AdminTag: React.FC<Props> = ({ suffix, tags }) => (
+export const AdminTag: React.FC<Props> = ({ suffix = "", tags }) => (
   <Box dir="row" gap={8} align="center">
     {tags.user && <Tag type="user" suffix={suffix} />}
     {tags.template && <Tag type="template" suffix={suffix} />}

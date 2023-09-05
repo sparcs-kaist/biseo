@@ -1,16 +1,10 @@
 import React from "react";
-import { Text } from "@/components/atoms";
 import styled from "@emotion/styled";
+import { Text } from "@/components/atoms";
 
 interface Props {
   title: string;
 }
-
-export const ChatHeader: React.FC<Props> = ({ title }) => (
-  <Container>
-    <Text variant="title2">{title}</Text>
-  </Container>
-);
 
 const Container = styled.div`
   position: relative;
@@ -22,3 +16,9 @@ const Container = styled.div`
   padding: 0 20px;
   justify-content: center;
 `;
+
+export const ChatHeader: React.FC<Props> = ({ title }) => (
+  <Container>
+    <Text variant="title2">{title}</Text>
+  </Container>
+);

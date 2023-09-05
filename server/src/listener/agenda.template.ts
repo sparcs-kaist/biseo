@@ -18,9 +18,7 @@ router.on("agenda.template.create", schema.Create, async (req, { io }) => {
   return {};
 });
 
-router.on("agenda.template.retrieveAll", schema.RetrieveAll, async req => {
-  return await retrieveAll();
-});
+router.on("agenda.template.retrieveAll", schema.RetrieveAll, retrieveAll);
 
 router.on("agenda.template.update", schema.Update, async (req, { io }) => {
   const { templateWithChoices } = await updateTemplate(req);

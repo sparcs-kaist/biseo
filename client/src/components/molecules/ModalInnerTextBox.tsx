@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import {
   BorderedBox,
   Box,
@@ -54,12 +54,12 @@ interface SubComponents {
 
 export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   title,
-  count,
-  buttonText,
-  buttonOnClick,
+  count = undefined,
+  buttonText = "",
+  buttonOnClick = () => {},
   children,
-  required,
-}) => (
+  required = false,
+}: ModalInnerProps) => (
   <Box dir="column" w="fill" gap={8}>
     <Box w="fill" dir="row" align="flex-end" justify="space-between">
       <Box dir="row" align="center" gap={8}>
@@ -92,7 +92,7 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   </Box>
 );
 
-const TextBox: React.FC<PropsWithChildren> = ({ children }) => (
+const TextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
   <BorderedBox
     borderColor="gray200"
     bg="gray100"
@@ -110,7 +110,7 @@ const TextBox: React.FC<PropsWithChildren> = ({ children }) => (
   </BorderedBox>
 );
 ModalInner.TextBox = TextBox;
-const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
+const WhiteTextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
   <BorderedBox
     borderColor="gray200"
     bg="white"
@@ -128,7 +128,7 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children }) => (
   </BorderedBox>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
-const InputBox: React.FC<InputProps> = ({ value, onChange }) => (
+const InputBox: React.FC<InputProps> = ({ value = undefined, onChange }) => (
   <BorderedBox
     w={300}
     borderColor="gray200"
@@ -148,7 +148,10 @@ const InputBox: React.FC<InputProps> = ({ value, onChange }) => (
 );
 ModalInner.InputBox = InputBox;
 
-const TextAreaInputBox: React.FC<TextAreaProps> = ({ value, onChange }) => (
+const TextAreaInputBox: React.FC<TextAreaProps> = ({
+  value = undefined,
+  onChange,
+}) => (
   <BorderedBox
     w={300}
     h={68}
@@ -167,14 +170,47 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({ value, onChange }) => (
 );
 ModalInner.TextAreaInputBox = TextAreaInputBox;
 
-const VoteOptions: React.FC<PropsWithChildren> = ({ children }) => (
+const TextButton: React.FC<SubmitProps> = ({
+  children = null,
+  value,
+  onClick,
+  onSubmit,
+}) => (
+  <BorderedBox
+    w={300}
+    borderColor="gray200"
+    bg="gray100"
+    borderSize={1}
+    roundBot={5}
+    roundTop={0}
+    borderStyle="solid"
+    dir="row"
+    align="center"
+    padRight={15}
+  >
+    <TextInput
+      value={value}
+      placeholder={children?.toString()}
+      onChange={onClick}
+      style={{ outline: "none" }}
+    />
+    <Button w={20} h={20} onClick={onSubmit}>
+      <Text color="blue600" variant="boldtitle2">
+        +
+      </Text>
+    </Button>
+  </BorderedBox>
+);
+ModalInner.TextButton = TextButton;
+
+const VoteOptions: React.FC<PropsWithChildren> = ({ children = null }) => (
   <Box dir="row" gap={8}>
     {children}
   </Box>
 );
 ModalInner.VoteOptions = VoteOptions;
 
-const VoteOption: React.FC<PropsWithChildren> = ({ children }) => (
+const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
   <BorderedBox
     borderColor="gray200"
     bg="white"
@@ -194,7 +230,7 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children }) => (
 ModalInner.VoteOption = VoteOption;
 
 const AddVoteOptionArea: React.FC<SubmitProps> = ({
-  children,
+  children = null,
   value,
   onClick,
   onSubmit,
@@ -227,7 +263,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
 ModalInner.AddVoteOptionArea = AddVoteOptionArea;
 
 const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
-  children,
+  children = null,
   onClick = () => {},
 }) => (
   <BorderedBox
@@ -257,40 +293,7 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
 );
 ModalInner.VoteChoice = VoteChoice;
 
-const TextButton: React.FC<SubmitProps> = ({
-  children,
-  value,
-  onClick,
-  onSubmit,
-}) => (
-  <BorderedBox
-    w={300}
-    borderColor="gray200"
-    bg="gray100"
-    borderSize={1}
-    roundBot={5}
-    roundTop={0}
-    borderStyle="solid"
-    dir="row"
-    align="center"
-    padRight={15}
-  >
-    <TextInput
-      value={value}
-      placeholder={children?.toString()}
-      onChange={onClick}
-      style={{ outline: "none" }}
-    />
-    <Button w={20} h={20} onClick={onSubmit}>
-      <Text color="blue600" variant="boldtitle2">
-        +
-      </Text>
-    </Button>
-  </BorderedBox>
-);
-ModalInner.TextButton = TextButton;
-
-const TagChoice: React.FC<PropsWithChildren> = ({ children }) => (
+const TagChoice: React.FC<PropsWithChildren> = ({ children = null }) => (
   <BorderedBox
     borderColor="gray200"
     bg="white"
@@ -311,7 +314,7 @@ const TagChoice: React.FC<PropsWithChildren> = ({ children }) => (
 );
 ModalInner.TagChoice = TagChoice;
 
-const TaggerBox: React.FC<PropsWithChildren> = ({ children }) => (
+const TaggerBox: React.FC<PropsWithChildren> = ({ children = null }) => (
   <TaggersBox w={300} h={73}>
     <Scroll>
       <TaggersBox>{children}</TaggersBox>

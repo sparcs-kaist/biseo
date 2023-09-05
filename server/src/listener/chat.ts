@@ -11,8 +11,6 @@ router.on("chat.send", schema.Send, async (req, { io, user }) => {
   return message;
 });
 
-router.on("chat.retrieve", schema.Retrieve, async req => {
-  return await retrieve(req);
-});
+router.on("chat.retrieve", schema.Retrieve, async req => retrieve(req));
 
 export { router as chatRouter };

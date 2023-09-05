@@ -5,7 +5,4 @@ import type {
 } from "@biseo/interface";
 
 /** Shared socket from server side code are configured here globally */
-export type BiseoSocket = Socket<
-  ServerToClientEvents,
-  ClientToServerEvents
->;
+export type BiseoSocket = Socket<ServerToClientEvents, ClientToServerEvents>;

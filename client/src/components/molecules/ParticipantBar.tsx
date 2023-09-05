@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Text } from "@/components/atoms";
 import styled from "@emotion/styled";
-import { Color } from "@/theme";
+import { Box, Text } from "@/components/atoms";
+import type { Color } from "@/theme";
 
 interface Props {
   total?: number;

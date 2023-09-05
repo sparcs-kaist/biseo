@@ -1,12 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import { Box, Button, TaggersBox, Text } from "@/components/atoms";
+import { Box, Button, Text } from "@/components/atoms";
 import { Modal, ModalInner } from "@/components/molecules";
-import { UserTable } from "@/components/organisms";
-
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
+import { UserTable } from "./UserTable";
 
 export const EditUserTagModal: React.FC = () => {
   const location = useLocation();
@@ -54,8 +53,8 @@ export const EditUserTagModal: React.FC = () => {
     if (!validated) return;
     updateTag({
       id: tagId,
-      title: title,
-      description: description,
+      title,
+      description,
       users: taggers,
     });
   };

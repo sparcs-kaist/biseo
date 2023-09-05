@@ -1,6 +1,6 @@
-import { socket } from "@/socket";
 import { create } from "zustand";
 import type { Agenda } from "@biseo/interface/agenda";
+import { socket } from "@/socket";
 
 interface AgendaState {
   agendas: Agenda[];
@@ -20,7 +20,7 @@ const useAgenda = create<AgendaState>(set => ({
   retrieveAgendas: async () => {
     try {
       const agendas = await socket.emitAsync("agenda.retrieveAll", {});
-      set({ agendas: agendas });
+      set({ agendas });
     } catch (error) {
       // TODO: globally handle error using zustand middleware
     }
@@ -40,7 +40,7 @@ socket.on("agenda.voted", ({ id, user, voters }) => {
         ? {
             ...agenda,
             user: { votable: agenda.user.votable, voted: user.voted },
-            voters: voters,
+            voters,
           }
         : agenda,
     );

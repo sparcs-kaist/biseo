@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { css, SerializedStyles } from "@emotion/react";
+import { css, type SerializedStyles } from "@emotion/react";
 import { theme } from "@/theme";
 import type { Color } from "@/theme";
 
@@ -63,7 +63,7 @@ interface Props {
   type: TagTypes;
 }
 
-export const Tag: React.FC<Props> = ({ suffix, type }) => (
+export const Tag: React.FC<Props> = ({ suffix = "", type }) => (
   <TagInner type={type}>
     {tagNames[type]} {suffix}
   </TagInner>

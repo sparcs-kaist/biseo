@@ -1,19 +1,14 @@
-import React from "react";
-import {
-  PositionedDownArrowIcon,
-  Select,
-  SelectWrapper,
-} from "@/components/atoms";
-import { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
+import { PositionedDownArrowIcon, Select, SelectWrapper } from "./Label";
 
-interface Props extends PropsWithChildren {
+interface SelectBoxProps {
   width: number;
   height: number;
   options: string[];
   onChange: (selectedValue: string) => void; // new prop
 }
 
-export const SelectBox: React.FC<Props> = ({
+export const SelectBox: React.FC<SelectBoxProps> = ({
   width,
   height,
   options,
@@ -37,8 +32,14 @@ export const SelectBox: React.FC<Props> = ({
   </SelectWrapper>
 );
 
-export const SelectText: React.FC<Props> = ({
-  children,
+interface SelectTextProps extends PropsWithChildren {
+  width: number;
+  height: number;
+  onChange: (selectedValue: string) => void; // new prop
+}
+
+export const SelectText: React.FC<SelectTextProps> = ({
+  children = null,
   width,
   height,
   onChange,

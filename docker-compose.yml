@@ -43,4 +43,3 @@ services:
 volumes:
   biseo-data:
     external: true
-

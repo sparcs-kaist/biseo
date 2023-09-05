@@ -1,15 +1,14 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 
-import { Button, Box, Text, TaggersBox } from "@/components/atoms";
+import { Button, Box, Text } from "@/components/atoms";
 import { Modal, ModalInner } from "@/components/molecules";
-import { UserTable } from "@/components/organisms";
-
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
+import { UserTable } from "./UserTable";
 
 export const CreateUserTagModal: React.FC = () => {
-  const { users, retrieveUsers } = useAdminUser(state => ({
+  const { users } = useAdminUser(state => ({
     users: state.adminUsers,
     retrieveUsers: state.retrieveAll,
   }));
@@ -44,8 +43,8 @@ export const CreateUserTagModal: React.FC = () => {
   const onSubmit = () => {
     if (!validated) return;
     createTag({
-      title: title,
-      description: description,
+      title,
+      description,
       users: taggers,
     });
   };

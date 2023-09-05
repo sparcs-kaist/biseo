@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Text, Card, Divider, Button } from "@/components/atoms";
-import { AgendaTag } from "@/components/molecules";
 
 import type { AdminAgenda } from "@biseo/interface/admin/agenda";
+import { Box, Text, Card, Divider, Button } from "@/components/atoms";
+import { AgendaTag } from "@/components/molecules/AgendaTag";
 import { useAdminAgenda } from "@/services/admin-agenda";
 
-const _tags = {
+const agendaTags = {
   public: true,
   identified: false,
   votable: true,
@@ -51,7 +51,7 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
   return (
     <Card onClick={openModal}>
       <Box gap={8} w="fill">
-        <AgendaTag tags={_tags} admin />
+        <AgendaTag tags={agendaTags} admin />
         <Box gap={2}>
           <Text variant="title2" color="black">
             {agenda.title}

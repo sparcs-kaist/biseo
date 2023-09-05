@@ -9,8 +9,8 @@ import {
   ParticipantBar,
   TerminatedModalInner,
 } from "@/components/molecules";
-import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { UserTable } from "./UserTable";
 
 export const TerminatedAgendaModal: React.FC = () => {
   const location = useLocation();
@@ -23,17 +23,17 @@ export const TerminatedAgendaModal: React.FC = () => {
     ),
   }));
   const totalChoiceCount =
-    targetAgenda == undefined
+    targetAgenda === undefined
       ? 0
       : targetAgenda?.choices
           .map(choice => choice.count)
           .reduce((prev, current) => prev + current, 0);
   const totalVoterCount =
-    targetAgenda?.voters.voted.length == undefined
+    targetAgenda?.voters.voted.length === undefined
       ? 0
       : targetAgenda?.voters.voted.length;
   const totalVotableCount =
-    targetAgenda?.voters.total.length == undefined
+    targetAgenda?.voters.total.length === undefined
       ? 0
       : targetAgenda?.voters.total.length;
 

@@ -1,5 +1,5 @@
-import { ClientToServerEvents, ServerToClientEvents } from "./events";
-import { Res } from "./helpers";
+import type { ClientToServerEvents, ServerToClientEvents } from "./events";
+import type { Res } from "./helpers";
 
 type AllEvents = ServerToClientEvents & ClientToServerEvents;
 
@@ -17,7 +17,8 @@ export type SchemaOf<Ev extends EventNames> = Parameters<AllEvents[Ev]>[0];
  * Get the response schema of a client side event
  * @example type ResponseOf<"chat.send"> = {};
  */
-export type ResponseOf<Ev extends ClientEventNames>
-  = Parameters<
+export type ResponseOf<Ev extends ClientEventNames> = Parameters<
   Parameters<ClientToServerEvents[Ev]>[1]
->[0] extends Res<infer O> ? O : never;
+>[0] extends Res<infer O>
+  ? O
+  : never;

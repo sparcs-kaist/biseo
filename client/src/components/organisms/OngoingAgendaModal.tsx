@@ -7,8 +7,8 @@ import {
   ParticipantBar,
 } from "@/components/molecules";
 import { Box, Button, Text } from "@/components/atoms";
-import { UserTable } from "@/components/organisms";
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { UserTable } from "./UserTable";
 
 export const OngoingAgendaModal: React.FC = () => {
   const location = useLocation();
@@ -27,10 +27,14 @@ export const OngoingAgendaModal: React.FC = () => {
   );
 
   const remind = () => {
-    targetAgenda && remindAgenda(targetAgenda.id);
+    if (targetAgenda) {
+      remindAgenda(targetAgenda.id);
+    }
   };
   const terminate = () => {
-    targetAgenda && terminateAgenda(targetAgenda.id, "terminated");
+    if (targetAgenda) {
+      terminateAgenda(targetAgenda.id, "terminated");
+    }
   };
 
   return (
@@ -99,7 +103,7 @@ export const OngoingAgendaModal: React.FC = () => {
           <ParticipantBar
             total={targetAgenda?.voters.total.length}
             participant={targetAgenda?.voters.voted.length}
-          ></ParticipantBar>
+          />
           <ModalInner
             title="투표 대상"
             count={targetAgenda?.voters.total.length}

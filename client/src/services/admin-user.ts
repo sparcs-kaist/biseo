@@ -1,6 +1,6 @@
-import { socket } from "@/socket";
 import { create } from "zustand";
 import type { AdminUser } from "@biseo/interface/admin/user";
+import { socket } from "@/socket";
 
 interface AdminUserState {
   adminUsers: AdminUser[];

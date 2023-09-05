@@ -1,6 +1,6 @@
-import { Init } from "@biseo/interface/init";
-import { useAuth } from "@/services/auth";
 import { redirect } from "react-router-dom";
+import type { Init } from "@biseo/interface/init";
+import { useAuth } from "@/services/auth";
 
 interface Params {
   when: (init: Init | null) => boolean;

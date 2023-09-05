@@ -1,10 +1,10 @@
-import { socket } from "@/socket";
 import { create } from "zustand";
 import type {
   UserTag,
   UserTagCreate,
   UserTagUpdate,
 } from "@biseo/interface/user/tag";
+import { socket } from "@/socket";
 
 interface UserTagState {
   userTags: UserTag[];

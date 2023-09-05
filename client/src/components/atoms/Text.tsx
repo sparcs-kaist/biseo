@@ -30,7 +30,7 @@ export const Text = styled.p<{
 }>(({ variant = "body", color = "black", theme, position = "static" }) => [
   css({
     color: theme.colors[color],
-    position: position,
+    position,
     whiteSpace: "pre-line",
   }),
   textStyles[variant],

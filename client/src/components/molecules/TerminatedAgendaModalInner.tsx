@@ -1,10 +1,10 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
 import { BorderedBox, Box, Scroll, Text } from "@/components/atoms";
 
-interface BoxWithTitle extends PropsWithChildren {
+interface BoxWithTitleProps extends PropsWithChildren {
   title: string;
 }
-interface BoxWithCount extends PropsWithChildren {
+interface BoxWithCountProps extends PropsWithChildren {
   count: number | undefined;
 }
 interface SubComponents {
@@ -13,7 +13,10 @@ interface SubComponents {
   OptionResultsBox: typeof OptionResultsBox;
 }
 
-const BoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
+const BoxWithTitle: React.FC<BoxWithTitleProps> = ({
+  title,
+  children = null,
+}) => (
   <Box w={300} dir="column" gap={8}>
     <Text variant="body" color="black">
       {title}
@@ -32,9 +35,12 @@ const BoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
     </BorderedBox>
   </Box>
 );
-//ModalInner.TextBox = TextBox;
+// ModalInner.TextBox = TextBox;
 
-const TextBoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
+const TextBoxWithTitle: React.FC<BoxWithTitleProps> = ({
+  title,
+  children = null,
+}) => (
   <Box w={300} dir="column" gap={10}>
     <Text variant="body" color="black">
       {title}
@@ -56,7 +62,10 @@ const TextBoxWithTitle: React.FC<BoxWithTitle> = ({ title, children }) => (
   </Box>
 );
 
-const OptionResultsBox: React.FC<BoxWithCount> = ({ children, count = 0 }) => (
+const OptionResultsBox: React.FC<BoxWithCountProps> = ({
+  children = null,
+  count = 0,
+}) => (
   <Box w={300} h={177} dir="column" gap={8}>
     <Box dir="row" gap={8}>
       <Text variant="body" color="black" dir="row">
@@ -99,7 +108,7 @@ const OptionResultsBox: React.FC<BoxWithCount> = ({ children, count = 0 }) => (
 );
 
 export const TerminatedModalInner: SubComponents = {
-  BoxWithTitle: BoxWithTitle,
-  TextBoxWithTitle: TextBoxWithTitle,
-  OptionResultsBox: OptionResultsBox,
+  BoxWithTitle,
+  TextBoxWithTitle,
+  OptionResultsBox,
 };

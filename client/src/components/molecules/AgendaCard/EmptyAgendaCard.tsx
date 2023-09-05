@@ -1,7 +1,12 @@
 import React from "react";
-import { Text, Card } from "@/components/atoms";
-import { AgendaStatus } from "@biseo/interface/agenda";
 import styled from "@emotion/styled";
+import type { AgendaStatus } from "@biseo/interface/agenda";
+import { Text, Card } from "@/components/atoms";
+
+const DashedCard = styled(Card)`
+  border-style: dashed;
+  background: none;
+`;
 
 const mention: Record<AgendaStatus, string> = {
   ongoing: "진행중인",
@@ -20,8 +25,3 @@ export const EmptyAgendaCard: React.FC<Props> = ({ agendaStatus }) => (
     </Text>
   </DashedCard>
 );
-
-const DashedCard = styled(Card)`
-  border-style: dashed;
-  background: none;
-`;

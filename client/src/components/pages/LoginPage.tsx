@@ -1,4 +1,4 @@
-import React, { FormEvent, useCallback, useState } from "react";
+import React, { type FormEvent, useCallback, useState } from "react";
 import { Navigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
@@ -10,78 +10,6 @@ import { useAuth } from "@/services/auth";
 import { useInput } from "@/common/hooks";
 import { theme } from "@/theme";
 import { Box, Text } from "@/components/atoms";
-
-export const LoginPage: React.FC = () => {
-  const { login, isLoggedIn } = useAuth(state => ({
-    login: state.login,
-    isLoggedIn: !!state.userInfo,
-  }));
-  const [error, setError] = useState<boolean>(false);
-
-  const { input: username } = useInput();
-  const { input: password } = useInput();
-
-  const easeMotion = {
-    initial: { opacity: 0, scale: 0.5 },
-    animate: { opacity: 1, scale: 1 },
-    transition: {
-      duration: 0.8,
-      delay: 0.5,
-      ease: [0, 0.71, 0.2, 1.01],
-    },
-  };
-
-  const handleLogin = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-
-      login(username.value, password.value)
-        .then(() => console.log("Login success!"))
-        .catch(err => setError(true));
-    },
-    [username.value, password.value],
-  );
-
-  if (isLoggedIn) return <Navigate to="/" replace={true} />;
-
-  return (
-    <Page>
-      <Box dir="column" align="center">
-        <LogoLargeIcon width={116} />
-        <LoginTitle {...easeMotion}>쉽고 빠른 의사결정은, Biseo</LoginTitle>
-      </Box>
-
-      <form onSubmit={handleLogin}>
-        <Box dir="column" gap={12} align="center">
-          <InputContainer
-            type="text"
-            placeholder="아이디를 입력하세요"
-            {...username}
-          />
-          <InputContainer
-            type="password"
-            placeholder="비밀번호를 입력하세요"
-            {...password}
-          />
-          <Box dir="column" gap={8} align="flex-start">
-            {error && (
-              <Text variant="subtitle" color="blue600">
-                아이디 또는 비밀번호가 올바르지 않습니다.
-              </Text>
-            )}
-
-            <LoginButton>
-              <Text variant="body" color="blue600">
-                로그인
-              </Text>
-            </LoginButton>
-          </Box>
-        </Box>
-      </form>
-      <LoginBackground src={LandingImg} />
-    </Page>
-  );
-};
 
 const Page = styled.div`
   width: 100vw;
@@ -127,7 +55,7 @@ const InputContainer = styled.input`
   }
   &::placeholder {
     font-size: 13px;
-    color: ${theme.colors["gray300"]};
+    color: ${theme.colors.gray300};
   }
 `;
 
@@ -163,3 +91,83 @@ const LoginBackground = styled.img`
 
   overflow: hidden;
 `;
+
+export const LoginPage: React.FC = () => {
+  const { login, isLoggedIn } = useAuth(state => ({
+    login: state.login,
+    isLoggedIn: !!state.userInfo,
+  }));
+  const [error, setError] = useState<boolean>(false);
+
+  const { input: username } = useInput();
+  const { input: password } = useInput();
+
+  const easeMotion = {
+    initial: { opacity: 0, scale: 0.5 },
+    animate: { opacity: 1, scale: 1 },
+    transition: {
+      duration: 0.8,
+      delay: 0.5,
+      ease: [0, 0.71, 0.2, 1.01],
+    },
+  };
+
+  const handleLogin = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      login(username.value, password.value)
+        .then(() => console.log("Login success!"))
+        .catch(() => setError(true));
+    },
+    [username.value, password.value],
+  );
+
+  if (isLoggedIn) return <Navigate to="/" replace />;
+
+  return (
+    <Page>
+      <Box dir="column" align="center">
+        <LogoLargeIcon width={116} />
+        <LoginTitle
+          initial={easeMotion.initial}
+          animate={easeMotion.animate}
+          transition={easeMotion.transition}
+        >
+          쉽고 빠른 의사결정은, Biseo
+        </LoginTitle>
+      </Box>
+
+      <form onSubmit={handleLogin}>
+        <Box dir="column" gap={12} align="center">
+          <InputContainer
+            type="text"
+            placeholder="아이디를 입력하세요"
+            value={username.value}
+            onChange={username.onChange}
+          />
+          <InputContainer
+            type="password"
+            placeholder="비밀번호를 입력하세요"
+            value={password.value}
+            onChange={password.onChange}
+          />
+          <Box dir="column" gap={8} align="flex-start">
+            {error && (
+              <Text variant="subtitle" color="blue600">
+                아이디 또는 비밀번호가 올바르지 않습니다.
+              </Text>
+            )}
+
+            <LoginButton>
+              <Text variant="body" color="blue600">
+                로그인
+              </Text>
+            </LoginButton>
+          </Box>
+        </Box>
+      </form>
+      <LoginBackground src={LandingImg} />
+    </Page>
+  );
+};

@@ -1,9 +1,11 @@
-import { Box, Card, Text, UserTag } from "@/components/atoms";
-import { AdminTag } from "@/components/molecules";
-import type { UserTag as IUserTag } from "@biseo/interface/user/tag";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const _tags = {
+import type { UserTag as IUserTag } from "@biseo/interface/user/tag";
+import { Box, Card, Text, UserTag } from "@/components/atoms";
+import { AdminTag } from "./AdminTag";
+
+const adminTags = {
   user: true,
   template: false,
 };
@@ -19,7 +21,7 @@ export const UserTagCards: React.FC<Props> = ({ tag }) => {
     <Card primary={false} round={5} onClick={openModal}>
       <Box gap={8}>
         <Box gap={8} dir="row">
-          <AdminTag tags={_tags} suffix={tag.users.length} />
+          <AdminTag tags={adminTags} suffix={tag.users.length} />
           <UserTag>{tag.title}</UserTag>
         </Box>
         <Box w={340}>

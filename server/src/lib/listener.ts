@@ -1,14 +1,13 @@
 import type { ZodType } from "zod";
-import type { Server, Socket } from "socket.io";
 
 import type { ClientEventNames, ResponseOf, SchemaOf } from "@biseo/interface";
 import type { Res } from "@biseo/interface/helpers";
 
-import type { BiseoServer, BiseoSocket } from "@/types/socket";
 import type { User } from "@prisma/client";
+import type { BiseoServer, BiseoSocket } from "@/types/socket";
 import { BiseoError, errorHandler } from "./error";
 
-type Listener = (io: Server, socket: Socket) => void;
+type Listener = (io: BiseoServer, socket: BiseoSocket) => void;
 
 interface HandlerContext {
   io: BiseoServer;
@@ -35,16 +34,21 @@ export const Router = () => {
     schema: ZodType<SchemaOf<Ev>>,
     handler: Handler<Ev>,
   ) => {
-    listeners.push((io, socket) => socket.on<Ev>(event, ((
+    listeners.push((io, socket) =>
+      socket.on<Ev>(event, ((
         req: SchemaOf<Ev>,
         callback: (res: Res<ResponseOf<Ev>>) => void,
-      ) => schema
-        .parseAsync(req)
-        .catch(() => { throw new BiseoError("bad request"); })
-        .then(req => handler(req, context(io, socket)))
-        .then(res => callback({ ok: true, data: res }))
-        .catch(errorHandler(callback))
-    ) as any));
+      ) =>
+        schema
+          .parseAsync(req)
+          .catch(() => {
+            throw new BiseoError("bad request");
+          })
+          .then(data => handler(data, context(io, socket)))
+          .then(res => callback({ ok: true, data: res }))
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .catch(errorHandler(callback))) as any),
+    );
   };
 
   const register = (io: BiseoServer, socket: BiseoSocket) => {

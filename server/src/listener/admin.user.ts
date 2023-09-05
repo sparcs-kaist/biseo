@@ -5,8 +5,6 @@ import { Router } from "@/lib/listener";
 
 const router = Router();
 
-router.on("admin.user.retrieveAll", schema.RetrieveAll, async req => {
-  return await retrieveAll();
-});
+router.on("admin.user.retrieveAll", schema.RetrieveAll, retrieveAll);
 
 export { router as adminUserRouter };

@@ -1,6 +1,6 @@
 import type { Prisma, User } from "@prisma/client";
 import type * as schema from "@biseo/interface/chat";
-import { Agenda } from "@biseo/interface/agenda";
+import type { Agenda } from "@biseo/interface/agenda";
 
 import { prisma } from "@/db/prisma";
 
@@ -11,7 +11,7 @@ export const createMessage = async (
   const sendQuery: Prisma.ChatCreateInput = {
     user: { connect: user },
     type: "message",
-    message: message,
+    message,
     createdAt: new Date(),
   };
 
@@ -45,7 +45,7 @@ export const createNotice = async (
     user: { connect: user },
     type: "notice",
     message: `${title} 투표가 ${
-      status === "ongoing" ? "시작" : status === "terminated" ? "종료" : ""
+      status === "ongoing" ? "시작" : "종료"
     }되었습니다.`,
     createdAt: new Date(),
   };

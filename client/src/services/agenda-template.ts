@@ -1,10 +1,10 @@
-import { socket } from "@/socket";
 import { create } from "zustand";
 import type {
   AgendaTemplate,
   AgendaTemplateCreate,
   AgendaTemplateUpdate,
 } from "@biseo/interface/agenda/template";
+import { socket } from "@/socket";
 
 interface AgendaTemplateState {
   agendaTemplates: AgendaTemplate[];
@@ -18,9 +18,8 @@ interface AgendaTemplateState {
 export const useAgendaTemplate = create<AgendaTemplateState>((set, get) => ({
   agendaTemplates: [],
 
-  findTemplate: id => {
-    return get().agendaTemplates.find(template => template.id === id);
-  },
+  findTemplate: id =>
+    get().agendaTemplates.find(template => template.id === id),
 
   createTemplate: async template => {
     try {

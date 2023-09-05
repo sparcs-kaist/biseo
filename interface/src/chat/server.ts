@@ -1,4 +1,5 @@
-import { z } from "zod";
+/* eslint-disable @typescript-eslint/no-redeclare -- A Zod schema name and type should have the same names */
+import type { z } from "zod";
 import { Message } from "./common";
 
 /**

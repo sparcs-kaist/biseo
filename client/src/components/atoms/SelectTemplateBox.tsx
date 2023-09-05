@@ -1,10 +1,10 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from "react";
+import { useAgendaTemplate } from "@/services/agenda-template";
 import {
   PositionedDownArrowIcon,
   SelectWrapper,
   TemplateSelect,
-} from "@/components/atoms";
-import { useAgendaTemplate } from "@/services/agenda-template";
+} from "./Label";
 
 interface Props extends PropsWithChildren {
   width: number;
@@ -13,7 +13,7 @@ interface Props extends PropsWithChildren {
 }
 
 export const SelectTemplateBox: React.FC<Props> = ({
-  children,
+  children = null,
   width,
   height,
   onChange,
@@ -26,7 +26,7 @@ export const SelectTemplateBox: React.FC<Props> = ({
       <TemplateSelect
         w={width}
         h={height}
-        onChange={e => onChange(parseInt(e.target.value, 10))}
+        onChange={e => onChange(parseInt(e.target.value))}
         defaultValue={0}
       >
         <option value={0}>{children}</option>

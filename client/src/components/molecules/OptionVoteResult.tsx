@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Text } from "@/components/atoms";
 import styled from "@emotion/styled";
-import { Color } from "@/theme";
+import { Box, Text } from "@/components/atoms";
+import type { Color } from "@/theme";
 
 interface Props {
   name: string;
@@ -32,32 +32,30 @@ export const OptionVoteResult: React.FC<Props> = ({
   name,
   count,
   totalCount,
-  userChoice,
-}) => {
-  return (
-    <Box w="fill" h={30}>
-      <Background
-        percent={(count / totalCount) * 100}
-        color={userChoice ? "blue200" : "blue100"}
-        borderColor={userChoice ? "blue300" : "gray200"}
+  userChoice = false,
+}) => (
+  <Box w="fill" h={30}>
+    <Background
+      percent={(count / totalCount) * 100}
+      color={userChoice ? "blue200" : "blue100"}
+      borderColor={userChoice ? "blue300" : "gray200"}
+    >
+      <Box
+        w="fill"
+        h="fill"
+        dir="row"
+        align="center"
+        justify="space-between"
+        padHorizontal={13}
+        padVertical={6}
       >
-        <Box
-          w="fill"
-          h="fill"
-          dir="row"
-          align="center"
-          justify="space-between"
-          padHorizontal={13}
-          padVertical={6}
-        >
-          <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
-            {name}
-          </Text>
-          <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
-            {count}
-          </Text>
-        </Box>
-      </Background>
-    </Box>
-  );
-};
+        <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
+          {name}
+        </Text>
+        <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
+          {count}
+        </Text>
+      </Box>
+    </Background>
+  </Box>
+);

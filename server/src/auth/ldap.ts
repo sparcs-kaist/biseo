@@ -19,8 +19,8 @@ const sanitize = (str: string) =>
  * Authenticate a user with LDAP
  */
 export const authenticate = async (data: {
-  username: string,
-  password: string,
+  username: string;
+  password: string;
 }): Promise<string | null> => {
   try {
     await client.bind(

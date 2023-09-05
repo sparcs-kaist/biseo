@@ -1,13 +1,5 @@
 import { DownArrowIcon } from "@/assets";
-import {
-  BorderedBox,
-  Box,
-  PositionedDownArrowIcon,
-  Select,
-  SelectWrapper,
-  TagSelect,
-  Text,
-} from "@/components/atoms";
+import { BorderedBox, Box, Text } from "@/components/atoms";
 
 export const AdminAgendaTags: React.FC = () => (
   <Box w={270} h={28} gap={16} dir="row" justify="center">

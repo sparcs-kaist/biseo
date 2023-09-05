@@ -18,9 +18,7 @@ router.on("user.tag.create", schema.Create, async (req, { io }) => {
   return {};
 });
 
-router.on("user.tag.retrieveAll", schema.RetrieveAll, async req => {
-  return await retrieveAll();
-});
+router.on("user.tag.retrieveAll", schema.RetrieveAll, retrieveAll);
 
 router.on("user.tag.update", schema.Update, async (req, { io }) => {
   const { tagWithUsers } = await updateTag(req);

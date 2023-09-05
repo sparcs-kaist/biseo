@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom";
 import { LogoIcon } from "@/assets";
 import { Box, Button, Text } from "@/components/atoms";
 import { HeaderItem } from "@/components/molecules";
 import { useAuth } from "@/services/auth";
-import { useNavigate } from "react-router-dom";
 
 const adminPathList = [
   { name: "유저 모드", path: "" },
   { name: "투표 관리", path: "admin/agendas" },
-  //{ name: "유저 관리", path: "admin/users" },
+  // { name: "유저 관리", path: "admin/users" },
   { name: "설정", path: "admin/settings" },
 ];
 
@@ -43,26 +43,24 @@ export const Header: React.FC = () => {
         <LogoIcon />
       </Box>
       <Box w="fill" h="fill" dir="row" align="center" justify="center">
-        {useAuth().userInfo?.isAdmin ? (
-          adminPathList.map((item, index) => (
-            <HeaderItem
-              key={index}
-              name={item.name}
-              path={item.path}
-              selected={
-                item.path === ""
-                  ? window.location.pathname === "/" + item.path
-                  : window.location.pathname.startsWith("/" + item.path)
-              }
-            />
-          ))
-        ) : (
-          <></>
-        )}
+        {useAuth().userInfo?.isAdmin
+          ? adminPathList.map(item => (
+              <HeaderItem
+                key={item.path}
+                name={item.name}
+                path={item.path}
+                selected={
+                  item.path === ""
+                    ? window.location.pathname === `/${item.path}`
+                    : window.location.pathname.startsWith(`/${item.path}`)
+                }
+              />
+            ))
+          : null}
       </Box>
       <Button h={28} w={28} onClick={handleLogout}>
         <Text variant="boldtitle3" color="blue600">
-          {displayName == undefined
+          {displayName === undefined
             ? "?"
             : displayName.slice(0, 1).toUpperCase()}
         </Text>

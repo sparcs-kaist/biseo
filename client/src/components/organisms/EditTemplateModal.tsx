@@ -17,15 +17,15 @@ export const EditTemplateModal: React.FC = () => {
   }));
 
   const agendaTitleFormatted =
-    targetTemplate != undefined ? targetTemplate.title : "";
+    targetTemplate !== undefined ? targetTemplate.title : "";
   const templateTitleFormatted =
-    targetTemplate != undefined ? targetTemplate.templateName : "";
+    targetTemplate !== undefined ? targetTemplate.templateName : "";
   const agendaContentFormatted =
-    targetTemplate != undefined ? targetTemplate.content : "";
+    targetTemplate !== undefined ? targetTemplate.content : "";
   const agendaResolutionFormatted =
-    targetTemplate != undefined ? targetTemplate.resolution : "";
+    targetTemplate !== undefined ? targetTemplate.resolution : "";
   const agendaChoicesFormatted: string[] =
-    targetTemplate != undefined ? targetTemplate.choices : [];
+    targetTemplate !== undefined ? targetTemplate.choices : [];
 
   const [templateTitle, setTemplateTitle] = useState(templateTitleFormatted);
   const [agendaTitle, setAgendaTitle] = useState(agendaTitleFormatted);

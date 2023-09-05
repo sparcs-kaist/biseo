@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Text, Card, Divider } from "@/components/atoms";
-import { AdminTag } from "@/components/molecules";
 import { useNavigate } from "react-router-dom";
-import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 
-const _tags = {
+import type { AgendaTemplate } from "@biseo/interface/agenda/template";
+import { Box, Text, Card, Divider } from "@/components/atoms";
+import { AdminTag } from "./AdminTag";
+
+const adminTags = {
   template: true,
   user: false,
 };
@@ -20,7 +21,7 @@ export const AgendaTemplateCard: React.FC<Props> = ({ template }) => {
   return (
     <Card onClick={openModal}>
       <Box gap={8} w="fill">
-        <AdminTag tags={_tags} suffix={template.choices.length} />
+        <AdminTag tags={adminTags} suffix={template.choices.length} />
         <Box gap={11}>
           <Text variant="title2" color="gray600">
             {template.templateName}

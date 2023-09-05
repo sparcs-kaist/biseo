@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import type { AgendaStatus } from "@biseo/interface/agenda";
 import { Box, Scroll } from "@/components/atoms";
 import { SectionHeader, AgendaCard } from "@/components/molecules";
 import { useAgenda } from "@/services/agenda";
@@ -7,7 +8,6 @@ import {
   isTerminatedAgenda,
   isPreparingAgenda,
 } from "@/utils/agenda";
-import { AgendaStatus } from "@biseo/interface/agenda";
 
 export const AgendaSection: React.FC = () => {
   const { preparingAgendas, ongoingAgendas, terminatedAgendas } = useAgenda(
@@ -31,7 +31,7 @@ export const AgendaSection: React.FC = () => {
   const getAgendaCards = useCallback(
     (agendaStatus: AgendaStatus) => {
       const agendas = getAgendas(agendaStatus);
-      if (agendaStatus == "ongoing") {
+      if (agendaStatus === "ongoing") {
         agendas.sort((a, b) => {
           if (a.voters.voted === 0) return -1;
           if (b.voters.voted === 0) return 1;

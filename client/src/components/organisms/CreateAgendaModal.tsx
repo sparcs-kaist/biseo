@@ -13,11 +13,10 @@ import {
   Modal,
   ModalInner,
 } from "@/components/molecules";
-import { UserTable } from "@/components/organisms";
-
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminUser } from "@/services/admin-user";
+import { UserTable } from "./UserTable";
 
 export const CreateAgendaModal: React.FC = () => {
   const { createAgenda } = useAdminAgenda(state => ({
@@ -90,7 +89,7 @@ export const CreateAgendaModal: React.FC = () => {
     const optionNum = options.length;
 
     const selected = [];
-    for (var i = 0; i < optionNum; i++) {
+    for (let i = 0; i < optionNum; i += 1) {
       if (options[i].selected) selected.push(options[i].value);
     }
     setSelectedTags(selected);
@@ -108,9 +107,9 @@ export const CreateAgendaModal: React.FC = () => {
   const onSubmit = () => {
     if (!validated) return;
     createAgenda({
-      title: title,
-      content: content,
-      resolution: resolution,
+      title,
+      content,
+      resolution,
       voters: {
         total: voters,
       },
