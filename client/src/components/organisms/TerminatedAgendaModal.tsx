@@ -9,8 +9,8 @@ import {
   ParticipantBar,
   TerminatedModalInner,
 } from "@/components/molecules";
-import { UserTable } from "@/components/organisms/UserTable";
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { UserTable } from "./UserTable";
 
 export const TerminatedAgendaModal: React.FC = () => {
   const location = useLocation();

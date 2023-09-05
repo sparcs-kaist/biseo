@@ -13,11 +13,10 @@ import {
   Modal,
   ModalInner,
 } from "@/components/molecules";
-import { UserTable } from "@/components/organisms/UserTable";
-
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAdminUser } from "@/services/admin-user";
 import { useAgendaTemplate } from "@/services/agenda-template";
+import { UserTable } from "./UserTable";
 
 export const EditAgendaModal: React.FC = () => {
   const location = useLocation();

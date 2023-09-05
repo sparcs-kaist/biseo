@@ -3,10 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 
 import { Box, Button, Text } from "@/components/atoms";
 import { Modal, ModalInner } from "@/components/molecules";
-import { UserTable } from "@/components/organisms/UserTable";
-
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
+import { UserTable } from "./UserTable";
 
 export const EditUserTagModal: React.FC = () => {
   const location = useLocation();

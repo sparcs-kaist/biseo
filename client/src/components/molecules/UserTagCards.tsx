@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import type { UserTag as IUserTag } from "@biseo/interface/user/tag";
 import { Box, Card, Text, UserTag } from "@/components/atoms";
-import { AdminTag } from "@/components/molecules/AdminTag";
+import { AdminTag } from "./AdminTag";
 
 const adminTags = {
   user: true,

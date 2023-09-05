@@ -13,11 +13,10 @@ import {
   Modal,
   ModalInner,
 } from "@/components/molecules";
-import { UserTable } from "@/components/organisms/UserTable";
-
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminUser } from "@/services/admin-user";
+import { UserTable } from "./UserTable";
 
 export const CreateAgendaModal: React.FC = () => {
   const { createAgenda } = useAdminAgenda(state => ({

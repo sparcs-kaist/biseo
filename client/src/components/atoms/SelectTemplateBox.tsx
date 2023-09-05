@@ -1,10 +1,10 @@
 import React, { type PropsWithChildren } from "react";
+import { useAgendaTemplate } from "@/services/agenda-template";
 import {
   PositionedDownArrowIcon,
   SelectWrapper,
   TemplateSelect,
-} from "@/components/atoms/Label";
-import { useAgendaTemplate } from "@/services/agenda-template";
+} from "./Label";
 
 interface Props extends PropsWithChildren {
   width: number;

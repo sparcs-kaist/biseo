@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import type { AgendaTemplate } from "@biseo/interface/agenda/template";
 import { Box, Text, Card, Divider } from "@/components/atoms";
-import { AdminTag } from "@/components/molecules/AdminTag";
+import { AdminTag } from "./AdminTag";
 
 const adminTags = {
   template: true,

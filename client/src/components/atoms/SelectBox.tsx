@@ -1,9 +1,5 @@
 import React, { type PropsWithChildren } from "react";
-import {
-  PositionedDownArrowIcon,
-  Select,
-  SelectWrapper,
-} from "@/components/atoms/Label";
+import { PositionedDownArrowIcon, Select, SelectWrapper } from "./Label";
 
 interface SelectBoxProps {
   width: number;

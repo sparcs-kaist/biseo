@@ -7,8 +7,8 @@ import {
   ParticipantBar,
 } from "@/components/molecules";
 import { Box, Button, Text } from "@/components/atoms";
-import { UserTable } from "@/components/organisms/UserTable";
 import { useAdminAgenda } from "@/services/admin-agenda";
+import { UserTable } from "./UserTable";
 
 export const OngoingAgendaModal: React.FC = () => {
   const location = useLocation();

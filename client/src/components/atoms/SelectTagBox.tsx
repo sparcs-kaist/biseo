@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  PositionedDownArrowIcon,
-  SelectWrapper,
-  TagSelect,
-} from "@/components/atoms/Label";
 import { useUserTag } from "@/services/user-tag";
+import { PositionedDownArrowIcon, SelectWrapper, TagSelect } from "./Label";
 
 interface Props {
   selected: string[];
