@@ -5,3 +5,4 @@ export * from "./layout";
 export * from "./round";
 export * from "./spacing";
 export * from "./text";
+export * from "./size";
