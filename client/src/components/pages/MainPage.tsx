@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { Box } from "@/components/atoms";
 import { AgendaSection, ChatSection } from "@/components/organisms";
 import { useAgenda } from "@/services/agenda";
+import { align, gap, justify, padding, row } from "@/styles";
+import { w, h } from "@/styles/size";
 
 export const MainPage: React.FC = () => {
   const { retrieveAgendas } = useAgenda(state => ({
@@ -13,18 +14,20 @@ export const MainPage: React.FC = () => {
   }, []);
 
   return (
-    <Box
-      dir="row"
-      justify="center"
-      w="fill"
-      h="fill"
-      padTop={10}
-      padBottom={30}
-      gap={20}
-      align="stretch"
+    <main
+      css={[
+        row,
+        justify.center,
+        align.stretch,
+        w.fill,
+        h.fill,
+        padding.top(10),
+        padding.bottom(30),
+        gap(20),
+      ]}
     >
       <AgendaSection />
       <ChatSection />
-    </Box>
+    </main>
   );
 };
