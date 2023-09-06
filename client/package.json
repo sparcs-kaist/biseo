@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
+    "build:netlify": "pnpm build && cp ./netlify.toml ./dist/",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "env": "echo $NODE_ENV"
