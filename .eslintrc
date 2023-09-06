@@ -85,6 +85,14 @@
         "allowExpressions": true
       }
     ],
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": [
+          "css"
+        ]
+      }
+    ],
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": [
       "error",
