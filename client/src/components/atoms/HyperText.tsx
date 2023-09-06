@@ -23,6 +23,9 @@ const textStyles = {
 
 type Variants = keyof typeof textStyles;
 
+/**
+ * @deprecated use `text` token instead
+ */
 export const HyperText = styled.a<{
   variant?: Variants;
   color?: Color;

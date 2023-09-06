@@ -9,6 +9,9 @@ const calcSize = (size: Size) => {
   return `${size}px`;
 };
 
+/**
+ * @deprecated use `padding`, `round`, and layout tokens instead
+ */
 export const Box = styled.div<{
   w?: Size;
   h?: Size;

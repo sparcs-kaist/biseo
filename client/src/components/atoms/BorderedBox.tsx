@@ -9,6 +9,9 @@ const calcSize = (size: Size) => {
   return `${size}px`;
 };
 
+/**
+ * @deprecated use `border` and `round` token instead
+ */
 export const BorderedBox = styled.div<{
   w?: Size;
   h?: Size;
