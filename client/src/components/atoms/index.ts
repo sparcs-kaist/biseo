@@ -20,3 +20,4 @@ export * from "./UserTag";
 export * from "./TaggersBox";
 export * from "./HyperText";
 export * from "./PresetOption";
+export * from "./TagSelect";
