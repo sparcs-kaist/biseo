@@ -16,6 +16,8 @@ services:
       - ./client:/usr/src/app
     depends_on:
       - server
+    networks:
+      - frontend
   server:
     container_name: biseo-server
     restart: always
@@ -29,6 +31,9 @@ services:
       dockerfile: .docker/server.Dockerfile
     depends_on:
       - db
+    networks:
+      - frontend
+      - backend
   db:
     container_name: biseo-db
     restart: always
@@ -39,7 +44,13 @@ services:
     volumes:
       - biseo-data:/var/lib/mysql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - backend
 
 volumes:
   biseo-data:
     external: true
+
+networks:
+  frontend:
+  backend:
