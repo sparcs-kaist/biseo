@@ -2,6 +2,7 @@ import React from "react";
 
 import type { AdminAgenda } from "@biseo/interface/admin/agenda";
 import type { Agenda } from "@biseo/interface/agenda";
+import { Group } from "./Group";
 import { List } from "./List";
 import { EmptyAgendaCard } from "./EmptyAgendaCard";
 import { OngoingAgendaCard } from "./OngoingAgendaCard";
@@ -39,6 +40,7 @@ const AdminAgendaCard: React.FC<AdminProps> = ({ agenda }) => {
 };
 
 export const AgendaCard = Object.assign(Component, {
+  Group,
   List,
   Empty: EmptyAgendaCard,
   Admin: AdminAgendaCard,
