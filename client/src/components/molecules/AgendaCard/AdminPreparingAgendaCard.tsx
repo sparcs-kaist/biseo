@@ -2,9 +2,13 @@ import React, { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import type { AdminAgenda } from "@biseo/interface/admin/agenda";
-import { Box, Text, Card, Divider, Button } from "@/components/atoms";
+
+import { Card, Divider, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
+
 import { useAdminAgenda } from "@/services/admin-agenda";
+
+import { gap, text, w } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -50,23 +54,17 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   return (
     <Card onClick={openModal}>
-      <Box gap={8} w="fill">
+      <div css={[gap(8), w.fill]}>
         <AgendaTag tags={agendaTags} admin />
-        <Box gap={2}>
-          <Text variant="title2" color="black">
-            {agenda.title}
-          </Text>
-          <Text variant="subtitle" color="gray500">
-            {agenda.content}
-          </Text>
-        </Box>
+        <div css={gap(2)}>
+          <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+          <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
+        </div>
         <Divider />
         <Button onClick={startVote} disabled={!validated}>
-          <Text variant="option1" color="blue600">
-            투표 시작하기
-          </Text>
+          <p css={[text.option1, text.blue600]}>투표 시작하기</p>
         </Button>
-      </Box>
+      </div>
     </Card>
   );
 };
