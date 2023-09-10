@@ -1,5 +1,7 @@
 import React from "react";
+
 import type { PreparingAgenda } from "@biseo/interface/agenda";
+
 import { Card } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 
@@ -17,7 +19,7 @@ interface Props {
 
 export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => (
   <Card>
-    <div css={[gap(8)]}>
+    <div css={gap(8)}>
       <AgendaTag
         tags={{
           public: agendaTags.public,
@@ -25,8 +27,8 @@ export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => (
           votable: agenda.user.votable,
         }}
       />
-      <div css={[gap(2)]}>
-        <p css={[text.title2, text.black]}>{agenda.title}</p>
+      <div css={gap(2)}>
+        <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
         <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
       </div>
     </div>
