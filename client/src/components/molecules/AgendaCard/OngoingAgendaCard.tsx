@@ -12,8 +12,7 @@ import {
 
 import { useAgenda } from "@/services/agenda";
 
-import { gap, row, justify, text } from "@/styles";
-import { w } from "@/styles/size";
+import { gap, row, justify, text, w } from "@/styles";
 
 interface OngoingAgendaProps {
   agenda: OngoingAgenda;

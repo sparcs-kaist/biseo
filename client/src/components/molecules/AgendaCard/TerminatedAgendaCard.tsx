@@ -9,8 +9,7 @@ import { VoteResult } from "@/components/molecules/VoteResult";
 import { VoteDetail } from "@/components/molecules/VoteDetail";
 import { VoteParticipate } from "@/components/molecules/VoteParticipate";
 
-import { gap, text } from "@/styles";
-import { w } from "@/styles/size";
+import { gap, text, w } from "@/styles";
 
 const agendaTags = {
   public: true,

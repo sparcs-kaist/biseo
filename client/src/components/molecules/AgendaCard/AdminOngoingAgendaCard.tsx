@@ -8,8 +8,7 @@ import { AgendaTag } from "@/components/molecules/AgendaTag";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
 
-import { row, center, justify, gap, text } from "@/styles";
-import { w } from "@/styles/size";
+import { row, center, justify, gap, text, w } from "@/styles";
 
 const agendaTags = {
   public: true,
