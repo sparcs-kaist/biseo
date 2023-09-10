@@ -1,13 +1,39 @@
 import React, { useCallback } from "react";
 import type { AgendaStatus } from "@biseo/interface/agenda";
-import { Box, Scroll } from "@/components/atoms";
-import { SectionHeader, AgendaCard } from "@/components/molecules";
+import { AgendaCard } from "@/components/molecules";
 import { useAgenda } from "@/services/agenda";
 import {
   isOngoingAgenda,
   isTerminatedAgenda,
   isPreparingAgenda,
 } from "@/utils/agenda";
+
+import { scroll } from "@/styles";
+import { css } from "@emotion/react";
+
+const gridLayout = css`
+  display: grid;
+  grid-template-columns: 380px 300px;
+  grid-gap: 15px 20px;
+
+  // Ongoing Agenda
+  *:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  // Preparing Agenda
+  *:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  // Terminated Agenda
+  *:nth-child(3) {
+    grid-column: 2;
+    grid-row: 1 / 3;
+  }
+`;
 
 export const AgendaSection: React.FC = () => {
   const { preparingAgendas, ongoingAgendas, terminatedAgendas } = useAgenda(
@@ -38,41 +64,28 @@ export const AgendaSection: React.FC = () => {
           return 0;
         });
       }
-      return (
-        <AgendaCard.List>
-          {agendas.length === 0 ? (
-            <AgendaCard.Empty agendaStatus={agendaStatus} />
-          ) : (
-            agendas.map(agenda => (
-              <AgendaCard key={agenda.id} agenda={agenda} />
-            ))
-          )}
-        </AgendaCard.List>
+      return agendas.length === 0 ? (
+        <AgendaCard.Empty agendaStatus={agendaStatus} />
+      ) : (
+        agendas.map(agenda => <AgendaCard key={agenda.id} agenda={agenda} />)
       );
     },
     [preparingAgendas, ongoingAgendas, terminatedAgendas],
   );
 
   return (
-    <Scroll hide>
-      <Box dir="row" gap={20}>
-        <Box dir="column" w={380}>
-          <SectionHeader count={ongoingAgendas.length}>
-            진행중인 투표
-          </SectionHeader>
+    <section css={scroll.y}>
+      <div css={gridLayout}>
+        <AgendaCard.Group title="진행중인 투표">
           {getAgendaCards("ongoing")}
-          <SectionHeader count={preparingAgendas.length}>
-            예정된 투표
-          </SectionHeader>
+        </AgendaCard.Group>
+        <AgendaCard.Group title="예정된 투표">
           {getAgendaCards("preparing")}
-        </Box>
-        <Box dir="column" w={300}>
-          <SectionHeader count={terminatedAgendas.length}>
-            종료된 투표
-          </SectionHeader>
+        </AgendaCard.Group>
+        <AgendaCard.Group title="종료된 투표">
           {getAgendaCards("terminated")}
-        </Box>
-      </Box>
-    </Scroll>
+        </AgendaCard.Group>
+      </div>
+    </section>
   );
 };
