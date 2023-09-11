@@ -1,8 +1,9 @@
-import React, { type PropsWithChildren, useEffect, useRef } from "react";
+import React, { useEffect, useRef, type PropsWithChildren } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { CloseIcon } from "@/assets";
-import { Box, Text } from "@/components/atoms";
+import { Box } from "@/components/atoms";
+import { text } from "@/styles";
 
 type Size = number | "hug" | "fill";
 const calcSize = (size: Size) => {
@@ -17,7 +18,16 @@ interface Props extends PropsWithChildren {
   height?: Size;
 }
 
-const Container = styled.dialog<{ w: Size; h: Size }>`
+const BackDrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${props => props.theme.colors.grayTrans};
+`;
+
+const Container = styled.div<{ w: Size; h: Size }>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -29,11 +39,9 @@ const Container = styled.dialog<{ w: Size; h: Size }>`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: ${props => props.theme.colors.white};
   border: none;
   border-radius: 10px;
-  &::backdrop {
-    background-color: ${props => props.theme.colors.grayTrans};
-  }
 `;
 
 const InnerContainer = styled.div`
@@ -59,50 +67,47 @@ export const Modal: React.FC<Props> = ({
   width = "hug",
   height = "hug",
 }) => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
+  const closeModal = () => navigate("..");
+
   useEffect(() => {
-    dialogRef.current?.showModal();
-    // 첫번째 input 요소에 focus를 줍니다. input 요소가 존재하지 않다면 CloseButton이 focus를 가집니다.
-    dialogRef.current?.querySelector("input")?.focus();
+    // 첫번째 input 요소가 존재한다면 focus를 줍니다.
+    modalRef.current?.querySelector("input")?.focus();
+
+    // 모달 외부 요소의 스크롤을 방지합니다.
+    document.body.style.overflow = "hidden";
+
+    // 모달이 unmount될 때 body의 스크롤을 다시 허용합니다.
+    return () => {
+      document.body.style.overflow = "auto";
+    };
   }, []);
 
-  // backdrop 영역 클릭 시 모달을 닫습니다.
-  const onDialogClick: React.MouseEventHandler<HTMLDialogElement> = e => {
-    const { top, left, right, bottom } =
-      e.currentTarget.getBoundingClientRect();
-    const { clientX, clientY } = e;
-    const isInDialog =
-      clientX > left && clientX < right && clientY > top && clientY < bottom;
-    if (!isInDialog) navigate("..");
-  };
-
-  // Esc 키 입력 시 모달을 닫습니다.
-  const onDialogCancel = () => navigate("..");
-
   return (
-    <Container
-      w={width}
-      h={height}
-      ref={dialogRef}
-      onClick={onDialogClick}
-      onCancel={onDialogCancel}
-    >
-      <Box w="fill" dir="row" align="center" justify="space-between">
-        <Text variant="title1">{title}</Text>
-        <Link
-          to=".."
-          relative="path"
-          replace
-          style={{ textDecoration: "none" }}
-        >
-          <CloseButton>
-            <CloseIcon />
-          </CloseButton>
-        </Link>
-      </Box>
-      <InnerContainer>{children}</InnerContainer>
-    </Container>
+    <BackDrop onClick={closeModal}>
+      <Container
+        w={width}
+        h={height}
+        onClick={e => e.stopPropagation()}
+        ref={modalRef}
+      >
+        <Box w="fill" dir="row" align="center" justify="space-between">
+          <h1 css={[text.title1]}>{title}</h1>
+          <Link
+            to=".."
+            relative="path"
+            replace
+            style={{ textDecoration: "none" }}
+          >
+            <CloseButton>
+              <CloseIcon />
+            </CloseButton>
+          </Link>
+        </Box>
+        <InnerContainer>{children}</InnerContainer>
+      </Container>
+    </BackDrop>
   );
 };
