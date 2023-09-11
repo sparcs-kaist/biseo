@@ -1,53 +1,46 @@
 import React, { useEffect, useRef, type PropsWithChildren } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import { CloseIcon } from "@/assets";
-import { align, row, justify, text, w } from "@/styles";
+import { colors, align, row, justify, text, w, h, type Size } from "@/styles";
 
-type Size = number | "hug" | "fill";
-const calcSize = (size: Size) => {
-  if (size === "fill") return "100%";
-  if (size === "hug") return "fit-content";
-  return `${size}px`;
-};
-
-interface Props extends PropsWithChildren {
+export interface Props extends PropsWithChildren {
   title: string;
   width?: Size;
   height?: Size;
 }
 
-const BackDrop = styled.div`
+/** backdrop 요소에 사용할 스타일을 정의합니다. */
+export const backDropStyle = css`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: ${props => props.theme.colors.grayTrans};
+  background-color: ${colors.grayTrans};
 `;
 
-const Container = styled.div<{ w: Size; h: Size }>`
+/** 모달 내 container에 사용할 스타일을 정의합니다. */
+export const containerStyle = css`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   gap: 15px;
-  width: ${props => calcSize(props.w)};
-  height: ${props => calcSize(props.h)};
   padding: 20px 25px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: ${props => props.theme.colors.white};
+  background-color: ${colors.white};
   border: none;
   border-radius: 10px;
 `;
 
-const Body = styled.div`
+/** 모달의 children을 감쌀 body에 사용할 스타일을 정의합니다. */
+export const bodyStyle = css`
   overflow: hidden;
 `;
 
-const CloseButton = styled.button`
+/** 모달 닫기 버튼에 사용할 스타일을 정의합니다. */
+export const closeButtonStyle = css`
   position: relative;
   display: flex;
   width: 22px;
@@ -56,7 +49,7 @@ const CloseButton = styled.button`
   justify-content: center;
   border: none;
   border-radius: 15px;
-  background-color: ${props => props.theme.colors.gray100};
+  background-color: ${colors.gray100};
   cursor: pointer;
 `;
 
@@ -85,11 +78,19 @@ export const Modal: React.FC<Props> = ({
   }, []);
 
   return (
-    <BackDrop onClick={closeModal}>
-      <Container
-        w={width}
-        h={height}
+    /* backdrop 컴포넌트는 키보드 인터렉션을 통해 모달을 닫을 수 있는 <button>을 가지고 있습니다. */
+    /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */
+    <div
+      css={[backDropStyle, w("fill"), h("fill")]}
+      onClick={closeModal}
+      onKeyUp={closeModal}
+    >
+      {/* container 컴포넌트의 onClick, onKeyUp 이벤트 리스너는 event propagation을 막기 위해서만 사용됩니다. */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      <div
+        css={[containerStyle, w(width), h(height)]}
         onClick={e => e.stopPropagation()}
+        onKeyUp={e => e.stopPropagation()}
         ref={containerRef}
       >
         <div css={[w.fill, row, align.center, justify.between]}>
@@ -100,13 +101,13 @@ export const Modal: React.FC<Props> = ({
             replace
             style={{ textDecoration: "none" }}
           >
-            <CloseButton>
+            <button type="button" title="모달 닫기" css={[closeButtonStyle]}>
               <CloseIcon />
-            </CloseButton>
+            </button>
           </Link>
         </div>
-        <Body>{children}</Body>
-      </Container>
-    </BackDrop>
+        <div css={bodyStyle}>{children}</div>
+      </div>
+    </div>
   );
 };
