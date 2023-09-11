@@ -2,8 +2,7 @@ import React, { useEffect, useRef, type PropsWithChildren } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { CloseIcon } from "@/assets";
-import { Box } from "@/components/atoms";
-import { text } from "@/styles";
+import { align, row, justify, text, w } from "@/styles";
 
 type Size = number | "hug" | "fill";
 const calcSize = (size: Size) => {
@@ -44,7 +43,7 @@ const Container = styled.div<{ w: Size; h: Size }>`
   border-radius: 10px;
 `;
 
-const InnerContainer = styled.div`
+const Body = styled.div`
   overflow: hidden;
 `;
 
@@ -67,14 +66,14 @@ export const Modal: React.FC<Props> = ({
   width = "hug",
   height = "hug",
 }) => {
-  const modalRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const closeModal = () => navigate("..");
 
   useEffect(() => {
     // 첫번째 input 요소가 존재한다면 focus를 줍니다.
-    modalRef.current?.querySelector("input")?.focus();
+    containerRef.current?.querySelector("input")?.focus();
 
     // 모달 외부 요소의 스크롤을 방지합니다.
     document.body.style.overflow = "hidden";
@@ -91,10 +90,10 @@ export const Modal: React.FC<Props> = ({
         w={width}
         h={height}
         onClick={e => e.stopPropagation()}
-        ref={modalRef}
+        ref={containerRef}
       >
-        <Box w="fill" dir="row" align="center" justify="space-between">
-          <h1 css={[text.title1]}>{title}</h1>
+        <div css={[w.fill, row, align.center, justify.between]}>
+          <h1 css={[text.title1, text.black]}>{title}</h1>
           <Link
             to=".."
             relative="path"
@@ -105,8 +104,8 @@ export const Modal: React.FC<Props> = ({
               <CloseIcon />
             </CloseButton>
           </Link>
-        </Box>
-        <InnerContainer>{children}</InnerContainer>
+        </div>
+        <Body>{children}</Body>
       </Container>
     </BackDrop>
   );
