@@ -1,5 +1,5 @@
 import React, { type PropsWithChildren, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { CloseIcon } from "@/assets";
 import { Box, Text } from "@/components/atoms";
@@ -59,17 +59,36 @@ export const Modal: React.FC<Props> = ({
   width = "hug",
   height = "hug",
 }) => {
-  const ref = useRef<HTMLDialogElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.close();
-      ref.current.showModal();
-    }
+    dialogRef.current?.showModal();
+    // 첫번째 input 요소에 focus를 줍니다. input 요소가 존재하지 않다면 CloseButton이 focus를 가집니다.
+    dialogRef.current?.querySelector("input")?.focus();
   }, []);
 
+  // backdrop 영역 클릭 시 모달을 닫습니다.
+  const onDialogClick: React.MouseEventHandler<HTMLDialogElement> = e => {
+    const { top, left, right, bottom } =
+      e.currentTarget.getBoundingClientRect();
+    const { clientX, clientY } = e;
+    const isInDialog =
+      clientX > left && clientX < right && clientY > top && clientY < bottom;
+    if (!isInDialog) navigate("..");
+  };
+
+  // Esc 키 입력 시 모달을 닫습니다.
+  const onDialogCancel = () => navigate("..");
+
   return (
-    <Container w={width} h={height} ref={ref}>
+    <Container
+      w={width}
+      h={height}
+      ref={dialogRef}
+      onClick={onDialogClick}
+      onCancel={onDialogCancel}
+    >
       <Box w="fill" dir="row" align="center" justify="space-between">
         <Text variant="title1">{title}</Text>
         <Link
