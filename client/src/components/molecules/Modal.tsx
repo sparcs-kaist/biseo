@@ -62,7 +62,7 @@ const closeButtonStyle = css`
   ${h(22)}
   ${center}
   border: none;
-  ${round.xlg}
+  ${round.xl}
   ${bg.gray100};
   cursor: pointer;
 `;
