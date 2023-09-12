@@ -41,7 +41,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       }}
     >
       {enabled ? (
-        <div css={[gap(15), w.fill]}>
+        <div css={[gap(15), w("fill")]}>
           <div css={gap(2)}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
@@ -60,7 +60,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
           />
-          <div css={[gap(12), w.fill]}>
+          <div css={[gap(12), w("fill")]}>
             {agenda.choices.map(choice => (
               <OptionVoteResult
                 name={choice.name}

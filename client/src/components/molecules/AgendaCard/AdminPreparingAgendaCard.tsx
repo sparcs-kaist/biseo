@@ -54,7 +54,7 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   return (
     <Card onClick={openModal}>
-      <div css={[gap(8), w.fill]}>
+      <div css={[gap(8), w("fill")]}>
         <AgendaTag tags={agendaTags} admin />
         <div css={gap(2)}>
           <h1 css={[text.title2, text.black]}>{agenda.title}</h1>

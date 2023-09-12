@@ -1,15 +1,22 @@
-import React, { type PropsWithChildren, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
+import React, { useEffect, useRef, type PropsWithChildren } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { css } from "@emotion/react";
 import { CloseIcon } from "@/assets";
-import { Box, Text } from "@/components/atoms";
-
-type Size = number | "hug" | "fill";
-const calcSize = (size: Size) => {
-  if (size === "fill") return "100%";
-  if (size === "hug") return "fit-content";
-  return `${size}px`;
-};
+import {
+  align,
+  bg,
+  center,
+  column,
+  gap,
+  h,
+  justify,
+  padding,
+  round,
+  row,
+  text,
+  w,
+  type Size,
+} from "@/styles";
 
 interface Props extends PropsWithChildren {
   title: string;
@@ -17,73 +24,105 @@ interface Props extends PropsWithChildren {
   height?: Size;
 }
 
-const Container = styled.dialog<{ w: Size; h: Size }>`
+/** backdrop 요소에 사용할 스타일을 정의합니다. */
+const backDropStyle = css`
+  position: fixed;
+  top: 0;
+  left: 0;
+  ${w("fill")}
+  ${h("fill")}
+  ${bg.grayTrans}
+`;
+
+/** 모달 내 container에 사용할 스타일을 정의합니다. */
+const containerStyle = css`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  gap: 15px;
-  width: ${props => calcSize(props.w)};
-  height: ${props => calcSize(props.h)};
-  padding: 20px 25px;
-  display: flex;
-  flex-direction: column;
+  ${gap(15)}
+  ${padding.vertical(20)}
+  ${padding.horizontal(25)}
+  ${column}
   overflow: hidden;
+  ${bg.white}
   border: none;
-  border-radius: 10px;
-  &::backdrop {
-    background-color: ${props => props.theme.colors.grayTrans};
-  }
+  ${round.lg}
 `;
 
-const InnerContainer = styled.div`
+/** 모달의 children을 감쌀 body에 사용할 스타일을 정의합니다. */
+const bodyStyle = css`
   overflow: hidden;
 `;
 
-const CloseButton = styled.button`
+/** 모달 닫기 버튼에 사용할 스타일을 정의합니다. */
+const closeButtonStyle = css`
   position: relative;
-  display: flex;
-  width: 22px;
-  height: 22px;
-  align-items: center;
-  justify-content: center;
+  ${w(22)}
+  ${h(22)}
+  ${center}
   border: none;
-  border-radius: 15px;
-  background-color: ${props => props.theme.colors.gray100};
+  ${round.xl}
+  ${bg.gray100};
   cursor: pointer;
 `;
 
+/** 모달 컴포넌트. 새 url에서 표시된다고 가정합니다. */
 export const Modal: React.FC<Props> = ({
   title,
   children = null,
   width = "hug",
   height = "hug",
 }) => {
-  const ref = useRef<HTMLDialogElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  const closeModal = () => navigate("..");
+  const onBackdropClick = (e: MouseEvent) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(e.target as Node)
+    )
+      closeModal();
+  };
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.close();
-      ref.current.showModal();
-    }
+    // 첫번째 input 요소가 존재한다면 focus를 줍니다.
+    containerRef.current?.querySelector("input")?.focus();
+
+    // 모달 외부 요소의 스크롤을 방지합니다.
+    document.body.style.overflow = "hidden";
+
+    // backdrop 클릭 시 모달을 닫는 이벤트 리스너를 추가합니다.
+    document.addEventListener("mousedown", onBackdropClick);
+
+    return () => {
+      // 모달이 unmount될 때 body의 스크롤을 다시 허용합니다.
+      document.body.style.overflow = "auto";
+
+      // document에 추가한 이벤트 리스너를 삭제합니다.
+      document.removeEventListener("mousedown", onBackdropClick);
+    };
   }, []);
 
   return (
-    <Container w={width} h={height} ref={ref}>
-      <Box w="fill" dir="row" align="center" justify="space-between">
-        <Text variant="title1">{title}</Text>
-        <Link
-          to=".."
-          relative="path"
-          replace
-          style={{ textDecoration: "none" }}
-        >
-          <CloseButton>
-            <CloseIcon />
-          </CloseButton>
-        </Link>
-      </Box>
-      <InnerContainer>{children}</InnerContainer>
-    </Container>
+    <div css={[backDropStyle]}>
+      <div css={[containerStyle, w(width), h(height)]} ref={containerRef}>
+        <div css={[w("fill"), row, align.center, justify.between]}>
+          <h1 css={[text.title1, text.black]}>{title}</h1>
+          <Link
+            to=".."
+            relative="path"
+            replace
+            style={{ textDecoration: "none" }}
+          >
+            <button type="button" title="모달 닫기" css={[closeButtonStyle]}>
+              <CloseIcon />
+            </button>
+          </Link>
+        </div>
+        <div css={bodyStyle}>{children}</div>
+      </div>
+    </div>
   );
 };

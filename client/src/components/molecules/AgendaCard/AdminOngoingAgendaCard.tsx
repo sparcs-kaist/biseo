@@ -39,13 +39,13 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   return (
     <Card onClick={openModal}>
-      <div css={[gap(8), w.fill]}>
+      <div css={[gap(8), w("fill")]}>
         <AgendaTag tags={agendaTags} admin />
         <div css={gap(2)}>
           <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
           <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
         </div>
-        <div css={[row, center, justify.between, w.fill]}>
+        <div css={[row, center, justify.between, w("fill")]}>
           <ProgressBar
             max={agenda.voters.total.length}
             value={agenda.voters.voted.length}
@@ -55,7 +55,7 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
           </p>
         </div>
         <Divider />
-        <div css={[row, justify.between, gap(8), w.fill]}>
+        <div css={[row, justify.between, gap(8), w("fill")]}>
           <Button
             onClick={e => {
               e.stopPropagation();
