@@ -93,7 +93,7 @@ export const Modal: React.FC<Props> = ({
         onKeyUp={e => e.stopPropagation()}
         ref={containerRef}
       >
-        <div css={[w.fill, row, align.center, justify.between]}>
+        <div css={[w("fill"), row, align.center, justify.between]}>
           <h1 css={[text.title1, text.black]}>{title}</h1>
           <Link
             to=".."

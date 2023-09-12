@@ -7,12 +7,9 @@ const calcSize = (size: Size) => {
   return `${size}px`;
 };
 
-const applyAttribute = (attribute: "height" | "width") =>
-  Object.assign(
-    (value: Size) => css`
-      ${attribute}: ${calcSize(value)};
-    `,
-  );
+const applyAttribute = (attribute: "height" | "width") => (value: Size) => css`
+  ${attribute}: ${calcSize(value)};
+`;
 
 /**
  * Applies height
