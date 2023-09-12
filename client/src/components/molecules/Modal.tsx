@@ -29,7 +29,7 @@ export const containerStyle = css`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: ${colors.white};
+  ${bg.white}
   border: none;
   border-radius: 10px;
 `;
