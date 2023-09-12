@@ -1,13 +1,18 @@
 import React, { useState, useCallback, useMemo } from "react";
+
 import type { OngoingAgenda } from "@biseo/interface/agenda";
-import { Box, Card, Text, Button } from "@/components/atoms";
+
+import { Card, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 import {
   ChoiceComponent,
   CompletedChoice,
   NotVotableChoice,
 } from "@/components/molecules/Choice";
+
 import { useAgenda } from "@/services/agenda";
+
+import { gap, row, justify, text, w } from "@/styles";
 
 interface OngoingAgendaProps {
   agenda: OngoingAgenda;
@@ -66,8 +71,8 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
 
   return (
     <Card primary bold>
-      <Box gap={10}>
-        <Box gap={8}>
+      <div css={gap(10)}>
+        <div css={gap(8)}>
           <AgendaTag
             tags={{
               public: agendaTags.public,
@@ -75,31 +80,25 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <Box gap={2}>
-            <Text variant="title2" color="black">
-              {agenda.title}
-            </Text>
-            <Text variant="subtitle" color="gray500">
-              {agenda.content}
-            </Text>
-          </Box>
-        </Box>
-        <Box gap={6}>
-          <Text variant="body" color="blue600">
-            {agenda.resolution}
-          </Text>
+          <div css={gap(2)}>
+            <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+            <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
+          </div>
+        </div>
+        <div css={gap(6)}>
+          <p css={[text.body, text.blue600]}>{agenda.resolution}</p>
           {choices}
-        </Box>
+        </div>
         {agenda.user.votable && !agenda.user.voted && (
-          <Box dir="row" justify="flex-end" w="fill">
+          <div css={[row, justify.end, w.fill]}>
             <Button w={90} disabled={!chosen} onClick={() => vote()}>
-              <Text variant="option1" color={chosen ? "blue600" : "blue300"}>
+              <p css={[text.option1, chosen ? text.blue600 : text.blue300]}>
                 투표하기
-              </Text>
+              </p>
             </Button>
-          </Box>
+          </div>
         )}
-      </Box>
+      </div>
     </Card>
   );
 };

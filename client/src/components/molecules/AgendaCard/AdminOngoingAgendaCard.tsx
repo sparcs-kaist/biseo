@@ -2,16 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import type { AdminAgenda } from "@biseo/interface/admin/agenda";
-import {
-  Box,
-  Text,
-  Card,
-  Divider,
-  ProgressBar,
-  Button,
-} from "@/components/atoms";
+
+import { Card, Divider, ProgressBar, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
+
 import { useAdminAgenda } from "@/services/admin-agenda";
+
+import { row, center, justify, gap, text, w } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -42,36 +39,30 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   return (
     <Card onClick={openModal}>
-      <Box gap={8} w="fill">
+      <div css={[gap(8), w.fill]}>
         <AgendaTag tags={agendaTags} admin />
-        <Box>
-          <Text variant="title2" color="black">
-            {agenda.title}
-          </Text>
-          <Text variant="subtitle" color="gray500">
-            {agenda.content}
-          </Text>
-        </Box>
-        <Box dir="row" w="fill" align="center" justify="space-between">
+        <div css={gap(2)}>
+          <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+          <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
+        </div>
+        <div css={[row, center, justify.between, w.fill]}>
           <ProgressBar
             max={agenda.voters.total.length}
             value={agenda.voters.voted.length}
           />
-          <Text variant="option1" color="gray500">
+          <p css={[text.option1, text.gray500]}>
             투표참여 {agenda.voters.voted.length}/{agenda.voters.total.length}
-          </Text>
-        </Box>
+          </p>
+        </div>
         <Divider />
-        <Box dir="row" w="fill" gap={8} justify="space-between">
+        <div css={[row, justify.between, gap(8), w.fill]}>
           <Button
             onClick={e => {
               e.stopPropagation();
               remind();
             }}
           >
-            <Text variant="option1" color="blue600">
-              투표 독촉하기
-            </Text>
+            <p css={[text.option1, text.blue600]}>투표 독촉하기</p>
           </Button>
           <Button
             onClick={e => {
@@ -79,12 +70,10 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
               terminate();
             }}
           >
-            <Text variant="option1" color="blue600">
-              투표 종료하기
-            </Text>
+            <p css={[text.option1, text.blue600]}>투표 종료하기</p>
           </Button>
-        </Box>
-      </Box>
+        </div>
+      </div>
     </Card>
   );
 };
