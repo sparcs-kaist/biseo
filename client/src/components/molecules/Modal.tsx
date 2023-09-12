@@ -78,6 +78,13 @@ export const Modal: React.FC<Props> = ({
   const navigate = useNavigate();
 
   const closeModal = () => navigate("..");
+  const onBackdropClick = (e: MouseEvent) => {
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(e.target as Node)
+    )
+      closeModal();
+  };
 
   useEffect(() => {
     // 첫번째 input 요소가 존재한다면 focus를 줍니다.
@@ -86,24 +93,21 @@ export const Modal: React.FC<Props> = ({
     // 모달 외부 요소의 스크롤을 방지합니다.
     document.body.style.overflow = "hidden";
 
-    // 모달이 unmount될 때 body의 스크롤을 다시 허용합니다.
+    // backdrop 클릭 시 모달을 닫는 이벤트 리스너를 추가합니다.
+    document.addEventListener("mousedown", onBackdropClick);
+
     return () => {
+      // 모달이 unmount될 때 body의 스크롤을 다시 허용합니다.
       document.body.style.overflow = "auto";
+
+      // document에 추가한 이벤트 리스너를 삭제합니다.
+      document.removeEventListener("mousedown", onBackdropClick);
     };
   }, []);
 
   return (
-    /* backdrop 컴포넌트는 키보드 인터렉션을 통해 모달을 닫을 수 있는 <button>을 가지고 있습니다. */
-    /* eslint-disable-next-line jsx-a11y/no-static-element-interactions */
-    <div css={[backDropStyle]} onClick={closeModal} onKeyUp={closeModal}>
-      {/* container 컴포넌트의 onClick, onKeyUp 이벤트 리스너는 event propagation을 막기 위해서만 사용됩니다. */}
-      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-      <div
-        css={[containerStyle, w(width), h(height)]}
-        onClick={e => e.stopPropagation()}
-        onKeyUp={e => e.stopPropagation()}
-        ref={containerRef}
-      >
+    <div css={[backDropStyle]}>
+      <div css={[containerStyle, w(width), h(height)]} ref={containerRef}>
         <div css={[w("fill"), row, align.center, justify.between]}>
           <h1 css={[text.title1, text.black]}>{title}</h1>
           <Link
