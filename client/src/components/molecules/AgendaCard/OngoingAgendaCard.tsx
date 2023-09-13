@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from "react";
 
 import type { OngoingAgenda } from "@biseo/interface/agenda";
 
-import { Card, Button } from "@/components/atoms";
+import { Box, Card, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 import {
   ChoiceComponent,
@@ -71,8 +71,8 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
 
   return (
     <Card primary bold>
-      <div css={{ gap: 10, width: "-webkit-fill-available", display: "grid" }}>
-        <div css={{ gap: 8, display: "grid" }}>
+      <Box gap={10} w="fill">
+        <Box css={{ gap: 8 }}>
           <AgendaTag
             tags={{
               public: agendaTags.public,
@@ -80,25 +80,25 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <div css={{ gap: 2, display: "grid" }}>
+          <div css={{ gap: 2 }}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
-        </div>
-        <div css={{ gap: 6, display: "grid" }}>
+        </Box>
+        <Box css={{ gap: 6 }}>
           <p css={[text.body, text.blue600]}>{agenda.resolution}</p>
           {choices}
-        </div>
+        </Box>
         {agenda.user.votable && !agenda.user.voted && (
-          <div css={[row, justify.end, w("fill")]}>
+          <Box css={[row, justify.end, w("fill")]}>
             <Button w={90} disabled={!chosen} onClick={() => vote()}>
               <p css={[text.option1, chosen ? text.blue600 : text.blue300]}>
                 투표하기
               </p>
             </Button>
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
     </Card>
   );
 };

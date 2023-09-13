@@ -2,7 +2,7 @@ import React from "react";
 
 import type { PreparingAgenda } from "@biseo/interface/agenda";
 
-import { Card } from "@/components/atoms";
+import { Box, Card } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 
 import { text } from "@/styles";
@@ -19,7 +19,7 @@ interface Props {
 
 export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => (
   <Card>
-    <div css={{ gap: 8, width: "-webkit-fill-available", display: "grid" }}>
+    <Box css={{ gap: 8, width: "-webkit-fill-available" }}>
       <AgendaTag
         tags={{
           public: agendaTags.public,
@@ -27,10 +27,10 @@ export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => (
           votable: agenda.user.votable,
         }}
       />
-      <div css={{ gap: 2, display: "grid" }}>
+      <Box css={{ gap: 2, display: "grid" }}>
         <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
         <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
-      </div>
-    </div>
+      </Box>
+    </Box>
   </Card>
 );

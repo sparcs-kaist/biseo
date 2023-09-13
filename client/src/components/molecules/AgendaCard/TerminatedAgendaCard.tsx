@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
 
-import { Card, Divider } from "@/components/atoms";
+import { Box, Card, Divider } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 import { OptionVoteResult } from "@/components/molecules/OptionVoteResult";
 import { VoteResult } from "@/components/molecules/VoteResult";
@@ -41,9 +41,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       }}
     >
       {enabled ? (
-        <div
-          css={{ gap: 15, width: "-webkit-fill-available", display: "grid" }}
-        >
+        <Box css={{ gap: 15, width: "-webkit-fill-available" }}>
           <div css={gap(2)}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
@@ -74,9 +72,9 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           </div>
           <Divider />
           <VoteDetail type={agendaTags.identified} />
-        </div>
+        </Box>
       ) : (
-        <div css={{ gap: 8, width: "-webkit-fill-available", display: "grid" }}>
+        <Box css={{ gap: 8, width: "-webkit-fill-available", display: "grid" }}>
           <AgendaTag
             tags={{
               public: agendaTags.public,
@@ -88,7 +86,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
-        </div>
+        </Box>
       )}
     </Card>
   );
