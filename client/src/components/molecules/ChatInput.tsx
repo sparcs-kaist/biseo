@@ -24,7 +24,6 @@ interface Props {
 export const ChatInput: React.FC<Props> = ({ send }) => {
   const { input, setValue } = useInput();
 
-  // TODO: disable send button based on `validated`
   const validated = useMemo(() => input.value.trim().length > 0, [input.value]);
 
   const sendCurrent = useCallback(() => {
