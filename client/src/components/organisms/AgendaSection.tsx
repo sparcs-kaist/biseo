@@ -16,22 +16,16 @@ const gridLayout = css`
   grid-template-columns: 380px 300px;
   grid-gap: 15px 20px;
 
-  // Ongoing Agenda
+  // Ongoing Agenda, Preparing Agenda
   *:nth-child(1) {
     grid-column: 1;
     grid-row: 1;
   }
 
-  // Preparing Agenda
-  *:nth-child(2) {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
   // Terminated Agenda
-  *:nth-child(3) {
+  *:nth-child(2) {
     grid-column: 2;
-    grid-row: 1 / 3;
+    grid-row: 1;
   }
 `;
 
@@ -76,12 +70,14 @@ export const AgendaSection: React.FC = () => {
   return (
     <section css={scroll.y}>
       <div css={gridLayout}>
-        <AgendaCard.Group title="진행중인 투표">
-          {getAgendaCards("ongoing")}
-        </AgendaCard.Group>
-        <AgendaCard.Group title="예정된 투표">
-          {getAgendaCards("preparing")}
-        </AgendaCard.Group>
+        <div>
+          <AgendaCard.Group title="진행중인 투표">
+            {getAgendaCards("ongoing")}
+          </AgendaCard.Group>
+          <AgendaCard.Group title="예정된 투표">
+            {getAgendaCards("preparing")}
+          </AgendaCard.Group>
+        </div>
         <AgendaCard.Group title="종료된 투표">
           {getAgendaCards("terminated")}
         </AgendaCard.Group>
