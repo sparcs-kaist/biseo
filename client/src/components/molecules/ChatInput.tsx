@@ -40,6 +40,12 @@ const formStyle = css`
   ${round.md}
 `;
 
+const textAreaScrollStyle = css`
+  ${scroll.y}
+  ${scrollBar}
+  overflow-y: scroll;
+`;
+
 interface Props {
   send: (message: string) => void;
 }
@@ -64,7 +70,7 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
       <form css={formStyle}>
         <div css={[row, w("fill"), h("fill")]}>
           <TextAreaAutosize
-            css={[padding.right(10), scroll.y, scrollBar]}
+            css={textAreaScrollStyle}
             onKeyDown={e => {
               if (
                 e.key === "Enter" &&
