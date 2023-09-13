@@ -1,5 +1,7 @@
 import React from "react";
-import { Box, Text, BorderedBox } from "@/components/atoms";
+import { BorderedBox } from "./BorderedBox";
+import { Text } from "./Text";
+import { Box } from "./Box";
 
 interface Tag {
   id: number;
