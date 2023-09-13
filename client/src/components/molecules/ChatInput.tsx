@@ -33,6 +33,9 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
     setValue("");
   }, [input.value, validated]);
 
+  /** @constant 클라이언트와 서버에서 사용하는 채팅 메시지의 최대 길이를 지정합니다. */
+  const maxMessageLength = 500;
+
   return (
     <Box w="fill" pad={10} bg="white100">
       <InputForm>
@@ -44,6 +47,7 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
             }
           }}
           value={input.value}
+          maxLength={maxMessageLength}
           onChange={input.onChange}
         />
         <Divider dir="vertical" />

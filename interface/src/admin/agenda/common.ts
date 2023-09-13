@@ -32,6 +32,7 @@ export type AdminAgenda = z.infer<typeof AdminAgenda>;
  * some description about admin agenda create schema goes here
  */
 export const AdminAgendaCreate = z.object({
+  // TODO: add max validation
   title: z.string().min(1),
   content: z.string().min(1),
   resolution: z.string().min(1),
