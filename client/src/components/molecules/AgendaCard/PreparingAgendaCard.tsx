@@ -2,10 +2,10 @@ import React from "react";
 
 import type { PreparingAgenda } from "@biseo/interface/agenda";
 
-import { Box, Card } from "@/components/atoms";
+import { Card } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 
-import { text } from "@/styles";
+import { w, gap, column, text } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -19,7 +19,7 @@ interface Props {
 
 export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => (
   <Card>
-    <Box css={{ gap: 8, width: "-webkit-fill-available" }}>
+    <div css={[gap(8), column, w("fill")]}>
       <AgendaTag
         tags={{
           public: agendaTags.public,
@@ -27,10 +27,10 @@ export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => (
           votable: agenda.user.votable,
         }}
       />
-      <Box css={{ gap: 2, display: "grid" }}>
+      <div css={[gap(2), column]}>
         <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
         <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
-      </Box>
-    </Box>
+      </div>
+    </div>
   </Card>
 );

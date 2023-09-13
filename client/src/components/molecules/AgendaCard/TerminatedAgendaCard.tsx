@@ -2,14 +2,14 @@ import React, { useState, useMemo } from "react";
 
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
 
-import { Box, Card, Divider } from "@/components/atoms";
+import { Card, Divider } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 import { OptionVoteResult } from "@/components/molecules/OptionVoteResult";
 import { VoteResult } from "@/components/molecules/VoteResult";
 import { VoteDetail } from "@/components/molecules/VoteDetail";
 import { VoteParticipate } from "@/components/molecules/VoteParticipate";
 
-import { gap, text, w } from "@/styles";
+import { column, gap, text, w } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -41,8 +41,15 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       }}
     >
       {enabled ? (
-        <Box css={{ gap: 15, width: "-webkit-fill-available" }}>
-          <div css={gap(2)}>
+        <div
+          css={{
+            gap: 15,
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div css={[gap(2), column]}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
@@ -72,9 +79,9 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           </div>
           <Divider />
           <VoteDetail type={agendaTags.identified} />
-        </Box>
+        </div>
       ) : (
-        <Box css={{ gap: 8, width: "-webkit-fill-available", display: "grid" }}>
+        <div css={[gap(8), column, w("fill")]}>
           <AgendaTag
             tags={{
               public: agendaTags.public,
@@ -82,11 +89,11 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <div css={gap(2)}>
+          <div css={[gap(2)]}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
-        </Box>
+        </div>
       )}
     </Card>
   );

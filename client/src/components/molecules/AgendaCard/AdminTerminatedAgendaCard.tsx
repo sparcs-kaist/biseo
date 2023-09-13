@@ -6,7 +6,7 @@ import type { AdminAgenda } from "@biseo/interface/admin/agenda";
 import { Card } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 
-import { gap, text } from "@/styles";
+import { w, column, gap, text } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -24,7 +24,7 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   return (
     <Card clickable onClick={openModal}>
-      <div css={{ gap: 8, width: "-webkit-fill-available", display: "grid" }}>
+      <div css={[gap(8), column, w("fill")]}>
         <AgendaTag
           tags={{
             public: agendaTags.public,
@@ -32,7 +32,7 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             votable: agendaTags.votable,
           }}
         />
-        <div css={gap(2)}>
+        <div css={[gap(2), column]}>
           <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
           <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
         </div>

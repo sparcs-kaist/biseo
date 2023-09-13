@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from "react";
 
 import type { OngoingAgenda } from "@biseo/interface/agenda";
 
-import { Box, Card, Button } from "@/components/atoms";
+import { Card, Button } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 import {
   ChoiceComponent,
@@ -12,7 +12,7 @@ import {
 
 import { useAgenda } from "@/services/agenda";
 
-import { row, justify, text, w } from "@/styles";
+import { column, row, justify, text, w, gap } from "@/styles";
 
 interface OngoingAgendaProps {
   agenda: OngoingAgenda;
@@ -71,8 +71,15 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
 
   return (
     <Card primary bold>
-      <Box gap={10} w="fill">
-        <Box css={{ gap: 8 }}>
+      <div
+        css={{
+          gap: 10,
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div css={[gap(8), column]}>
           <AgendaTag
             tags={{
               public: agendaTags.public,
@@ -80,25 +87,25 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <div css={{ gap: 2 }}>
+          <div css={[gap(2), column]}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
-        </Box>
-        <Box css={{ gap: 6 }}>
+        </div>
+        <div css={[gap(6), column]}>
           <p css={[text.body, text.blue600]}>{agenda.resolution}</p>
           {choices}
-        </Box>
+        </div>
         {agenda.user.votable && !agenda.user.voted && (
-          <Box css={[row, justify.end, w("fill")]}>
+          <div css={[row, justify.end, w("fill")]}>
             <Button w={90} disabled={!chosen} onClick={() => vote()}>
               <p css={[text.option1, chosen ? text.blue600 : text.blue300]}>
                 투표하기
               </p>
             </Button>
-          </Box>
+          </div>
         )}
-      </Box>
+      </div>
     </Card>
   );
 };
