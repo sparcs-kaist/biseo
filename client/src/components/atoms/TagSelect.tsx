@@ -2,23 +2,23 @@ import React from "react";
 import { css } from "@emotion/react";
 import { theme } from "@/theme";
 import { SmallCloseIcon } from "@/assets";
-import {
-  PositionedDownArrowIcon,
-  PresetOption,
-  BorderedBox,
-  Text,
-} from "@/components/atoms";
 
-import Select, {
-  components,
+import Select, { components } from "react-select";
+import type {
   OptionProps,
   DropdownIndicatorProps,
   MultiValueGenericProps,
   MultiValueRemoveProps,
 } from "react-select";
 
+import { PositionedDownArrowIcon } from "./Label";
+import { PresetOption } from "./PresetOption";
+import { BorderedBox } from "./BorderedBox";
+import { Text } from "./Text";
+
 interface Props {
   tags: Tag[];
+  onChange: (selection: string[]) => void;
 }
 
 interface Tag {
@@ -69,22 +69,21 @@ const multiValueStyles = css``;
 const multiValueRemoveStyles = css`
   display: flex;
 `;
-const Option = (props: OptionProps<Tag>) => {
-  return (
-    <components.Option {...props}>
-      <PresetOption tag={props.data} selected={props.isSelected} />
-    </components.Option>
-  );
-};
-const DropdownIndicator = (props: DropdownIndicatorProps<Tag>) => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <PositionedDownArrowIcon />
-    </components.DropdownIndicator>
-  );
-};
-const MultiValueContainer = (props: MultiValueGenericProps<Tag>) => (
-  <components.MultiValueContainer {...props}>
+const Option = ({ data, isSelected, ...rest }: OptionProps<Tag>) => (
+  <components.Option {...{ data, isSelected, ...rest }}>
+    <PresetOption tag={data} selected={isSelected} />
+  </components.Option>
+);
+const DropdownIndicator = (props: DropdownIndicatorProps<Tag>) => (
+  <components.DropdownIndicator {...props}>
+    <PositionedDownArrowIcon />
+  </components.DropdownIndicator>
+);
+const MultiValueContainer = ({
+  data,
+  ...rest
+}: MultiValueGenericProps<Tag>) => (
+  <components.MultiValueContainer {...{ data, ...rest }}>
     <BorderedBox
       dir="row"
       round={5}
@@ -98,9 +97,9 @@ const MultiValueContainer = (props: MultiValueGenericProps<Tag>) => (
       padVertical={5}
     >
       <Text variant="option1" color="gray500">
-        {props.data.title}
+        {data.title}
       </Text>
-      <components.MultiValueRemove {...props} />
+      <components.MultiValueRemove {...{ data, ...rest }} />
     </BorderedBox>
   </components.MultiValueContainer>
 );
@@ -110,7 +109,7 @@ const MultiValueRemove = (props: MultiValueRemoveProps<Tag>) => (
   </components.MultiValueRemove>
 );
 
-export const TagSelect_temp: React.FC<Props> = ({ tags }) => (
+export const TagSelect: React.FC<Props> = ({ tags, onChange }) => (
   <Select
     styles={{
       control: () => ({
@@ -149,10 +148,11 @@ export const TagSelect_temp: React.FC<Props> = ({ tags }) => (
     isSearchable={false}
     isClearable={false}
     // menuIsOpen
+    menuPortalTarget={document.body}
     unstyled
     options={tags}
     placeholder="태그를 선택하세요"
-    onChange={tags => console.log(tags)}
+    onChange={selection => onChange(selection.map(t => t.title))}
     getOptionValue={tag => tag.id.toString()}
     isMulti
   />
