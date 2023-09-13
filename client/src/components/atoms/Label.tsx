@@ -79,7 +79,7 @@ export const TemplateSelect = styled.select<{ w: number; h: number }>`
   appearance: none;
 `;
 
-export const TagSelect = styled.select`
+export const LegacyTagSelect = styled.select`
   width: 300px;
   /* height: 38px; */
   padding: 5px;
@@ -111,6 +111,6 @@ export const TagSelect = styled.select`
   -ms-appearance: none;
   appearance: none;
 `;
-TagSelect.defaultProps = {
+LegacyTagSelect.defaultProps = {
   multiple: true,
 };
