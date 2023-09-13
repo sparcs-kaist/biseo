@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
+/**
+ * @deprecated use `scroll` and `scrollBar` instead
+ */
 export const Scroll = styled.div<{ hide?: boolean }>`
   height: 100%;
 

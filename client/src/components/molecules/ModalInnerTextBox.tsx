@@ -193,6 +193,12 @@ const TextButton: React.FC<SubmitProps> = ({
       placeholder={children?.toString()}
       onChange={onClick}
       style={{ outline: "none" }}
+      onKeyDown={e => {
+        if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
+          e.preventDefault();
+          onSubmit();
+        }
+      }}
     />
     <Button w={20} h={20} onClick={onSubmit}>
       <Text color="blue600" variant="boldtitle2">

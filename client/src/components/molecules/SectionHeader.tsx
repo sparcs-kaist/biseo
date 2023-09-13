@@ -5,6 +5,9 @@ interface Props extends PropsWithChildren {
   count: number;
 }
 
+/**
+ * @deprecated use AgendaCard.Group instead
+ */
 export const SectionHeader: React.FC<Props> = ({ count, children = null }) => (
   <Box dir="row" align="center" gap={8} padHorizontal={15} padVertical={11}>
     <Text variant="title2" color="black">

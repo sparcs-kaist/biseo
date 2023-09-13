@@ -1,10 +1,16 @@
 import React from "react";
-import styled from "@emotion/styled";
-import type { AgendaStatus } from "@biseo/interface/agenda";
-import { Text, Card } from "@/components/atoms";
 
-const DashedCard = styled(Card)`
+import type { AgendaStatus } from "@biseo/interface/agenda";
+
+import { Card } from "@/components/atoms";
+
+import { css } from "@emotion/react";
+import { text, center } from "@/styles";
+
+const dashedBorder = css`
   border-style: dashed;
+`;
+const noBackground = css`
   background: none;
 `;
 
@@ -19,9 +25,9 @@ interface Props {
 }
 
 export const EmptyAgendaCard: React.FC<Props> = ({ agendaStatus }) => (
-  <DashedCard align="center">
-    <Text variant="subtitle" color="gray500">
+  <Card css={[center, dashedBorder, noBackground]}>
+    <p css={[text.subtitle, text.gray500]}>
       {mention[agendaStatus]} 투표가 없습니다.
-    </Text>
-  </DashedCard>
+    </p>
+  </Card>
 );

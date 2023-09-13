@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: "[FEAT]"
+title: ""
 labels: enhancement
 assignees: ""
 ---
@@ -10,11 +10,9 @@ assignees: ""
 
 <!-- 제안하는 이유와 내용을 자세히 설명해주세요 -->
 
-# 관련 기능 \*
+## 스크린샷
 
-[] 투표
-[] 채팅
-[] 어드민
-[] 기타
+# 관련 Task \*
 
-# 스크린샷
+- [ ] Task1
+- [ ] Task2

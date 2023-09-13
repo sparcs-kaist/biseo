@@ -6,3 +6,4 @@ export * from "./round";
 export * from "./spacing";
 export * from "./text";
 export * from "./size";
+export * from "./scroll";

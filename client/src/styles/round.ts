@@ -13,4 +13,7 @@ export const round = {
   lg: css`
     border-radius: 10px;
   `,
+  xl: css`
+    border-radius: 15px;
+  `,
 } as const;

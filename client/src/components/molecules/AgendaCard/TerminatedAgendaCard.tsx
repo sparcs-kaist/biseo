@@ -1,12 +1,15 @@
 import React, { useState, useMemo } from "react";
 
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
-import { Box, Card, Divider, Text } from "@/components/atoms";
+
+import { Card, Divider } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 import { OptionVoteResult } from "@/components/molecules/OptionVoteResult";
 import { VoteResult } from "@/components/molecules/VoteResult";
 import { VoteDetail } from "@/components/molecules/VoteDetail";
 import { VoteParticipate } from "@/components/molecules/VoteParticipate";
+
+import { gap, text, w } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -38,20 +41,14 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       }}
     >
       {enabled ? (
-        <Box w="fill" gap={15}>
-          <Box gap={2}>
-            <Text variant="title2" color="black">
-              {agenda.title}
-            </Text>
-            <Text variant="subtitle" color="gray500">
-              {agenda.content}
-            </Text>
-          </Box>
-          <Box>
-            <Text variant="body" color="blue600">
-              {agenda.resolution}
-            </Text>
-          </Box>
+        <div css={[gap(15), w("fill")]}>
+          <div css={gap(2)}>
+            <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+            <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
+          </div>
+          <div>
+            <p css={[text.body, text.blue600]}>{agenda.resolution}</p>
+          </div>
           <Divider />
           <VoteParticipate
             voted={agenda.voters.voted}
@@ -63,7 +60,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
           />
-          <Box w="fill" gap={12}>
+          <div css={[gap(12), w("fill")]}>
             {agenda.choices.map(choice => (
               <OptionVoteResult
                 name={choice.name}
@@ -72,12 +69,12 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
                 userChoice={revealChoice && agenda.user.voted === choice.id}
               />
             ))}
-          </Box>
+          </div>
           <Divider />
           <VoteDetail type={agendaTags.identified} />
-        </Box>
+        </div>
       ) : (
-        <Box gap={8}>
+        <div css={gap(8)}>
           <AgendaTag
             tags={{
               public: agendaTags.public,
@@ -85,15 +82,11 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <Box gap={2}>
-            <Text variant="title2" color="black">
-              {agenda.title}
-            </Text>
-            <Text variant="subtitle" color="gray500">
-              {agenda.content}
-            </Text>
-          </Box>
-        </Box>
+          <div css={gap(2)}>
+            <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+            <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
+          </div>
+        </div>
       )}
     </Card>
   );
