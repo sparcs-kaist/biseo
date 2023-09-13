@@ -41,7 +41,9 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       }}
     >
       {enabled ? (
-        <div css={[gap(15), w("fill")]}>
+        <div
+          css={{ gap: 15, width: "-webkit-fill-available", display: "grid" }}
+        >
           <div css={gap(2)}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
@@ -74,7 +76,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           <VoteDetail type={agendaTags.identified} />
         </div>
       ) : (
-        <div css={gap(8)}>
+        <div css={{ gap: 8, width: "-webkit-fill-available", display: "grid" }}>
           <AgendaTag
             tags={{
               public: agendaTags.public,

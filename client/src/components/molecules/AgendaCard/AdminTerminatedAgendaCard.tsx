@@ -24,7 +24,7 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   return (
     <Card clickable onClick={openModal}>
-      <div css={gap(8)}>
+      <div css={{ gap: 8, width: "-webkit-fill-available", display: "grid" }}>
         <AgendaTag
           tags={{
             public: agendaTags.public,

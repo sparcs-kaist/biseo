@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo } from "react";
 
 import {
   Box,
-  Body,
   Header,
   Table,
   Cell,
@@ -132,7 +131,7 @@ export const UserTable: React.FC<Props> = ({
           </Row>
         </Header>
         <Scroll>
-          <Body>
+          <Box w={298}>
             {filteredUsers.map(user => (
               <Row
                 key={user.id}
@@ -155,7 +154,7 @@ export const UserTable: React.FC<Props> = ({
                 )}
                 <Cell w={60}>{user.displayName}</Cell>
                 <Cell w={100}>{user.username}</Cell>
-                <Cell>
+                <Cell w="hug">
                   {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
                   {user.tags.map(tag => (
                     <UserTag key={tag} tag={tag} />
@@ -163,7 +162,7 @@ export const UserTable: React.FC<Props> = ({
                 </Cell>
               </Row>
             ))}
-          </Body>
+          </Box>
         </Scroll>
       </Table>
     </Box>

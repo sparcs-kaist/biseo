@@ -39,7 +39,7 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   return (
     <Card onClick={openModal}>
-      <div css={[gap(8), w("fill")]}>
+      <div css={{ gap: 8, width: "-webkit-fill-available", display: "grid" }}>
         <AgendaTag tags={agendaTags} admin />
         <div css={gap(2)}>
           <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
