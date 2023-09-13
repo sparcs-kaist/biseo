@@ -40,8 +40,12 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
     <Box w="fill" pad={10} bg="white100">
       <InputForm>
         <TextAreaAutosize
-          onKeyPress={e => {
-            if (e.key === "Enter" && !e.shiftKey) {
+          onKeyDown={e => {
+            if (
+              e.key === "Enter" &&
+              !e.shiftKey &&
+              !e.nativeEvent.isComposing
+            ) {
               e.preventDefault();
               sendCurrent();
             }
