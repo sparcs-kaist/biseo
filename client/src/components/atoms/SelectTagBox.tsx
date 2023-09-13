@@ -1,20 +1,15 @@
 import React from "react";
 import { useUserTag } from "@/services/user-tag";
-import { TagSelect_temp } from "@/components/atoms";
+import { TagSelect } from "./TagSelect";
 
 interface Props {
-  selected: string[];
-  onChange: React.ChangeEventHandler<HTMLSelectElement>;
+  onChange: (selection: string[]) => void;
 }
 
-export const SelectTagBox: React.FC<Props> = ({ selected, onChange }) => {
+export const SelectTagBox: React.FC<Props> = ({ onChange }) => {
   const { tags } = useUserTag(state => ({
     tags: state.userTags,
   }));
 
-  return (
-    <>
-      <TagSelect_temp tags={tags} />
-    </>
-  );
+  return <TagSelect tags={tags} onChange={onChange} />;
 };
