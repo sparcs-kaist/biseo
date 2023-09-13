@@ -41,14 +41,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       }}
     >
       {enabled ? (
-        <div
-          css={{
-            gap: 15,
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
+        <div css={[gap(15), w("fill"), column]}>
           <div css={[gap(2), column]}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>

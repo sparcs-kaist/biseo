@@ -71,14 +71,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
 
   return (
     <Card primary bold>
-      <div
-        css={{
-          gap: 10,
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div css={[gap(10), w("fill"), column]}>
         <div css={[gap(8), column]}>
           <AgendaTag
             tags={{
