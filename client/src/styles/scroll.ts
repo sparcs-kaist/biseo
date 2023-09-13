@@ -12,6 +12,7 @@ const applyDirection = (direction: "x" | "y") => css`
 
   ::-webkit-scrollbar {
     width: 14px;
+    height: 14px;
   }
 
   ::-webkit-scrollbar-thumb {
