@@ -1,27 +1,26 @@
 import styled from "@emotion/styled";
 import { DownArrowIcon } from "@/assets";
+import { w, padding, bg, border, justify, align, round, text } from "@/styles";
 
 export const SelectWrapper = styled.div`
   position: relative;
   display: inline-block;
 `;
 
-export const Select = styled.select<{ w: number; h: number }>`
-  width: ${props => props.w}px;
-  height: ${props => props.h}px;
-  padding: 0 10px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  border: 1px solid ${props => props.theme.colors.gray200};
-  background-color: ${props => props.theme.colors.white};
+export const Select = styled.select`
+  ${padding.vertical(0)}
+  ${padding.horizontal(10)}
+  ${justify.between}
+  ${align.center}
+  ${round.md}
+  ${border.gray200}
+  ${bg.white}
 
+  ${text.option1}
+  ${text.gray600}
   font-family: "Noto Sansf KR";
-  font-size: 10px;
   font-style: normal;
-  font-weight: 500;
   line-height: normal;
-  color: ${props => props.theme.colors.gray600};
 
   &:focus {
     outline: none;
@@ -46,27 +45,20 @@ export const PositionedDownArrowIcon = styled(DownArrowIcon)`
   pointer-events: none;
 `;
 
-export const TemplateSelect = styled.select<{ w: number; h: number }>`
-  width: ${props => props.w}px;
-  height: ${props => props.h}px;
-  padding: 0 15px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  border: 1px solid ${props => props.theme.colors.gray200};
-  background-color: ${props => props.theme.colors.gray100};
+export const TemplateSelect = styled.select`
+  ${padding.vertical(0)}
+  ${padding.horizontal(15)}
+  ${justify.between}
+  ${align.center}
+  ${round.md}
+  ${border.gray200}
+  ${bg.gray100}
 
-  color: ${props => props.theme.colors.gray300};
-
+  ${text.gray300};
+  ${text.subtitle}
   font-family: "Noto Sansf KR";
-  font-size: 11px;
   font-style: normal;
-  font-weight: 500;
   line-height: normal;
-
-  &:focus {
-    outline: none;
-  }
 
   &:hover {
     cursor: pointer;
@@ -80,21 +72,21 @@ export const TemplateSelect = styled.select<{ w: number; h: number }>`
 `;
 
 export const TagSelect = styled.select`
-  width: 300px;
-  /* height: 38px; */
-  padding: 5px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  border: 0px solid ${props => props.theme.colors.gray200};
-  background-color: ${props => props.theme.colors.white};
+  ${w(300)}
+  ${padding(5)}
+  ${justify.between}
+  ${align.center}
+  ${round.md}
+  ${border.gray200}
 
-  color: ${props => props.theme.colors.gray600};
+  border: 0;
+  ${round.md}
+  ${bg.white};
 
+  ${text.gray600};
+  ${text.subtitle}
   font-family: "Noto Sansf KR";
-  font-size: 11px;
   font-style: normal;
-  font-weight: 500;
   line-height: normal;
 
   &:focus {
