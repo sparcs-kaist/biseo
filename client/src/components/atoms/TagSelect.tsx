@@ -41,6 +41,9 @@ interface Tag {
   description: string;
 }
 
+const cursorInitial = css`
+  cursor: initial;
+`;
 const cursorPointer = css`
   cursor: pointer;
 `;
@@ -107,6 +110,7 @@ const MultiValueContainer = (props: MultiValueGenericProps<Tag>) => {
           padding.horizontal(8),
           padding.vertical(5),
           gap(6),
+          cursorInitial,
         ]}
       >
         <p css={[text.option1, text.gray500]}>{data.title}</p>
@@ -117,7 +121,7 @@ const MultiValueContainer = (props: MultiValueGenericProps<Tag>) => {
 };
 const MultiValueRemove = (props: MultiValueRemoveProps<Tag>) => (
   <components.MultiValueRemove {...props}>
-    <CloseSmallIcon />
+    <CloseSmallIcon css={cursorPointer} />
   </components.MultiValueRemove>
 );
 

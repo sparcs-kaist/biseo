@@ -1,4 +1,5 @@
 import React from "react";
+import { css } from "@emotion/react";
 import {
   bg,
   round,
@@ -23,6 +24,10 @@ interface Props {
   selected: boolean;
 }
 
+const cursorPointer = css`
+  cursor: pointer;
+`;
+
 export const PresetOption: React.FC<Props> = ({ tag, selected }) => (
   <div
     css={[
@@ -34,6 +39,7 @@ export const PresetOption: React.FC<Props> = ({ tag, selected }) => (
       h(30),
       round.md,
       padding.horizontal(10),
+      cursorPointer,
     ]}
   >
     <div
