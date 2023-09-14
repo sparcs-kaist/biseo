@@ -20,11 +20,11 @@ export type AgendaTemplate = z.infer<typeof AgendaTemplate>;
  * some description about agenda template create schema goes here
  */
 export const AgendaTemplateCreate = z.object({
-  templateName: z.string(),
-  title: z.string(),
-  content: z.string(),
-  resolution: z.string(),
-  choices: z.array(z.string()),
+  templateName: z.string().min(1).max(255),
+  title: z.string().min(1).max(255),
+  content: z.string().min(1).max(255),
+  resolution: z.string().min(1).max(255),
+  choices: z.array(z.string().min(1).max(255)),
 });
 export type AgendaTemplateCreate = z.infer<typeof AgendaTemplateCreate>;
 
