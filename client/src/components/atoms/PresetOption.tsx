@@ -1,7 +1,16 @@
 import React from "react";
-import { BorderedBox } from "./BorderedBox";
-import { Text } from "./Text";
-import { Box } from "./Box";
+import {
+  bg,
+  round,
+  row,
+  justify,
+  padding,
+  text,
+  w,
+  h,
+  align,
+  border,
+} from "@/styles";
 
 interface Tag {
   id: number;
@@ -15,32 +24,31 @@ interface Props {
 }
 
 export const PresetOption: React.FC<Props> = ({ tag, selected }) => (
-  <Box
-    dir="row"
-    w="fill"
-    h={30}
-    round={5}
-    justify="space-between"
-    align="center"
-    padHorizontal={10}
-    bg={selected ? "blue100" : "white"}
+  <div
+    css={[
+      row,
+      justify.between,
+      align.center,
+      selected ? bg.blue100 : bg.white,
+      w("fill"),
+      h(30),
+      round.md,
+      padding.horizontal(10),
+    ]}
   >
-    <BorderedBox
-      round={5}
-      borderSize={1}
-      borderStyle="solid"
-      borderColor="gray200"
-      align="center"
-      padHorizontal={6}
-      padVertical={3}
+    <div
+      css={[
+        align.center,
+        border.gray200,
+        round.md,
+        padding.horizontal(6),
+        padding.vertical(3),
+      ]}
     >
-      <Text variant="option2" color="gray500">
-        {tag.title}
-      </Text>
-    </BorderedBox>
-
-    <Text variant="option1" color={selected ? "gray600" : "gray500"}>
+      <p css={[text.option2, text.gray500]}>{tag.title}</p>
+    </div>
+    <p css={[text.option1, selected ? text.gray600 : text.gray500]}>
       {tag.description}
-    </Text>
-  </Box>
+    </p>
+  </div>
 );

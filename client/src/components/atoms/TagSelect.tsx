@@ -24,12 +24,11 @@ import {
   text,
   w,
   h,
+  align,
 } from "@/styles";
 
 import { PositionedDownArrowIcon } from "./Label";
 import { PresetOption } from "./PresetOption";
-import { BorderedBox } from "./BorderedBox";
-import { Text } from "./Text";
 
 interface Props {
   tags: Tag[];
@@ -42,6 +41,9 @@ interface Tag {
   description: string;
 }
 
+const cursorPointer = css`
+  cursor: pointer;
+`;
 const boxShadow = css`
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.06);
 `;
@@ -95,23 +97,21 @@ const MultiValueContainer = (props: MultiValueGenericProps<Tag>) => {
   const { data } = props;
   return (
     <components.MultiValueContainer {...props}>
-      <BorderedBox
-        dir="row"
-        round={5}
-        borderSize={1}
-        borderStyle="solid"
-        borderColor="gray200"
-        bg="white"
-        align="center"
-        gap={6}
-        padHorizontal={8}
-        padVertical={5}
+      <div
+        css={[
+          row,
+          align.center,
+          border.gray200,
+          round.md,
+          bg.white,
+          padding.horizontal(8),
+          padding.vertical(5),
+          gap(6),
+        ]}
       >
-        <Text variant="option1" color="gray500">
-          {data.title}
-        </Text>
+        <p css={[text.option1, text.gray500]}>{data.title}</p>
         <components.MultiValueRemove {...props} />
-      </BorderedBox>
+      </div>
     </components.MultiValueContainer>
   );
 };
@@ -123,6 +123,7 @@ const MultiValueRemove = (props: MultiValueRemoveProps<Tag>) => (
 
 export const TagSelect: React.FC<Props> = ({ tags, onChange }) => (
   <Select
+    css={cursorPointer}
     styles={selectStyles}
     components={{
       Option,
