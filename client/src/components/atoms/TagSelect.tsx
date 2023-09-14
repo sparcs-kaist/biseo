@@ -138,7 +138,7 @@ export const TagSelect: React.FC<Props> = ({ tags, onChange }) => (
     isClearable={false}
     menuPortalTarget={document.body}
     unstyled
-    menuIsOpen
+    // menuIsOpen
     options={tags}
     placeholder="태그를 선택하세요"
     onChange={selection => onChange(selection.map(t => t.title))}
