@@ -1,4 +1,5 @@
 import React, { type PropsWithChildren } from "react";
+import { w, h } from "@/styles";
 import { PositionedDownArrowIcon, Select, SelectWrapper } from "./Label";
 
 interface SelectBoxProps {
@@ -16,8 +17,7 @@ export const SelectBox: React.FC<SelectBoxProps> = ({
 }) => (
   <SelectWrapper>
     <Select
-      w={width}
-      h={height}
+      css={[w(width), h(height)]}
       onChange={e => onChange(e.target.value)}
       defaultValue=""
     >
@@ -46,8 +46,7 @@ export const SelectText: React.FC<SelectTextProps> = ({
 }) => (
   <SelectWrapper>
     <Select
-      w={width}
-      h={height}
+      css={[w(width), h(height)]}
       onChange={e => onChange(e.target.value)}
       defaultValue=""
     >

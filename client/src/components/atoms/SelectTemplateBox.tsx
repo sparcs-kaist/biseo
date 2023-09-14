@@ -1,4 +1,5 @@
 import React, { type PropsWithChildren } from "react";
+import { w, h } from "@/styles";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import {
   PositionedDownArrowIcon,
@@ -24,8 +25,7 @@ export const SelectTemplateBox: React.FC<Props> = ({
   return (
     <SelectWrapper>
       <TemplateSelect
-        w={width}
-        h={height}
+        css={[w(width), h(height)]}
         onChange={e => onChange(parseInt(e.target.value))}
         defaultValue={0}
       >
