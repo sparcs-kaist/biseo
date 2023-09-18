@@ -1,5 +1,7 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { css } from "@emotion/react";
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 
 import { EmoticonIcon, SendIcon } from "@/assets";
 import { Divider, TextAreaAutosize } from "@/components/atoms";
@@ -51,6 +53,12 @@ interface Props {
 }
 
 export const ChatInput: React.FC<Props> = ({ send }) => {
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const absolutePosition = css`
+    position: absolute;
+    transform: translate(0%, -100%);
+  `;
+
   const { input, setValue } = useInput();
 
   /** TODO: disable send button based on `validated` */
@@ -87,7 +95,30 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
           />
           <Divider dir="vertical" />
         </div>
-        <EmoticonIcon />
+        <EmoticonIcon
+          onClick={e => {
+            e.stopPropagation();
+            setPickerOpen(p => !p);
+          }}
+        />
+        {pickerOpen && (
+          <div css={absolutePosition}>
+            <Picker
+              data={data}
+              onEmojiSelect={(emoji: { native: string }) =>
+                setValue(s => s + emoji.native)
+              }
+              onClickOutside={() => setPickerOpen(false)}
+              // emojiButtonRadius="50%"
+              // emojiButtonSize={24}
+              // emojiSize={16}
+              // dynamicWidth={true}
+              isNative
+              previewPosition="none"
+              skinTonePosition="none"
+            />
+          </div>
+        )}
         <SendIcon onClick={sendCurrent} />
         {/* TODO: Replace with button / add hover, actove effect */}
       </form>
