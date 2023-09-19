@@ -1,13 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  Box,
-  Button,
-  SelectTagBox,
-  SelectTemplateBox,
-  Text,
-} from "@/components/atoms";
+import { Button, SelectTagBox, SelectTemplateBox } from "@/components/atoms";
 import {
   AdminAgendaTagsSelect,
   Modal,
@@ -16,6 +10,19 @@ import {
 import { useAdminAgenda } from "@/services/admin-agenda";
 import { useAgendaTemplate } from "@/services/agenda-template";
 import { useAdminUser } from "@/services/admin-user";
+
+import {
+  gap,
+  row,
+  column,
+  justify,
+  text,
+  w,
+  bg,
+  round,
+  padding,
+} from "@/styles";
+
 import { UserTable } from "./UserTable";
 
 export const CreateAgendaModal: React.FC = () => {
@@ -112,24 +119,24 @@ export const CreateAgendaModal: React.FC = () => {
 
   return (
     <Modal title="투표 생성하기">
-      <Box w={630} justify="space-between" dir="row">
-        <Box w={300} gap={20}>
-          <Box gap={10}>
-            <ModalInner
-              title="템플릿 선택"
-              buttonOnClick={() => applyTemplate(template)}
-              buttonText="템플릿 적용"
+      <div css={[row, justify.between, w(630)]}>
+        <div css={[column, gap(20), w(300)]}>
+          <ModalInner
+            title="템플릿 선택"
+            buttonOnClick={() => applyTemplate(template)}
+            buttonText="템플릿 적용"
+          >
+            <SelectTemplateBox
+              width={300}
+              height={38}
+              onChange={(templateId: number) => {
+                setTemplate(templateId);
+              }}
             >
-              <SelectTemplateBox
-                width={300}
-                height={38}
-                onChange={(templateId: number) => {
-                  setTemplate(templateId);
-                }}
-              >
-                템플릿을 선택하세요
-              </SelectTemplateBox>
-            </ModalInner>
+              템플릿을 선택하세요
+            </SelectTemplateBox>
+          </ModalInner>
+          <div css={[column, gap(10)]}>
             <ModalInner title="투표 제목" required>
               <ModalInner.InputBox onChange={onChangeTitle} value={title} />
             </ModalInner>
@@ -145,27 +152,27 @@ export const CreateAgendaModal: React.FC = () => {
                 value={resolution}
               />
             </ModalInner>
+          </div>
 
-            <ModalInner title="투표 항목" count={choices.length} required>
-              <ModalInner.AddVoteOptionArea
-                onClick={onChangeChoice}
-                onSubmit={addChoice}
-                value={newchoice}
-              >
-                {choices.map(opt => (
-                  <ModalInner.VoteChoice
-                    key={opt}
-                    onClick={() => deleteChoice(opt)}
-                  >
-                    {opt}
-                  </ModalInner.VoteChoice>
-                ))}
-              </ModalInner.AddVoteOptionArea>
-            </ModalInner>
-          </Box>
-        </Box>
+          <ModalInner title="투표 항목" count={choices.length} required>
+            <ModalInner.AddVoteOptionArea
+              onClick={onChangeChoice}
+              onSubmit={addChoice}
+              value={newchoice}
+            >
+              {choices.map(opt => (
+                <ModalInner.VoteChoice
+                  key={opt}
+                  onClick={() => deleteChoice(opt)}
+                >
+                  {opt}
+                </ModalInner.VoteChoice>
+              ))}
+            </ModalInner.AddVoteOptionArea>
+          </ModalInner>
+        </div>
 
-        <Box w={300} gap={20}>
+        <div css={[column, gap(20), w(300)]}>
           <ModalInner
             title="태그 선택"
             buttonText="선택된 태그 적용하기"
@@ -181,17 +188,17 @@ export const CreateAgendaModal: React.FC = () => {
               filterBy="tag"
             />
           </ModalInner>
-          <Box
-            w={300}
-            h={106}
-            gap={10}
-            align="center"
-            justify="center"
-            bg="blue100"
+          <div
+            css={[
+              column,
+              bg.blue100,
+              gap(10),
+              round.md,
+              padding.horizontal(15),
+              padding.vertical(13),
+            ]}
           >
-            <Box dir="row" w={270} h={28} justify="space-between">
-              <AdminAgendaTagsSelect />
-            </Box>
+            <AdminAgendaTagsSelect />
             <Link
               to={validated ? ".." : "#"}
               relative="path"
@@ -199,14 +206,12 @@ export const CreateAgendaModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={270} h={38} onClick={onSubmit} disabled={!validated}>
-                <Text variant="boldtitle3" color="blue600">
-                  투표 생성하기
-                </Text>
+                <p css={[text.boldtitle3, text.blue600]}>투표 생성하기</p>
               </Button>
             </Link>
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
     </Modal>
   );
 };
