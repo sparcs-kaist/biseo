@@ -1,8 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-
 import {
-  Box,
-  Body,
   Header,
   Table,
   Cell,
@@ -10,11 +7,10 @@ import {
   CheckBox,
   UserTag,
   SelectBox,
-  Scroll,
 } from "@/components/atoms";
-
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
+import { h, w, gap, column, row, align, scroll, scrollBar } from "@/styles";
 
 interface Props {
   userList?: number[];
@@ -93,9 +89,9 @@ export const UserTable: React.FC<Props> = ({
   };
 
   return (
-    <Box w="fill" gap={5}>
+    <div css={[w("fill"), gap(5)]}>
       {filterBy ? (
-        <Box w="fill" dir="row" justify="flex-start">
+        <div css={[w("fill"), row, align.start]}>
           <SelectBox
             width={92}
             height={26}
@@ -111,7 +107,7 @@ export const UserTable: React.FC<Props> = ({
             })()}
             onChange={setSelectedFilterOption}
           />
-        </Box>
+        </div>
       ) : null}
       <Table w="fill" h={287}>
         <Header>
@@ -131,8 +127,8 @@ export const UserTable: React.FC<Props> = ({
             <Cell scroll>태그</Cell>
           </Row>
         </Header>
-        <Scroll>
-          <Body>
+        <div css={[scroll.y, scroll.x, scrollBar, h(277)]}>
+          <div css={[w(298), column]}>
             {filteredUsers.map(user => (
               <Row
                 key={user.id}
@@ -155,7 +151,7 @@ export const UserTable: React.FC<Props> = ({
                 )}
                 <Cell w={60}>{user.displayName}</Cell>
                 <Cell w={100}>{user.username}</Cell>
-                <Cell>
+                <Cell w="hug">
                   {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
                   {user.tags.map(tag => (
                     <UserTag key={tag} tag={tag} />
@@ -163,9 +159,9 @@ export const UserTable: React.FC<Props> = ({
                 </Cell>
               </Row>
             ))}
-          </Body>
-        </Scroll>
+          </div>
+        </div>
       </Table>
-    </Box>
+    </div>
   );
 };

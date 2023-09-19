@@ -5,7 +5,7 @@ import type { PreparingAgenda } from "@biseo/interface/agenda";
 import { Card } from "@/components/atoms";
 import { AgendaTag } from "@/components/molecules/AgendaTag";
 
-import { gap, text } from "@/styles";
+import { w, gap, column, text } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -19,7 +19,7 @@ interface Props {
 
 export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => (
   <Card>
-    <div css={gap(8)}>
+    <div css={[gap(8), column, w("fill")]}>
       <AgendaTag
         tags={{
           public: agendaTags.public,
@@ -27,7 +27,7 @@ export const PreparingAgendaCard: React.FC<Props> = ({ agenda }) => (
           votable: agenda.user.votable,
         }}
       />
-      <div css={gap(2)}>
+      <div css={[gap(2), column]}>
         <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
         <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
       </div>

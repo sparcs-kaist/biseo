@@ -12,7 +12,7 @@ import {
 
 import { useAgenda } from "@/services/agenda";
 
-import { gap, row, justify, text, w } from "@/styles";
+import { column, row, justify, text, w, gap } from "@/styles";
 
 interface OngoingAgendaProps {
   agenda: OngoingAgenda;
@@ -71,8 +71,8 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
 
   return (
     <Card primary bold>
-      <div css={gap(10)}>
-        <div css={gap(8)}>
+      <div css={[gap(10), w("fill"), column]}>
+        <div css={[gap(8), column]}>
           <AgendaTag
             tags={{
               public: agendaTags.public,
@@ -80,12 +80,12 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <div css={gap(2)}>
+          <div css={[gap(2), column]}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
         </div>
-        <div css={gap(6)}>
+        <div css={[gap(6), column]}>
           <p css={[text.body, text.blue600]}>{agenda.resolution}</p>
           {choices}
         </div>
