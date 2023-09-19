@@ -53,7 +53,6 @@ interface Props {
 export const ChatInput: React.FC<Props> = ({ send }) => {
   const { input, setValue } = useInput();
 
-  /** TODO: disable send button based on `validated` */
   const validated = useMemo(() => input.value.trim().length > 0, [input.value]);
 
   /** @constant 클라이언트와 서버에서 사용하는 채팅 메시지의 최대 길이를 지정합니다. */

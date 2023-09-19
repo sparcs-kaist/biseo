@@ -28,7 +28,7 @@ export const CreateTemplateModal: React.FC = () => {
     setAgendaNewChoice(e.target.value);
   };
   const onNewChoiceSubmit = () => {
-    if (!agendaChoice.includes(agendaNewChoice)) {
+    if (agendaNewChoice.length > 0 && !agendaChoice.includes(agendaNewChoice)) {
       setAgendaChoice([...agendaChoice, agendaNewChoice]);
       setAgendaNewChoice("");
     }
