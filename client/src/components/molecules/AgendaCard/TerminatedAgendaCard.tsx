@@ -60,7 +60,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
           />
-          <div css={[gap(12), w("fill")]}>
+          <div css={[column, gap(12), w("fill")]}>
             {agenda.choices.map(choice => (
               <OptionVoteResult
                 name={choice.name}
