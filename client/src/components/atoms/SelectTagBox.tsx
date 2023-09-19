@@ -1,35 +1,15 @@
 import React from "react";
 import { useUserTag } from "@/services/user-tag";
-import { PositionedDownArrowIcon, SelectWrapper, TagSelect } from "./Label";
+import { TagSelect } from "./TagSelect";
 
 interface Props {
-  selected: string[];
-  onChange: React.ChangeEventHandler<HTMLSelectElement>;
+  onChange: (selection: string[]) => void;
 }
 
-export const SelectTagBox: React.FC<Props> = ({ selected, onChange }) => {
+export const SelectTagBox: React.FC<Props> = ({ onChange }) => {
   const { tags } = useUserTag(state => ({
     tags: state.userTags,
   }));
 
-  return (
-    <>
-      <SelectWrapper>
-        <TagSelect defaultValue={[]} onChange={onChange}>
-          <option value="" disabled>
-            태그를 선택하세요
-          </option>
-          {tags.map(tag => (
-            <option key={tag.id} value={tag.title}>
-              {tag.title}
-            </option>
-          ))}
-        </TagSelect>
-        <PositionedDownArrowIcon />
-      </SelectWrapper>
-      {selected.map(tag => (
-        <>{tag}</>
-      ))}
-    </>
-  );
+  return <TagSelect tags={tags} onChange={onChange} />;
 };
