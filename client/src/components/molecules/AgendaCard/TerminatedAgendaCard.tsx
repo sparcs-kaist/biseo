@@ -9,7 +9,7 @@ import { VoteResult } from "@/components/molecules/VoteResult";
 import { VoteDetail } from "@/components/molecules/VoteDetail";
 import { VoteParticipate } from "@/components/molecules/VoteParticipate";
 
-import { gap, text, w } from "@/styles";
+import { column, gap, text, w } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -41,8 +41,8 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       }}
     >
       {enabled ? (
-        <div css={[gap(15), w("fill")]}>
-          <div css={gap(2)}>
+        <div css={[column, gap(15), w("fill")]}>
+          <div css={[column, gap(2)]}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
@@ -74,7 +74,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           <VoteDetail type={agendaTags.identified} />
         </div>
       ) : (
-        <div css={gap(8)}>
+        <div css={[column, gap(8)]}>
           <AgendaTag
             tags={{
               public: agendaTags.public,
@@ -82,7 +82,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
               votable: agenda.user.votable,
             }}
           />
-          <div css={gap(2)}>
+          <div css={[column, gap(2)]}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
