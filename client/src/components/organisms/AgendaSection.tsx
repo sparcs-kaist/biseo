@@ -14,6 +14,7 @@ import { css } from "@emotion/react";
 const gridLayout = css`
   display: grid;
   grid-template-columns: 380px 300px;
+  grid-template-rows: auto 1fr;
   grid-gap: 15px 20px;
 
   // Ongoing Agenda
