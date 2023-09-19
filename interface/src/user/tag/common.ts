@@ -18,8 +18,8 @@ export type UserTag = z.infer<typeof UserTag>;
  * some description about user tag create schema goes here
  */
 export const UserTagCreate = z.object({
-  title: z.string(),
-  description: z.string(),
+  title: z.string().min(1).max(255),
+  description: z.string().min(1).max(255),
   users: z.array(z.number()),
 });
 export type UserTagCreate = z.infer<typeof UserTagCreate>;

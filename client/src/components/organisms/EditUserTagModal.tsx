@@ -77,11 +77,13 @@ export const EditUserTagModal: React.FC = () => {
           <Box w={300} h={101} dir="column" justify="space-between">
             <ModalInner title="태그 대상 보기" count={taggers.length}>
               <ModalInner.TaggerBox>
-                {filteredUsers.map(user => (
-                  <ModalInner.TagChoice key={user.id}>
-                    {user.username}
-                  </ModalInner.TagChoice>
-                ))}
+                {filteredUsers
+                  .sort((a, b) => (a.username < b.username ? -1 : 1))
+                  .map(user => (
+                    <ModalInner.TagChoice key={user.id}>
+                      {user.username}
+                    </ModalInner.TagChoice>
+                  ))}
               </ModalInner.TaggerBox>
             </ModalInner>
           </Box>

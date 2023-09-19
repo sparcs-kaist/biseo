@@ -1,33 +1,34 @@
 import styled from "@emotion/styled";
 import TextareaAutosize from "react-textarea-autosize";
+import { w, h, text, padding } from "@/styles";
 
 export const TextAreaFixedsize = styled.textarea`
-  width: 100%;
-  height: 100%;
-  padding: 10px 15px;
+  ${w("fill")}
+  ${h("fill")}
+  ${padding.vertical(10)}
+  ${padding.horizontal(15)}
   resize: none;
   border: none;
   background: transparent;
-  font-size: 11px;
-  font-weight: 500;
-  color: ${props => props.theme.colors.black};
+  ${text.subtitle}
+  ${text.black}
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
-    color: ${props => props.theme.colors.gray300};
+    ${text.gray300}
   }
 `;
 
 export const TextAreaAutosize = styled(TextareaAutosize)`
-  width: 100%;
+  ${w("fill")}
+  max-height: 100%;
   outline: none;
   resize: none;
   border: none;
   background: transparent;
-  font-size: 12px;
-  font-weight: 500;
-  color: ${props => props.theme.colors.black};
+  ${text.body}
+  ${text.black}
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
-    color: ${props => props.theme.colors.gray300};
+    ${text.gray300}
   }
 `;
