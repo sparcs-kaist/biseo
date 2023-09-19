@@ -10,6 +10,7 @@ import { useAuth } from "@/services/auth";
 import { useInput } from "@/common/hooks";
 import { theme } from "@/theme";
 import { Box, Text } from "@/components/atoms";
+import { text } from "@/styles";
 
 const Page = styled.div`
   width: 100vw;
@@ -43,7 +44,8 @@ const InputContainer = styled.input`
   border: 1px solid ${theme.colors.gray300};
   border-radius: 5px;
   outline: none;
-  font-size: 13px;
+
+  ${text.subtitle}
 
   &:hover {
     border: 1px solid ${theme.colors.gray400};
