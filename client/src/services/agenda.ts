@@ -29,7 +29,10 @@ const useAgenda = create<AgendaState>(set => ({
 
 socket.on("agenda.started", ongoingAgenda => {
   useAgenda.setState(state => ({
-    agendas: [...state.agendas, ongoingAgenda],
+    agendas: [
+      ...state.agendas.filter(agenda => agenda.id !== ongoingAgenda.id),
+      ongoingAgenda,
+    ],
   }));
 });
 
@@ -49,12 +52,12 @@ socket.on("agenda.voted", ({ id, user, voters }) => {
 });
 
 socket.on("agenda.terminated", terminatedAgenda => {
-  useAgenda.setState(state => {
-    const updatedAgendas = state.agendas.map(agenda =>
-      agenda.id === terminatedAgenda.id ? terminatedAgenda : agenda,
-    );
-    return { agendas: updatedAgendas };
-  });
+  useAgenda.setState(state => ({
+    agendas: [
+      ...state.agendas.filter(agenda => agenda.id !== terminatedAgenda.id),
+      terminatedAgenda,
+    ],
+  }));
 });
 
 socket.on("agenda.reminded", reminded => {
