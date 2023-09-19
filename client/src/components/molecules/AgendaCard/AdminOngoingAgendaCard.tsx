@@ -8,7 +8,7 @@ import { AgendaTag } from "@/components/molecules/AgendaTag";
 
 import { useAdminAgenda } from "@/services/admin-agenda";
 
-import { row, center, justify, gap, text, w } from "@/styles";
+import { row, center, justify, gap, text, w, column } from "@/styles";
 
 const agendaTags = {
   public: true,
@@ -39,9 +39,9 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   return (
     <Card onClick={openModal}>
-      <div css={[gap(8), w("fill")]}>
+      <div css={[column, gap(8), w("fill")]}>
         <AgendaTag tags={agendaTags} admin />
-        <div css={gap(2)}>
+        <div css={[column, gap(2)]}>
           <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
           <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
         </div>

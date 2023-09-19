@@ -80,15 +80,8 @@ export const EditAgendaModal: React.FC = () => {
     const selected = users.filter(user => user.tags.some(tagIsSelected));
     setVoters(selected.map(user => user.id));
   };
-  const onChangeSelectedTags = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { options } = e.target;
-    const optionNum = options.length;
-
-    const selected = [];
-    for (let i = 0; i < optionNum; i += 1) {
-      if (options[i].selected) selected.push(options[i].value);
-    }
-    setSelectedTags(selected);
+  const onChangeSelectedTags = (selection: string[]) => {
+    setSelectedTags(selection);
   };
   const { findTemplate } = useAgendaTemplate(state => ({
     findTemplate: state.findTemplate,
@@ -190,10 +183,7 @@ export const EditAgendaModal: React.FC = () => {
             buttonText="선택된 태그 적용하기"
             buttonOnClick={applySelectedTags}
           >
-            <SelectTagBox
-              selected={selectedTags}
-              onChange={onChangeSelectedTags}
-            />
+            <SelectTagBox onChange={onChangeSelectedTags} />
           </ModalInner>
           <ModalInner title="투표 대상" count={voters.length}>
             <UserTable

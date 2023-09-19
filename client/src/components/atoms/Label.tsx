@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { DownArrowIcon } from "@/assets";
+import { text } from "@/styles";
 
 export const SelectWrapper = styled.div`
   position: relative;
@@ -58,11 +59,7 @@ export const TemplateSelect = styled.select<{ w: number; h: number }>`
 
   color: ${props => props.theme.colors.gray300};
 
-  font-family: "Noto Sansf KR";
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+  ${text.subtitle}
 
   &:focus {
     outline: none;
@@ -78,39 +75,3 @@ export const TemplateSelect = styled.select<{ w: number; h: number }>`
   -ms-appearance: none;
   appearance: none;
 `;
-
-export const TagSelect = styled.select`
-  width: 300px;
-  /* height: 38px; */
-  padding: 5px;
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 5px;
-  border: 0px solid ${props => props.theme.colors.gray200};
-  background-color: ${props => props.theme.colors.white};
-
-  color: ${props => props.theme.colors.gray600};
-
-  font-family: "Noto Sansf KR";
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-
-  &:focus {
-    outline: none;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -o-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-`;
-TagSelect.defaultProps = {
-  multiple: true,
-};

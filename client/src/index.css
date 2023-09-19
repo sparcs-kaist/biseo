@@ -7,6 +7,10 @@
   font-family: "Noto Sans KR", sans-serif;
 }
 
+::placeholder {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
 :root {
   min-width: 1280px;
   background-color: #fafbfc; /* white100 */

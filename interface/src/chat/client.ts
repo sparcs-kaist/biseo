@@ -7,7 +7,7 @@ import { Message } from "./common";
  * description
  */
 export const Send = z.object({
-  message: z.string().min(1),
+  message: z.string().min(1).max(500),
 });
 export type Send = z.infer<typeof Send>;
 export const SendCb = Message;
