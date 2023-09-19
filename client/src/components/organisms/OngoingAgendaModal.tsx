@@ -6,8 +6,21 @@ import {
   ModalInner,
   ParticipantBar,
 } from "@/components/molecules";
-import { Box, Button, Text } from "@/components/atoms";
+import { Button } from "@/components/atoms";
 import { useAdminAgenda } from "@/services/admin-agenda";
+
+import {
+  gap,
+  row,
+  column,
+  justify,
+  text,
+  w,
+  bg,
+  round,
+  padding,
+} from "@/styles";
+
 import { UserTable } from "./UserTable";
 
 export const OngoingAgendaModal: React.FC = () => {
@@ -39,9 +52,9 @@ export const OngoingAgendaModal: React.FC = () => {
 
   return (
     <Modal title="진행 중인 투표">
-      <Box w={630} justify="space-between" padVertical={15} dir="row">
-        <Box w={300} gap={20}>
-          <Box gap={10}>
+      <div css={[row, justify.between, w(630), padding.vertical(15)]}>
+        <div css={[column, gap(20), w(300)]}>
+          <div css={[column, gap(10)]}>
             <ModalInner title="투표 제목">
               <ModalInner.WhiteTextBox>
                 {targetAgenda?.title}
@@ -57,7 +70,7 @@ export const OngoingAgendaModal: React.FC = () => {
                 {targetAgenda?.resolution}
               </ModalInner.WhiteTextBox>
             </ModalInner>
-          </Box>
+          </div>
           <ModalInner title="투표 항목" count={targetAgenda?.choices.length}>
             <ModalInner.VoteOptions>
               {targetAgenda?.choices.map(c => (
@@ -70,19 +83,20 @@ export const OngoingAgendaModal: React.FC = () => {
           <ModalInner.VoteOptions options={voteOptions}/>
           */}
           </ModalInner>
-          <Box
-            gap={10}
-            bg="blue100"
-            padVertical={12}
-            padHorizontal={15}
-            round={5}
+          <div
+            css={[
+              column,
+              bg.blue100,
+              gap(10),
+              round.md,
+              padding.horizontal(15),
+              padding.vertical(13),
+            ]}
           >
             <AdminAgendaTags />
-            <Box dir="row" w={270} gap={10} justify="space-between">
+            <div css={[row, gap(10), justify.between, w(270)]}>
               <Button w={130} h={38} onClick={remind}>
-                <Text variant="boldtitle3" color="blue600">
-                  투표 독촉하기
-                </Text>
+                <p css={[text.boldtitle3, text.blue600]}>투표 독촉하기</p>
               </Button>
               <Link
                 to=".."
@@ -91,15 +105,13 @@ export const OngoingAgendaModal: React.FC = () => {
                 style={{ textDecoration: "none" }}
               >
                 <Button w={130} h={38} onClick={terminate}>
-                  <Text variant="boldtitle3" color="blue600">
-                    투표 종료하기
-                  </Text>
+                  <p css={[text.boldtitle3, text.blue600]}>투표 종료하기</p>
                 </Button>
               </Link>
-            </Box>
-          </Box>
-        </Box>
-        <Box w={300} gap={20}>
+            </div>
+          </div>
+        </div>
+        <div css={[column, gap(20), w(300)]}>
           <ParticipantBar
             total={targetAgenda?.voters.total.length}
             participant={targetAgenda?.voters.voted.length}
@@ -116,8 +128,8 @@ export const OngoingAgendaModal: React.FC = () => {
               filterBy="voted"
             />
           </ModalInner>
-        </Box>
-      </Box>
+        </div>
+      </div>
     </Modal>
   );
 };
