@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { DownArrowIcon } from "@/assets";
+import { text } from "@/styles";
 
 export const SelectWrapper = styled.div`
   position: relative;
@@ -58,11 +59,7 @@ export const TemplateSelect = styled.select<{ w: number; h: number }>`
 
   color: ${props => props.theme.colors.gray300};
 
-  font-family: "Noto Sansf KR";
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
+  ${text.subtitle}
 
   &:focus {
     outline: none;
