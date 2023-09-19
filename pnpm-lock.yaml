@@ -62,6 +62,12 @@ importers:
 
   client:
     dependencies:
+      '@emoji-mart/data':
+        specifier: ^1.1.2
+        version: 1.1.2
+      '@emoji-mart/react':
+        specifier: ^1.1.1
+        version: 1.1.1(emoji-mart@5.5.2)(react@18.2.0)
       '@emotion/react':
         specifier: ^11.11.1
         version: 11.11.1(@types/react@18.0.26)(react@18.2.0)
@@ -71,6 +77,9 @@ importers:
       axios:
         specifier: ^1.4.0
         version: 1.4.0
+      emoji-mart:
+        specifier: ^5.5.2
+        version: 5.5.2
       framer-motion:
         specifier: ^10.16.1
         version: 10.16.1(react-dom@18.2.0)(react@18.2.0)
@@ -119,7 +128,7 @@ importers:
         version: 10.4.13(postcss@8.4.29)
       vite:
         specifier: ^4.0.0
-        version: 4.0.0(@types/node@20.4.7)
+        version: 4.0.0
       vite-plugin-svgr:
         specifier: ^3.2.0
         version: 3.2.0(vite@4.0.0)
@@ -608,6 +617,20 @@ packages:
       colorspace: 1.1.4
       enabled: 2.0.0
       kuler: 2.0.0
+    dev: false
+
+  /@emoji-mart/data@1.1.2:
+    resolution: {integrity: sha512-1HP8BxD2azjqWJvxIaWAMyTySeZY0Osr83ukYjltPVkNXeJvTz7yDrPLBtnrD5uqJ3tg4CcLuuBW09wahqL/fg==}
+    dev: false
+
+  /@emoji-mart/react@1.1.1(emoji-mart@5.5.2)(react@18.2.0):
+    resolution: {integrity: sha512-NMlFNeWgv1//uPsvLxvGQoIerPuVdXwK/EUek8OOkJ6wVOWPUizRBJU0hDqWZCOROVpfBgCemaC3m6jDOXi03g==}
+    peerDependencies:
+      emoji-mart: ^5.2
+      react: ^16.8 || ^17 || ^18
+    dependencies:
+      emoji-mart: 5.5.2
+      react: 18.2.0
     dev: false
 
   /@emotion/babel-plugin@11.11.0:
@@ -1591,7 +1614,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.22.5(@babel/core@7.22.11)
       magic-string: 0.27.0
       react-refresh: 0.14.0
-      vite: 4.0.0(@types/node@20.4.7)
+      vite: 4.0.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -2415,6 +2438,10 @@ packages:
   /electron-to-chromium@1.4.502:
     resolution: {integrity: sha512-xqeGw3Gr6o3uyHy/yKjdnDQHY2RQvXcGC2cfHjccK1IGkH6cX1WQBN8EeC/YpwPhGkBaikDTecJ8+ssxSVRQlw==}
     dev: true
+
+  /emoji-mart@5.5.2:
+    resolution: {integrity: sha512-Sqc/nso4cjxhOwWJsp9xkVm8OF5c+mJLZJFoFfzRuKO+yWiN7K8c96xmtughYb0d/fZ8UC6cLIQ/p4BR6Pv3/A==}
+    dev: false
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -5603,13 +5630,13 @@ packages:
       '@rollup/pluginutils': 5.0.3
       '@svgr/core': 7.0.0
       '@svgr/plugin-jsx': 7.0.0
-      vite: 4.0.0(@types/node@20.4.7)
+      vite: 4.0.0
     transitivePeerDependencies:
       - rollup
       - supports-color
     dev: true
 
-  /vite@4.0.0(@types/node@20.4.7):
+  /vite@4.0.0:
     resolution: {integrity: sha512-ynad+4kYs8Jcnn8J7SacS9vAbk7eMy0xWg6E7bAhS1s79TK+D7tVFGXVZ55S7RNLRROU1rxoKlvZ/qjaB41DGA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -5634,7 +5661,6 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.4.7
       esbuild: 0.16.17
       postcss: 8.4.28
       resolve: 1.22.4
