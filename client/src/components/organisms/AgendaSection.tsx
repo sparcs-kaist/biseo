@@ -65,11 +65,9 @@ export const AgendaSection: React.FC = () => {
           return 0;
         });
       }
-      return agendas.length === 0 ? (
-        <AgendaCard.Empty agendaStatus={agendaStatus} />
-      ) : (
-        agendas.map(agenda => <AgendaCard key={agenda.id} agenda={agenda} />)
-      );
+      return agendas.map(agenda => (
+        <AgendaCard key={agenda.id} agenda={agenda} />
+      ));
     },
     [preparingAgendas, ongoingAgendas, terminatedAgendas],
   );
@@ -77,13 +75,13 @@ export const AgendaSection: React.FC = () => {
   return (
     <section css={scroll.y}>
       <div css={gridLayout}>
-        <AgendaCard.Group title="진행중인 투표">
+        <AgendaCard.Group agendaStatus="ongoing">
           {getAgendaCards("ongoing")}
         </AgendaCard.Group>
-        <AgendaCard.Group title="예정된 투표">
+        <AgendaCard.Group agendaStatus="preparing">
           {getAgendaCards("preparing")}
         </AgendaCard.Group>
-        <AgendaCard.Group title="종료된 투표">
+        <AgendaCard.Group agendaStatus="terminated">
           {getAgendaCards("terminated")}
         </AgendaCard.Group>
       </div>
