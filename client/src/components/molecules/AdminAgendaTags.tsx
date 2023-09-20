@@ -20,7 +20,7 @@ export const AdminAgendaTags: React.FC = () => (
         gap={99}
       >
         <Text color="gray600" variant="option1">
-          비공개
+          공개
         </Text>
       </BorderedBox>
     </Box>
@@ -68,7 +68,7 @@ export const AdminAgendaTagsSelect: React.FC = () => (
         dir="row"
       >
         <Text color="gray600" variant="option1">
-          비공개
+          공개
         </Text>
 
         <Box padVertical={7}>
