@@ -8,13 +8,14 @@ import {
   isPreparingAgenda,
 } from "@/utils/agenda";
 
-import { scroll } from "@/styles";
+import { gap, scroll, column } from "@/styles";
 import { css } from "@emotion/react";
 
 const gridLayout = css`
   display: grid;
   grid-template-columns: 380px 300px;
   grid-gap: 15px 20px;
+  grid-template-rows: auto 1fr;
 
   // Ongoing Agenda, Preparing Agenda
   *:nth-child(1) {
@@ -70,7 +71,7 @@ export const AgendaSection: React.FC = () => {
   return (
     <section css={scroll.y}>
       <div css={gridLayout}>
-        <div>
+        <div css={[gap(20), column]}>
           <AgendaCard.Group title="진행중인 투표">
             {getAgendaCards("ongoing")}
           </AgendaCard.Group>
