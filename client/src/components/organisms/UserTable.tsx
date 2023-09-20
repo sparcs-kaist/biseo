@@ -10,7 +10,7 @@ import {
 } from "@/components/atoms";
 import { useAdminUser } from "@/services/admin-user";
 import { useUserTag } from "@/services/user-tag";
-import { h, w, gap, column, row, align, scroll, scrollBar } from "@/styles";
+import { h, w, gap, row, align, scroll, scrollBar } from "@/styles";
 
 interface Props {
   userList?: number[];
@@ -109,56 +109,65 @@ export const UserTable: React.FC<Props> = ({
           />
         </div>
       ) : null}
-      <Table w="fill" h={287}>
-        <Header>
-          <Row>
-            {editable ? (
-              <Cell w={27}>
-                <CheckBox
-                  checked={allSelected}
-                  onChange={toggleHeaderCheckbox}
-                />
-              </Cell>
-            ) : (
-              <Cell w={0} />
-            )}
-            <Cell w={60}>이름</Cell>
-            <Cell w={100}>닉네임</Cell>
-            <Cell scroll>태그</Cell>
-          </Row>
-        </Header>
-        <div css={[scroll.y, scroll.x, scrollBar, h(277)]}>
-          <div css={[w(298), column]}>
-            {filteredUsers.map(user => (
-              <Row
-                key={user.id}
-                selected={selectedUsers.includes(user.id)}
-                onClick={() => {
-                  if (editable) {
-                    selectUser(user.id);
-                  }
-                }}
-              >
+      <Table w="fill" h={277}>
+        <div css={[w(298)]}>
+          <div css={[scroll.x, scroll.y, scrollBar, h(277)]}>
+            <Header
+              css={{
+                position: "sticky",
+                zIndex: "1",
+                top: "0px",
+              }}
+            >
+              <Row>
                 {editable ? (
                   <Cell w={27}>
                     <CheckBox
-                      checked={selectedUsers.includes(user.id)}
-                      readOnly
+                      checked={allSelected}
+                      onChange={toggleHeaderCheckbox}
                     />
                   </Cell>
                 ) : (
                   <Cell w={0} />
                 )}
-                <Cell w={60}>{user.displayName}</Cell>
-                <Cell w={100}>{user.username}</Cell>
-                <Cell w="hug">
-                  {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
-                  {user.tags.map(tag => (
-                    <UserTag key={tag} tag={tag} />
-                  ))}
-                </Cell>
+                <Cell w={60}>이름</Cell>
+                <Cell w={100}>닉네임</Cell>
+                <Cell w={150}>태그</Cell>
               </Row>
-            ))}
+            </Header>
+
+            <div css={[w("hug")]}>
+              {filteredUsers.map(user => (
+                <Row
+                  key={user.id}
+                  selected={selectedUsers.includes(user.id)}
+                  onClick={() => {
+                    if (editable) {
+                      selectUser(user.id);
+                    }
+                  }}
+                >
+                  {editable ? (
+                    <Cell w={27}>
+                      <CheckBox
+                        checked={selectedUsers.includes(user.id)}
+                        readOnly
+                      />
+                    </Cell>
+                  ) : (
+                    <Cell w={0} />
+                  )}
+                  <Cell w={60}>{user.displayName}</Cell>
+                  <Cell w={100}>{user.username}</Cell>
+                  <Cell w="hug">
+                    {/* {user.isAdmin ? <UserTag>어드민</UserTag> : <></>} */}
+                    {user.tags.map(tag => (
+                      <UserTag key={tag} tag={tag} />
+                    ))}
+                  </Cell>
+                </Row>
+              ))}
+            </div>
           </div>
         </div>
       </Table>
