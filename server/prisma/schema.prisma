@@ -27,6 +27,7 @@ model Agenda {
 model User {
   id          Int                 @id @default(autoincrement())
   username    String              @unique
+  password    String
   displayName String
   isAdmin     Boolean             @default(false) @map("is_admin")
   chats       Chat[]
