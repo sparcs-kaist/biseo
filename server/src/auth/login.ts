@@ -1,8 +1,6 @@
 import { z } from "zod";
 import type { Request, Response } from "express";
 
-import { prisma } from "@/db/prisma";
-
 import { authenticate } from "./ldap";
 import { getToken } from "./token";
 
@@ -19,9 +17,5 @@ export const loginHandler = async (req: Request, res: Response) => {
   const username = await authenticate(result.data);
   if (!username) return res.status(401).send("Unauthorized");
 
-  const user =
-    (await prisma.user.findUnique({ where: { username } })) ||
-    (await prisma.user.create({ data: { username, displayName: username } }));
-
-  return res.json({ token: getToken(user.username) });
+  return res.json({ token: getToken(username) });
 };
