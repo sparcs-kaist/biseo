@@ -16,6 +16,7 @@ services:
       - server
     networks:
       - frontend
+      - proxy
   server:
     container_name: biseo-server
     restart: always
@@ -52,3 +53,5 @@ volumes:
 networks:
   frontend:
   backend:
+  proxy:
+    external: true
