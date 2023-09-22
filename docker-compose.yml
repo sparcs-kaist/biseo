@@ -35,6 +35,8 @@ services:
     container_name: biseo-db
     restart: always
     image: mysql:8.0
+    ports:
+      - "${EXPOSE_PORT:?}:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:?}
       - MYSQL_DATABASE=${DB_NAME:?}
