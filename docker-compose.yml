@@ -8,8 +8,6 @@ services:
     build:
       context: .
       dockerfile: .docker/client.Dockerfile
-    ports:
-      - "${EXPOSE_PORT:?}:80"
     environment:
       - SERVER_URI="http://server:8000"
     depends_on:
