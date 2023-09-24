@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { w, h, text, colors } from "@/styles";
 
 import {
   Box,
   Button,
   SelectTagBox,
   SelectTemplateBox,
-  Text,
 } from "@/components/atoms";
 import {
   AdminAgendaTagsSelect,
@@ -198,10 +198,17 @@ export const CreateAgendaModal: React.FC = () => {
               replace
               style={{ textDecoration: "none" }}
             >
-              <Button w={270} h={38} onClick={onSubmit} disabled={!validated}>
-                <Text variant="boldtitle3" color={validated? "blue600" : "gray300"}>
-                  투표 생성하기
-                </Text>
+              <Button
+                css={[
+                  w(270),
+                  h(38),
+                  text.boldtitle3,
+                  validated ? colors.blue600 : colors.gray300,
+                ]}
+                onClick={onSubmit}
+                disabled={!validated}
+              >
+                투표 생성하기
               </Button>
             </Link>
           </Box>
