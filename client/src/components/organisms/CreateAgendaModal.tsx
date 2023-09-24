@@ -199,9 +199,17 @@ export const CreateAgendaModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={270} h={38} onClick={onSubmit} disabled={!validated}>
-                <Text variant="boldtitle3" color="blue600">
-                  투표 생성하기
-                </Text>
+                {
+                  validated ? ( 
+                    <Text variant="boldtitle3" color="blue600">
+                      투표 생성하기
+                    </Text>
+                  ) : (
+                    <Text variant="boldtitle3" color="gray300">
+                      투표 생성하기
+                    </Text>
+                  )
+                }
               </Button>
             </Link>
           </Box>
