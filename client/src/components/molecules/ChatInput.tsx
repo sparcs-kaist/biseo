@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { css } from "@emotion/react";
-import { SendIcon } from "@/assets"; 
+import { SendIcon } from "@/assets";
 import { Divider, TextAreaAutosize } from "@/components/atoms";
 import { useInput } from "@/common/hooks";
 import {
