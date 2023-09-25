@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import { css } from "@emotion/react";
-// import { EmoticonIcon, SendIcon } from "@/assets";
-import { SendIcon } from "@/assets"; // remove emoji
+import { SendIcon } from "@/assets"; 
 import { Divider, TextAreaAutosize } from "@/components/atoms";
 import { useInput } from "@/common/hooks";
 import {
@@ -86,7 +85,7 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
           />
           <Divider dir="vertical" />
         </div>
-        {/* <EmoticonIcon /> */}
+        {/* TODO: Add EmoticonIcon */}
         <SendIcon onClick={sendCurrent} />
         {/* TODO: Replace with button / add hover, actove effect */}
       </form>
