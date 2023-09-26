@@ -282,8 +282,9 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
     round={5}
     borderStyle="solid"
     justify="space-between"
+    gap={5}
     dir="row"
-    align="center"
+    align="flex-start"
     style={{
       height: "fit-content",
       minHeight: 32,
