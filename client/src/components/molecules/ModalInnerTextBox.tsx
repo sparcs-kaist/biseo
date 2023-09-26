@@ -276,22 +276,32 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
     borderColor="gray200"
     bg="white"
     w="fill"
-    h={32}
     borderSize={1}
     padVertical={6}
-    padLeft={12}
-    padRight={0}
+    padHorizontal={12}
     round={5}
     borderStyle="solid"
     justify="space-between"
     dir="row"
     align="center"
+    style={{
+      height: "fit-content",
+      minHeight: 32,
+    }}
   >
-    <Text color="gray500" variant="subtitle">
+    <Text
+      color="gray500"
+      variant="subtitle"
+      style={{
+        "height": "fit-content",
+        "word-break": "break-all",
+        "word-wrap": "break-word",
+      }}
+    >
       {children}
     </Text>
     <Clickable>
-      <Box pad={10} onClick={onClick}>
+      <Box w={13} h={13} justify="center" align="center" onClick={onClick}>
         <TrashIcon />
       </Box>
     </Clickable>
