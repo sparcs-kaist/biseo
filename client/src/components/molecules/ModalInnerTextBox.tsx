@@ -294,9 +294,9 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
       color="gray500"
       variant="subtitle"
       style={{
-        "height": "fit-content",
-        "word-break": "break-all",
-        "word-wrap": "break-word",
+        height: "fit-content",
+        wordBreak: "break-all",
+        overflowWrap: "break-word",
       }}
     >
       {children}
