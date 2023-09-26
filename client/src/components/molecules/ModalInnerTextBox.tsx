@@ -11,6 +11,8 @@ import {
   Clickable,
   TaggersBox,
 } from "@/components/atoms";
+import { scroll, scrollBar } from "@/styles";
+import { css } from "@emotion/react";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
 
@@ -51,6 +53,12 @@ interface SubComponents {
   WhiteTextBox: typeof WhiteTextBox;
   TaggerBox: typeof TaggerBox;
 }
+
+const textAreaScrollStyle = css`
+  ${scroll.y}
+  ${scrollBar}
+  overflow-y: scroll;
+`;
 
 export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   title,
@@ -165,6 +173,7 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
       placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
+      css={textAreaScrollStyle}
     />
   </BorderedBox>
 );
