@@ -130,7 +130,7 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
     borderStyle="solid"
     gap={10}
   >
-    <Text color="gray600" variant="subtitle">
+    <Text color="gray600" variant="subtitle" css={textAreaScrollStyle}>
       {children}
     </Text>
   </BorderedBox>
