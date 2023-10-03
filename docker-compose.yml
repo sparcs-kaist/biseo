@@ -2,22 +2,22 @@ version: "3.4"
 name: "biseo"
 
 services:
-  client:
-    container_name: biseo-client
+  web:
+    container_name: biseo-web
     restart: always
     build:
       context: .
-      dockerfile: .docker/client.Dockerfile
+      dockerfile: .docker/web.Dockerfile
     ports:
       - "${EXPOSE_PORT:?}:80"
     environment:
-      - SERVER_URI="http://server:8000"
+      - SERVER_URI="http://api:8000"
     depends_on:
-      - server
+      - api
     networks:
       - frontend
-  server:
-    container_name: biseo-server
+  api:
+    container_name: biseo-api
     restart: always
     environment:
       - NODE_ENV=production
@@ -26,7 +26,7 @@ services:
       - SECRET_KEY=${SECRET_KEY:?}
     build:
       context: .
-      dockerfile: .docker/server.Dockerfile
+      dockerfile: .docker/api.Dockerfile
     depends_on:
       - db
     networks:
