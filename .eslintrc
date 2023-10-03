@@ -120,6 +120,9 @@
       "typescript": {
         "project": ["./tsconfig.json"]
       }
+    },
+    "react": {
+      "version": "18.2.0"
     }
   }
 }
