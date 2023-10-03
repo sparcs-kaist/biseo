@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "paths": {
+      "@biseo/interface/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
