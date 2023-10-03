@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "license": "MIT",
   "main": "dist/index.js",
-  "module": "src/index.ts",
+  "types": "src/index.ts",
   "devDependencies": {
     "zod": "^3.21.4"
   },
@@ -13,6 +13,18 @@
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc"
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./init": "./dist/init/index.js",
+    "./agenda": "./dist/agenda/index.js",
+    "./agenda/template": "./dist/agenda/template/index.js",
+    "./chat": "./dist/chat/index.js",
+    "./user": "./dist/user/index.js",
+    "./user/tag": "./dist/user/tag/index.js",
+    "./admin/agenda": "./dist/admin/agenda/index.js",
+    "./admin/user": "./dist/admin/user/index.js"
   }
 }
