@@ -1,5 +1,5 @@
 import type { Server, Socket } from "socket.io";
-import type { DefaultEventsMap } from "socket.io/dist/typed-events";
+import type { DefaultEventsMap } from "@socket.io/component-emitter";
 import type {
   ClientToServerEvents,
   ServerToClientEvents,

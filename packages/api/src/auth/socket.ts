@@ -1,4 +1,3 @@
-import type { ExtendedError } from "socket.io/dist/namespace";
 import type { BiseoSocket } from "@biseo/api/types/socket";
 import { getUserFromToken } from "@biseo/api/auth/token";
 
@@ -13,10 +12,7 @@ const handler = async (socket: BiseoSocket) => {
   return socket.emit("init", user);
 };
 
-export const auth = (
-  socket: BiseoSocket,
-  next: (err?: ExtendedError) => void,
-) => {
+export const auth = (socket: BiseoSocket, next: (err?: Error) => void) => {
   handler(socket)
     .then(() => next())
     .catch(e => {
