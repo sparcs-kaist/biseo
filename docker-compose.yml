@@ -29,7 +29,7 @@ services:
       dockerfile: .docker/api.Dockerfile
     depends_on:
       db:
-        condition: service_completed_successfully
+        condition: service_healthy
     networks:
       - frontend
       - backend
@@ -45,6 +45,11 @@ services:
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:
       - backend
+    healthcheck:
+      test: "mysql -uroot -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE -e 'select 1'"
+      start_period: 0s
+      interval: 1s
+      retries: 3
 
 volumes:
   biseo-data:
