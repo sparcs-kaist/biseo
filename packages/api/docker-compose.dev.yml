@@ -12,6 +12,11 @@ services:
     volumes:
       - db:/var/lib/mysql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: "mysql -uroot -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE -e 'select 1'"
+      start_period: 0s
+      interval: 1s
+      retries: 30
 
 volumes:
   db:
