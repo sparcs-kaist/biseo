@@ -1,11 +1,10 @@
 import type { Error as ErrorResponse } from "@biseo/interface/helpers";
 import logger from "@biseo/api/utils/logger";
 
-export class BiseoError {
-  message: string;
-
+export class BiseoError extends Error {
   constructor(message: string) {
-    this.message = message;
+    super(message);
+    Object.setPrototypeOf(this, BiseoError.prototype);
   }
 
   serialize() {
