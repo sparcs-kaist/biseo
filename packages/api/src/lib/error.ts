@@ -1,7 +1,13 @@
 import type { Error as ErrorResponse } from "@biseo/interface/helpers";
 import logger from "@biseo/api/utils/logger";
 
-export class BiseoError extends Error {
+export class BiseoError {
+  message: string;
+
+  constructor(message: string) {
+    this.message = message;
+  }
+
   serialize() {
     return { ok: false, message: this.message } as const;
   }
