@@ -224,9 +224,16 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
     h={30}
     justify="center"
     borderSize={1}
+    padVertical={7}
     padHorizontal={15}
     round={5}
     borderStyle="solid"
+    style={{
+      maxWidth: "100%",
+      height: "fit-content",
+      wordBreak: "break-all",
+      overflowWrap: "break-word",
+    }}
   >
     <Text color="gray600" variant="subtitle">
       {children}
