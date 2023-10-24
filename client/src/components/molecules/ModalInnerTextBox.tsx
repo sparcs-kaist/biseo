@@ -13,6 +13,8 @@ import {
 } from "@/components/atoms";
 import "@/components/atoms/placeholder.css";
 import { TrashIcon } from "@/assets";
+import { css } from "@emotion/react";
+import { scroll, scrollBar } from "@/styles";
 
 interface ModalInnerProps extends PropsWithChildren {
   title: string;
@@ -209,11 +211,26 @@ const TextButton: React.FC<SubmitProps> = ({
 );
 ModalInner.TextButton = TextButton;
 
-const VoteOptions: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <Box dir="row" gap={8}>
-    {children}
-  </Box>
-);
+const VoteOptions: React.FC<PropsWithChildren> = ({ children = null }) => {
+  const scrollTyle = css`
+    ${scroll.y}
+    ${scrollBar}
+  overflow-y: scroll;
+  `;
+  return (
+    <Box
+      dir="row"
+      gap={8}
+      w="fill"
+      h={150}
+      wrap="wrap"
+      justify="flex-start"
+      css={scrollTyle}
+    >
+      {children}
+    </Box>
+  );
+};
 ModalInner.VoteOptions = VoteOptions;
 
 const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
