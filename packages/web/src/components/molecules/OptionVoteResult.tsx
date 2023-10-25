@@ -37,7 +37,7 @@ export const OptionVoteResult: React.FC<Props> = ({
   <Box w="fill" h={30}>
     <Background
       percent={(count / totalCount) * 100}
-      color={userChoice ? "blue200" : "blue100"}
+      color={userChoice ? "blue500" : "blue300"}
       borderColor={userChoice ? "blue300" : "gray200"}
     >
       <Box
