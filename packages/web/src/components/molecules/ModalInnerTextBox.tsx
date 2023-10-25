@@ -238,7 +238,7 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
     borderColor="gray200"
     bg="white"
     w="hug"
-    h={30}
+    h="hug"
     justify="center"
     borderSize={1}
     padVertical={7}
@@ -247,7 +247,6 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
     borderStyle="solid"
     style={{
       maxWidth: "100%",
-      height: "fit-content",
       wordBreak: "break-all",
       overflowWrap: "break-word",
     }}
@@ -300,8 +299,9 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
     borderColor="gray200"
     bg="white"
     w="fill"
+    h="hug"
     borderSize={1}
-    padVertical={6}
+    padVertical={8}
     padHorizontal={12}
     round={5}
     borderStyle="solid"
@@ -310,7 +310,6 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
     dir="row"
     align="flex-start"
     style={{
-      height: "fit-content",
       minHeight: 32,
     }}
   >
@@ -318,7 +317,6 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
       color="gray500"
       variant="subtitle"
       style={{
-        height: "fit-content",
         wordBreak: "break-all",
         overflowWrap: "break-word",
       }}
