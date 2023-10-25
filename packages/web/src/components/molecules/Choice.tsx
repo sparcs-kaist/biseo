@@ -17,7 +17,7 @@ const Container = styled.div<{
   border: 1px solid ${props => props.theme.colors.gray200};
   padding: 6px 12px 6px 12px;
   width: 340px;
-  height: 30px;
+  height: fit-content;
   gap: 10px;
   display: flex;
   flex-direction: row;
@@ -35,7 +35,14 @@ interface ChoiceTextProps extends PropsWithChildren {
 }
 
 const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => (
-  <Text variant="body" color={color}>
+  <Text
+    variant="body"
+    color={color}
+    style={{
+      wordBreak: "break-all",
+      overflowWrap: "break-word",
+    }}
+  >
     {children}
   </Text>
 );
