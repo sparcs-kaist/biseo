@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "es5",
+    "sourceMap": true,
+    "strict": true,
+    "allowJs": false,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": false,
+    "types": []
+  },
+  "exclude": ["node_modules", "dist"]
+}
