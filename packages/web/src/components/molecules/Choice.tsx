@@ -6,6 +6,7 @@ import type { Choice } from "@biseo/interface/agenda";
 import { Text } from "@biseo/web/components/atoms";
 import { SelectIcon } from "@biseo/web/assets";
 import { type Color, theme } from "@biseo/web/theme";
+import { center, h, w } from "@biseo/web/styles";
 
 const Container = styled.div<{
   color: Color;
@@ -14,7 +15,7 @@ const Container = styled.div<{
   border-radius: 5px;
   background-color: ${props => props.theme.colors[props.color]};
   border: 1px solid ${props => props.theme.colors.gray200};
-  padding: 6px 13px 6px 13px;
+  padding: 6px 12px 6px 12px;
   width: 340px;
   height: 30px;
   gap: 10px;
@@ -76,7 +77,9 @@ const ChoiceBase: React.FC<ChoiceBaseProps> = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <SelectIcon stroke={theme.colors[choiceStyle.selectIconColor]} />
+      <div css={[w(13), h(13), center]}>
+        <SelectIcon stroke={theme.colors[choiceStyle.selectIconColor]} />
+      </div>
       <ChoiceText color={choiceStyle.textColor}>{text}</ChoiceText>
     </Container>
   );
