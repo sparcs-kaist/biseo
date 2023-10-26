@@ -31,10 +31,24 @@ const selectAgendaDefaultFields = {
   },
 };
 
+const selectAgendaTypeFields = {
+  select: {
+    named: true,
+    private: true,
+  },
+};
+
+// TODO: remove workaround
+const agendaTypeFallback = {
+  named: false,
+  private: false,
+};
+
 export const createAgenda = async ({
   title,
   resolution,
   content,
+  type,
   choices,
   voters,
 }: schema.AdminAgendaCreate) => {
@@ -42,6 +56,9 @@ export const createAgenda = async ({
     title,
     resolution,
     content,
+    type: {
+      create: type,
+    },
     choices: {
       create: choices.map(name => ({ name })),
     },
@@ -51,6 +68,7 @@ export const createAgenda = async ({
   };
 
   const {
+    type: createdType,
     voters: createdVoters,
     choices: createdChoices,
     ...createdAgenda
@@ -58,6 +76,7 @@ export const createAgenda = async ({
     data: createAgendaQuery,
     select: {
       ...selectAgendaDefaultFields.select,
+      type: selectAgendaTypeFields,
       choices: true,
       voters: selectOnlyUser,
     },
@@ -67,6 +86,8 @@ export const createAgenda = async ({
     ...createdAgenda,
     status: "preparing",
     choices: createdChoices,
+    // TODO: remove workaround
+    type: createdType,
     voters: {
       voted: 0,
       total: createdVoters.length,
@@ -117,6 +138,7 @@ export const startAgenda = async (agendaId: number, user: User) => {
       },
       select: {
         ...selectAgendaDefaultFields.select,
+        type: selectAgendaTypeFields,
         choices: {
           include: {
             users: true,
@@ -131,6 +153,8 @@ export const startAgenda = async (agendaId: number, user: User) => {
   const ongoingAgenda: OngoingAgenda = {
     ...updatedAgenda,
     status: "ongoing",
+    // TODO: remove workaround
+    type: updatedAgenda.type ? updatedAgenda.type : agendaTypeFallback,
     voters: {
       voted: 0,
       total: updatedVoters.length,
@@ -163,6 +187,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
     },
     select: {
       ...selectAgendaDefaultFields.select,
+      type: selectAgendaTypeFields,
       choices: {
         include: {
           users: true,
@@ -192,6 +217,8 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
       // eslint-disable-next-line no-underscore-dangle
       count: choice._count.users,
     })),
+    // TODO: remove workaround
+    type: updatedAgenda.type ? updatedAgenda.type : agendaTypeFallback,
     voters: {
       voted: updatedChoices.reduce(
         (acc, choice) => acc + choice.users.length,
@@ -254,6 +281,7 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
     },
     select: {
       ...selectAgendaDefaultFields.select,
+      type: selectAgendaTypeFields,
       choices: true,
       voters: selectOnlyUser,
     },
@@ -274,6 +302,7 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
       id: choice.id,
       name: choice.name,
     })),
+    type: updatedAgenda.type ? updatedAgenda.type : agendaTypeFallback,
     voters: {
       voted: 0,
       total: voters.length,
@@ -298,6 +327,7 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
       name: choice.name,
       count: 0,
     })),
+    type: updatedAgenda.type ? updatedAgenda.type : agendaTypeFallback,
     voters: {
       voted: [],
       total: voters.map(voter => voter.user),
@@ -347,6 +377,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
       startAt: true,
       endAt: true,
       deletedAt: true,
+      type: selectAgendaTypeFields,
       choices: {
         include: {
           users: selectOnlyUser,
@@ -372,6 +403,8 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
       content: agenda.content,
       resolution: agenda.resolution,
       status,
+      // TODO: remove workaround
+      type: agenda.type ? agenda.type : agendaTypeFallback,
       choices: agenda.choices.map(choice => ({
         id: choice.id,
         name: choice.name,
