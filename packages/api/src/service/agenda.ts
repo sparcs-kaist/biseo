@@ -10,6 +10,12 @@ export const retrieveAll = async (
   const agendaDbRes = await prisma.agenda.findMany({
     where: { deletedAt: null },
     include: {
+      type: {
+        select: {
+          named: true,
+          private: true,
+        },
+      },
       voters: true,
       choices: {
         select: {
@@ -32,6 +38,8 @@ export const retrieveAll = async (
       title: agenda.title,
       content: agenda.content,
       resolution: agenda.resolution,
+      // TODO: remove workaround
+      type: agenda.type ? agenda.type : { named: false, private: false },
       voters: {
         voted: agenda.choices.reduce(
           (acc, choice) => acc + choice.users.length,
