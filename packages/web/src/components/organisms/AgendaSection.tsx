@@ -73,7 +73,7 @@ export const AgendaSection: React.FC = () => {
   );
 
   return (
-    <section css={scroll.y}>
+    <section css={[scroll.y, scroll.hidden]}>
       <div css={gridLayout}>
         <AgendaCard.Group agendaStatus="ongoing">
           {getAgendaCards("ongoing")}
