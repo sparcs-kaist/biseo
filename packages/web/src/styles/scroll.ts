@@ -26,14 +26,12 @@ const applyDirection = (direction: "x" | "y") => css`
   }
 `;
 
-export const hiddenScroll = css`
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
 export const scroll = {
   x: applyDirection("x"),
   y: applyDirection("y"),
-  hidden: hiddenScroll,
+  hidden: css`
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  `,
 } as const;
