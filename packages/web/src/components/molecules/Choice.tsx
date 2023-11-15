@@ -1,12 +1,10 @@
-import React, { useState, type PropsWithChildren } from "react";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-
 import type { Choice } from "@biseo/interface/agenda";
-import { Text } from "@biseo/web/components/atoms";
 import { SelectIcon } from "@biseo/web/assets";
-import { type Color, theme } from "@biseo/web/theme";
-import { center, h, w } from "@biseo/web/styles";
+import { center, h, text as styleText, w } from "@biseo/web/styles";
+import { theme, type Color } from "@biseo/web/theme";
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+import React, { useState, type PropsWithChildren } from "react";
 
 const Container = styled.div<{
   color: Color;
@@ -35,16 +33,7 @@ interface ChoiceTextProps extends PropsWithChildren {
 }
 
 const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => (
-  <Text
-    variant="body"
-    color={color}
-    style={{
-      wordBreak: "break-all",
-      overflowWrap: "break-word",
-    }}
-  >
-    {children}
-  </Text>
+  <p css={[styleText.body, styleText[color]]}>{children}</p>
 );
 
 const choiceBaseStyle = (
