@@ -34,7 +34,7 @@ module.exports = {
         project: ["./packages/*/tsconfig.json", "./tsconfig.json"],
     },
     plugins: ["import", "@typescript-eslint", "react"],
-    ignorePatterns: ["node_modules/", "dist/"],
+    ignorePatterns: ["node_modules/", "dist/", ".eslintrc.cjs"],
     rules: {
         "import/extensions": [
             "error",
