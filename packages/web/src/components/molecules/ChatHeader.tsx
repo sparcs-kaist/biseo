@@ -12,7 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   width: "100%";
   min-height: 42px;
-  background-color: ${props => props.theme.colors.gray100};
+  background-color: ${props => props.colors.gray100};
   padding: 0 20px;
   justify-content: center;
 `;

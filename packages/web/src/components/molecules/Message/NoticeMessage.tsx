@@ -13,8 +13,8 @@ const Container = styled.div`
   flex-direction: row;
   gap: 4px;
   padding: 6px 15px;
-  background-color: ${props => props.theme.colors.blue100};
-  border: solid 1px ${props => props.theme.colors.blue600};
+  background-color: ${props => props.colors.blue100};
+  border: solid 1px ${props => props.colors.blue600};
   border-radius: 10px;
 `;
 

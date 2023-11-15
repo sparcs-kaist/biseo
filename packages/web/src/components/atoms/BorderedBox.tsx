@@ -1,6 +1,7 @@
-import styled from "@emotion/styled";
+import type { ColorKeys } from "@biseo/web/styles";
+import { colors } from "@biseo/web/styles";
 import { css } from "@emotion/react";
-import type { Color } from "@biseo/web/theme";
+import styled from "@emotion/styled";
 
 type Size = number | "hug" | "fill";
 const calcSize = (size: Size) => {
@@ -15,7 +16,7 @@ const calcSize = (size: Size) => {
 export const BorderedBox = styled.div<{
   w?: Size;
   h?: Size;
-  bg?: Color;
+  bg?: ColorKeys;
   round?: number;
   roundTop?: number;
   roundBot?: number;
@@ -31,7 +32,7 @@ export const BorderedBox = styled.div<{
   padLeft?: number;
   padRight?: number;
   borderSize?: number;
-  borderColor?: Color;
+  borderColor?: ColorKeys;
   borderStyle?:
     | "solid"
     | "dotted"
@@ -61,7 +62,7 @@ export const BorderedBox = styled.div<{
     padRight = padHorizontal,
     padBottom = padVertical,
     padTop = padVertical,
-    theme,
+
     borderSize = 0,
     borderColor,
     borderStyle,
@@ -69,7 +70,7 @@ export const BorderedBox = styled.div<{
   }) => css`
     width: ${calcSize(w)};
     height: ${calcSize(h)};
-    background-color: ${bg ? theme.colors[bg] : "transparent"};
+    background-color: ${bg ? colors[bg] : "transparent"};
     border-radius: ${roundTop}px ${roundTop}px ${roundBot}px ${roundBot}px;
     display: flex;
     flex-direction: ${dir};
@@ -81,7 +82,7 @@ export const BorderedBox = styled.div<{
     padding-left: ${padLeft}px;
     padding-right: ${padRight}px;
     border: ${borderSize}px ${borderStyle};
-    border-color: ${borderColor ? theme.colors[borderColor] : "transparent"};
+    border-color: ${borderColor ? colors[borderColor] : "transparent"};
     position: ${position};
   `,
 );

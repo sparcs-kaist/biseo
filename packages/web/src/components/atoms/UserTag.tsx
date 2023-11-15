@@ -1,5 +1,5 @@
-import React, { type PropsWithChildren } from "react";
 import styled from "@emotion/styled";
+import React, { type PropsWithChildren } from "react";
 
 interface Props extends PropsWithChildren {
   tag?: string;
@@ -13,9 +13,9 @@ const Container = styled.div`
   align-items: center;
   font-size: 9px;
   font-weight: 500;
-  color: ${props => props.theme.colors.gray500};
-  background-color: ${props => props.theme.colors.white};
-  border: solid 1px ${props => props.theme.colors.gray200};
+  color: ${props => props.colors.gray500};
+  background-color: ${props => props.colors.white};
+  border: solid 1px ${props => props.colors.gray200};
   border-radius: 5px;
 `;
 

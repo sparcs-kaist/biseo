@@ -24,7 +24,7 @@ export const colors = {
   green600: "#008B1C",
 } as const;
 
-type ColorKeys = keyof typeof colors;
+export type ColorKeys = keyof typeof colors;
 export type Color = (typeof colors)[ColorKeys];
 export const mapColors = <T>(cb: (color: Color) => T) =>
   Object.fromEntries(

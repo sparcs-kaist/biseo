@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
+import { colors, type ColorKeys } from "@biseo/web/styles";
 import { css } from "@emotion/react";
-import type { Color } from "@biseo/web/theme";
+import styled from "@emotion/styled";
 
 type Size = number | "hug" | "fill";
 const calcSize = (size: Size) => {
@@ -15,7 +15,7 @@ const calcSize = (size: Size) => {
 export const Box = styled.div<{
   w?: Size;
   h?: Size;
-  bg?: Color;
+  bg?: ColorKeys;
   round?: number;
   dir?: "row" | "column";
   gap?: number | "auto";
@@ -49,7 +49,6 @@ export const Box = styled.div<{
     padRight = padHorizontal,
     padBottom = padVertical,
     padTop = padVertical,
-    theme,
     zIndex = 0,
     position = "static",
     self = "auto",
@@ -57,7 +56,7 @@ export const Box = styled.div<{
   }) => css`
     width: ${calcSize(w)};
     height: ${calcSize(h)};
-    background-color: ${bg ? theme.colors[bg] : "transparent"};
+    background-color: ${bg ? colors[bg] : "transparent"};
     border-radius: ${round}px;
     display: flex;
     flex-direction: ${dir};

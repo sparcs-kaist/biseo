@@ -10,7 +10,6 @@ import { useAuth } from "@biseo/web/services/auth";
 import { useInput } from "@biseo/web/common/hooks";
 import { Box } from "@biseo/web/components/atoms";
 import { text } from "@biseo/web/styles";
-import { theme } from "@biseo/web/theme";
 
 const Page = styled.div`
   width: 100vw;
@@ -31,7 +30,7 @@ const Page = styled.div`
 const LoginTitle = styled(motion.div)`
   font-size: 35px;
   font-weight: 700;
-  color: ${theme.colors.black};
+  color: ${colors.black};
 `;
 
 const InputContainer = styled.input`
@@ -41,23 +40,23 @@ const InputContainer = styled.input`
   box-sizing: border-box;
   padding: 9px 14px;
 
-  border: 1px solid ${theme.colors.gray300};
+  border: 1px solid ${colors.gray300};
   border-radius: 5px;
   outline: none;
 
   ${text.subtitle}
 
   &:hover {
-    border: 1px solid ${theme.colors.gray400};
+    border: 1px solid ${colors.gray400};
   }
 
   &:focus {
-    border: 1px solid ${theme.colors.blue300};
-    box-shadow: 0px 0px 0px 3px ${theme.colors.blue200};
+    border: 1px solid ${colors.blue300};
+    box-shadow: 0px 0px 0px 3px ${colors.blue200};
   }
   &::placeholder {
     font-size: 13px;
-    color: ${theme.colors.gray300};
+    color: ${colors.gray300};
   }
 `;
 
@@ -65,13 +64,13 @@ const LoginButton = styled.button`
   width: 320px;
   height: 45px;
 
-  background-color: ${theme.colors.blue200};
+  background-color: ${colors.blue200};
   border: none;
   border-radius: 5px;
   outline: none;
 
   &:hover {
-    background-color: ${theme.colors.blue300};
+    background-color: ${colors.blue300};
   }
 
   display: flex;

@@ -32,7 +32,7 @@ const SelectIndicator = styled.div`
   bottom: 0;
   width: 100%;
   height: 2px;
-  background-color: ${props => props.theme.colors.black};
+  background-color: ${props => props.colors.black};
   border-radius: 1px 1px 0 0;
 `;
 

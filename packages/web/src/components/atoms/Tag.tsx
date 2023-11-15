@@ -1,13 +1,12 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { css, type SerializedStyles } from "@emotion/react";
-import { theme } from "@biseo/web/theme";
 import type { Color } from "@biseo/web/theme";
+import { css, type SerializedStyles } from "@emotion/react";
+import styled from "@emotion/styled";
+import React from "react";
 
 const colors = (color: Color, bg: Color) =>
   css({
-    color: theme.colors[color],
-    backgroundColor: theme.colors[bg],
+    color: colors[color],
+    backgroundColor: colors[bg],
   });
 
 type TagTypes =

@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
 import { LogoIcon } from "@biseo/web/assets";
 import { Box } from "@biseo/web/components/atoms";
 import { HeaderItem, Profile } from "@biseo/web/components/molecules";
 import { useAuth } from "@biseo/web/services/auth";
 import {
+  align,
   bg,
   center,
+  column,
   h,
-  w,
+  justify,
   round,
   text,
-  justify,
-  align,
-  column,
+  w,
 } from "@biseo/web/styles";
+import styled from "@emotion/styled";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const adminPathList = [
   { name: "유저 모드", path: "" },
@@ -33,7 +33,7 @@ const Container = styled.header`
   height: 60px;
   padding: 0 50px;
   padding-top: 5px;
-  border-bottom: 1px solid ${props => props.theme.colors.gray300};
+  border-bottom: 1px solid ${props => props.colors.gray300};
 `;
 
 export const Header: React.FC = () => {

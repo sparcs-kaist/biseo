@@ -9,10 +9,10 @@ export const TextInput = styled.input`
   background: transparent;
   border: none;
   border-radius: 5px;
-  color: ${props => props.theme.colors.black};
+  color: ${props => props.colors.black};
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
-    color: ${props => props.theme.colors.gray300};
+    color: ${props => props.colors.gray300};
   }
 `;
 TextInput.defaultProps = {

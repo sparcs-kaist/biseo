@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
 import { DownArrowIcon } from "@biseo/web/assets";
 import { text } from "@biseo/web/styles";
+import styled from "@emotion/styled";
 
 export const SelectWrapper = styled.div`
   position: relative;
@@ -14,15 +14,15 @@ export const Select = styled.select<{ w: number; h: number }>`
   justify-content: space-between;
   align-items: center;
   border-radius: 5px;
-  border: 1px solid ${props => props.theme.colors.gray200};
-  background-color: ${props => props.theme.colors.white};
+  border: 1px solid ${props => props.colors.gray200};
+  background-color: ${props => props.colors.white};
 
   font-family: "Noto Sansf KR";
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  color: ${props => props.theme.colors.gray600};
+  color: ${props => props.colors.gray600};
 
   &:focus {
     outline: none;
@@ -54,10 +54,10 @@ export const TemplateSelect = styled.select<{ w: number; h: number }>`
   justify-content: space-between;
   align-items: center;
   border-radius: 5px;
-  border: 1px solid ${props => props.theme.colors.gray200};
-  background-color: ${props => props.theme.colors.gray100};
+  border: 1px solid ${props => props.colors.gray200};
+  background-color: ${props => props.colors.gray100};
 
-  color: ${props => props.theme.colors.gray300};
+  color: ${props => props.colors.gray300};
 
   ${text.subtitle}
 

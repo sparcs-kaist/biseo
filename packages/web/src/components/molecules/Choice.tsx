@@ -1,7 +1,7 @@
 import type { Choice } from "@biseo/interface/agenda";
 import { SelectIcon } from "@biseo/web/assets";
-import { center, h, text as styleText, w } from "@biseo/web/styles";
-import { theme, type Color } from "@biseo/web/theme";
+import { center, colors, h, text as styleText, w } from "@biseo/web/styles";
+import { type Color } from "@biseo/web/theme";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { useState, type PropsWithChildren } from "react";
@@ -11,8 +11,8 @@ const Container = styled.div<{
   clickable?: boolean;
 }>`
   border-radius: 5px;
-  background-color: ${props => props.theme.colors[props.color]};
-  border: 1px solid ${props => props.theme.colors.gray200};
+  background-color: ${props => props.colors[props.color]};
+  border: 1px solid ${props => props.colors.gray200};
   padding: 6px 12px 6px 12px;
   width: 340px;
   height: fit-content;
@@ -74,7 +74,7 @@ const ChoiceBase: React.FC<ChoiceBaseProps> = ({
       onMouseLeave={onMouseLeave}
     >
       <div css={[w(13), h(13), center]}>
-        <SelectIcon stroke={theme.colors[choiceStyle.selectIconColor]} />
+        <SelectIcon stroke={colors[choiceStyle.selectIconColor]} />
       </div>
       <ChoiceText color={choiceStyle.textColor}>{text}</ChoiceText>
     </Container>

@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 458px;
-  border: solid 1px ${props => props.theme.colors.gray300};
+  border: solid 1px ${props => props.colors.gray300};
   border-radius: 5px;
   overflow: hidden;
 `;
