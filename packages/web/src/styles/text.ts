@@ -1,5 +1,17 @@
-import { css } from "@emotion/react";
 import { mapColors } from "@biseo/web/styles/color";
+import { css } from "@emotion/react";
+
+const singleLine = css`
+  white-space: pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+const multiLine = css`
+  white-space: pre-line;
+  word-break: break-all;
+  overflow-wrap: break-word;
+`;
 
 const style = (size: number, weight: number) => css`
   font-size: ${size}px;
@@ -29,4 +41,6 @@ export const text = {
   boldtitle2: style(13, 700),
   boldtitle3: style(12, 700),
   boldtitle4: style(11, 700),
+  singleLine,
+  multiLine,
 } as const;

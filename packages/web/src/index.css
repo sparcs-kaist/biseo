@@ -21,3 +21,10 @@ body,
 #root {
   height: 100%;
 }
+
+/* use text.singeLine as default */
+p {
+    white-space: pre-line;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
