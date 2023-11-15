@@ -1,20 +1,19 @@
-import React, { type PropsWithChildren } from "react";
+import { TrashIcon } from "@biseo/web/assets";
 import {
   BorderedBox,
   Box,
-  Text,
-  GrayTextButton,
-  Scroll,
-  TextInput,
-  TextAreaFixedsize,
   Button,
   Clickable,
+  GrayTextButton,
+  Scroll,
   TaggersBox,
+  TextAreaFixedsize,
+  TextInput,
 } from "@biseo/web/components/atoms";
 import "@biseo/web/components/atoms/placeholder.css";
-import { TrashIcon } from "@biseo/web/assets";
+import { scroll, scrollBar, text } from "@biseo/web/styles";
 import { css } from "@emotion/react";
-import { scroll, scrollBar } from "@biseo/web/styles";
+import React, { type PropsWithChildren } from "react";
 
 interface ModalInnerProps extends PropsWithChildren {
   title: string;
@@ -66,14 +65,8 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
     <Box w="fill" dir="row" align="flex-end" justify="space-between">
       <Box dir="row" align="center" gap={8}>
         <Box dir="row" gap={2}>
-          <Text variant="body" color="black">
-            {title}
-          </Text>
-          {required && (
-            <Text variant="body" color="blue600">
-              *
-            </Text>
-          )}
+          <p css={[text.body, text.black]}>{title}</p>
+          {required && <p css={[text.body, text.blue600]}>*</p>}
         </Box>
         {count !== undefined && (
           <Box
@@ -84,7 +77,7 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
             w={20}
             h={20}
           >
-            <Text color="blue600">{count}</Text>
+            <p css={[text.body, text.blue600]}>{count}</p>
           </Box>
         )}
       </Box>
@@ -106,9 +99,7 @@ const TextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
     borderStyle="solid"
     gap={10}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
+    <p css={[text.subtitle, text.gray600]}>{children}</p>
   </BorderedBox>
 );
 ModalInner.TextBox = TextBox;
@@ -124,9 +115,7 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
     borderStyle="solid"
     gap={10}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
+    <p css={[text.subtitle, text.gray600]}>{children}</p>
   </BorderedBox>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
@@ -203,9 +192,7 @@ const TextButton: React.FC<SubmitProps> = ({
       }}
     />
     <Button w={20} h={20} onClick={onSubmit}>
-      <Text color="blue600" variant="boldtitle2">
-        +
-      </Text>
+      <p css={[text.boldtitle2, text.blue600]}>+</p>
     </Button>
   </BorderedBox>
 );
@@ -251,9 +238,7 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
       overflowWrap: "break-word",
     }}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
+    <p css={[text.subtitle, text.gray600]}>{children}</p>
   </BorderedBox>
 );
 ModalInner.VoteOption = VoteOption;
@@ -313,16 +298,7 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
       minHeight: 32,
     }}
   >
-    <Text
-      color="gray500"
-      variant="subtitle"
-      style={{
-        wordBreak: "break-all",
-        overflowWrap: "break-word",
-      }}
-    >
-      {children}
-    </Text>
+    <p css={[text.subtitle, text.gray500]}>{children}</p>
     <Clickable>
       <Box w={13} h={13} justify="center" align="center" onClick={onClick}>
         <TrashIcon />
@@ -346,9 +322,7 @@ const TagChoice: React.FC<PropsWithChildren> = ({ children = null }) => (
     justify="center"
     align="center"
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
+    <p css={[text.subtitle, text.gray600]}>{children}</p>
   </BorderedBox>
 );
 ModalInner.TagChoice = TagChoice;

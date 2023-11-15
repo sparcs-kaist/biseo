@@ -1,6 +1,7 @@
-import React from "react";
-import { Box, Text } from "@biseo/web/components/atoms";
+import { Box } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import type { Color } from "@biseo/web/theme";
+import React from "react";
 
 interface Props {
   choices: { name: string; count: number }[];
@@ -33,12 +34,10 @@ const graph = (choices: { name: string; count: number }[], colors: Color[]) => {
 export const ChoiceGraph: React.FC<Props> = ({ choices, colors }) => (
   <Box h={46} dir="column" gap={10}>
     <Box w={260} justify="space-between" dir="row">
-      <Text variant="subtitle" color="black">
-        투표결과
-      </Text>
-      <Text variant="option1" color="gray500">
+      <p css={[text.subtitle, text.black]}>투표결과</p>
+      <p css={[text.option1, text.gray500]}>
         재석 {choices.map(choice => choice.count).reduce((a, b) => a + b)}명
-      </Text>
+      </p>
     </Box>
     <Box round={5} dir="row" h={20} w={260}>
       {graph(choices, colors)}

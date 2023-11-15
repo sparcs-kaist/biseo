@@ -1,7 +1,8 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { Box, Text } from "@biseo/web/components/atoms";
+import { Box } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import type { Color } from "@biseo/web/theme";
+import styled from "@emotion/styled";
+import React from "react";
 
 interface Props {
   name: string;
@@ -49,12 +50,12 @@ export const OptionVoteResult: React.FC<Props> = ({
         padHorizontal={13}
         padVertical={6}
       >
-        <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
+        <p css={[text.option1, userChoice ? text.blue500 : text.gray500]}>
           {name}
-        </Text>
-        <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
+        </p>
+        <p css={[text.option1, userChoice ? text.blue500 : text.gray500]}>
           {count}
-        </Text>
+        </p>
       </Box>
     </Background>
   </Box>

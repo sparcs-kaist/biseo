@@ -2,7 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import type { AgendaTemplate } from "@biseo/interface/agenda/template";
-import { Box, Text, Card, Divider } from "@biseo/web/components/atoms";
+import { Box, Card, Divider } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import { AdminTag } from "./AdminTag";
 
 const adminTags = {
@@ -23,18 +24,12 @@ export const AgendaTemplateCard: React.FC<Props> = ({ template }) => {
       <Box gap={8} w="fill">
         <AdminTag tags={adminTags} suffix={template.choices.length} />
         <Box gap={11}>
-          <Text variant="title2" color="gray600">
-            {template.templateName}
-          </Text>
+          <p css={[text.title2, text.gray600]}>{template.templateName}</p>
         </Box>
         <Divider />
         <Box w={340} gap={2}>
-          <Text variant="title3" color="gray500">
-            {template.title}
-          </Text>
-          <Text variant="subtitle" color="gray400">
-            {template.content}
-          </Text>
+          <p css={[text.title3, text.gray500]}>{template.title}</p>
+          <p css={[text.subtitle, text.gray400]}>{template.content}</p>
         </Box>
       </Box>
     </Card>

@@ -1,5 +1,6 @@
+import { BorderedBox, Box, Scroll } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import React, { type PropsWithChildren } from "react";
-import { BorderedBox, Box, Scroll, Text } from "@biseo/web/components/atoms";
 
 interface BoxWithTitleProps extends PropsWithChildren {
   title: string;
@@ -18,9 +19,7 @@ const BoxWithTitle: React.FC<BoxWithTitleProps> = ({
   children = null,
 }) => (
   <Box w={300} dir="column" gap={8}>
-    <Text variant="body" color="black">
-      {title}
-    </Text>
+    <p css={[text.body, text.black]}>{title}</p>
     <BorderedBox
       borderColor="gray200"
       bg="white"
@@ -42,9 +41,7 @@ const TextBoxWithTitle: React.FC<BoxWithTitleProps> = ({
   children = null,
 }) => (
   <Box w={300} dir="column" gap={10}>
-    <Text variant="body" color="black">
-      {title}
-    </Text>
+    <p css={[text.body, text.black]}>{title}</p>
     <BorderedBox
       borderColor="gray200"
       bg="white"
@@ -55,9 +52,7 @@ const TextBoxWithTitle: React.FC<BoxWithTitleProps> = ({
       round={5}
       borderStyle="solid"
     >
-      <Text color="gray600" variant="subtitle">
-        {children}
-      </Text>
+      <p css={[text.subtitle, text.gray600]}>{children}</p>
     </BorderedBox>
   </Box>
 );
@@ -68,9 +63,7 @@ const OptionResultsBox: React.FC<BoxWithCountProps> = ({
 }) => (
   <Box w={300} h={177} dir="column" gap={8}>
     <Box dir="row" gap={8}>
-      <Text variant="body" color="black" dir="row">
-        투표 결과
-      </Text>
+      <p css={[text.body, text.black]}>투표 결과</p>
       {count !== undefined && (
         <Box
           bg="blue200"
@@ -80,7 +73,7 @@ const OptionResultsBox: React.FC<BoxWithCountProps> = ({
           w={20}
           h={20}
         >
-          <Text color="blue600">{count}</Text>
+          <p css={[text.body, text.blue600]}>{count}</p>
         </Box>
       )}
     </Box>

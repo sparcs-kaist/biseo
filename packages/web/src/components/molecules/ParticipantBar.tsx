@@ -1,7 +1,8 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { Box, Text } from "@biseo/web/components/atoms";
+import { Box } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import type { Color } from "@biseo/web/theme";
+import styled from "@emotion/styled";
+import React from "react";
 
 interface Props {
   total?: number;
@@ -32,13 +33,9 @@ export const ParticipantBar: React.FC<Props> = ({
 }) => (
   <Box w={300} h={59} gap={8} dir="column">
     <Box w={75} h={20} gap={8} dir="row" align="center">
-      <Text variant="body" color="black">
-        투표 참여
-      </Text>
+      <p css={[text.body, text.black]}>투표 참여</p>
       <Box bg="blue200" round={5} align="center" justify="center" w={20} h={20}>
-        <Text variant="boldtitle4" color="blue600">
-          {participant}
-        </Text>
+        <p css={[text.boldtitle4, text.blue600]}>{participant}</p>
       </Box>
     </Box>
     <Box w={300} h={30}>
@@ -56,12 +53,12 @@ export const ParticipantBar: React.FC<Props> = ({
           padHorizontal={13}
           padVertical={6}
         >
-          <Text color="black" variant="option1">
+          <p css={[text.option1, text.black]}>
             {total ? ((participant * 100) / total).toFixed(1) : 0}%
-          </Text>
-          <Text color="black" variant="option1">
+          </p>
+          <p css={[text.option1, text.black]}>
             {participant}/{total}
-          </Text>
+          </p>
         </Box>
       </Background>
     </Box>

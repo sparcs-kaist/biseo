@@ -1,7 +1,8 @@
 import React from "react";
 
 import type { Message } from "@biseo/interface/chat";
-import { Box, HyperText, Text } from "@biseo/web/components/atoms";
+import { Box, HyperText } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import { formatTime } from "@biseo/web/utils/format";
 
 interface Props {
@@ -45,15 +46,9 @@ const parseURL: React.FC<string> = (content: string) => {
 export const PlainMessage: React.FC<Props> = ({ message }) => (
   <Box dir="column" gap={4} padHorizontal={20} padVertical={10}>
     <Box dir="row" gap={4} align="center">
-      <Text variant="boldtitle3" color="black">
-        {message.user.displayName}
-      </Text>
-      <Text variant="option2" color="gray500">
-        {formatTime(message.createdAt)}
-      </Text>
+      <p css={[text.boldtitle3, text.black]}>{message.user.displayName}</p>
+      <p css={[text.option2, text.gray500]}>{formatTime(message.createdAt)}</p>
     </Box>
-    <Text variant="body" color="black">
-      {parseURL(message.message)}
-    </Text>
+    <p css={[text.body, text.black]}>{parseURL(message.message)}</p>
   </Box>
 );

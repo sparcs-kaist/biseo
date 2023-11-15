@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import { Box, Button, Text } from "@biseo/web/components/atoms";
+import { Box, Button } from "@biseo/web/components/atoms";
 import { Modal, ModalInner } from "@biseo/web/components/molecules";
 import { useAdminUser } from "@biseo/web/services/admin-user";
 import { useUserTag } from "@biseo/web/services/user-tag";
+import { text } from "@biseo/web/styles";
 import { UserTable } from "./UserTable";
 
 export const EditUserTagModal: React.FC = () => {
@@ -95,9 +96,7 @@ export const EditUserTagModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={145} h={40} onClick={onSubmit} disabled={!validated}>
-                <Text variant="boldtitle3" color="blue600">
-                  태그 수정하기
-                </Text>
+                <p css={[text.boldtitle3, text.blue600]}>태그 수정하기</p>
               </Button>
             </Link>
             <Link
@@ -107,9 +106,7 @@ export const EditUserTagModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={145} h={40} onClick={() => deleteTag(tagId)}>
-                <Text variant="boldtitle3" color="blue600">
-                  태그 삭제하기
-                </Text>
+                <p css={[text.boldtitle3, text.blue600]}>태그 삭제하기</p>
               </Button>
             </Link>
           </Box>

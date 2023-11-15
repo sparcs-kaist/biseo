@@ -1,13 +1,14 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Box, Button } from "@biseo/web/components/atoms";
 import {
   AdminAgendaTags,
   Modal,
   ModalInner,
   ParticipantBar,
 } from "@biseo/web/components/molecules";
-import { Box, Button, Text } from "@biseo/web/components/atoms";
 import { useAdminAgenda } from "@biseo/web/services/admin-agenda";
+import { text } from "@biseo/web/styles";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import { UserTable } from "./UserTable";
 
 export const OngoingAgendaModal: React.FC = () => {
@@ -80,9 +81,7 @@ export const OngoingAgendaModal: React.FC = () => {
             <AdminAgendaTags />
             <Box dir="row" w={270} gap={10} justify="space-between">
               <Button w={130} h={38} onClick={remind}>
-                <Text variant="boldtitle3" color="blue600">
-                  투표 독촉하기
-                </Text>
+                <p css={[text.boldtitle3, text.blue600]}>투표 독촉하기</p>
               </Button>
               <Link
                 to=".."
@@ -91,9 +90,7 @@ export const OngoingAgendaModal: React.FC = () => {
                 style={{ textDecoration: "none" }}
               >
                 <Button w={130} h={38} onClick={terminate}>
-                  <Text variant="boldtitle3" color="blue600">
-                    투표 종료하기
-                  </Text>
+                  <p css={[text.boldtitle3, text.blue600]}>투표 종료하기</p>
                 </Button>
               </Link>
             </Box>

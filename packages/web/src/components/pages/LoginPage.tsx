@@ -1,16 +1,16 @@
-import React, { type FormEvent, useCallback, useState } from "react";
-import { Navigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
+import React, { useCallback, useState, type FormEvent } from "react";
+import { Navigate } from "react-router-dom";
 
 import { LogoLargeIcon } from "@biseo/web/assets";
 import LandingImg from "@biseo/web/assets/landing.png";
 import { useAuth } from "@biseo/web/services/auth";
 
 import { useInput } from "@biseo/web/common/hooks";
-import { theme } from "@biseo/web/theme";
-import { Box, Text } from "@biseo/web/components/atoms";
+import { Box } from "@biseo/web/components/atoms";
 import { text } from "@biseo/web/styles";
+import { theme } from "@biseo/web/theme";
 
 const Page = styled.div`
   width: 100vw;
@@ -156,15 +156,13 @@ export const LoginPage: React.FC = () => {
           />
           <Box dir="column" gap={8} align="flex-start">
             {error && (
-              <Text variant="subtitle" color="blue600">
+              <p css={[text.subtitle, text.blue600]}>
                 아이디 또는 비밀번호가 올바르지 않습니다.
-              </Text>
+              </p>
             )}
 
             <LoginButton>
-              <Text variant="body" color="blue600">
-                로그인
-              </Text>
+              <p css={[text.body, text.blue600]}>로그인</p>
             </LoginButton>
           </Box>
         </Box>

@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
 import styled from "@emotion/styled";
+import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-import { Text } from "@biseo/web/components/atoms";
 import {
   ChatHeader,
   ChatInput,
   Message,
 } from "@biseo/web/components/molecules";
 import { useChat } from "@biseo/web/services";
+import { text } from "@biseo/web/styles";
 
 const Container = styled.div`
   display: flex;
@@ -40,9 +40,9 @@ export const ChatSection: React.FC = () => {
           <Message key={message.id} message={message} />
         ))}
         {hasMore && (
-          <Text ref={ref} variant="body" color="gray400">
+          <p ref={ref} css={[text.body, text.gray400]}>
             로딩 중
-          </Text>
+          </p>
         )}
       </Message.List>
       <ChatInput send={sendMessage} />

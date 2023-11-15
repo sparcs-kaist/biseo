@@ -1,5 +1,6 @@
+import { Box, Tag } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import React from "react";
-import { Box, Text, Tag } from "@biseo/web/components/atoms";
 
 interface Props {
   type: boolean;
@@ -11,9 +12,7 @@ export const VoteDetail: React.FC<Props> = ({ type }) => (
       <>TODO</>
     ) : (
       <Box w="fill" justify="space-between" dir="row" align="center">
-        <Text variant="subtitle" color="black">
-          투표 상세
-        </Text>
+        <p css={[text.subtitle, text.black]}>투표 상세</p>
         <Tag type="anonymous" />
       </Box>
     )}
