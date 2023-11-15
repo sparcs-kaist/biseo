@@ -102,11 +102,11 @@ export const UserTable: React.FC<Props> = ({
             options={(() => {
               switch (filterBy) {
                 case "tag":
-                  return tags.map(tag => tag.title);
+                  return ["전체보기", ...tags.map(tag => tag.title)];
                 case "voted":
-                  return ["투표 완료자", "투표 미완료자"];
+                  return ["전체보기", "투표 완료자", "투표 미완료자"];
                 default:
-                  return [];
+                  return ["전체보기"];
               }
             })()}
             onChange={setSelectedFilterOption}

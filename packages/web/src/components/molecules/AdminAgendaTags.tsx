@@ -1,5 +1,5 @@
 import { DownArrowIcon } from "@biseo/web/assets";
-import { BorderedBox, Box, Text } from "@biseo/web/components/atoms";
+import { BorderedBox, Box, SelectBox, Text } from "@biseo/web/components/atoms";
 
 export const AdminAgendaTags: React.FC = () => (
   <Box w={270} h={28} gap={16} dir="row" justify="center">
@@ -80,27 +80,12 @@ export const AdminAgendaTagsSelect: React.FC = () => (
       <Text variant="body" color="black">
         투표 상세
       </Text>
-      <BorderedBox
-        borderColor="gray200"
-        bg="white"
-        w={75}
-        h={28}
-        justify="space-between"
-        borderSize={1}
-        padHorizontal={12}
-        padVertical={7}
-        round={5}
-        borderStyle="solid"
-        dir="row"
-      >
-        <Text color="gray600" variant="option1">
-          무기명
-        </Text>
-
-        <Box padVertical={7}>
-          <DownArrowIcon />
-        </Box>
-      </BorderedBox>
+      <SelectBox
+        width={75}
+        height={28}
+        options={["기명", "무기명"]}
+        onChange={() => {}}
+      />
     </Box>
   </Box>
 );

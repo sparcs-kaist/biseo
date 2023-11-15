@@ -21,7 +21,6 @@ export const SelectBox: React.FC<SelectBoxProps> = ({
       onChange={e => onChange(e.target.value)}
       defaultValue=""
     >
-      <option value="">전체보기</option>
       {options.map(option => (
         <option key={option} value={option}>
           {option}
