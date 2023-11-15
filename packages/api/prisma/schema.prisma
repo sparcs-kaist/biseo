@@ -8,11 +8,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model AgendaType {
+  id       Int     @id @default(autoincrement())
+  agenda   Agenda  @relation(fields: [agendaId], references: [id])
+  agendaId Int     @map("agenda_id") @unique
+  named    Boolean @default(false)
+  private  Boolean @default(false)
+  @@map("agenda_type")
+}
+
 model Agenda {
   id         Int                 @id @default(autoincrement())
   title      String
   resolution String
   content    String
+  type       AgendaType?
   startAt    DateTime?           @map("start_at")
   endAt      DateTime?           @map("end_at")
   createdAt  DateTime            @default(now()) @map("created_at")

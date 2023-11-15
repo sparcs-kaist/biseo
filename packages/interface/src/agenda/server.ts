@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-redeclare -- A Zod schema name and type should have the same names */
 import { z } from "zod";
-import { OngoingAgenda, PreparingAgenda, TerminatedAgenda } from "./common";
+import {
+  OngoingAgenda,
+  PreparingAgenda,
+  TerminatedAgenda,
+  VoteInfo,
+} from "./common";
 
 /**
  * Created
@@ -29,9 +34,7 @@ export type Started = z.infer<typeof Started>;
  */
 export const Voted = z.object({
   id: z.number(),
-  user: z.object({
-    voted: z.number(),
-  }),
+  user: z.object({ voteInfo: VoteInfo }),
   voters: z.object({
     voted: z.number(),
     total: z.number(),

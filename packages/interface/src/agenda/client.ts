@@ -18,6 +18,7 @@ export type RetrieveAllCb = z.infer<typeof RetrieveAllCb>;
 export const Vote = z.object({
   choiceId: z.number(),
   agendaId: z.number(),
+  voterId: z.number().nullable(),
 });
 export type Vote = z.infer<typeof Vote>;
 export const VoteCb = z.object({});

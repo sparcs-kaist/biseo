@@ -31,6 +31,7 @@ export const retrieveAll = async (
       id: agenda.id,
       title: agenda.title,
       content: agenda.content,
+      type: agenda.type,
       resolution: agenda.resolution,
       voters: {
         voted: agenda.choices.reduce(
@@ -88,7 +89,7 @@ export const retrieveAll = async (
 };
 
 export const vote = async (
-  { choiceId, agendaId }: schema.Vote,
+  { choiceId, agendaId, voterId }: schema.Vote,
   io: BiseoServer,
   user: User,
 ) => {
@@ -161,7 +162,7 @@ export const vote = async (
   io.to(`user/${user.username}`).emit("agenda.voted", {
     id: agendaId,
     user: {
-      voted: choiceId,
+      voteInfo: { voterid: voterId, choiceid: choiceId },
     },
     voters: {
       voted: res.choice.agenda.choices.reduce(

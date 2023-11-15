@@ -21,15 +21,47 @@ export const ChoiceWithResult = Choice.extend({
 export type ChoiceWithResult = z.infer<typeof ChoiceWithResult>;
 
 /**
+ * VoteInfo
+ * some description about voteInfo schema goes here
+ */
+export const VoteInfo = z.object({
+  voterid: z.number().nullable(),
+  choiceid: z.number(),
+});
+export type VoteInfo = z.infer<typeof VoteInfo>;
+
+/**
+ * AgendaType
+ * some description about voteInfo schema goes here
+ */
+export const AgendaType = z.object({
+  id: z.number(),
+  agendaId: z.number(),
+  named: z.boolean(),
+  private: z.boolean(),
+  voteInfo: z.array(VoteInfo).nullable(),
+});
+export type AgendaType = z.infer<typeof AgendaType>;
+
+/**
+ * AgendaStatus
+ * some description about agenda status type goes here
+ */
+export const AgendaStatus = z.enum(["preparing", "ongoing", "terminated"]);
+export type AgendaStatus = z.infer<typeof AgendaStatus>;
+
+/**
  * AgendaBase
  * some description about agenda base schema goes here
  */
+
 export const AgendaBase = z.object({
   id: z.number(),
   title: z.string(),
   content: z.string(),
+  type: AgendaType,
   resolution: z.string(),
-  status: z.never(), // Must be overridden
+  status: AgendaStatus, // Must be overridden
   voters: z.object({
     voted: z.number(),
     total: z.number(),
@@ -88,10 +120,3 @@ export const Agenda = z.union([
   TerminatedAgenda,
 ]);
 export type Agenda = z.infer<typeof Agenda>;
-
-/**
- * AgendaStatus
- * some description about agenda status type goes here
- */
-export const AgendaStatus = z.enum(["preparing", "ongoing", "terminated"]);
-export type AgendaStatus = z.infer<typeof AgendaStatus>;
