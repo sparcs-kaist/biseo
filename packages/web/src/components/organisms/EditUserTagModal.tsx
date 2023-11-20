@@ -31,7 +31,7 @@ export const EditUserTagModal: React.FC = () => {
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
 
@@ -68,7 +68,7 @@ export const EditUserTagModal: React.FC = () => {
           </ModalInner>
 
           <ModalInner title="태그 설명" required>
-            <ModalInner.InputBox
+            <ModalInner.TextAreaInputBox
               value={description}
               onChange={onChangeDescription}
             />
