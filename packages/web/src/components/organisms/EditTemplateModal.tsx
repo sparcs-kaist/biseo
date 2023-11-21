@@ -43,7 +43,7 @@ export const EditTemplateModal: React.FC = () => {
   const onChangeAgendaTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAgendaTitle(e.target.value);
   };
-  const onChangeAgendaContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeAgendaContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setAgendaContent(e.target.value);
   };
   const onChangeAgendaResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,7 +114,7 @@ export const EditTemplateModal: React.FC = () => {
           </ModalInner>
 
           <ModalInner title="투표 설명" required>
-            <ModalInner.InputBox
+            <ModalInner.TextAreaInputBox
               onChange={onChangeAgendaContent}
               value={agendaContent}
             />

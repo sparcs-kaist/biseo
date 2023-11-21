@@ -53,7 +53,7 @@ export const EditAgendaModal: React.FC = () => {
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const onChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,7 +150,10 @@ export const EditAgendaModal: React.FC = () => {
               <ModalInner.InputBox value={title} onChange={onChangeTitle} />
             </ModalInner>
             <ModalInner title="투표 설명" required>
-              <ModalInner.InputBox value={content} onChange={onChangeContent} />
+              <ModalInner.TextAreaInputBox
+                value={content}
+                onChange={onChangeContent}
+              />
             </ModalInner>
             <ModalInner title="의결 문안" required>
               <ModalInner.InputBox

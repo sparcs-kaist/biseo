@@ -68,7 +68,7 @@ export const AdminAgendaSection: React.FC = () => {
       </Box>
       <Box dir="column" w={300}>
         <SectionHeader count={ongoingAgendas.length}>
-          진행중인 투표
+          진행 중인 투표
         </SectionHeader>
         {getAgendaCards("ongoing")}
       </Box>
