@@ -1,5 +1,5 @@
 import { Box } from "@biseo/web/components/atoms";
-import type { Color } from "@biseo/web/theme";
+import type { ColorKeys } from "@biseo/web/styles";
 import { colors, text } from "@biseo/web/styles";
 import styled from "@emotion/styled";
 import React from "react";
@@ -13,8 +13,8 @@ interface Props {
 
 const Background = styled.div<{
   percent: number;
-  color: Color;
-  borderColor: Color;
+  color: ColorKeys;
+  borderColor: ColorKeys;
 }>`
   width: 100%;
   height: 100%;

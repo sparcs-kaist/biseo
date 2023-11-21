@@ -1,13 +1,13 @@
 import type { Choice } from "@biseo/interface/agenda";
 import { SelectIcon } from "@biseo/web/assets";
+import type { ColorKeys } from "@biseo/web/styles";
 import { center, colors, h, text as styleText, w } from "@biseo/web/styles";
-import { type Color } from "@biseo/web/theme";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React, { useState, type PropsWithChildren } from "react";
 
 const Container = styled.div<{
-  color: Color;
+  color: ColorKeys;
   clickable?: boolean;
 }>`
   border-radius: 5px;
@@ -29,7 +29,7 @@ const Container = styled.div<{
 `;
 
 interface ChoiceTextProps extends PropsWithChildren {
-  color: Color;
+  color: ColorKeys;
 }
 
 const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => (
@@ -37,9 +37,9 @@ const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => (
 );
 
 const choiceBaseStyle = (
-  containerColor: Color,
-  selectIconColor: Color,
-  textColor: Color,
+  containerColor: ColorKeys,
+  selectIconColor: ColorKeys,
+  textColor: ColorKeys,
 ) => ({ containerColor, selectIconColor, textColor });
 
 const choiceStyles = {
