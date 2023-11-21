@@ -2,16 +2,6 @@
 import { z } from "zod";
 
 /**
- * Type
- * some description about type schema goes here
- */
-export const AgendaType = z.object({
-  named: z.boolean(),
-  private: z.boolean(),
-});
-export type AgendaType = z.infer<typeof AgendaType>;
-
-/**
  * Choice
  * some description about choice schema goes here
  */
@@ -39,7 +29,10 @@ export const AgendaBase = z.object({
   title: z.string(),
   content: z.string(),
   resolution: z.string(),
-  type: AgendaType,
+  type: z.object({
+    named: z.boolean(),
+    public: z.boolean(),
+  }),
   status: z.never(), // Must be overridden
   voters: z.object({
     voted: z.number(),

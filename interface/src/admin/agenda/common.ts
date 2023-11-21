@@ -34,7 +34,7 @@ export const AdminAgendaCreate = z.object({
   resolution: z.string().min(1).max(255),
   type: z.object({
     named: z.boolean(),
-    private: z.boolean(),
+    public: z.boolean(),
   }),
   choices: z.array(z.string().min(1).max(255)).min(1),
   voters: z.object({

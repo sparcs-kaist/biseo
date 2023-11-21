@@ -103,6 +103,10 @@ export const CreateAgendaModal: React.FC = () => {
       title,
       content,
       resolution,
+      type: {
+        named: false,
+        public: true,
+      },
       voters: {
         total: voters,
       },
