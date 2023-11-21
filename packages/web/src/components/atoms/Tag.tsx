@@ -1,9 +1,10 @@
-import type { Color } from "@biseo/web/theme";
+import type { ColorKeys } from "@biseo/web/styles";
+import { colors } from "@biseo/web/styles";
 import { css, type SerializedStyles } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
 
-const colors = (color: Color, bg: Color) =>
+const tagColors = (color: ColorKeys, bg: ColorKeys) =>
   css({
     color: colors[color],
     backgroundColor: colors[bg],
@@ -31,14 +32,14 @@ const tagNames: Record<TagTypes, string> = {
 };
 
 const tagStyles: Record<TagTypes, SerializedStyles> = {
-  public: colors("orange600", "orange200"),
-  private: colors("gray600", "gray200"),
-  identified: colors("green600", "green200"),
-  anonymous: colors("purple600", "purple200"),
-  votable: colors("blue600", "blue200"),
-  participant: colors("blue600", "blue200"),
-  user: colors("purple600", "purple200"),
-  template: colors("orange600", "orange200"),
+  public: tagColors("orange600", "orange200"),
+  private: tagColors("gray600", "gray200"),
+  identified: tagColors("green600", "green200"),
+  anonymous: tagColors("purple600", "purple200"),
+  votable: tagColors("blue600", "blue200"),
+  participant: tagColors("blue600", "blue200"),
+  user: tagColors("purple600", "purple200"),
+  template: tagColors("orange600", "orange200"),
 };
 
 const TagInner = styled.div<{

@@ -1,12 +1,12 @@
 import { Box } from "@biseo/web/components/atoms";
+import type { ColorKeys } from "@biseo/web/styles";
 import { text } from "@biseo/web/styles";
-import type { Color } from "@biseo/web/theme";
 import React from "react";
 
 interface Choice {
   name: string;
   count: number;
-  color: Color;
+  color: ColorKeys;
 }
 
 interface Props {

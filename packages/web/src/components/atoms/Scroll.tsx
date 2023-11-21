@@ -1,3 +1,4 @@
+import { colors } from "@biseo/web/styles";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
@@ -24,7 +25,7 @@ export const Scroll = styled.div<{ hide?: boolean }>`
     ${props =>
       !props.hide &&
       css`
-        background-color: ${props.colors.gray400};
+        background-color: ${colors.gray400};
       `}
     border-radius: 100px;
   }

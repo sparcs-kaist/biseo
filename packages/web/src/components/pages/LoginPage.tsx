@@ -9,7 +9,7 @@ import { useAuth } from "@biseo/web/services/auth";
 
 import { useInput } from "@biseo/web/common/hooks";
 import { Box } from "@biseo/web/components/atoms";
-import { text } from "@biseo/web/styles";
+import { colors, text } from "@biseo/web/styles";
 
 const Page = styled.div`
   width: 100vw;

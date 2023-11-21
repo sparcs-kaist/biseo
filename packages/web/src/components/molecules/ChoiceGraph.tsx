@@ -1,15 +1,18 @@
 import { Box } from "@biseo/web/components/atoms";
+import type { ColorKeys } from "@biseo/web/styles";
 import { text } from "@biseo/web/styles";
-import type { Color } from "@biseo/web/theme";
 import React from "react";
 
 interface Props {
   choices: { name: string; count: number }[];
-  colors: Color[];
+  colors: ColorKeys[];
 }
 const graphMaxLength = 260;
 
-const graph = (choices: { name: string; count: number }[], colors: Color[]) => {
+const graph = (
+  choices: { name: string; count: number }[],
+  colors: ColorKeys[],
+) => {
   const sortedChoices = choices.sort((a, b) => b.count - a.count);
 
   const totalChoiceCount = sortedChoices
