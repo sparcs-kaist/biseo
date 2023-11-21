@@ -24,7 +24,7 @@ body,
 
 /* use text.singeLine as default */
 p {
-    white-space: pre-line;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: pre-line;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
