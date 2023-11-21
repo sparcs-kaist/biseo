@@ -1,6 +1,6 @@
 import { Box } from "@biseo/web/components/atoms";
-import { text } from "@biseo/web/styles";
 import type { Color } from "@biseo/web/theme";
+import { colors, text } from "@biseo/web/styles";
 import styled from "@emotion/styled";
 import React from "react";
 
@@ -17,12 +17,12 @@ const Background = styled.div<{
   width: 100%;
   height: 100%;
 
-  border: 1px solid ${props => props.colors[props.borderColor]};
+  border: 1px solid ${props => colors[props.borderColor]};
   border-radius: 5px;
 
   background: linear-gradient(
     to right,
-    ${props => props.colors[props.color]} ${props => props.percent}%,
+    ${props => colors[props.color]} ${props => props.percent}%,
     #ffffff ${props => props.percent}%
   );
 `;

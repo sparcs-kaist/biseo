@@ -1,5 +1,5 @@
 import { Box } from "@biseo/web/components/atoms";
-import { text } from "@biseo/web/styles";
+import { colors, text } from "@biseo/web/styles";
 import styled from "@emotion/styled";
 import React from "react";
 
@@ -13,8 +13,8 @@ const Container = styled.div`
   flex-direction: row;
   gap: 4px;
   padding: 6px 15px;
-  background-color: ${props => props.colors.blue100};
-  border: solid 1px ${props => props.colors.blue600};
+  background-color: ${colors.blue100};
+  border: solid 1px ${colors.blue600};
   border-radius: 10px;
 `;
 

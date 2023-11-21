@@ -1,3 +1,4 @@
+import { colors } from "@biseo/web/styles";
 import styled from "@emotion/styled";
 import React, { type PropsWithChildren } from "react";
 
@@ -13,9 +14,9 @@ const Container = styled.div`
   align-items: center;
   font-size: 9px;
   font-weight: 500;
-  color: ${props => props.colors.gray500};
-  background-color: ${props => props.colors.white};
-  border: solid 1px ${props => props.colors.gray200};
+  color: ${colors.gray500};
+  background-color: ${colors.white};
+  border: solid 1px ${colors.gray200};
   border-radius: 5px;
 `;
 

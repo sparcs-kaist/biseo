@@ -11,8 +11,8 @@ const Container = styled.div<{
   clickable?: boolean;
 }>`
   border-radius: 5px;
-  background-color: ${props => props.colors[props.color]};
-  border: 1px solid ${props => props.colors.gray200};
+  background-color: ${props => colors[props.color]};
+  border: 1px solid ${colors.gray200};
   padding: 6px 12px 6px 12px;
   width: 340px;
   height: fit-content;

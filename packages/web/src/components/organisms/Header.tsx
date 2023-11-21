@@ -6,6 +6,7 @@ import {
   align,
   bg,
   center,
+  colors,
   column,
   h,
   justify,
@@ -33,7 +34,7 @@ const Container = styled.header`
   height: 60px;
   padding: 0 50px;
   padding-top: 5px;
-  border-bottom: 1px solid ${props => props.colors.gray300};
+  border-bottom: 1px solid ${colors.gray300};
 `;
 
 export const Header: React.FC = () => {

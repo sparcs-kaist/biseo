@@ -8,13 +8,13 @@ import {
   Message,
 } from "@biseo/web/components/molecules";
 import { useChat } from "@biseo/web/services";
-import { text } from "@biseo/web/styles";
+import { colors, text } from "@biseo/web/styles";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 458px;
-  border: solid 1px ${props => props.colors.gray300};
+  border: solid 1px ${colors.gray300};
   border-radius: 5px;
   overflow: hidden;
 `;

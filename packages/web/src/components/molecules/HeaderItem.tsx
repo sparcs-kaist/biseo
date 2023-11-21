@@ -1,4 +1,4 @@
-import { text } from "@biseo/web/styles";
+import { colors, text } from "@biseo/web/styles";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import React from "react";
@@ -32,7 +32,7 @@ const SelectIndicator = styled.div`
   bottom: 0;
   width: 100%;
   height: 2px;
-  background-color: ${props => props.colors.black};
+  background-color: ${colors.black};
   border-radius: 1px 1px 0 0;
 `;
 

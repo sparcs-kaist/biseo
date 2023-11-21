@@ -1,4 +1,4 @@
-import { text } from "@biseo/web/styles";
+import { colors, text } from "@biseo/web/styles";
 import styled from "@emotion/styled";
 import React from "react";
 
@@ -12,7 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   width: "100%";
   min-height: 42px;
-  background-color: ${props => props.colors.gray100};
+  background-color: ${colors.gray100};
   padding: 0 20px;
   justify-content: center;
 `;
