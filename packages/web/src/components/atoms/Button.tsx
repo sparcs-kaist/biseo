@@ -33,7 +33,7 @@ export const Button = styled.button<{
 
     &:disabled {
       cursor: none;
-      background-color: ${theme.colors.white};
+      background-color: ${colors.white};
     }
   `,
 );

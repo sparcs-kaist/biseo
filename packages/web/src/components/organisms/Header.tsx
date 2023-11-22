@@ -2,18 +2,7 @@ import { LogoIcon } from "@biseo/web/assets";
 import { Box } from "@biseo/web/components/atoms";
 import { HeaderItem, Profile } from "@biseo/web/components/molecules";
 import { useAuth } from "@biseo/web/services/auth";
-import {
-  align,
-  bg,
-  center,
-  colors,
-  column,
-  h,
-  justify,
-  round,
-  text,
-  w,
-} from "@biseo/web/styles";
+import { bg, center, colors, h, round, text, w } from "@biseo/web/styles";
 import styled from "@emotion/styled";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
