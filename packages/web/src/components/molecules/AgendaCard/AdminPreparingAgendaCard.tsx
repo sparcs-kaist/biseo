@@ -57,7 +57,7 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
       <div css={[column, gap(8), w("fill")]}>
         <AgendaTag tags={agendaTags} admin />
         <div css={[column, gap(2)]}>
-          <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+          <p css={[text.title2, text.black]}>{agenda.title}</p>
           <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
         </div>
         <Divider />

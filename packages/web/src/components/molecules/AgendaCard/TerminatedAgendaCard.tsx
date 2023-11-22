@@ -43,7 +43,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       {enabled ? (
         <div css={[column, gap(15), w("fill")]}>
           <div css={[column, gap(2)]}>
-            <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+            <p css={[text.title2, text.black]}>{agenda.title}</p>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
           <div>
@@ -83,7 +83,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             }}
           />
           <div css={[column, gap(2)]}>
-            <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+            <p css={[text.title2, text.black]}>{agenda.title}</p>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
         </div>
