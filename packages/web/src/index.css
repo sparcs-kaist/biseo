@@ -22,9 +22,9 @@ body,
   height: 100%;
 }
 
-/* use text.singeLine as default */
+/* use text.multiLine as default */
 p {
   white-space: pre-line;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
