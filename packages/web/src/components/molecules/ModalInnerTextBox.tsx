@@ -53,6 +53,9 @@ interface SubComponents {
   TaggerBox: typeof TaggerBox;
 }
 
+/** @constant 클라이언트와 서버에서 사용하는 채팅 메시지의 최대 길이를 지정합니다. */
+const maxTextLength = 255;
+
 export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   title,
   count = undefined,
@@ -134,6 +137,7 @@ const InputBox: React.FC<InputProps> = ({ value = undefined, onChange }) => (
       placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
+      maxLength={maxTextLength}
     />
   </BorderedBox>
 );
@@ -156,6 +160,7 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
       placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
+      maxLength={maxTextLength}
     />
   </BorderedBox>
 );

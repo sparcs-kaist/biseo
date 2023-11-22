@@ -71,7 +71,7 @@ export const Header: React.FC = () => {
           : null}
       </Box>
       <div
-        css={[column, justify.start, align.center, h(32)]}
+        css={[{ position: "relative" }]}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
