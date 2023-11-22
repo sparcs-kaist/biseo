@@ -5,17 +5,7 @@ import { LogoIcon } from "@biseo/web/assets";
 import { Box } from "@biseo/web/components/atoms";
 import { HeaderItem, Profile } from "@biseo/web/components/molecules";
 import { useAuth } from "@biseo/web/services/auth";
-import {
-  bg,
-  center,
-  h,
-  w,
-  round,
-  text,
-  justify,
-  align,
-  column,
-} from "@biseo/web/styles";
+import { bg, center, h, w, round, text } from "@biseo/web/styles";
 
 const adminPathList = [
   { name: "유저 모드", path: "" },
@@ -70,7 +60,7 @@ export const Header: React.FC = () => {
           : null}
       </Box>
       <div
-        css={[column, justify.start, align.center, h(32)]}
+        css={[{ position: "relative" }]}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
