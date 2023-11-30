@@ -21,6 +21,28 @@ export const ChoiceWithResult = Choice.extend({
 export type ChoiceWithResult = z.infer<typeof ChoiceWithResult>;
 
 /**
+ * VoteInfo
+ * some description about vote info schema goes here
+ */
+export const VoteInfo = Choice.extend({
+  voterid: z.number(),
+  choiceid: z.number(),
+});
+export type VoteInfo = z.infer<typeof VoteInfo>;
+/**
+ * VoteInfo
+ * some description about vote info schema goes here
+ */
+export const AgendaType = Choice.extend({
+  id: z.number(),
+  agendaId: z.number(),
+  named: z.boolean(),
+  private: z.boolean(),
+  voteInfo: z.array(VoteInfo),
+});
+export type AgendaType = z.infer<typeof AgendaType>;
+
+/**
  * AgendaBase
  * some description about agenda base schema goes here
  */
@@ -28,6 +50,7 @@ export const AgendaBase = z.object({
   id: z.number(),
   title: z.string(),
   content: z.string(),
+  type: AgendaType,
   resolution: z.string(),
   status: z.never(), // Must be overridden
   voters: z.object({
