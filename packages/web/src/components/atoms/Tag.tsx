@@ -48,12 +48,14 @@ const TagInner = styled.div<{
   css`
     display: flex;
     height: 18px;
-    border-radius: 3px;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+
+    font-weight: 500;
+
+    border-radius: 3px;
     padding: 2px 10px;
     font-size: 10px;
-    font-weight: 500;
   `,
   tagStyles[type],
 ]);
