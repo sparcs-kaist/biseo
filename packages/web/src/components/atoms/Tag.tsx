@@ -1,13 +1,13 @@
-import React from "react";
-import styled from "@emotion/styled";
+import type { ColorKeys } from "@biseo/web/styles";
+import { colors } from "@biseo/web/styles";
 import { css, type SerializedStyles } from "@emotion/react";
-import { theme } from "@biseo/web/theme";
-import type { Color } from "@biseo/web/theme";
+import styled from "@emotion/styled";
+import React from "react";
 
-const colors = (color: Color, bg: Color) =>
+const tagColors = (color: ColorKeys, bg: ColorKeys) =>
   css({
-    color: theme.colors[color],
-    backgroundColor: theme.colors[bg],
+    color: colors[color],
+    backgroundColor: colors[bg],
   });
 
 type TagTypes =
@@ -32,14 +32,14 @@ const tagNames: Record<TagTypes, string> = {
 };
 
 const tagStyles: Record<TagTypes, SerializedStyles> = {
-  public: colors("orange600", "orange200"),
-  private: colors("gray600", "gray200"),
-  identified: colors("green600", "green200"),
-  anonymous: colors("purple600", "purple200"),
-  votable: colors("blue600", "blue200"),
-  participant: colors("blue600", "blue200"),
-  user: colors("purple600", "purple200"),
-  template: colors("orange600", "orange200"),
+  public: tagColors("orange600", "orange200"),
+  private: tagColors("gray600", "gray200"),
+  identified: tagColors("green600", "green200"),
+  anonymous: tagColors("purple600", "purple200"),
+  votable: tagColors("blue600", "blue200"),
+  participant: tagColors("blue600", "blue200"),
+  user: tagColors("purple600", "purple200"),
+  template: tagColors("orange600", "orange200"),
 };
 
 const TagInner = styled.div<{
@@ -48,12 +48,14 @@ const TagInner = styled.div<{
   css`
     display: flex;
     height: 18px;
-    border-radius: 3px;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+
+    font-weight: 500;
+
+    border-radius: 3px;
     padding: 2px 10px;
     font-size: 10px;
-    font-weight: 500;
   `,
   tagStyles[type],
 ]);

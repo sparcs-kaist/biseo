@@ -1,20 +1,18 @@
-import React, { useState, type PropsWithChildren } from "react";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-
 import type { Choice } from "@biseo/interface/agenda";
-import { Text } from "@biseo/web/components/atoms";
 import { SelectIcon } from "@biseo/web/assets";
-import { type Color, theme } from "@biseo/web/theme";
-import { center, h, w } from "@biseo/web/styles";
+import type { ColorKeys } from "@biseo/web/styles";
+import { center, colors, h, text as styleText, w } from "@biseo/web/styles";
+import { css } from "@emotion/react";
+import styled from "@emotion/styled";
+import React, { useState, type PropsWithChildren } from "react";
 
 const Container = styled.div<{
-  color: Color;
+  color: ColorKeys;
   clickable?: boolean;
 }>`
   border-radius: 5px;
-  background-color: ${props => props.theme.colors[props.color]};
-  border: 1px solid ${props => props.theme.colors.gray200};
+  background-color: ${props => colors[props.color]};
+  border: 1px solid ${colors.gray200};
   padding: 6px 12px 6px 12px;
   width: 340px;
   height: fit-content;
@@ -31,26 +29,17 @@ const Container = styled.div<{
 `;
 
 interface ChoiceTextProps extends PropsWithChildren {
-  color: Color;
+  color: ColorKeys;
 }
 
 const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => (
-  <Text
-    variant="body"
-    color={color}
-    style={{
-      wordBreak: "break-all",
-      overflowWrap: "break-word",
-    }}
-  >
-    {children}
-  </Text>
+  <p css={[styleText.body, styleText[color]]}>{children}</p>
 );
 
 const choiceBaseStyle = (
-  containerColor: Color,
-  selectIconColor: Color,
-  textColor: Color,
+  containerColor: ColorKeys,
+  selectIconColor: ColorKeys,
+  textColor: ColorKeys,
 ) => ({ containerColor, selectIconColor, textColor });
 
 const choiceStyles = {
@@ -85,7 +74,7 @@ const ChoiceBase: React.FC<ChoiceBaseProps> = ({
       onMouseLeave={onMouseLeave}
     >
       <div css={[w(13), h(13), center]}>
-        <SelectIcon stroke={theme.colors[choiceStyle.selectIconColor]} />
+        <SelectIcon stroke={colors[choiceStyle.selectIconColor]} />
       </div>
       <ChoiceText color={choiceStyle.textColor}>{text}</ChoiceText>
     </Container>

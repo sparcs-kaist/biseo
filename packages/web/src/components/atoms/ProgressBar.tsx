@@ -1,13 +1,14 @@
-import React from "react";
+import { colors } from "@biseo/web/styles";
 import styled from "@emotion/styled";
+import React from "react";
 
 const ProgressContainer = styled.div<{ width?: number }>(
-  ({ width = 180, theme }) => `
+  ({ width = 180 }) => `
   display: flex;
   align-items: center;
   width: ${width}px;
   height: 12px;
-  background-color: ${theme.colors.blue200};
+  background-color: ${colors.blue200};
   border-radius: 5px;
   overflow: hidden;
 `,
@@ -15,7 +16,7 @@ const ProgressContainer = styled.div<{ width?: number }>(
 
 const ProgressBarFill = styled.div<{ value: number; max: number }>`
   height: 100%;
-  background-color: ${props => props.theme.colors.blue400};
+  background-color: ${colors.blue400};
   width: ${props => (props.max ? (props.value / props.max) * 100 : 0)}%;
   border-radius: 5px ${props => (props.value === props.max ? "5px" : "0px")} 0px
     5px;

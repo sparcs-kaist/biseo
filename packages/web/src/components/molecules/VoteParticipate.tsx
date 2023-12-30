@@ -1,5 +1,6 @@
+import { Box, Tag } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import React, { useMemo, useState } from "react";
-import { Box, Text, Tag } from "@biseo/web/components/atoms";
 
 interface Props {
   voted: number;
@@ -25,9 +26,7 @@ export const VoteParticipate: React.FC<Props> = ({ voted, total }) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <Text variant="subtitle" color="black">
-        투표 참여
-      </Text>
+      <p css={[text.subtitle, text.black]}>투표 참여</p>
       <Tag type="participant" suffix={participantInfo} />
     </Box>
   );

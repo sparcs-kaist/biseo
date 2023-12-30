@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Button, Box, Text } from "@biseo/web/components/atoms";
+import { Box, Button } from "@biseo/web/components/atoms";
 import { Modal, ModalInner } from "@biseo/web/components/molecules";
 import { useAgendaTemplate } from "@biseo/web/services/agenda-template";
+import { text } from "@biseo/web/styles";
+import React, { useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 export const EditTemplateModal: React.FC = () => {
   const location = useLocation();
@@ -152,9 +153,7 @@ export const EditTemplateModal: React.FC = () => {
               onClick={onTemplateUpdate}
               disabled={!validated}
             >
-              <Text variant="boldtitle3" color="blue600">
-                템플릿 수정하기
-              </Text>
+              <p css={[text.boldtitle3, text.blue600]}>템플릿 수정하기</p>
             </Button>
             <Link
               to={validated ? ".." : "#"}
@@ -163,9 +162,7 @@ export const EditTemplateModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={145} h={40} onClick={onTemplateDelete}>
-                <Text variant="boldtitle3" color="blue600">
-                  템플릿 삭제하기
-                </Text>
+                <p css={[text.boldtitle3, text.blue600]}>템플릿 삭제하기</p>
               </Button>
             </Link>
           </Box>

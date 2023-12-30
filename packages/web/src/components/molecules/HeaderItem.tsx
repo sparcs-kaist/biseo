@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "@emotion/styled";
+import { colors, text } from "@biseo/web/styles";
 import { css } from "@emotion/react";
-import { Text } from "@biseo/web/components/atoms";
+import styled from "@emotion/styled";
+import React from "react";
 
 interface Props {
   name: string;
@@ -32,7 +32,7 @@ const SelectIndicator = styled.div`
   bottom: 0;
   width: 100%;
   height: 2px;
-  background-color: ${props => props.theme.colors.black};
+  background-color: ${colors.black};
   border-radius: 1px 1px 0 0;
 `;
 
@@ -43,9 +43,7 @@ export const HeaderItem: React.FC<Props> = ({
 }) => (
   <Container selected={selected}>
     <Link href={`/${path}`}>
-      <Text variant="title3" color={selected ? "black" : "gray500"}>
-        {name}
-      </Text>
+      <p css={[text.title3, selected ? text.black : text.gray500]}>{name}</p>
     </Link>
     {selected ? <SelectIndicator /> : null}
   </Container>

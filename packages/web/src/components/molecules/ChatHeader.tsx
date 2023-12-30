@@ -1,6 +1,6 @@
-import React from "react";
+import { colors, text } from "@biseo/web/styles";
 import styled from "@emotion/styled";
-import { Text } from "@biseo/web/components/atoms";
+import React from "react";
 
 interface Props {
   title: string;
@@ -12,13 +12,13 @@ const Container = styled.div`
   flex-direction: column;
   width: "100%";
   min-height: 42px;
-  background-color: ${props => props.theme.colors.gray100};
+  background-color: ${colors.gray100};
   padding: 0 20px;
   justify-content: center;
 `;
 
 export const ChatHeader: React.FC<Props> = ({ title }) => (
   <Container>
-    <Text variant="title2">{title}</Text>
+    <p css={[text.title2, text.black]}>{title}</p>
   </Container>
 );

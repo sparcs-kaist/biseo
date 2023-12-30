@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
+import { colors, type ColorKeys } from "@biseo/web/styles";
 import { css } from "@emotion/react";
-import type { Color } from "@biseo/web/theme";
+import styled from "@emotion/styled";
 
 type Size = number | "hug" | "fill";
 const calcSize = (size: Size) => {
@@ -12,10 +12,10 @@ const calcSize = (size: Size) => {
 export const Button = styled.button<{
   w?: Size;
   h?: Size;
-  color?: Color;
+  color?: ColorKeys;
   padHorizontal?: number;
 }>(
-  ({ w = "fill", h = 28, color = "blue200", padHorizontal = 0, theme }) => css`
+  ({ w = "fill", h = 28, color = "blue200", padHorizontal = 0 }) => css`
     display: flex;
     width: ${calcSize(w)};
     height: ${calcSize(h)};
@@ -25,7 +25,7 @@ export const Button = styled.button<{
     justify-content: center;
     align-items: center;
     line-height: 28px;
-    background-color: ${theme.colors[color]};
+    background-color: ${colors[color]};
 
     &:hover {
       cursor: pointer;
@@ -33,7 +33,7 @@ export const Button = styled.button<{
 
     &:disabled {
       cursor: none;
-      background-color: ${theme.colors.white};
+      background-color: ${colors.white};
     }
   `,
 );

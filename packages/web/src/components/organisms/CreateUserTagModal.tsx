@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
-
-import { Button, Box, Text } from "@biseo/web/components/atoms";
+import { Box, Button } from "@biseo/web/components/atoms";
 import { Modal, ModalInner } from "@biseo/web/components/molecules";
 import { useAdminUser } from "@biseo/web/services/admin-user";
 import { useUserTag } from "@biseo/web/services/user-tag";
+import { text } from "@biseo/web/styles";
+import React, { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { UserTable } from "./UserTable";
 
 export const CreateUserTagModal: React.FC = () => {
@@ -83,9 +83,7 @@ export const CreateUserTagModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={300} h={42} onClick={onSubmit} disabled={!validated}>
-                <Text variant="boldtitle3" color="blue600">
-                  태그 생성하기
-                </Text>
+                <p css={[text.boldtitle3, text.blue600]}>태그 생성하기</p>
               </Button>
             </Link>
           </Box>

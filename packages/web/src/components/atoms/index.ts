@@ -13,7 +13,6 @@ export * from "./SelectTagBox";
 export * from "./SelectTemplateBox";
 export * from "./Table";
 export * from "./Tag";
-export * from "./Text";
 export * from "./TextArea";
 export * from "./TextInput";
 export * from "./UserTag";

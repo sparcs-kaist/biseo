@@ -109,7 +109,7 @@ export const Modal: React.FC<Props> = ({
     <div css={[backDropStyle]}>
       <div css={[containerStyle, w(width), h(height)]} ref={containerRef}>
         <div css={[w("fill"), row, align.center, justify.between]}>
-          <h1 css={[text.title1, text.black]}>{title}</h1>
+          <p css={[text.title1, text.black]}>{title}</p>
           <Link
             to=".."
             relative="path"

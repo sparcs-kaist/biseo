@@ -2,7 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import type { UserTag as IUserTag } from "@biseo/interface/user/tag";
-import { Box, Card, Text, UserTag } from "@biseo/web/components/atoms";
+import { Box, Card, UserTag } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 import { AdminTag } from "./AdminTag";
 
 const adminTags = {
@@ -25,9 +26,7 @@ export const UserTagCards: React.FC<Props> = ({ tag }) => {
           <UserTag>{tag.title}</UserTag>
         </Box>
         <Box w={340}>
-          <Text variant="title2" color="gray600">
-            {tag.description}
-          </Text>
+          <p css={[text.title2, text.gray600]}>{tag.description}</p>
         </Box>
       </Box>
     </Card>

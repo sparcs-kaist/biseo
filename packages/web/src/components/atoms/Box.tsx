@@ -1,6 +1,6 @@
-import styled from "@emotion/styled";
+import { colors, type ColorKeys } from "@biseo/web/styles";
 import { css } from "@emotion/react";
-import type { Color } from "@biseo/web/theme";
+import styled from "@emotion/styled";
 
 type Size = number | "hug" | "fill";
 const calcSize = (size: Size) => {
@@ -11,11 +11,12 @@ const calcSize = (size: Size) => {
 
 /**
  * @deprecated use `padding`, `round`, and layout tokens instead
+ * w("hug"), h("hug"), bg.transparent, round(0), dir("column"), gap(0), align("start"), justify("start"), pad(0), padHorizontal(0), padVertical(0), padTop(0), padBottom(0), padLeft(0), padRight(0), zIndex(0), position("static"), self("auto"), wrap("nowrap")
  */
 export const Box = styled.div<{
   w?: Size;
   h?: Size;
-  bg?: Color;
+  bg?: ColorKeys;
   round?: number;
   dir?: "row" | "column";
   gap?: number | "auto";
@@ -37,27 +38,26 @@ export const Box = styled.div<{
     w = "hug",
     h = "hug",
     bg,
-    round = 0,
-    dir = "column",
-    gap = 0,
-    align = "start",
-    justify = "start",
-    pad = 0,
+    round = 0, // default
+    dir = "column", // not default
+    gap = 0, // not default
+    align = "start", // not default
+    justify = "start", // not default
+    pad = 0, // pad(0)
     padHorizontal = pad,
     padVertical = pad,
     padLeft = padHorizontal,
     padRight = padHorizontal,
     padBottom = padVertical,
     padTop = padVertical,
-    theme,
-    zIndex = 0,
-    position = "static",
+    zIndex = 0, // zIndex(0)
+    position = "static", // default
     self = "auto",
     wrap = "nowrap",
   }) => css`
     width: ${calcSize(w)};
     height: ${calcSize(h)};
-    background-color: ${bg ? theme.colors[bg] : "transparent"};
+    background-color: ${bg ? colors[bg] : "transparent"};
     border-radius: ${round}px;
     display: flex;
     flex-direction: ${dir};

@@ -1,12 +1,11 @@
 import { DownArrowIcon } from "@biseo/web/assets";
-import { BorderedBox, Box, Text } from "@biseo/web/components/atoms";
+import { BorderedBox, Box } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 
 export const AdminAgendaTags: React.FC = () => (
   <Box w={270} h={28} gap={16} dir="row" justify="center">
     <Box dir="row" w={122} h={28} gap={10} align="center">
-      <Text variant="body" color="black">
-        투표 결과
-      </Text>
+      <p css={[text.body, text.black]}>투표 결과</p>
       <BorderedBox
         borderColor="gray200"
         bg="white"
@@ -19,15 +18,11 @@ export const AdminAgendaTags: React.FC = () => (
         borderStyle="solid"
         gap={99}
       >
-        <Text color="gray600" variant="option1">
-          비공개
-        </Text>
+        <p css={[text.option1, text.gray600]}>비공개</p>
       </BorderedBox>
     </Box>
     <Box dir="row" w={122} h={28} gap={10} align="center">
-      <Text variant="body" color="black">
-        투표 상세
-      </Text>
+      <p css={[text.body, text.black]}>투표 상세</p>
       <BorderedBox
         borderColor="gray200"
         bg="white"
@@ -40,9 +35,7 @@ export const AdminAgendaTags: React.FC = () => (
         gap={99}
         borderStyle="solid"
       >
-        <Text color="gray600" variant="option1">
-          무기명
-        </Text>
+        <p css={[text.option1, text.gray600]}>무기명</p>
       </BorderedBox>
     </Box>
   </Box>
@@ -51,9 +44,7 @@ export const AdminAgendaTags: React.FC = () => (
 export const AdminAgendaTagsSelect: React.FC = () => (
   <Box w={270} h={28} justify="space-between" dir="row">
     <Box dir="row" w={130} h={28} gap={8} align="center">
-      <Text variant="body" color="black">
-        투표 결과
-      </Text>
+      <p css={[text.body, text.black]}>투표 결과</p>
       <BorderedBox
         borderColor="gray200"
         bg="white"
@@ -67,19 +58,14 @@ export const AdminAgendaTagsSelect: React.FC = () => (
         borderStyle="solid"
         dir="row"
       >
-        <Text color="gray600" variant="option1">
-          비공개
-        </Text>
-
+        <p css={[text.option1, text.gray600]}>비공개</p>
         <Box padVertical={7}>
           <DownArrowIcon />
         </Box>
       </BorderedBox>
     </Box>
     <Box dir="row" w={130} h={28} gap={8} align="center">
-      <Text variant="body" color="black">
-        투표 상세
-      </Text>
+      <p css={[text.body, text.black]}>투표 상세</p>
       <BorderedBox
         borderColor="gray200"
         bg="white"
@@ -93,10 +79,7 @@ export const AdminAgendaTagsSelect: React.FC = () => (
         borderStyle="solid"
         dir="row"
       >
-        <Text color="gray600" variant="option1">
-          무기명
-        </Text>
-
+        <p css={[text.option1, text.gray600]}>무기명</p>
         <Box padVertical={7}>
           <DownArrowIcon />
         </Box>

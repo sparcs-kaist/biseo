@@ -1,6 +1,7 @@
-import React from "react";
-import { Card, Text } from "@biseo/web/components/atoms";
 import { PlusIcon } from "@biseo/web/assets";
+import { Card } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
+import React from "react";
 
 interface Props {
   content: string;
@@ -12,8 +13,8 @@ export const AddButtonCard: React.FC<Props> = ({
   onClick = () => {},
 }) => (
   <Card align="center" small clickable onClick={onClick}>
-    <Text color="gray500" variant="body">
+    <p css={[text.body, text.gray500]}>
       <PlusIcon /> {content}
-    </Text>
+    </p>
   </Card>
 );

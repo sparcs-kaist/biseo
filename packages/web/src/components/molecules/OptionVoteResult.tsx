@@ -1,7 +1,8 @@
-import React from "react";
+import { Box } from "@biseo/web/components/atoms";
+import type { ColorKeys } from "@biseo/web/styles";
+import { colors, text } from "@biseo/web/styles";
 import styled from "@emotion/styled";
-import { Box, Text } from "@biseo/web/components/atoms";
-import type { Color } from "@biseo/web/theme";
+import React from "react";
 
 interface Props {
   name: string;
@@ -12,18 +13,18 @@ interface Props {
 
 const Background = styled.div<{
   percent: number;
-  color: Color;
-  borderColor: Color;
+  color: ColorKeys;
+  borderColor: ColorKeys;
 }>`
   width: 100%;
   height: 100%;
 
-  border: 1px solid ${props => props.theme.colors[props.borderColor]};
+  border: 1px solid ${props => colors[props.borderColor]};
   border-radius: 5px;
 
   background: linear-gradient(
     to right,
-    ${props => props.theme.colors[props.color]} ${props => props.percent}%,
+    ${props => colors[props.color]} ${props => props.percent}%,
     #ffffff ${props => props.percent}%
   );
 `;
@@ -49,12 +50,12 @@ export const OptionVoteResult: React.FC<Props> = ({
         padHorizontal={13}
         padVertical={6}
       >
-        <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
+        <p css={[text.option1, userChoice ? text.blue500 : text.gray500]}>
           {name}
-        </Text>
-        <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
+        </p>
+        <p css={[text.option1, userChoice ? text.blue500 : text.gray500]}>
           {count}
-        </Text>
+        </p>
       </Box>
     </Background>
   </Box>

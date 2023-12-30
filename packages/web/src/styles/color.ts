@@ -16,15 +16,15 @@ export const colors = {
   blue500: "#2F80DE",
   blue600: "#065DAC",
   blue700: "#004B81",
-  purpleLight: "#F6EEFE",
-  purple: "#9836EF",
-  orangeLight: "#FDF7E6",
-  orange: "#FF9211",
-  greenLight: "#E9F9EF",
-  green: "#008B1C",
+  purple200: "#F6EEFE",
+  purple600: "#9836EF",
+  orange200: "#FDF7E6",
+  orange600: "#FF9211",
+  green200: "#E9F9EF",
+  green600: "#008B1C",
 } as const;
 
-type ColorKeys = keyof typeof colors;
+export type ColorKeys = keyof typeof colors;
 export type Color = (typeof colors)[ColorKeys];
 export const mapColors = <T>(cb: (color: Color) => T) =>
   Object.fromEntries(

@@ -1,5 +1,6 @@
-import styled from "@emotion/styled";
+import { colors } from "@biseo/web/styles";
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 
 /**
  * @deprecated use `scroll` and `scrollBar` instead
@@ -24,7 +25,7 @@ export const Scroll = styled.div<{ hide?: boolean }>`
     ${props =>
       !props.hide &&
       css`
-        background-color: ${props.theme.colors.gray400};
+        background-color: ${colors.gray400};
       `}
     border-radius: 100px;
   }

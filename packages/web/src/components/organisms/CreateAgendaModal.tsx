@@ -6,7 +6,6 @@ import {
   Button,
   SelectTagBox,
   SelectTemplateBox,
-  Text,
 } from "@biseo/web/components/atoms";
 import {
   AdminAgendaTagsSelect,
@@ -14,8 +13,9 @@ import {
   ModalInner,
 } from "@biseo/web/components/molecules";
 import { useAdminAgenda } from "@biseo/web/services/admin-agenda";
-import { useAgendaTemplate } from "@biseo/web/services/agenda-template";
 import { useAdminUser } from "@biseo/web/services/admin-user";
+import { useAgendaTemplate } from "@biseo/web/services/agenda-template";
+import { text } from "@biseo/web/styles";
 import { UserTable } from "./UserTable";
 
 export const CreateAgendaModal: React.FC = () => {
@@ -199,12 +199,14 @@ export const CreateAgendaModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={270} h={38} onClick={onSubmit} disabled={!validated}>
-                <Text
-                  variant="boldtitle3"
-                  color={validated ? "blue600" : "gray300"}
+                <p
+                  css={[
+                    text.boldtitle3,
+                    validated ? text.blue600 : text.gray300,
+                  ]}
                 >
                   투표 생성하기
-                </Text>
+                </p>
               </Button>
             </Link>
           </Box>

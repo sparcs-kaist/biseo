@@ -1,3 +1,4 @@
+import { colors } from "@biseo/web/styles";
 import styled from "@emotion/styled";
 
 export const TextInput = styled.input`
@@ -9,10 +10,10 @@ export const TextInput = styled.input`
   background: transparent;
   border: none;
   border-radius: 5px;
-  color: ${props => props.theme.colors.black};
+  color: ${colors.black};
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
-    color: ${props => props.theme.colors.gray300};
+    color: ${colors.gray300};
   }
 `;
 TextInput.defaultProps = {

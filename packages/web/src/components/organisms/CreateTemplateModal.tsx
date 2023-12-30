@@ -1,8 +1,9 @@
+import { Box, Button } from "@biseo/web/components/atoms";
+import { Modal, ModalInner } from "@biseo/web/components/molecules";
+import { useAgendaTemplate } from "@biseo/web/services/agenda-template";
+import { text } from "@biseo/web/styles";
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Box, Text } from "@biseo/web/components/atoms";
-import { ModalInner, Modal } from "@biseo/web/components/molecules";
-import { useAgendaTemplate } from "@biseo/web/services/agenda-template";
 
 export const CreateTemplateModal: React.FC = () => {
   const [templateTitle, setTemplateTitle] = useState("");
@@ -107,9 +108,7 @@ export const CreateTemplateModal: React.FC = () => {
               onClick={onTemplateUpdate}
               disabled={!validated}
             >
-              <Text variant="boldtitle3" color="blue600">
-                템플릿 생성하기
-              </Text>
+              <p css={[text.boldtitle3, text.blue600]}>템플릿 생성하기</p>
             </Button>
           </Link>
         </Box>

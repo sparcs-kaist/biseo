@@ -1,5 +1,6 @@
-import React, { type PropsWithChildren } from "react";
+import { colors } from "@biseo/web/styles";
 import styled from "@emotion/styled";
+import React, { type PropsWithChildren } from "react";
 
 interface Props extends PropsWithChildren {
   tag?: string;
@@ -8,14 +9,16 @@ interface Props extends PropsWithChildren {
 const Container = styled.div`
   display: flex;
   height: 18px;
-  padding: 3px 6px;
   justify-content: center;
   align-items: center;
-  font-size: 9px;
+
   font-weight: 500;
-  color: ${props => props.theme.colors.gray500};
-  background-color: ${props => props.theme.colors.white};
-  border: solid 1px ${props => props.theme.colors.gray200};
+
+  padding: 3px 6px;
+  font-size: 9px;
+  color: ${colors.gray500};
+  background-color: ${colors.white};
+  border: solid 1px ${colors.gray200};
   border-radius: 5px;
 `;
 

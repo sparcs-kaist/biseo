@@ -1,6 +1,7 @@
-import styled from "@emotion/styled";
+import type { ColorKeys } from "@biseo/web/styles";
+import { colors } from "@biseo/web/styles";
 import { css } from "@emotion/react";
-import type { Color } from "@biseo/web/theme";
+import styled from "@emotion/styled";
 
 const typography = (size: number, weight: number) => css`
   font-size: ${size}px;
@@ -28,11 +29,11 @@ type Variants = keyof typeof textStyles;
  */
 export const HyperText = styled.a<{
   variant?: Variants;
-  color?: Color;
+  color?: ColorKeys;
   position?: "absolute" | "static";
-}>(({ variant = "body", color = "black", theme, position = "static" }) => [
+}>(({ variant = "body", color = "black", position = "static" }) => [
   css({
-    color: theme.colors[color],
+    color: colors[color],
     position,
     whiteSpace: "pre-line",
   }),
