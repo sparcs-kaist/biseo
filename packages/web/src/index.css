@@ -21,10 +21,3 @@ body,
 #root {
   height: 100%;
 }
-
-/* use text.multiLine as default */
-p {
-  white-space: pre-line;
-  word-break: break-all;
-  overflow-wrap: break-word;
-}
