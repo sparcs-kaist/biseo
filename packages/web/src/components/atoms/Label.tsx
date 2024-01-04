@@ -17,7 +17,7 @@ export const Select = styled.select<{ w: number; h: number }>`
   border: 1px solid ${props => props.theme.colors.gray200};
   background-color: ${props => props.theme.colors.white};
 
-  font-family: "Noto Sansf KR";
+  font-family: "Noto Sans KR";
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
