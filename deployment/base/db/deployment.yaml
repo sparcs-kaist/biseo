@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biseo-db
+  labels:
+    app: biseo-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: biseo-db
+  template:
+    metadata:
+      labels:
+        app: biseo-db
+    spec:
+      containers:
+      - name: biseo-db
+        image: mysql:8.0
+        command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+        ports:
+        - containerPort: 3306
+          name: db-port
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: biseo-secret
+              key: DB_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: biseo-env
+              key: DB_NAME

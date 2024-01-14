@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: biseo-env
+data:
+  NODE_ENV: "production"
+  SERVER_PORT: 8000
+  DB_NAME: "biseo"
