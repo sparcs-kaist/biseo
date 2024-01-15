@@ -4,5 +4,5 @@ metadata:
   name: biseo-env
 data:
   NODE_ENV: "production"
-  SERVER_PORT: 8000
+  SERVER_PORT: "8000"
   DB_NAME: "biseo"
