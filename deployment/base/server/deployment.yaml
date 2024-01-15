@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: biseo-server
-          image: 
+          image: 666583083672.dkr.ecr.ap-northeast-2.amazonaws.com/biseo-server:latest
           ports:
           - containerPort: 8000
           envFrom:
