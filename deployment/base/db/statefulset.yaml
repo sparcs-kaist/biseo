@@ -30,11 +30,26 @@ spec:
             secretKeyRef:
               name: biseo-secret
               key: DB_PASSWORD
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: biseo-secret
+              key: DB_PASSWORD
         - name: MYSQL_DATABASE
           valueFrom:
             configMapKeyRef:
               name: biseo-env
               key: DB_NAME
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: biseo-env
+              key: DB_USER
+        - name: MYSQL_ROOT_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: biseo-env
+              key: DB_ROOT_HOST
         volumeMounts:
           - name: biseo-db-storage
             mountPath: /var/lib/mysql

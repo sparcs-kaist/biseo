@@ -6,3 +6,5 @@ data:
   NODE_ENV: "production"
   SERVER_PORT: "8000"
   DB_NAME: "biseo"
+  DB_USER: "mysql"
+  DB_ROOT_HOST: "%"
