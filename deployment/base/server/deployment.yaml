@@ -28,3 +28,11 @@ spec:
             value: "production"
           - name: SERVER_PORT
             value: "8000"
+          volumeMounts:
+          - mountPath: "/app/.env"
+            name: secret-env
+            readOnly: true
+      volumes:
+        - name: secret-env
+          secret:
+            secretName: biseo-secret
