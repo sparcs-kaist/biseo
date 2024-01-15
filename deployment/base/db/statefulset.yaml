@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: biseo-db
   labels:
@@ -16,8 +16,10 @@ spec:
     spec:
       containers:
       - name: biseo-db
-        image: mysql:8.0
-        args: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+        image: mysql:8.0.19
+        args: 
+          - --character-set-server=utf8mb4
+          - --collation-server=utf8mb4_unicode_ci
         ports:
         - containerPort: 3306
           name: db-port
@@ -32,3 +34,10 @@ spec:
             configMapKeyRef:
               name: biseo-env
               key: DB_NAME
+        volumeMounts:
+          - name: biseo-db-storage
+            mountPath: /var/lib/mysql
+      volumes:
+        - name: biseo-db-storage
+          persistentVolumeClaim:
+            claimName: biseo-db-pv-claim

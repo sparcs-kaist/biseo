@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: biseo
+  name: biseo-db-pv-claim
+  labels:
+    app: biseo-db
+spec:
+  storageClassName: "ebs-sc"
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
