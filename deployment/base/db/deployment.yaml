@@ -17,7 +17,7 @@ spec:
       containers:
       - name: biseo-db
         image: mysql:8.0
-        command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
+        args: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci"]
         ports:
         - containerPort: 3306
           name: db-port
