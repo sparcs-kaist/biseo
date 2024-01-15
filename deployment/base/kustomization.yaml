@@ -6,6 +6,3 @@ resources:
 - ./server/service.yaml
 - ./server/ingress.yaml
 - ./server/sealed-secret.yaml
-- ./db/statefulset.yaml
-- ./db/service.yaml
-- ./db/pvc.yaml
