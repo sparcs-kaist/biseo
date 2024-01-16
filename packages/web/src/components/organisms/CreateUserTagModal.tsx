@@ -22,7 +22,7 @@ export const CreateUserTagModal: React.FC = () => {
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const onChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
 
@@ -58,7 +58,7 @@ export const CreateUserTagModal: React.FC = () => {
           </ModalInner>
 
           <ModalInner title="태그 설명" required>
-            <ModalInner.InputBox
+            <ModalInner.TextAreaInputBox
               onChange={onChangeDescription}
               value={description}
             />
@@ -83,7 +83,10 @@ export const CreateUserTagModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={300} h={42} onClick={onSubmit} disabled={!validated}>
-                <Text variant="boldtitle3" color="blue600">
+                <Text
+                  variant="boldtitle3"
+                  color={validated ? "blue600" : "gray300"}
+                >
                   태그 생성하기
                 </Text>
               </Button>

@@ -22,7 +22,7 @@ export const VoteResult: React.FC<Props> = ({
       {voted ? (
         <Text
           variant="option2"
-          color="gray500"
+          color="gray400"
           onClick={e => {
             clickHandler(revealChoice);
             e.stopPropagation();

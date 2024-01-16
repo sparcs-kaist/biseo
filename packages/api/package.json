@@ -4,13 +4,13 @@
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "pnpm migrate && nodemon",
+    "dev": "pnpm migrate:dev && nodemon",
     "prod": "prisma migrate deploy && node dist/index.js",
     "db": "docker compose -f docker-compose.dev.yml",
     "typecheck": "prisma generate && tsc --noEmit",
     "typegen": "prisma generate",
-    "migrate": "pnpm db up -d && prisma migrate dev",
-    "studio": "pnpm db up -d && prisma studio",
+    "migrate:dev": "pnpm db up --wait && prisma migrate dev",
+    "studio": "pnpm db up --wait && prisma studio",
     "build": "prisma generate && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "env": "echo $NODE_ENV"
   },

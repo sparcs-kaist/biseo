@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { LogoIcon } from "@biseo/web/assets";
-import { Box, Button, Text } from "@biseo/web/components/atoms";
-import { HeaderItem } from "@biseo/web/components/molecules";
+import { Box } from "@biseo/web/components/atoms";
+import { HeaderItem, Profile } from "@biseo/web/components/molecules";
 import { useAuth } from "@biseo/web/services/auth";
+import { bg, center, h, w, round, text } from "@biseo/web/styles";
 
 const adminPathList = [
   { name: "유저 모드", path: "" },
@@ -36,7 +37,7 @@ export const Header: React.FC = () => {
     logout();
     navigate("/", { replace: true });
   };
-
+  const [hover, setHover] = useState(false);
   return (
     <Container>
       <Box h="fill" dir="row" align="center">
@@ -58,13 +59,25 @@ export const Header: React.FC = () => {
             ))
           : null}
       </Box>
-      <Button h={28} w={28} onClick={handleLogout}>
-        <Text variant="boldtitle3" color="blue600">
-          {displayName === undefined
-            ? "?"
-            : displayName.slice(0, 1).toUpperCase()}
-        </Text>
-      </Button>
+      <div
+        css={[{ position: "relative" }]}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
+        <div css={[h(28), w(28), bg.blue200, round.md, center]}>
+          <div css={[text.boldtitle3, text.blue600]}>
+            {displayName === undefined
+              ? "?"
+              : displayName.slice(0, 1).toUpperCase()}
+          </div>
+        </div>
+        {hover ? (
+          <Profile
+            displayName={displayName === undefined ? "?" : displayName}
+            onLogout={handleLogout}
+          />
+        ) : null}
+      </div>
     </Container>
   );
 };
