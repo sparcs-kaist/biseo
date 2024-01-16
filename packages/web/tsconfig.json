@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "target": "ESNext",
+    "moduleResolution": "Bundler",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "esModuleInterop": false,
@@ -11,7 +10,12 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "@emotion/react",
-    "types": ["vite-plugin-svgr/client"]
+    "types": ["vite-plugin-svgr/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@biseo/web/*": ["./src/*"]
+      // TODO: change to @/*
+    }
   },
   "include": ["src", "vite.config.ts"],
   "references": [
