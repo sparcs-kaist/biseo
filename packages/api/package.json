@@ -1,5 +1,6 @@
 {
   "name": "@biseo/api",
+  "private": true,
   "version": "2.0.0",
   "main": "src/index.ts",
   "license": "MIT",
@@ -11,8 +12,9 @@
     "typegen": "prisma generate",
     "migrate:dev": "pnpm db up --wait && prisma migrate dev",
     "studio": "pnpm db up --wait && prisma studio",
-    "build": "prisma generate && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "env": "echo $NODE_ENV"
+    "build": "prisma generate && tsc && tsc-alias",
+    "env": "echo $NODE_ENV",
+    "clean": "rm -rf dist"
   },
   "files": [
     "dist",
