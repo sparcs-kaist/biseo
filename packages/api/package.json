@@ -40,6 +40,6 @@
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.7",
-    "tsconfig-paths": "^4.1.2"
+    "tsconfig-paths": "^4.2.0"
   }
 }
