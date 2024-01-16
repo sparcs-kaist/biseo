@@ -14,6 +14,8 @@
     "src"
   ],
   "scripts": {
+    "prepare": "pnpm build",
+    "dev": "tsc && (concurrently \"tsc -w\" \"tsc-alias -w\")",
     "typecheck": "tsc --noEmit",
     "build": "tsc && tsc-alias",
   },
