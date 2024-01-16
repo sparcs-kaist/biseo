@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc && tsc-alias",
   },
   "exports": {
     ".": "./dist/index.js",
