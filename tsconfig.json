@@ -1,12 +1,21 @@
 {
-  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@biseo/*": ["packages/*/src"],
-      "@biseo/web/*": ["packages/web/src/*"],
-      "@biseo/api/*": ["packages/api/src/*"],
-      "@biseo/interface/*": ["packages/interface/src/*"]
-    }
-  }
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
+    "sourceMap": true,
+    "strict": true,
+    "allowJs": false,
+    "declaration": false,
+    "declarationMap": false,
+    "noEmitOnError": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": false
+  },
+  "exclude": ["node_modules", "dist"]
 }
