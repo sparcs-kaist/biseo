@@ -5,13 +5,11 @@ on:
   push:
     branches:
       - deploy
-
-# on:
-#   pull_request:
-#     types:
-#       - closed
-#     branches:
-#       - deploy
+  pull_request:
+    types:
+      - closed
+    branches:
+      - deploy
 
 env:
   AWS_REGION: ap-northeast-2
