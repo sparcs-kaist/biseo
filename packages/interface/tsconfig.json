@@ -4,9 +4,9 @@
     "outDir": "./dist",
     "declaration": true,
     "declarationMap": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"]
     }
   },
   "include": ["./src/**/*.ts"]

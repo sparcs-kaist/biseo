@@ -2,9 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@biseo/api/*": ["./src/*"]
+      "@biseo/api/*": ["./*"]
       // TODO: change to @/*
     }
   },
