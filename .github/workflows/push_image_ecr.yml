@@ -2,11 +2,16 @@ name: Push Prod Image to Amazon ECR
 
 # when tagging action success
 on:
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
       - deploy
+
+# on:
+#   pull_request:
+#     types:
+#       - closed
+#     branches:
+#       - deploy
 
 env:
   AWS_REGION: ap-northeast-2
