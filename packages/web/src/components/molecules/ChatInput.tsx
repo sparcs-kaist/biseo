@@ -9,7 +9,7 @@ import {
   h,
   padding,
   scroll,
-  scrollBar,
+  hideScrollBar,
   bg,
   justify,
   align,
@@ -42,7 +42,7 @@ const formStyle = css`
 
 const textAreaScrollStyle = css`
   ${scroll.y}
-  ${scrollBar}
+  ${hideScrollBar}
   overflow-y: scroll;
 `;
 
