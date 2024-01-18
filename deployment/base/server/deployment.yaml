@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biseo-server
+  labels:
+    app: biseo-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: biseo-server
+  template:
+    metadata:
+      labels:
+        app: biseo-server
+    spec:
+      containers:
+        - name: biseo-server
+          image: 666583083672.dkr.ecr.ap-northeast-2.amazonaws.com/biseo-server:latest
+          ports:
+          - containerPort: 8000
+          envFrom:
+          - secretRef:
+              name: biseo-secret
+          env:
+          - name: NODE_ENV
+            value: "production"
+          - name: SERVER_PORT
+            value: "8000"
