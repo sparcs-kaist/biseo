@@ -28,7 +28,6 @@ spec:
               configMapKeyRef:
                 name: biseo-env
                 key: NODE_ENV
-            value: "production"
           - name: SERVER_PORT
             valueFrom:
               configMapKeyRef:
