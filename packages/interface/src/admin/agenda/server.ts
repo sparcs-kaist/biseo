@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-redeclare -- A Zod schema name and type should have the same names */
 import { z } from "zod";
-import { User } from "@biseo/interface/user";
-import { AgendaStatus, ChoiceWithResult } from "@biseo/interface/agenda";
+import { User } from "@/user";
+import { AgendaStatus, ChoiceWithResult } from "@/agenda";
 import { AdminAgenda } from "./common";
 
 /**
