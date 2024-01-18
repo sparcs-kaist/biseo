@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: biseo-env
 data:
-  NODE_ENV: "production"
+  NODE_ENV: "development"
   SERVER_PORT: "8000"
