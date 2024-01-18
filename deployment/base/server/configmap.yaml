@@ -3,8 +3,5 @@ kind: ConfigMap
 metadata:
   name: biseo-env
 data:
-  NODE_ENV: "production"
+  NODE_ENV: "development"
   SERVER_PORT: "8000"
-  DB_NAME: biseo
-  DB_USER: mysql
-  DB_ROOT_HOST: '%'
