@@ -24,6 +24,13 @@ spec:
               name: biseo-secret
           env:
           - name: NODE_ENV
+            valueFrom:
+              configMapKeyRef:
+                name: biseo-env
+                key: NODE_ENV
             value: "production"
           - name: SERVER_PORT
-            value: "8000"
+            valueFrom:
+              configMapKeyRef:
+                name: biseo-env
+                key: SERVER_PORT
