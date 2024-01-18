@@ -18,7 +18,7 @@ export const UserTagCards: React.FC<Props> = ({ tag }) => {
   const navigate = useNavigate();
   const openModal = () => navigate(`tagEdit?tagId=${tag.id}`);
   return (
-    <Card primary={false} round={5} onClick={openModal}>
+    <Card primary={false} round={5} onClick={openModal} clickable>
       <Box gap={8}>
         <Box gap={8} dir="row">
           <AdminTag tags={adminTags} suffix={tag.users.length} />

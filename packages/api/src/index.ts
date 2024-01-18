@@ -17,16 +17,19 @@ import { agendaRouter } from "@biseo/api/listener/agenda";
 import { agendaTemplateRouter } from "@biseo/api/listener/agenda.template";
 import { userTagRouter } from "@biseo/api/listener/user.tag";
 
+const corsOrigin =
+  env.NODE_ENV === "development" ? "*" : [/sparcs\.org$/, /kaist\.ac\.kr$/];
+
 const app = express();
 const httpServer = createServer(app);
 const io: BiseoServer = new Server(httpServer, {
   path: "/api/socket",
-  cors: { origin: "*" },
+  cors: { origin: corsOrigin },
 });
 const port = env.SERVER_PORT ?? 8000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: corsOrigin }));
 
 app.get("/api", (req, res) => {
   res.send("Hello World!");

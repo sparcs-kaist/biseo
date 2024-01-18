@@ -83,7 +83,10 @@ export const CreateUserTagModal: React.FC = () => {
               style={{ textDecoration: "none" }}
             >
               <Button w={300} h={42} onClick={onSubmit} disabled={!validated}>
-                <Text variant="boldtitle3" color="blue600">
+                <Text
+                  variant="boldtitle3"
+                  color={validated ? "blue600" : "gray300"}
+                >
                   태그 생성하기
                 </Text>
               </Button>

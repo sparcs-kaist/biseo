@@ -24,7 +24,7 @@ export const getUserFromToken = async (token: string): Promise<User | null> => {
   try {
     const { username, iat } = decoded.parse(jwt.verify(token, env.SECRET_KEY));
     if (iat < Math.floor(Date.now() / 1000) - MAX_AGE) return null;
-    return await prisma.user.findUnique({ where: { username } });
+    return prisma.user.findUnique({ where: { username } });
   } catch {
     return null;
   }

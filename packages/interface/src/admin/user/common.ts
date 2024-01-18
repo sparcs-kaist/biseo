@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-redeclare -- A Zod schema name and type should have the same names */
 import { z } from "zod";
-import { User } from "@biseo/interface/user";
+import { User } from "@/user";
 
 /**
  * AdminUser
