@@ -119,6 +119,7 @@ export const EditAgendaModal: React.FC = () => {
       title,
       content,
       resolution,
+      type: targetAgenda?.type || { named: false, public: true },
       voters: {
         total: voters,
       },
