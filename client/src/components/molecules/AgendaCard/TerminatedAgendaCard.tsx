@@ -51,6 +51,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           </div>
           <Divider />
           <VoteParticipate
+            named={agenda.type.named}
             voted={agenda.voters.voted}
             total={agenda.voters.total}
           />
