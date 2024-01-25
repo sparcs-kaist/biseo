@@ -53,7 +53,7 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
   };
 
   return (
-    <Card onClick={openModal}>
+    <Card clickable onClick={openModal}>
       <div css={[column, gap(8), w("fill")]}>
         <AgendaTag tags={agendaTags} admin />
         <div css={[column, gap(2)]}>

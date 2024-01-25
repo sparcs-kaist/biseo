@@ -19,7 +19,7 @@ export const AgendaTemplateCard: React.FC<Props> = ({ template }) => {
   const openModal = () => navigate(`templateEdit?templateId=${template.id}`);
 
   return (
-    <Card onClick={openModal}>
+    <Card clickable onClick={openModal}>
       <Box gap={8} w="fill">
         <AdminTag tags={adminTags} suffix={template.choices.length} />
         <Box gap={11}>
