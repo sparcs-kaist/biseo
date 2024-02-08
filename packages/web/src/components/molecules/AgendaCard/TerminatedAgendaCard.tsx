@@ -51,6 +51,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           </div>
           <Divider />
           <VoteParticipate
+            named={agenda.type.named}
             voted={agenda.voters.voted}
             total={agenda.voters.total}
           />
@@ -60,7 +61,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
           />
-          <div css={[column, gap(6), w("fill")]}>
+          <div css={[column, gap(12), w("fill")]}>
             {agenda.choices.map(choice => (
               <OptionVoteResult
                 name={choice.name}
