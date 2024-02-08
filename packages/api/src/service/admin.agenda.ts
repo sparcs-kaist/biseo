@@ -32,10 +32,18 @@ const selectAgendaDefaultFields = {
   },
 };
 
+const selectAgendaTypeFields = {
+  select: {
+    isNamed: true,
+    isPublic: true,
+  },
+};
+
 export const createAgenda = async ({
   title,
   resolution,
   content,
+  type,
   choices,
   voters,
 }: schema.AdminAgendaCreate) => {
@@ -43,6 +51,8 @@ export const createAgenda = async ({
     title,
     resolution,
     content,
+    isNamed: type.named,
+    isPublic: type.public,
     choices: {
       create: choices.map(name => ({ name })),
     },
@@ -59,6 +69,7 @@ export const createAgenda = async ({
     data: createAgendaQuery,
     select: {
       ...selectAgendaDefaultFields.select,
+      ...selectAgendaTypeFields.select,
       choices: true,
       voters: selectOnlyUser,
     },
@@ -66,6 +77,10 @@ export const createAgenda = async ({
 
   const agendaVotable: PreparingAgenda = {
     ...createdAgenda,
+    type: {
+      named: createdAgenda.isNamed,
+      public: createdAgenda.isPublic,
+    },
     status: "preparing",
     choices: createdChoices,
     voters: {
@@ -119,6 +134,7 @@ export const startAgenda = async (agendaId: number, user: User) => {
       },
       select: {
         ...selectAgendaDefaultFields.select,
+        ...selectAgendaTypeFields.select,
         choices: {
           include: {
             users: true,
@@ -133,6 +149,10 @@ export const startAgenda = async (agendaId: number, user: User) => {
   const ongoingAgenda: OngoingAgenda = {
     ...updatedAgenda,
     status: "ongoing",
+    type: {
+      named: updatedAgenda.isNamed,
+      public: updatedAgenda.isPublic,
+    },
     voters: {
       voted: 0,
       total: updatedVoters.length,
@@ -166,6 +186,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
     },
     select: {
       ...selectAgendaDefaultFields.select,
+      ...selectAgendaTypeFields.select,
       choices: {
         include: {
           users: true,
@@ -195,6 +216,10 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
       // eslint-disable-next-line no-underscore-dangle
       count: choice._count.users,
     })),
+    type: {
+      named: updatedAgenda.isNamed,
+      public: updatedAgenda.isPublic,
+    },
     voters: {
       voted: updatedChoices.reduce(
         (acc, choice) => acc + choice.users.length,
@@ -258,6 +283,7 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
     },
     select: {
       ...selectAgendaDefaultFields.select,
+      ...selectAgendaTypeFields.select,
       choices: true,
       voters: selectOnlyUser,
     },
@@ -278,6 +304,10 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
       id: choice.id,
       name: choice.name,
     })),
+    type: {
+      named: updatedAgenda.isNamed,
+      public: updatedAgenda.isPublic,
+    },
     voters: {
       voted: 0,
       total: voters.length,
@@ -302,6 +332,10 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
       name: choice.name,
       count: 0,
     })),
+    type: {
+      named: updatedAgenda.isNamed,
+      public: updatedAgenda.isPublic,
+    },
     voters: {
       voted: [],
       total: voters.map(voter => voter.user),
@@ -349,6 +383,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
     where: { deletedAt: null },
     select: {
       ...selectAgendaDefaultFields.select,
+      ...selectAgendaTypeFields.select,
       startAt: true,
       endAt: true,
       deletedAt: true,
@@ -380,6 +415,11 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
       content: agenda.content,
       resolution: agenda.resolution,
       status,
+      // TODO: remove workaround
+      type: {
+        named: agenda.isNamed,
+        public: agenda.isPublic,
+      },
       choices: agenda.choices.map(choice => ({
         id: choice.id,
         name: choice.name,

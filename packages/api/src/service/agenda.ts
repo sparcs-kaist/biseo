@@ -15,7 +15,17 @@ export const retrieveAll = async (
         select: {
           id: true,
           name: true,
-          users: true,
+          users: {
+            select: {
+              userId: true,
+              choiceId: true,
+              user: {
+                select: {
+                  displayName: true,
+                },
+              },
+            },
+          },
         },
       },
     },
@@ -35,11 +45,23 @@ export const retrieveAll = async (
       title: agenda.title,
       content: agenda.content,
       resolution: agenda.resolution,
+      type: { named: agenda.isNamed, public: agenda.isPublic },
       voters: {
-        voted: agenda.choices.reduce(
-          (acc, choice) => acc + choice.users.length,
-          0,
-        ),
+        voted: agenda.isNamed
+          ? agenda.choices.reduce(
+              (acc, choice) => [
+                ...acc,
+                ...choice.users.map(u => ({
+                  displayName: u.user.displayName,
+                  choiceId: u.choiceId,
+                })),
+              ],
+              [] as { displayName: string; choiceId: number }[],
+            )
+          : agenda.choices.reduce(
+              (acc, choice) => acc + choice.users.length,
+              0,
+            ),
         total: agenda.voters.length,
       },
       endAt: agenda.endAt,
