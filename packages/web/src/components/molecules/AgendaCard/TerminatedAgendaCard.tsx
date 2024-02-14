@@ -92,7 +92,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             ))}
           </div>
           <Divider />
-          <VoteDetail type={agendaTags.identified} />
+          <VoteDetail named={agenda.type.named} />
         </div>
       ) : (
         <div css={[column, gap(8), w("fill")]}>
