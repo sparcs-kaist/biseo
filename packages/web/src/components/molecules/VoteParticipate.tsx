@@ -18,7 +18,7 @@ export const VoteParticipate: React.FC<Props> = ({ named, voted, total }) => {
   const participantInfo = useMemo(
     () =>
       hover
-        ? `투표 참여자 ${voted}명 /투표 대상자 ${total}명`
+        ? `투표 참여자 ${votedLength}명 /투표 대상자 ${total}명`
         : `${votedLength}/${total}`,
     [hover],
   );
