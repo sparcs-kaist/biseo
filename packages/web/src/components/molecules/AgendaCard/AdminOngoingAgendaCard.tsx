@@ -15,12 +15,6 @@ import { useAdminAgenda } from "@biseo/web/services/admin-agenda";
 
 import { row, center, justify, gap, text, w, column } from "@biseo/web/styles";
 
-const agendaTags = {
-  public: true,
-  identified: false,
-  votable: true,
-};
-
 interface Props {
   agenda: AdminAgenda;
 }
@@ -45,7 +39,14 @@ export const AdminOngoingAgendaCard: React.FC<Props> = ({ agenda }) => {
   return (
     <Card clickable onClick={openModal}>
       <div css={[column, gap(8), w("fill")]}>
-        <AgendaTag tags={agendaTags} admin />
+        <AgendaTag
+          tags={{
+            public: agenda.type.public,
+            identified: agenda.type.named,
+            votable: true,
+          }}
+          admin
+        />
         <div css={[column, gap(2)]}>
           <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
           <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
