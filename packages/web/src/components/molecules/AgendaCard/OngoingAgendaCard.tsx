@@ -18,12 +18,6 @@ interface OngoingAgendaProps {
   agenda: OngoingAgenda;
 }
 
-// const agendaTags = {
-//   public: true,
-//   identified: false,
-//   votable: true,
-// };
-
 export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   const [chosenChoiceId, setChosenChoiceId] = useState(0);
   const { voteAgenda } = useAgenda(state => ({

@@ -10,12 +10,6 @@ import { useAdminAgenda } from "@biseo/web/services/admin-agenda";
 
 import { column, gap, text, w } from "@biseo/web/styles";
 
-const agendaTags = {
-  public: true,
-  identified: false,
-  votable: true,
-};
-
 interface Props {
   agenda: AdminAgenda;
 }
@@ -44,7 +38,7 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
 
   const startVote = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!validated) {
-      alert("투표 대상을 설정해주세요");
+      alert("투표 대상을 설정해주세요"); // eslint-disable-line no-alert
       // TODO: button 아래 card click으로 간주되어 edit modal로의 redirection 때문에 alert가 뜨지 않음
       return;
     }
@@ -55,7 +49,14 @@ export const AdminPreparingAgendaCard: React.FC<Props> = ({ agenda }) => {
   return (
     <Card onClick={openModal}>
       <div css={[column, gap(8), w("fill")]}>
-        <AgendaTag tags={agendaTags} admin />
+        <AgendaTag
+          tags={{
+            public: agenda.type.public,
+            identified: agenda.type.named,
+            votable: true,
+          }}
+          admin
+        />
         <div css={[column, gap(2)]}>
           <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
           <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>

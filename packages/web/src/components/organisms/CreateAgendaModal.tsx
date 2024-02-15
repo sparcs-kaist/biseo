@@ -32,6 +32,8 @@ export const CreateAgendaModal: React.FC = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [isnamd, setIsnamed] = useState(false); // eslint-disable-line
+  const [ispuclic, setIspublic] = useState(true); // eslint-disable-line
   const [resolution, setResolution] = useState("");
   const [choices, setChoices] = useState<string[]>([]);
   const [voters, setVoters] = useState<number[]>([]);
@@ -100,6 +102,10 @@ export const CreateAgendaModal: React.FC = () => {
   const onSubmit = () => {
     if (!validated) return;
     createAgenda({
+      type: {
+        named: isnamd,
+        public: ispuclic,
+      },
       title,
       content,
       resolution,

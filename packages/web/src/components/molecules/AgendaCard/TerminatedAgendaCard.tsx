@@ -97,8 +97,8 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
         <div css={[column, gap(8)]}>
           <AgendaTag
             tags={{
-              public: agendaTags.public,
-              identified: agendaTags.identified,
+              public: agenda.type.public,
+              identified: agenda.type.named,
               votable: agenda.user.votable,
             }}
           />
