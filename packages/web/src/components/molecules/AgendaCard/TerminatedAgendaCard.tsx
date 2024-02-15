@@ -7,6 +7,10 @@ import { AgendaTag } from "@biseo/web/components/molecules/AgendaTag";
 import { OptionVoteResult } from "@biseo/web/components/molecules/OptionVoteResult";
 import { VoteResult } from "@biseo/web/components/molecules/VoteResult";
 import { VoteDetail } from "@biseo/web/components/molecules/VoteDetail";
+import {
+  VotedMembers,
+  type Voter,
+} from "@biseo/web/components/molecules/VotedMembers";
 import { VoteParticipate } from "@biseo/web/components/molecules/VoteParticipate";
 
 import { column, gap, text, w } from "@biseo/web/styles";
@@ -73,6 +77,21 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           </div>
           <Divider />
           <VoteDetail named={agenda.type.named} />
+          {agenda.type.named ? (
+            <div css={[column, gap(6), w("fill")]}>
+              {agenda.choices.map(choice => (
+                <VotedMembers
+                  userList={(agenda.voters.voted as Array<Voter>).map(voter => {
+                    if (choice.id === voter.choiceId) {
+                      return voter;
+                    }
+                    return null;
+                  })}
+                  name={choice.name}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
       ) : (
         <div css={[column, gap(8)]}>
