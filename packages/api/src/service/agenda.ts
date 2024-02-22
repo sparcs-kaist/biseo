@@ -171,7 +171,7 @@ export const vote = async (
       total: res.choice.agenda.voters.length,
     },
   });
-  io.emit("admin.agenda.voted", {
+  io.to("admin").emit("admin.agenda.voted", {
     id: agendaId,
     choices: res.choice.agenda.choices.map(choice => ({
       id: choice.id,
