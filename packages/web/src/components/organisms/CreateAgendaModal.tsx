@@ -32,8 +32,8 @@ export const CreateAgendaModal: React.FC = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isnamd, setIsnamed] = useState(false); // eslint-disable-line
-  const [ispuclic, setIspublic] = useState(true); // eslint-disable-line
+  const [isnamd, setIsnamed] = useState(false);
+  const [ispublic, setIspublic] = useState(true);
   const [resolution, setResolution] = useState("");
   const [choices, setChoices] = useState<string[]>([]);
   const [voters, setVoters] = useState<number[]>([]);
@@ -45,6 +45,12 @@ export const CreateAgendaModal: React.FC = () => {
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResolution(e.target.value);
+  };
+  const onChangeIspublic = (e: boolean) => {
+    setIspublic(e);
+  };
+  const onChangeIsnamed = (e: boolean) => {
+    setIsnamed(e);
   };
 
   const [template, setTemplate] = useState(0);
@@ -104,7 +110,7 @@ export const CreateAgendaModal: React.FC = () => {
     createAgenda({
       type: {
         named: isnamd,
-        public: ispuclic,
+        public: ispublic,
       },
       title,
       content,
@@ -196,7 +202,12 @@ export const CreateAgendaModal: React.FC = () => {
             bg="blue100"
           >
             <Box dir="row" w={270} h={28} justify="space-between">
-              <AdminAgendaTagsSelect />
+              <AdminAgendaTagsSelect
+                switchPublic={onChangeIspublic}
+                switchNamed={onChangeIsnamed}
+                ispublic={ispublic}
+                isnamed={isnamd}
+              />
             </Box>
             <Link
               to={validated ? ".." : "#"}
