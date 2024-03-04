@@ -41,7 +41,7 @@ export const ToggleButton = styled.div<{
     justify-content: center;
     align-items: center;
     line-height: 28px;
-    padding: 4px 6px 4px 6px;
+    padding: 4px 5px 4px 5px;
     background-color: ${selected ? theme.colors.blue200 : theme.colors.white};
     transition-duration: 0.25s;
     transition-property: background-color;
