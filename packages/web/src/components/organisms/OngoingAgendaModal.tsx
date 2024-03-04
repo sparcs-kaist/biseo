@@ -37,6 +37,11 @@ export const OngoingAgendaModal: React.FC = () => {
     }
   };
 
+  const isPublic =
+    targetAgenda?.type.public === undefined ? false : targetAgenda?.type.public;
+  const isNamed =
+    targetAgenda?.type.named === undefined ? false : targetAgenda?.type.named;
+
   return (
     <Modal title="진행 중인 투표">
       <Box w={630} justify="space-between" padVertical={15} dir="row">
@@ -77,7 +82,7 @@ export const OngoingAgendaModal: React.FC = () => {
             padHorizontal={15}
             round={5}
           >
-            <AdminAgendaTags />
+            <AdminAgendaTags ispublic={isPublic} isnamed={isNamed} />
             <Box dir="row" w={270} gap={10} justify="space-between">
               <Button w={130} h={38} onClick={remind}>
                 <Text variant="boldtitle3" color="blue600">
