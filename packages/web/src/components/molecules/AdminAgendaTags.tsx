@@ -59,6 +59,7 @@ export const AdminAgendaTagsSelect: React.FC = () => (
         bg="white"
         w={75}
         h={28}
+        align="center"
         justify="space-between"
         borderSize={1}
         padHorizontal={12}
@@ -85,6 +86,7 @@ export const AdminAgendaTagsSelect: React.FC = () => (
         bg="white"
         w={75}
         h={28}
+        align="center"
         justify="space-between"
         borderSize={1}
         padHorizontal={12}
