@@ -7,13 +7,14 @@ import { AgendaTag } from "@biseo/web/components/molecules/AgendaTag";
 import { OptionVoteResult } from "@biseo/web/components/molecules/OptionVoteResult";
 import { VoteResult } from "@biseo/web/components/molecules/VoteResult";
 import { VoteDetail } from "@biseo/web/components/molecules/VoteDetail";
+import { VoteDetailChoice } from "@biseo/web/components/molecules/VoteDetailChoice";
 import { VoteParticipate } from "@biseo/web/components/molecules/VoteParticipate";
 
 import { column, gap, text, w } from "@biseo/web/styles";
 
 const agendaTags = {
   public: true,
-  identified: false,
+  identified: true,
   votable: true,
 };
 
@@ -31,6 +32,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
     () => agenda.choices.reduce((acc, c) => acc + c.count, 0),
     [agenda.choices],
   );
+
   return (
     <Card
       bold={enabled}
@@ -72,6 +74,19 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           </div>
           <Divider />
           <VoteDetail type={agendaTags.identified} />
+          <div css={[column, gap(6), w("fill")]}>
+            {agenda.choices.map(choice => (
+              <VoteDetailChoice
+                userList={agenda.type.voteInfo.map(voteInfo => {
+                  if (choice.id === voteInfo.choiceid) {
+                    return voteInfo.voterid;
+                  }
+                  return null;
+                })}
+                name={choice.name}
+              />
+            ))}
+          </div>
         </div>
       ) : (
         <div css={[column, gap(8)]}>
