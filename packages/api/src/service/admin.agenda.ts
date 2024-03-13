@@ -354,6 +354,9 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
       },
       voters: selectOnlyUser,
     },
+    orderBy: {
+      endAt: "desc",
+    },
   });
 
   const res = agendaFromDB.map(agenda => {

@@ -19,6 +19,9 @@ export const retrieveAll = async (
         },
       },
     },
+    orderBy: {
+      endAt: "desc",
+    },
   });
   const res = agendaDbRes.map((agenda): schema.Agenda => {
     const userVotable = agenda.voters.some(v => v.userId === user.id);
