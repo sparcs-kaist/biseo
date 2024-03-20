@@ -218,7 +218,7 @@ const TextButton: React.FC<SubmitProps> = ({
       }}
     />
     <Button w={20} h={20} onClick={onSubmit}>
-      <Text color="blue600" variant="boldtitle2">
+      <Text color="blue600" variant="boldtitle2" style={{ lineHeight: 1 }}>
         +
       </Text>
     </Button>
