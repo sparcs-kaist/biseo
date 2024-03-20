@@ -40,7 +40,7 @@ export const ChatSection: React.FC = () => {
           <Message key={message.id} message={message} />
         ))}
         {hasMore && (
-          <Text ref={ref} variant="body" color="gray400">
+          <Text ref={ref} variant="body" color="gray400" textAlign="center">
             로딩 중
           </Text>
         )}
