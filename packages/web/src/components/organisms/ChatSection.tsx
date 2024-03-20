@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useInView } from "react-intersection-observer";
-
-import { Text } from "@biseo/web/components/atoms";
+import { formatDate } from "@biseo/web/utils/format";
+import { Divider, Text } from "@biseo/web/components/atoms";
 import {
   ChatHeader,
   ChatInput,
   Message,
 } from "@biseo/web/components/molecules";
+import { margin, round, padding, center, text } from "@biseo/web/styles";
 import { useChat } from "@biseo/web/services";
 
 const Container = styled.div`
@@ -36,8 +37,22 @@ export const ChatSection: React.FC = () => {
     <Container>
       <ChatHeader title="스레드" />
       <Message.List ref={scrollRef}>
-        {messages.map(message => (
-          <Message key={message.id} message={message} />
+        {messages.map((message, index) => (
+          <>
+            <Message key={message.id} message={message} />
+            {formatDate(messages[index + 1]?.createdAt) !==
+              formatDate(message.createdAt) && (
+              <div
+                css={[round.xl, padding(8), center, text.body, text.gray500]}
+              >
+                <Divider />
+                <span css={[margin(8), `white-space: nowrap`]}>
+                  {formatDate(message.createdAt)}
+                </span>
+                <Divider />
+              </div>
+            )}
+          </>
         ))}
         {hasMore && (
           <Text ref={ref} variant="body" color="gray400">
