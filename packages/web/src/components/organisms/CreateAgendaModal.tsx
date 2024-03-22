@@ -32,7 +32,7 @@ export const CreateAgendaModal: React.FC = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [isnamd, setIsnamed] = useState(false);
+  const [isnamed, setIsnamed] = useState(false);
   const [ispublic, setIspublic] = useState(true);
   const [resolution, setResolution] = useState("");
   const [choices, setChoices] = useState<string[]>([]);
@@ -109,7 +109,7 @@ export const CreateAgendaModal: React.FC = () => {
     if (!validated) return;
     createAgenda({
       type: {
-        named: isnamd,
+        named: isnamed,
         public: ispublic,
       },
       title,
@@ -206,7 +206,7 @@ export const CreateAgendaModal: React.FC = () => {
                 switchPublic={onChangeIspublic}
                 switchNamed={onChangeIsnamed}
                 ispublic={ispublic}
-                isnamed={isnamd}
+                isnamed={isnamed}
               />
             </Box>
             <Link

@@ -42,6 +42,8 @@ export const EditAgendaModal: React.FC = () => {
 
   const [title, setTitle] = useState(targetAgenda?.title || "");
   const [content, setContent] = useState(targetAgenda?.content || "");
+  const [isnamed, setIsnamed] = useState(false);
+  const [ispublic, setIspublic] = useState(true);
   const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
   const [template, setTemplate] = useState(0);
   const [choices, setChoices] = useState(
@@ -58,6 +60,12 @@ export const EditAgendaModal: React.FC = () => {
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResolution(e.target.value);
+  };
+  const onChangeIspublic = (e: boolean) => {
+    setIspublic(e);
+  };
+  const onChangeIsnamed = (e: boolean) => {
+    setIsnamed(e);
   };
 
   const [newchoice, setNewchoice] = useState("");
@@ -202,7 +210,12 @@ export const EditAgendaModal: React.FC = () => {
             padHorizontal={15}
             round={5}
           >
-            <AdminAgendaTagsSelect />
+            <AdminAgendaTagsSelect
+              switchPublic={onChangeIspublic}
+              switchNamed={onChangeIsnamed}
+              ispublic={ispublic}
+              isnamed={isnamed}
+            />
             <Box dir="row" w="fill" gap={10} justify="space-between">
               <Link
                 to={validated ? ".." : `?agendaId=${agendaId}`}
