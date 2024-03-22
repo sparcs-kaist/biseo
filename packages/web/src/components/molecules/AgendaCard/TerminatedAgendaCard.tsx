@@ -7,10 +7,7 @@ import { AgendaTag } from "@biseo/web/components/molecules/AgendaTag";
 import { OptionVoteResult } from "@biseo/web/components/molecules/OptionVoteResult";
 import { VoteResult } from "@biseo/web/components/molecules/VoteResult";
 import { VoteDetail } from "@biseo/web/components/molecules/VoteDetail";
-import {
-  VotedMembers,
-  type Voter,
-} from "@biseo/web/components/molecules/VotedMembers";
+import { VotedMembers } from "@biseo/web/components/molecules/VotedMembers";
 import { VoteParticipate } from "@biseo/web/components/molecules/VoteParticipate";
 import {
   align,
@@ -38,6 +35,11 @@ interface Props {
   agenda: TerminatedAgenda;
 }
 
+type Voter = {
+  displayName: string;
+  choiceId: number;
+};
+
 export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   const [enabled, setEnabled] = useState<boolean>(false);
   const [revealChoice, setRevealChoice] = useState<boolean>(false);
@@ -48,6 +50,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
     () => agenda.choices.reduce((acc, c) => acc + c.count, 0),
     [agenda.choices],
   );
+
   return (
     <Card
       bold={enabled}
@@ -101,12 +104,14 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             <div css={[column, gap(6), w("fill")]}>
               {agenda.choices.map(choice => (
                 <VotedMembers
-                  userList={(agenda.voters.voted as Array<Voter>).map(voter => {
-                    if (choice.id === voter.choiceId) {
-                      return voter;
-                    }
-                    return null;
-                  })}
+                  userList={(agenda.voters.voted as Array<Voter>)
+                    .filter(voter => {
+                      if (choice.id === voter.choiceId) {
+                        return true;
+                      }
+                      return false;
+                    })
+                    .map(voter => voter.displayName)}
                   name={choice.name}
                 />
               ))}
