@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
 
@@ -31,6 +31,33 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
     () => agenda.choices.reduce((acc, c) => acc + c.count, 0),
     [agenda.choices],
   );
+  const optionVoteResult = useCallback(() => {
+    if (agenda.type.public) {
+      return agenda.choices.map(choice => (
+        <OptionVoteResult
+          ispublic={agenda.type.public}
+          name={choice.name}
+          count={choice.count}
+          totalCount={totalCount}
+          userChoice={revealChoice && agenda.user.voted === choice.id}
+        />
+      ));
+    }
+    let currmax = 0;
+    return agenda.choices.map(choice => {
+      const ismax = choice.count >= currmax;
+      currmax = ismax ? choice.count : currmax;
+      return (
+        <OptionVoteResult
+          ispublic={agenda.type.public}
+          name={choice.name}
+          count={ismax ? 1 : 0}
+          totalCount={1}
+          userChoice={revealChoice && agenda.user.voted === choice.id}
+        />
+      );
+    });
+  }, [revealChoice]);
 
   return (
     <Card
@@ -63,14 +90,15 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             voted={agenda.user.voted != null}
           />
           <div css={[column, gap(12), w("fill")]}>
-            {agenda.choices.map(choice => (
+            {optionVoteResult()}
+            {/* {agenda.choices.map(choice => (
               <OptionVoteResult
                 name={choice.name}
                 count={choice.count}
                 totalCount={totalCount}
                 userChoice={revealChoice && agenda.user.voted === choice.id}
               />
-            ))}
+            ))} */}
           </div>
           <Divider />
           <VoteDetail named={agenda.type.named} />
