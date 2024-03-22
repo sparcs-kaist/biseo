@@ -73,6 +73,7 @@ export const TerminatedAgendaModal: React.FC = () => {
               >
                 {targetAgenda?.choices.map(choice => (
                   <OptionVoteResult
+                    ispublic={targetAgenda.type.public}
                     key={choice.id}
                     name={choice.name}
                     count={choice.count}
