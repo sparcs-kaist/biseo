@@ -23,7 +23,10 @@ type Voter = {
 
 export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   const [enabled, setEnabled] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const [revealChoice, setRevealChoice] = useState<boolean>(agenda.type.named);
+  const [detectDrag, setDetectDrag] = useState<NodeJS.Timeout>();
+
   const switchRevealChoice = (prev: boolean) => {
     setRevealChoice(!prev);
   };
@@ -31,6 +34,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
     () => agenda.choices.reduce((acc, c) => acc + c.count, 0),
     [agenda.choices],
   );
+
   const optionVoteResult = useCallback(() => {
     if (agenda.type.public) {
       return agenda.choices.map(choice => (
@@ -63,8 +67,16 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
     <Card
       bold={enabled}
       clickable
-      onClick={e => {
-        setEnabled(value => !value);
+      onMouseDown={e => {
+        setDetectDrag(setTimeout(() => setIsDragging(true), 200));
+        e.stopPropagation();
+      }}
+      onMouseUp={e => {
+        if (!isDragging) {
+          clearTimeout(detectDrag);
+          setEnabled(value => !value);
+        }
+        setIsDragging(false);
         e.stopPropagation();
       }}
     >
