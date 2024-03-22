@@ -25,12 +25,6 @@ import {
   formatTime,
 } from "@biseo/web/utils/format";
 
-const agendaTags = {
-  public: true,
-  identified: false,
-  votable: true,
-};
-
 interface Props {
   agenda: TerminatedAgenda;
 }
@@ -42,7 +36,7 @@ type Voter = {
 
 export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   const [enabled, setEnabled] = useState<boolean>(false);
-  const [revealChoice, setRevealChoice] = useState<boolean>(false);
+  const [revealChoice, setRevealChoice] = useState<boolean>(agenda.type.named);
   const switchRevealChoice = (prev: boolean) => {
     setRevealChoice(!prev);
   };
@@ -83,7 +77,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             total={agenda.voters.total}
           />
           <VoteResult
-            type={agendaTags.public}
+            type={agenda.type.public}
             clickHandler={switchRevealChoice}
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
