@@ -8,7 +8,7 @@ import {
   isPreparingAgenda,
 } from "@biseo/web/utils/agenda";
 
-import { scroll } from "@biseo/web/styles";
+import { hideScrollBar, scroll } from "@biseo/web/styles";
 import { css } from "@emotion/react";
 
 const gridLayout = css`
@@ -73,7 +73,7 @@ export const AgendaSection: React.FC = () => {
   );
 
   return (
-    <section css={scroll.y}>
+    <section css={[scroll.y, hideScrollBar]}>
       <div css={gridLayout}>
         <AgendaCard.Group agendaStatus="ongoing">
           {getAgendaCards("ongoing")}

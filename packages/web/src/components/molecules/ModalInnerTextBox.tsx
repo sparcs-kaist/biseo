@@ -14,7 +14,7 @@ import {
 import "@biseo/web/components/atoms/placeholder.css";
 import { TrashIcon } from "@biseo/web/assets";
 import { css } from "@emotion/react";
-import { scroll, scrollBar } from "@biseo/web/styles";
+import { scroll, hideScrollBar } from "@biseo/web/styles";
 
 interface ModalInnerProps extends PropsWithChildren {
   title: string;
@@ -219,7 +219,7 @@ ModalInner.TextButton = TextButton;
 const VoteOptions: React.FC<PropsWithChildren> = ({ children = null }) => {
   const scrollTyle = css`
     ${scroll.y}
-    ${scrollBar}
+    ${hideScrollBar}
   overflow-y: scroll;
   `;
   return (

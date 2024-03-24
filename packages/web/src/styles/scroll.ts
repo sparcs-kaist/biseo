@@ -1,9 +1,9 @@
 import { css } from "@emotion/react";
 import { colors } from "@biseo/web/styles/color";
 
-export const scrollBar = css`
-  ::-webkit-scrollbar-thumb {
-    background-color: ${colors.gray400};
+export const hideScrollBar = css`
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -17,7 +17,7 @@ const applyDirection = (direction: "x" | "y") => css`
   ::-webkit-scrollbar-thumb {
     border: 4px solid transparent;
     background-clip: padding-box;
-
+    background-color: ${colors.gray400};
     border-radius: 100px;
   }
 
