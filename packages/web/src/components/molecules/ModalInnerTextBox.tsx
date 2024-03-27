@@ -10,11 +10,24 @@ import {
   Button,
   Clickable,
   TaggersBox,
+  Divider,
 } from "@biseo/web/components/atoms";
 import "@biseo/web/components/atoms/placeholder.css";
 import { TrashIcon } from "@biseo/web/assets";
 import { css } from "@emotion/react";
-import { scroll, scrollBar } from "@biseo/web/styles";
+import {
+  w,
+  h,
+  padding,
+  scroll,
+  scrollBar,
+  bg,
+  align,
+  column,
+  gap,
+  border,
+  round,
+} from "@biseo/web/styles";
 
 interface ModalInnerProps extends PropsWithChildren {
   title: string;
@@ -185,11 +198,8 @@ const TextButton: React.FC<SubmitProps> = ({
 }) => (
   <BorderedBox
     w={300}
-    borderColor="gray200"
     bg="gray100"
     borderSize={1}
-    roundBot={5}
-    roundTop={0}
     borderStyle="solid"
     dir="row"
     align="center"
@@ -269,30 +279,27 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
   onClick,
   onSubmit,
 }) => (
-  <Box w={300}>
-    <BorderedBox
-      borderColor="gray200"
-      bg="white"
-      w="fill"
-      h={152}
-      borderSize={1}
-      pad={10}
-      padRight={0}
-      roundBot={0}
-      roundTop={5}
-      borderStyle="solid"
-      align="stretch"
+  <div css={[w(300), border.gray200, round.md, `overflow: hidden`]}>
+    <div
+      css={[
+        bg.white,
+        w("fill"),
+        h(152),
+        padding(10),
+        column,
+        align.stretch,
+        scroll.y,
+        scrollBar,
+        gap(10),
+      ]}
     >
-      <Scroll>
-        <Box w="fill" gap={10}>
-          {children}
-        </Box>
-      </Scroll>
-    </BorderedBox>
+      {children}
+    </div>
+    <Divider color="gray200" />
     <TextButton onClick={onClick} onSubmit={onSubmit} value={value}>
       새로운 항목
     </TextButton>
-  </Box>
+  </div>
 );
 ModalInner.AddVoteOptionArea = AddVoteOptionArea;
 

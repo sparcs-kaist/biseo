@@ -18,6 +18,7 @@ export const Cell = styled.td<{ w?: Size; scroll?: boolean }>(
     padding: 6px 5px;
     font-size: 10px;
     font-weight: 500;
+    line-break: anywhere;
   `,
 );
 
@@ -45,7 +46,8 @@ export const Body = styled.tbody`
 export const Row = styled.tr<{ selected?: boolean }>`
   position: relative;
   display: flex;
-  height: 32px;
+  min-height: 32px;
+  height: fit-content;
   align-items: center;
   gap: 5px;
   background-color: ${props =>
