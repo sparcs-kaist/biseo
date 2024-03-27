@@ -16,6 +16,8 @@ import "@biseo/web/components/atoms/placeholder.css";
 import { TrashIcon } from "@biseo/web/assets";
 import { css } from "@emotion/react";
 import {
+  colors,
+  text,
   w,
   h,
   padding,
@@ -218,9 +220,7 @@ const TextButton: React.FC<SubmitProps> = ({
       }}
     />
     <Button w={20} h={20} onClick={onSubmit}>
-      <Text color="blue600" variant="boldtitle2" style={{ lineHeight: 1 }}>
-        +
-      </Text>
+      <Text css={[colors.blue600, text.boldtitle2, "line-height: 1"]}>+</Text>
     </Button>
   </BorderedBox>
 );
