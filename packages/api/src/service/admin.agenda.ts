@@ -273,6 +273,8 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
           data: agendaUpdate.choices.map(it => ({ name: it })),
         },
       },
+      isNamed: agendaUpdate.type.named,
+      isPublic: agendaUpdate.type.public,
       voters: {
         createMany: {
           data: agendaUpdate.voters.total.map(it => ({

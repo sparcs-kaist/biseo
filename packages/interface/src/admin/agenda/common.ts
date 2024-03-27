@@ -7,7 +7,7 @@ import { User } from "@/user";
  * AdminAgendaStatus
  * some description about admin agenda status type goes here
  */
-export const AdminAgendaStatus = z.enum([...AgendaStatus.options]);
+export const AdminAgendaStatus = z.enum(AgendaStatus.options);
 export type AdminAgendaStatus = z.infer<typeof AdminAgendaStatus>;
 
 /**

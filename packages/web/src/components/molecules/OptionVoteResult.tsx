@@ -55,7 +55,7 @@ export const OptionVoteResult: React.FC<Props> = ({
           {name}
         </Text>
         <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
-          {ispublic ? count : ""}
+          {ispublic && count}
         </Text>
       </Box>
     </Background>

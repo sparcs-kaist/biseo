@@ -42,8 +42,10 @@ export const EditAgendaModal: React.FC = () => {
 
   const [title, setTitle] = useState(targetAgenda?.title || "");
   const [content, setContent] = useState(targetAgenda?.content || "");
-  const [isnamed, setIsnamed] = useState(false);
-  const [ispublic, setIspublic] = useState(true);
+  const [isNamed, setIsnamed] = useState(targetAgenda?.type.named || Boolean);
+  const [isPublic, setIspublic] = useState(
+    targetAgenda?.type.public || Boolean,
+  );
   const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
   const [template, setTemplate] = useState(0);
   const [choices, setChoices] = useState(
@@ -127,7 +129,7 @@ export const EditAgendaModal: React.FC = () => {
       title,
       content,
       resolution,
-      type: targetAgenda?.type || { named: false, public: true },
+      type: { named: isNamed, public: isPublic },
       voters: {
         total: voters,
       },
@@ -213,8 +215,8 @@ export const EditAgendaModal: React.FC = () => {
             <AdminAgendaTagsSelect
               switchPublic={onChangeIspublic}
               switchNamed={onChangeIsnamed}
-              ispublic={ispublic}
-              isnamed={isnamed}
+              ispublic={isPublic}
+              isnamed={isNamed}
             />
             <Box dir="row" w="fill" gap={10} justify="space-between">
               <Link
