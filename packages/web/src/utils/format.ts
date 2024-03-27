@@ -12,3 +12,14 @@ export const formatTime = (isoString: string) => {
 
   return `${ampm} ${displayHours}:${displayMinutes}`;
 };
+
+export const formatDate = (isoString: string) => {
+  const time = new Date(isoString);
+
+  const year = time.getFullYear();
+  const month = time.getMonth() + 1;
+  const date = time.getDate();
+  const day = ["일", "월", "화", "수", "목", "금", "토"][time.getDay()];
+
+  return `${year}년 ${month}월 ${date}일 (${day})`;
+};

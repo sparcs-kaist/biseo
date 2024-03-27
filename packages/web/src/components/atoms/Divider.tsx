@@ -1,19 +1,25 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import type { Color } from "@biseo/web/theme";
 
 export const Divider = styled.hr<{
   dir?: "horizontal" | "vertical";
+  color?: Color;
 }>(
-  ({ dir = "horizontal", theme }) => css`
+  ({ dir = "horizontal", color = "gray300", theme }) => css`
     border: none;
     ${dir === "horizontal"
       ? css`
           width: 100%;
-          border-bottom: 1px solid ${theme.colors.gray300};
+          height: 1px;
+          border: none;
+          background-color: ${theme.colors[color]};
         `
       : css`
+          width: 1px;
           height: 100%;
-          border-right: 1px solid ${theme.colors.gray300};
+          border: none;
+          background-color: ${theme.colors[color]};
         `}
   `,
 );

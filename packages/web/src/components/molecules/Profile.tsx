@@ -43,6 +43,7 @@ export const Profile: React.FC<Props> = ({ displayName, onLogout }) => (
           w(100),
           h(18),
           padding.horizontal(8),
+          padding.vertical(2),
           justify.between,
           align.center,
         ]}

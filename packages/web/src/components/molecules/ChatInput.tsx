@@ -38,6 +38,7 @@ const formStyle = css`
   ${bg.white}
   ${border.gray300}
   ${round.md}
+  ${align.center}
 `;
 
 const textAreaScrollStyle = css`
