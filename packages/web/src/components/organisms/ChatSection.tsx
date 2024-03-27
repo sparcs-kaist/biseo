@@ -55,7 +55,7 @@ export const ChatSection: React.FC = () => {
           </>
         ))}
         {hasMore && (
-          <Text ref={ref} variant="body" color="gray400">
+          <Text ref={ref} variant="body" color="gray400" textAlign="center">
             로딩 중
           </Text>
         )}

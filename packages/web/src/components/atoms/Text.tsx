@@ -30,11 +30,21 @@ export const Text = styled.p<{
   variant?: Variants;
   color?: Color;
   position?: "absolute" | "static";
-}>(({ variant = "body", color = "black", theme, position = "static" }) => [
-  css({
-    color: theme.colors[color],
-    position,
-    whiteSpace: "pre-line",
-  }),
-  textStyles[variant],
-]);
+  textAlign?: "center" | "left";
+}>(
+  ({
+    variant = "body",
+    color = "black",
+    theme,
+    position = "static",
+    textAlign = "left",
+  }) => [
+    css({
+      color: theme.colors[color],
+      position,
+      whiteSpace: "pre-line",
+      textAlign,
+    }),
+    textStyles[variant],
+  ],
+);
