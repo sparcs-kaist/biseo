@@ -13,6 +13,9 @@ model Agenda {
   title      String
   resolution String
   content    String
+  // type       AgendaType
+  isNamed    Boolean             @default(false)
+  isPublic   Boolean             @default(true)
   startAt    DateTime?           @map("start_at")
   endAt      DateTime?           @map("end_at")
   createdAt  DateTime            @default(now()) @map("created_at")
@@ -23,6 +26,11 @@ model Agenda {
 
   @@map("agenda")
 }
+
+// type AgendaType {
+//   named    Boolean @default(false)
+//   private  Boolean @default(false)
+// }
 
 model User {
   id          Int                 @id @default(autoincrement())

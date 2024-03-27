@@ -29,9 +29,22 @@ export const AgendaBase = z.object({
   title: z.string(),
   content: z.string(),
   resolution: z.string(),
+  type: z.object({
+    named: z.boolean(),
+    public: z.boolean(),
+  }),
   status: z.never(), // Must be overridden
   voters: z.object({
-    voted: z.number(),
+    voted: z.union([
+      z.number(),
+      z.array(
+        z.object({
+          // userId: z.number(),
+          displayName: z.string(),
+          choiceId: z.number(),
+        }),
+      ),
+    ]),
     total: z.number(),
   }),
 });

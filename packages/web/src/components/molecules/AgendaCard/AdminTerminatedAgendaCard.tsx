@@ -8,12 +8,6 @@ import { AgendaTag } from "@biseo/web/components/molecules/AgendaTag";
 
 import { column, gap, text } from "@biseo/web/styles";
 
-const agendaTags = {
-  public: true,
-  identified: false,
-  votable: false,
-};
-
 interface Props {
   agenda: AdminAgenda;
 }
@@ -27,9 +21,9 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       <div css={[column, gap(8)]}>
         <AgendaTag
           tags={{
-            public: agendaTags.public,
-            identified: agendaTags.identified,
-            votable: agendaTags.votable,
+            public: agenda.type.public,
+            identified: agenda.type.named,
+            votable: true,
           }}
         />
         <div css={[column, gap(2)]}>

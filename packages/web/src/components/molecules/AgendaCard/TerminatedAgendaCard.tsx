@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
 
@@ -7,23 +7,26 @@ import { AgendaTag } from "@biseo/web/components/molecules/AgendaTag";
 import { OptionVoteResult } from "@biseo/web/components/molecules/OptionVoteResult";
 import { VoteResult } from "@biseo/web/components/molecules/VoteResult";
 import { VoteDetail } from "@biseo/web/components/molecules/VoteDetail";
+import { VotedMembers } from "@biseo/web/components/molecules/VotedMembers";
 import { VoteParticipate } from "@biseo/web/components/molecules/VoteParticipate";
 
 import { column, gap, text, w } from "@biseo/web/styles";
-
-const agendaTags = {
-  public: true,
-  identified: false,
-  votable: true,
-};
 
 interface Props {
   agenda: TerminatedAgenda;
 }
 
+type Voter = {
+  displayName: string;
+  choiceId: number;
+};
+
 export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   const [enabled, setEnabled] = useState<boolean>(false);
-  const [revealChoice, setRevealChoice] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [revealChoice, setRevealChoice] = useState<boolean>(agenda.type.named);
+  const [detectDrag, setDetectDrag] = useState<NodeJS.Timeout>();
+
   const switchRevealChoice = (prev: boolean) => {
     setRevealChoice(!prev);
   };
@@ -31,12 +34,49 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
     () => agenda.choices.reduce((acc, c) => acc + c.count, 0),
     [agenda.choices],
   );
+
+  const optionVoteResult = useCallback(() => {
+    if (agenda.type.public) {
+      return agenda.choices.map(choice => (
+        <OptionVoteResult
+          ispublic={agenda.type.public}
+          name={choice.name}
+          count={choice.count}
+          totalCount={totalCount}
+          userChoice={revealChoice && agenda.user.voted === choice.id}
+        />
+      ));
+    }
+    let currmax = 0;
+    return agenda.choices.map(choice => {
+      const ismax = choice.count >= currmax;
+      currmax = ismax ? choice.count : currmax;
+      return (
+        <OptionVoteResult
+          ispublic={agenda.type.public}
+          name={choice.name}
+          count={ismax ? 1 : 0}
+          totalCount={1}
+          userChoice={revealChoice && agenda.user.voted === choice.id}
+        />
+      );
+    });
+  }, [revealChoice]);
+
   return (
     <Card
       bold={enabled}
       clickable
-      onClick={e => {
-        setEnabled(value => !value);
+      onMouseDown={e => {
+        setDetectDrag(setTimeout(() => setIsDragging(true), 200));
+        e.stopPropagation();
+      }}
+      onMouseUp={e => {
+        if (!isDragging) {
+          clearTimeout(detectDrag);
+          setEnabled(value => !value);
+        }
+        setIsDragging(false);
         e.stopPropagation();
       }}
     >
@@ -51,34 +91,53 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           </div>
           <Divider />
           <VoteParticipate
+            named={agenda.type.named}
             voted={agenda.voters.voted}
             total={agenda.voters.total}
           />
           <VoteResult
-            type={agendaTags.public}
+            type={agenda.type.public}
             clickHandler={switchRevealChoice}
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
           />
-          <div css={[column, gap(6), w("fill")]}>
-            {agenda.choices.map(choice => (
+          <div css={[column, gap(12), w("fill")]}>
+            {optionVoteResult()}
+            {/* {agenda.choices.map(choice => (
               <OptionVoteResult
                 name={choice.name}
                 count={choice.count}
                 totalCount={totalCount}
                 userChoice={revealChoice && agenda.user.voted === choice.id}
               />
-            ))}
+            ))} */}
           </div>
           <Divider />
-          <VoteDetail type={agendaTags.identified} />
+          <VoteDetail named={agenda.type.named} />
+          {agenda.type.named ? (
+            <div css={[column, gap(6), w("fill")]}>
+              {agenda.choices.map(choice => (
+                <VotedMembers
+                  userList={(agenda.voters.voted as Array<Voter>)
+                    .filter(voter => {
+                      if (choice.id === voter.choiceId) {
+                        return true;
+                      }
+                      return false;
+                    })
+                    .map(voter => voter.displayName)}
+                  name={choice.name}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
       ) : (
         <div css={[column, gap(8)]}>
           <AgendaTag
             tags={{
-              public: agendaTags.public,
-              identified: agendaTags.identified,
+              public: agenda.type.public,
+              identified: agenda.type.named,
               votable: agenda.user.votable,
             }}
           />
