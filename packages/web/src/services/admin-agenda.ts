@@ -77,7 +77,7 @@ export const useAdminAgenda = create<AdminAgendaState>(set => ({
 
 socket.on("admin.agenda.created", adminAgenda => {
   useAdminAgenda.setState(state => ({
-    adminAgendas: [...state.adminAgendas, adminAgenda],
+    adminAgendas: [adminAgenda, ...state.adminAgendas],
   }));
 });
 

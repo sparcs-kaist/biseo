@@ -54,8 +54,8 @@ socket.on("agenda.voted", ({ id, user, voters }) => {
 socket.on("agenda.terminated", terminatedAgenda => {
   useAgenda.setState(state => ({
     agendas: [
-      ...state.agendas.filter(agenda => agenda.id !== terminatedAgenda.id),
       terminatedAgenda,
+      ...state.agendas.filter(agenda => agenda.id !== terminatedAgenda.id),
     ],
   }));
 });
