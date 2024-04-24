@@ -2,11 +2,26 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
 type Size = number | "hug" | "fill";
+type Position = "left" | "middle" | "right";
 
 const calcSize = (size: Size) => {
   if (size === "fill") return "fill";
   if (size === "hug") return "fit-content";
   return `${size}px`;
+};
+const calcBorderRadius = (position: Position) => {
+  if (position === "left") return "5px 0px 0px 5px";
+  if (position === "middle") return "0px 0px 0px 0px";
+  if (position === "right") return "0px 5px 5px 0px";
+  return "0px 0px 0px 0px";
+};
+const calcBorderWidth = (position: Position, selected: boolean) => {
+  const activeborder = selected ? 0 : 1;
+  if (position === "left") return `1px ${activeborder}px 1px 1px`;
+  if (position === "middle")
+    return `1px ${activeborder}px 1px ${activeborder}px`;
+  if (position === "right") return `1px 1px 1px ${activeborder}px`;
+  return "0px 0px 0px 0px";
 };
 
 export const ToggleContainor = styled.div<{
@@ -17,7 +32,6 @@ export const ToggleContainor = styled.div<{
     display: flex;
     width: ${calcSize(w)};
     height: ${calcSize(h)};
-    border-radius: 5px;
     border: none;
     justify-content: center;
     align-items: center;
@@ -27,26 +41,25 @@ export const ToggleContainor = styled.div<{
 
 export const ToggleButton = styled.div<{
   selected: boolean;
-  isLeft: boolean;
+  position: Position;
 }>(
-  ({ selected, isLeft = true, theme }) => css`
+  ({ selected, position, theme }) => css`
     display: flex;
     width: fill;
     height: 100%;
-    padding: 0px;
     border-style: solid;
-    border-width: 1px;
-    border-radius: ${isLeft ? "5px 0px 0px 5px" : "0px 5px 5px 0px"};
-    border-color: ${selected ? theme.colors.blue300 : theme.colors.gray400};
+    border-width: ${calcBorderWidth(position, selected)};
+    border-radius: ${calcBorderRadius(position)};
+    border-color: ${selected ? theme.colors.blue300 : theme.colors.gray300};
     justify-content: center;
     align-items: center;
-    line-height: 28px;
     padding: 4px 5px 4px 5px;
     background-color: ${selected ? theme.colors.blue200 : theme.colors.white};
     transition-duration: 0.25s;
     transition-property: background-color;
 
     &:hover {
+      cursor: ${selected ? "default" : "pointer"};
       background-color: ${theme.colors.blue200};
     }
   `,

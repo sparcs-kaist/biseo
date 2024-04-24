@@ -28,12 +28,12 @@ export const AdminAgendaTags: React.FC<TagProps> = ({
         투표 결과
       </Text>
       <ToggleContainor h={25}>
-        <ToggleButton isLeft selected={ispublic}>
+        <ToggleButton position="left" selected={ispublic}>
           <Text variant="option1" color={ispublic ? "blue500" : "gray400"}>
             공개
           </Text>
         </ToggleButton>
-        <ToggleButton isLeft={false} selected={!ispublic}>
+        <ToggleButton position="right" selected={!ispublic}>
           <Text variant="option1" color={!ispublic ? "blue500" : "gray400"}>
             비공개
           </Text>
@@ -45,12 +45,12 @@ export const AdminAgendaTags: React.FC<TagProps> = ({
         투표 상세
       </Text>
       <ToggleContainor h={25}>
-        <ToggleButton isLeft selected={isnamed}>
+        <ToggleButton position="left" selected={isnamed}>
           <Text variant="option1" color={isnamed ? "blue500" : "gray400"}>
             기명
           </Text>
         </ToggleButton>
-        <ToggleButton isLeft={false} selected={!isnamed}>
+        <ToggleButton position="right" selected={!isnamed}>
           <Text variant="option1" color={!isnamed ? "blue500" : "gray400"}>
             무기명
           </Text>
@@ -73,7 +73,7 @@ export const AdminAgendaTagsSelect: React.FC<SelectProps> = ({
       </Text>
       <ToggleContainor h={25}>
         <ToggleButton
-          isLeft
+          position="left"
           selected={ispublic}
           onClick={() => {
             switchPublic(true);
@@ -84,7 +84,7 @@ export const AdminAgendaTagsSelect: React.FC<SelectProps> = ({
           </Text>
         </ToggleButton>
         <ToggleButton
-          isLeft={false}
+          position="right"
           selected={!ispublic}
           onClick={() => {
             switchPublic(false);
@@ -102,7 +102,7 @@ export const AdminAgendaTagsSelect: React.FC<SelectProps> = ({
       </Text>
       <ToggleContainor h={25}>
         <ToggleButton
-          isLeft
+          position="left"
           selected={isnamed}
           onClick={() => {
             switchNamed(true);
@@ -113,7 +113,7 @@ export const AdminAgendaTagsSelect: React.FC<SelectProps> = ({
           </Text>
         </ToggleButton>
         <ToggleButton
-          isLeft={false}
+          position="right"
           selected={!isnamed}
           onClick={() => {
             switchNamed(false);
