@@ -8,8 +8,8 @@ import { OptionVoteResult } from "@biseo/web/components/molecules/OptionVoteResu
 import { VoteResult } from "@biseo/web/components/molecules/VoteResult";
 import { VoteDetail } from "@biseo/web/components/molecules/VoteDetail";
 import { VoteParticipate } from "@biseo/web/components/molecules/VoteParticipate";
-
-import { column, gap, text, w } from "@biseo/web/styles";
+import { align, column, gap, justify, row, text, w } from "@biseo/web/styles";
+import { formatDateSimple } from "@biseo/web/utils/format";
 
 const agendaTags = {
   public: true,
@@ -43,7 +43,12 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       {enabled ? (
         <div css={[column, gap(15), w("fill")]}>
           <div css={[column, gap(2)]}>
-            <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+            <div css={[row, justify.between, align.center]}>
+              <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
+              <p css={[text.subtitle, text.gray400]}>
+                {formatDateSimple(agenda.startAt)}
+              </p>
+            </div>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
           <div>
@@ -74,14 +79,20 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           <VoteDetail type={agendaTags.identified} />
         </div>
       ) : (
-        <div css={[column, gap(8)]}>
-          <AgendaTag
-            tags={{
-              public: agendaTags.public,
-              identified: agendaTags.identified,
-              votable: agenda.user.votable,
-            }}
-          />
+        <div css={[column, gap(8), w("fill")]}>
+          <div css={[row, justify.between, align.center]}>
+            <AgendaTag
+              tags={{
+                public: agendaTags.public,
+                identified: agendaTags.identified,
+                votable: agenda.user.votable,
+              }}
+            />
+            <p css={[text.subtitle, text.gray400]}>
+              {formatDateSimple(agenda.startAt)}
+            </p>
+          </div>
+
           <div css={[column, gap(2)]}>
             <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
