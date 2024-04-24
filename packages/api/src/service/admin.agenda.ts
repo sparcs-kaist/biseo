@@ -28,6 +28,7 @@ const selectAgendaDefaultFields = {
     title: true,
     resolution: true,
     content: true,
+    startAt: true,
   },
 };
 
@@ -148,6 +149,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
   const {
     voters: updatedVoters,
     choices: updatedChoices,
+    startAt: agendaStartAt,
     ...updatedAgenda
   } = await prisma.agenda.update({
     data: {
@@ -203,6 +205,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
       voted: userVoted,
       votable: userVotable,
     },
+    startAt: agendaStartAt?.toISOString() || "", // startAt is not null with terminatedAgenda
   };
 
   return terminatedAgenda;
