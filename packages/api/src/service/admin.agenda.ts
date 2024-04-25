@@ -95,6 +95,7 @@ export const createAgenda = async ({
       voted: [],
       total: createdVoters.map(voter => voter.user),
     },
+    startAt: "", // startAt is not displayed yet
   };
 
   return {
@@ -305,6 +306,7 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
       voted: [],
       total: voters.map(voter => voter.user),
     },
+    startAt: "",
   };
   return {
     voters: voters.map(voter => `user/${voter.user.username}`),
@@ -387,6 +389,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
         total: agenda.voters.map(user => user.user),
         voted,
       },
+      startAt: agenda.startAt?.toISOString() || "",
     };
   });
 

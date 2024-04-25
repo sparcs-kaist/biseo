@@ -24,6 +24,7 @@ export const AdminAgenda = AgendaBase.omit({
   }),
   status: AdminAgendaStatus,
   choices: z.array(ChoiceWithResult),
+  startAt: z.string(), // currently used only on terminated admin agendas
 });
 export type AdminAgenda = z.infer<typeof AdminAgenda>;
 
