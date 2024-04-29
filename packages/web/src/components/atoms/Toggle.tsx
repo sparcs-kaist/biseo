@@ -15,14 +15,6 @@ const calcBorderRadius = (position: Position) => {
   if (position === "right") return "0px 5px 5px 0px";
   return "0px 0px 0px 0px";
 };
-const calcBorderWidth = (position: Position, selected: boolean) => {
-  const activeborder = selected ? 0 : 1;
-  if (position === "left") return `1px ${activeborder}px 1px 1px`;
-  if (position === "middle")
-    return `1px ${activeborder}px 1px ${activeborder}px`;
-  if (position === "right") return `1px 1px 1px ${activeborder}px`;
-  return "0px 0px 0px 0px";
-};
 
 export const ToggleContainor = styled.div<{
   w?: Size;
@@ -48,9 +40,11 @@ export const ToggleButton = styled.div<{
     width: fill;
     height: 100%;
     border-style: solid;
-    border-width: ${calcBorderWidth(position, selected)};
+    border-width: 1px;
     border-radius: ${calcBorderRadius(position)};
-    border-color: ${selected ? theme.colors.blue300 : theme.colors.gray300};
+    border-color: ${selected ? theme.colors.blue500 : theme.colors.gray300};
+    border-left-width: ${position === "left" || selected ? "1px" : "0px"};
+    border-right-width: ${position === "right" || selected ? "1px" : "0px"};
     justify-content: center;
     align-items: center;
     padding: 4px 5px 4px 5px;
