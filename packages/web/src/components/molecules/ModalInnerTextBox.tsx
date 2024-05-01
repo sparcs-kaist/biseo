@@ -2,7 +2,6 @@ import React, { type PropsWithChildren } from "react";
 import {
   BorderedBox,
   Box,
-  Text,
   GrayTextButton,
   Scroll,
   TextInput,
@@ -114,9 +113,7 @@ const TextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
     borderStyle="solid"
     gap={10}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
+    <p css={[colors.gray600, text.subtitle]}>{children}</p>
   </BorderedBox>
 );
 ModalInner.TextBox = TextBox;
@@ -132,9 +129,7 @@ const WhiteTextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
     borderStyle="solid"
     gap={10}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
+    <p css={[colors.gray600, text.subtitle]}>{children}</p>
   </BorderedBox>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
@@ -210,7 +205,7 @@ const TextButton: React.FC<SubmitProps> = ({
       }}
     />
     <Button w={20} h={20} onClick={onSubmit}>
-      <Text css={[colors.blue600, text.boldtitle2, "line-height: 1"]}>+</Text>
+      <p css={[colors.blue600, text.boldtitle2, "line-height: 1"]}>+</p>
     </Button>
   </BorderedBox>
 );
@@ -256,9 +251,7 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
       overflowWrap: "break-word",
     }}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
+    <p css={[colors.gray600, text.subtitle]}>{children}</p>
   </BorderedBox>
 );
 ModalInner.VoteOption = VoteOption;
@@ -315,16 +308,15 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
       minHeight: 32,
     }}
   >
-    <Text
-      color="gray500"
-      variant="subtitle"
+    <p
+      css={[colors.gray600, text.subtitle]}
       style={{
         wordBreak: "break-all",
         overflowWrap: "break-word",
       }}
     >
       {children}
-    </Text>
+    </p>
     <Clickable>
       <Box w={13} h={13} justify="center" align="center" onClick={onClick}>
         <TrashIcon />
@@ -348,9 +340,7 @@ const TagChoice: React.FC<PropsWithChildren> = ({ children = null }) => (
     justify="center"
     align="center"
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
+    <p css={[colors.gray600, text.subtitle]}>{children}</p>
   </BorderedBox>
 );
 ModalInner.TagChoice = TagChoice;
