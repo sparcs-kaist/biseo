@@ -102,55 +102,46 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
 );
 
 const TextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="gray100"
-    w={300}
-    borderSize={1}
-    padVertical={10}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
-    gap={10}
+  <div
+    css={[
+      border.gray200,
+      round.md,
+      bg.gray100,
+      w(300),
+      padding.vertical(10),
+      padding.horizontal(15),
+      gap(10),
+    ]}
   >
     <p css={[colors.gray600, text.subtitle]}>{children}</p>
-  </BorderedBox>
+  </div>
 );
 ModalInner.TextBox = TextBox;
 const WhiteTextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="white"
-    w={300}
-    borderSize={1}
-    padVertical={10}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
-    gap={10}
+  <div
+    css={[
+      border.gray200,
+      round.md,
+      bg.white,
+      w(300),
+      padding.vertical(10),
+      padding.horizontal(15),
+      gap(10),
+    ]}
   >
     <p css={[colors.gray600, text.subtitle]}>{children}</p>
-  </BorderedBox>
+  </div>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<InputProps> = ({ value = undefined, onChange }) => (
-  <BorderedBox
-    w={300}
-    borderColor="gray200"
-    bg="gray100"
-    borderSize={1}
-    round={5}
-    borderStyle="solid"
-    dir="row"
-    align="center"
-  >
+  <div css={[border.gray200, round.md, bg.gray100, w(300), row, align.center]}>
     <TextInput
       placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
       maxLength={maxTextLength}
     />
-  </BorderedBox>
+  </div>
 );
 ModalInner.InputBox = InputBox;
 
@@ -158,22 +149,14 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
   value = undefined,
   onChange,
 }) => (
-  <BorderedBox
-    w={300}
-    h={68}
-    borderColor="gray200"
-    bg="gray100"
-    borderSize={1}
-    round={5}
-    borderStyle="solid"
-  >
+  <div css={[w(300), h(68), border.gray200, round.md, bg.gray100]}>
     <TextAreaFixedsize
       placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
       maxLength={maxTextLength}
     />
-  </BorderedBox>
+  </div>
 );
 ModalInner.TextAreaInputBox = TextAreaInputBox;
 
@@ -183,15 +166,7 @@ const TextButton: React.FC<SubmitProps> = ({
   onClick,
   onSubmit,
 }) => (
-  <BorderedBox
-    w={300}
-    bg="gray100"
-    borderSize={1}
-    borderStyle="solid"
-    dir="row"
-    align="center"
-    padRight={15}
-  >
+  <div css={[w(300), bg.gray100, row, align.center, padding.right(15), border]}>
     <TextInput
       value={value}
       placeholder={children?.toString()}
@@ -207,7 +182,7 @@ const TextButton: React.FC<SubmitProps> = ({
     <Button w={20} h={20} onClick={onSubmit}>
       <p css={[colors.blue600, text.boldtitle2, "line-height: 1"]}>+</p>
     </Button>
-  </BorderedBox>
+  </div>
 );
 ModalInner.TextButton = TextButton;
 
