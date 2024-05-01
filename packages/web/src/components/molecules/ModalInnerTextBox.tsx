@@ -29,6 +29,9 @@ import {
   gap,
   border,
   round,
+  row,
+  center,
+  justify,
 } from "@biseo/web/styles";
 
 interface ModalInnerProps extends PropsWithChildren {
@@ -80,36 +83,23 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   children,
   required = false,
 }: ModalInnerProps) => (
-  <Box dir="column" w="fill" gap={8}>
-    <Box w="fill" dir="row" align="flex-end" justify="space-between">
-      <Box dir="row" align="center" gap={8}>
-        <Box dir="row" gap={2}>
-          <Text variant="body" color="black">
-            {title}
-          </Text>
-          {required && (
-            <Text variant="body" color="blue600">
-              *
-            </Text>
-          )}
-        </Box>
+  <div css={[column, w("fill"), gap(8)]}>
+    <div css={[w("fill"), row, align.end, justify.between]}>
+      <div css={[row, align.center, gap(8)]}>
+        <div css={[row, gap(2)]}>
+          <p css={[text.body, text.black]}>{title}</p>
+          {required && <p css={[text.body, text.blue600]}>*</p>}
+        </div>
         {count !== undefined && (
-          <Box
-            bg="blue200"
-            round={5}
-            align="center"
-            justify="center"
-            w={20}
-            h={20}
-          >
-            <Text color="blue600">{count}</Text>
-          </Box>
+          <div css={[center, bg.blue200, round.md, w(20), h(20)]}>
+            <p css={[text.blue600, text.body]}>{count}</p>
+          </div>
         )}
-      </Box>
+      </div>
       <GrayTextButton onClick={buttonOnClick}>{buttonText}</GrayTextButton>
-    </Box>
+    </div>
     {children}
-  </Box>
+  </div>
 );
 
 const TextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
