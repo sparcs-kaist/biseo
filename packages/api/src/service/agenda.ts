@@ -42,6 +42,7 @@ export const retrieveAll = async (
         ),
         total: agenda.voters.length,
       },
+      startAt: agenda.startAt,
     };
 
     if (!agenda.startAt) {
@@ -83,6 +84,7 @@ export const retrieveAll = async (
         name: choice.name,
         count: choice.users.length,
       })),
+      startAt: agenda.startAt.toISOString(),
     };
   });
   if (!res) throw new BiseoError("failed to retrieve agenda");
