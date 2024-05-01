@@ -192,18 +192,23 @@ const VoteOptions: React.FC<PropsWithChildren> = ({ children = null }) => {
     ${scrollBar}
   overflow-y: scroll;
   `;
+  const flexWrap = css`
+    flex-wrap: wrap;
+  `;
   return (
-    <Box
-      dir="row"
-      gap={8}
-      w="fill"
-      h={150}
-      wrap="wrap"
-      justify="flex-start"
-      css={scrollTyle}
+    <div
+      css={[
+        row,
+        justify.start,
+        w("fill"),
+        h(150),
+        scrollTyle,
+        gap(8),
+        flexWrap,
+      ]}
     >
       {children}
-    </Box>
+    </div>
   );
 };
 ModalInner.VoteOptions = VoteOptions;
