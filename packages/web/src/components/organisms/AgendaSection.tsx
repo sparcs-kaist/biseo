@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import type { AgendaStatus } from "@biseo/interface/agenda";
 import { AgendaCard } from "@biseo/web/components/molecules";
 import { useAgenda } from "@biseo/web/services/agenda";
@@ -37,6 +37,8 @@ const gridLayout = css`
 `;
 
 export const AgendaSection: React.FC = () => {
+  const [showRecentAgendasOnly] = useState(false);
+
   const { preparingAgendas, ongoingAgendas, terminatedAgendas } = useAgenda(
     state => ({
       preparingAgendas: state.agendas.filter(isPreparingAgenda),
@@ -48,8 +50,21 @@ export const AgendaSection: React.FC = () => {
   const getAgendas = useCallback(
     (agendaStatus: AgendaStatus) => {
       if (agendaStatus === "preparing") return preparingAgendas;
-      if (agendaStatus === "ongoing") return ongoingAgendas;
-      if (agendaStatus === "terminated") return terminatedAgendas;
+      if (agendaStatus === "ongoing")
+        return ongoingAgendas.sort((a, b) => {
+          if (a.voters.voted === 0) return -1;
+          if (b.voters.voted === 0) return 1;
+          return 0;
+        });
+      if (agendaStatus === "terminated") {
+        const recent24Hours = new Date();
+        recent24Hours.setDate(new Date().getDate() - 1);
+        return showRecentAgendasOnly
+          ? terminatedAgendas.filter(
+              agenda => new Date(agenda.startAt) > recent24Hours,
+            )
+          : terminatedAgendas;
+      }
       return [];
     },
     [preparingAgendas, ongoingAgendas, terminatedAgendas],
@@ -58,13 +73,6 @@ export const AgendaSection: React.FC = () => {
   const getAgendaCards = useCallback(
     (agendaStatus: AgendaStatus) => {
       const agendas = getAgendas(agendaStatus);
-      if (agendaStatus === "ongoing") {
-        agendas.sort((a, b) => {
-          if (a.voters.voted === 0) return -1;
-          if (b.voters.voted === 0) return 1;
-          return 0;
-        });
-      }
       return agendas.map(agenda => (
         <AgendaCard key={agenda.id} agenda={agenda} />
       ));
