@@ -37,7 +37,7 @@ const gridLayout = css`
 `;
 
 export const AgendaSection: React.FC = () => {
-  const [showRecentAgendasOnly] = useState(false);
+  const [showRecentAgendasOnly, setShowRecentAgendasOnly] = useState(false);
 
   const { preparingAgendas, ongoingAgendas, terminatedAgendas } = useAgenda(
     state => ({
@@ -89,7 +89,10 @@ export const AgendaSection: React.FC = () => {
         <AgendaCard.Group agendaStatus="preparing">
           {getAgendaCards("preparing")}
         </AgendaCard.Group>
-        <AgendaCard.Group agendaStatus="terminated">
+        <AgendaCard.Group
+          agendaStatus="terminated"
+          handleRecentOnly={() => setShowRecentAgendasOnly(curr => !curr)}
+        >
           {getAgendaCards("terminated")}
         </AgendaCard.Group>
       </div>
