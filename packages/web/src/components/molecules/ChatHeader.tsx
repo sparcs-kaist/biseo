@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Text } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 
 interface Props {
   title: string;
@@ -19,6 +19,6 @@ const Container = styled.div`
 
 export const ChatHeader: React.FC<Props> = ({ title }) => (
   <Container>
-    <Text variant="title2">{title}</Text>
+    <h2 css={[text.title2, text.black]}>{title}</h2>
   </Container>
 );
