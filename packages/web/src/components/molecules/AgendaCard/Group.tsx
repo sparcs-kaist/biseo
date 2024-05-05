@@ -19,9 +19,14 @@ import { EmptyAgendaCard } from "./EmptyAgendaCard";
 
 interface Props extends PropsWithChildren {
   agendaStatus: AgendaStatus;
+  admin?: boolean;
 }
 
-export const Group: React.FC<Props> = ({ agendaStatus, children = null }) => (
+export const Group: React.FC<Props> = ({
+  agendaStatus,
+  admin = false,
+  children = null,
+}) => (
   <div>
     <div css={[row, align.center, h(42), gap(8), padding.horizontal(15)]}>
       <h2 css={[text.title2, text.black]}>{agendaStatusNames[agendaStatus]}</h2>
@@ -36,13 +41,23 @@ export const Group: React.FC<Props> = ({ agendaStatus, children = null }) => (
           center,
         ]}
       >
-        {Children.count(children)}
+        {admin && agendaStatus === "preparing"
+          ? // account for the add agenda button
+            Children.count(children) - 1
+          : Children.count(children)}
       </div>
     </div>
-    {Children.count(children) ? (
-      <ul css={[column, gap(15)]}>{children}</ul>
+    {Children.count(children) === 0 ||
+    (admin &&
+      agendaStatus === "preparing" &&
+      Children.count(children) === 1) ? (
+      // no agendas; show empty card
+      <ul css={[column, gap(15)]}>
+        {children}
+        <EmptyAgendaCard agendaStatus={agendaStatus} />
+      </ul>
     ) : (
-      <EmptyAgendaCard agendaStatus={agendaStatus} />
+      <ul css={[column, gap(15)]}>{children}</ul>
     )}
   </div>
 );
