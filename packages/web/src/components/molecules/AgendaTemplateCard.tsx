@@ -2,7 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import type { AgendaTemplate } from "@biseo/interface/agenda/template";
-import { Box, Text, Card, Divider } from "@biseo/web/components/atoms";
+import { Card, Divider } from "@biseo/web/components/atoms";
+import { w, gap, text, column } from "@biseo/web/styles";
 import { AdminTag } from "./AdminTag";
 
 const adminTags = {
@@ -20,23 +21,17 @@ export const AgendaTemplateCard: React.FC<Props> = ({ template }) => {
 
   return (
     <Card clickable onClick={openModal}>
-      <Box gap={8} w="fill">
+      <div css={[column, gap(8), w("fill")]}>
         <AdminTag tags={adminTags} suffix={template.choices.length} />
-        <Box gap={11}>
-          <Text variant="title2" color="gray600">
-            {template.templateName}
-          </Text>
-        </Box>
+        <div css={gap(11)}>
+          <h2 css={[text.title2, text.gray600]}>{template.templateName}</h2>
+        </div>
         <Divider />
-        <Box w={340} gap={2}>
-          <Text variant="title3" color="gray500">
-            {template.title}
-          </Text>
-          <Text variant="subtitle" color="gray400">
-            {template.content}
-          </Text>
-        </Box>
-      </Box>
+        <div css={[w(340), gap(2)]}>
+          <h3 css={[text.title3, text.gray500]}>{template.title}</h3>
+          <h4 css={[text.subtitle, text.gray400]}>{template.content}</h4>
+        </div>
+      </div>
     </Card>
   );
 };
