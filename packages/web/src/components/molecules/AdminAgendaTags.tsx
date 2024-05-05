@@ -1,108 +1,105 @@
 import { DownArrowIcon } from "@biseo/web/assets";
-import { BorderedBox, Box, Text } from "@biseo/web/components/atoms";
+import {
+  row,
+  center,
+  justify,
+  align,
+  border,
+  round,
+  bg,
+  w,
+  h,
+  padding,
+  gap,
+  text,
+} from "@biseo/web/styles";
 
 export const AdminAgendaTags: React.FC = () => (
-  <Box w={270} h={28} gap={16} dir="row" justify="center">
-    <Box dir="row" w={122} h={28} gap={10} align="center">
-      <Text variant="body" color="black">
-        투표 결과
-      </Text>
-      <BorderedBox
-        borderColor="gray200"
-        bg="white"
-        w={65}
-        h={28}
-        justify="center"
-        borderSize={1}
-        padHorizontal={15}
-        round={5}
-        borderStyle="solid"
-        gap={99}
+  <div css={[w(270), h(28), gap(16), row, justify.center]}>
+    <div css={[row, w(122), h(28), gap(10), align.center]}>
+      <p css={[text.body, text.black]}>투표 결과</p>
+      <div
+        css={[
+          border.gray200,
+          bg.white,
+          w(65),
+          h(28),
+          center,
+          padding.horizontal(15),
+          round.md,
+          gap(99),
+        ]}
       >
-        <Text color="gray600" variant="option1">
-          비공개
-        </Text>
-      </BorderedBox>
-    </Box>
-    <Box dir="row" w={122} h={28} gap={10} align="center">
-      <Text variant="body" color="black">
-        투표 상세
-      </Text>
-      <BorderedBox
-        borderColor="gray200"
-        bg="white"
-        w={65}
-        h={28}
-        justify="center"
-        borderSize={1}
-        padHorizontal={15}
-        round={5}
-        gap={99}
-        borderStyle="solid"
+        <p css={[text.option1, text.gray600]}>비공개</p>
+      </div>
+    </div>
+    <div css={[row, w(122), h(28), gap(10), align.center]}>
+      <p css={[text.body, text.black]}>투표 상세</p>
+      <div
+        css={[
+          border.gray200,
+          bg.white,
+          w(65),
+          h(28),
+          center,
+          padding.horizontal(15),
+          round.md,
+          gap(99),
+        ]}
       >
-        <Text color="gray600" variant="option1">
-          무기명
-        </Text>
-      </BorderedBox>
-    </Box>
-  </Box>
+        <p css={[text.option1, text.gray600]}>무기명</p>
+      </div>
+    </div>
+  </div>
 );
 
 export const AdminAgendaTagsSelect: React.FC = () => (
-  <Box w={270} h={28} justify="space-between" dir="row">
-    <Box dir="row" w={130} h={28} gap={8} align="center">
-      <Text variant="body" color="black">
-        투표 결과
-      </Text>
-      <BorderedBox
-        borderColor="gray200"
-        bg="white"
-        w={75}
-        h={28}
-        align="center"
-        justify="space-between"
-        borderSize={1}
-        padHorizontal={12}
-        padVertical={7}
-        round={5}
-        borderStyle="solid"
-        dir="row"
+  <div css={[w(270), h(28), justify.between, row]}>
+    <div css={[row, w(130), h(28), gap(8), align.center]}>
+      <p css={[text.body, text.black]}>투표 결과</p>
+      <div
+        css={[
+          border.gray200,
+          bg.white,
+          w(75),
+          h(28),
+          align.center,
+          justify.between,
+          padding.horizontal(12),
+          padding.vertical(7),
+          round.md,
+          row,
+        ]}
       >
-        <Text color="gray600" variant="option1">
-          비공개
-        </Text>
+        <p css={[text.option1, text.gray600]}>비공개</p>
 
-        <Box padVertical={7}>
+        <div css={[padding.vertical(7), center]}>
           <DownArrowIcon />
-        </Box>
-      </BorderedBox>
-    </Box>
-    <Box dir="row" w={130} h={28} gap={8} align="center">
-      <Text variant="body" color="black">
-        투표 상세
-      </Text>
-      <BorderedBox
-        borderColor="gray200"
-        bg="white"
-        w={75}
-        h={28}
-        align="center"
-        justify="space-between"
-        borderSize={1}
-        padHorizontal={12}
-        padVertical={7}
-        round={5}
-        borderStyle="solid"
-        dir="row"
+        </div>
+      </div>
+    </div>
+    <div css={[row, w(130), h(28), gap(8), align.center]}>
+      <p css={[text.body, text.black]}>투표 상세</p>
+      <div
+        css={[
+          border.gray200,
+          bg.white,
+          w(75),
+          h(28),
+          align.center,
+          justify.between,
+          padding.horizontal(12),
+          padding.vertical(7),
+          round.md,
+          row,
+        ]}
       >
-        <Text color="gray600" variant="option1">
-          무기명
-        </Text>
+        <p css={[text.option1, text.gray600]}>무기명</p>
 
-        <Box padVertical={7}>
+        <div css={[padding.vertical(7), center]}>
           <DownArrowIcon />
-        </Box>
-      </BorderedBox>
-    </Box>
-  </Box>
+        </div>
+      </div>
+    </div>
+  </div>
 );
