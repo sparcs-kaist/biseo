@@ -23,7 +23,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         :checked + label div span { transform: translateX(10px) }`,
       ]}
     />
-    <label htmlFor="toggle" css={[row]}>
+    <label htmlFor="toggle" css={[row, `cursor: pointer`]}>
       <div
         css={[
           bg.gray300,
