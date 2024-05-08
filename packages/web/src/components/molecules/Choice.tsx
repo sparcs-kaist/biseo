@@ -9,11 +9,12 @@ import { center, h, w, text } from "@biseo/web/styles";
 
 const Container = styled.div<{
   color: Color;
+  borderColor: Color;
   clickable?: boolean;
 }>`
   border-radius: 5px;
   background-color: ${props => props.theme.colors[props.color]};
-  border: 1px solid ${props => props.theme.colors.gray200};
+  border: 1px solid ${props => props.theme.colors[props.borderColor]};
   padding: 6px 12px 6px 12px;
   width: 340px;
   height: fit-content;
@@ -44,14 +45,15 @@ const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => {
 
 const choiceBaseStyle = (
   containerColor: Color,
+  containerBorderColor: Color,
   selectIconColor: Color,
   textColor: Color,
-) => ({ containerColor, selectIconColor, textColor });
+) => ({ containerColor, containerBorderColor, selectIconColor, textColor });
 
 const choiceStyles = {
-  chosen: choiceBaseStyle("blue600", "blue600", "white"),
-  hover: choiceBaseStyle("blue200", "blue600", "blue600"),
-  notChosen: choiceBaseStyle("white", "gray500", "gray500"),
+  chosen: choiceBaseStyle("blue600", "blue600", "blue600", "white"),
+  hover: choiceBaseStyle("blue200", "blue200", "blue600", "blue600"),
+  notChosen: choiceBaseStyle("white", "gray200", "gray500", "gray500"),
 };
 
 interface ChoiceBaseProps {
@@ -74,6 +76,7 @@ const ChoiceBase: React.FC<ChoiceBaseProps> = ({
   return (
     <Container
       color={choiceStyle.containerColor}
+      borderColor={choiceStyle.containerBorderColor}
       onClick={onClick}
       clickable={!!onClick}
       onMouseEnter={onMouseEnter}
