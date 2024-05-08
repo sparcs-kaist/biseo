@@ -1,7 +1,5 @@
 import React, { type PropsWithChildren } from "react";
 import {
-  BorderedBox,
-  Box,
   GrayTextButton,
   Scroll,
   TextInput,
@@ -10,6 +8,7 @@ import {
   Clickable,
   TaggersBox,
   Divider,
+  Box,
 } from "@biseo/web/components/atoms";
 import "@biseo/web/components/atoms/placeholder.css";
 import { TrashIcon } from "@biseo/web/assets";
@@ -214,17 +213,16 @@ const VoteOptions: React.FC<PropsWithChildren> = ({ children = null }) => {
 ModalInner.VoteOptions = VoteOptions;
 
 const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="white"
-    w="hug"
-    h="hug"
-    justify="center"
-    borderSize={1}
-    padVertical={7}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
+  <div
+    css={[
+      w("hug"),
+      h("hug"),
+      justify.center,
+      border.gray200,
+      round.md,
+      padding.vertical(7),
+      padding.horizontal(15),
+    ]}
     style={{
       maxWidth: "100%",
       wordBreak: "break-all",
@@ -232,7 +230,7 @@ const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
     }}
   >
     <p css={[colors.gray600, text.subtitle]}>{children}</p>
-  </BorderedBox>
+  </div>
 );
 ModalInner.VoteOption = VoteOption;
 
@@ -270,20 +268,19 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
   children = null,
   onClick = () => {},
 }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="white"
-    w="fill"
-    h="hug"
-    borderSize={1}
-    padVertical={8}
-    padHorizontal={12}
-    round={5}
-    borderStyle="solid"
-    justify="space-between"
-    gap={5}
-    dir="row"
-    align="flex-start"
+  <div
+    css={[
+      w("fill"),
+      h("hug"),
+      bg.white,
+      justify.start,
+      border.gray200,
+      round.md,
+      padding.vertical(8),
+      padding.horizontal(12),
+      row,
+      gap(5),
+    ]}
     style={{
       minHeight: 32,
     }}
@@ -302,26 +299,24 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
         <TrashIcon />
       </Box>
     </Clickable>
-  </BorderedBox>
+  </div>
 );
 ModalInner.VoteChoice = VoteChoice;
 
 const TagChoice: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="white"
-    h={30}
-    borderSize={1}
-    padVertical={0}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
-    gap={8}
-    justify="center"
-    align="center"
+  <div
+    css={[
+      h(30),
+      bg.white,
+      border.gray200,
+      padding.horizontal(15),
+      round.md,
+      gap(8),
+      center,
+    ]}
   >
     <p css={[colors.gray600, text.subtitle]}>{children}</p>
-  </BorderedBox>
+  </div>
 );
 ModalInner.TagChoice = TagChoice;
 
