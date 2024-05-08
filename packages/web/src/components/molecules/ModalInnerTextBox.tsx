@@ -8,7 +8,6 @@ import {
   Clickable,
   TaggersBox,
   Divider,
-  Box,
 } from "@biseo/web/components/atoms";
 import "@biseo/web/components/atoms/placeholder.css";
 import { TrashIcon } from "@biseo/web/assets";
@@ -296,9 +295,17 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
       {children}
     </p>
     <Clickable>
-      <Box w={13} h={13} justify="center" align="center" onClick={onClick}>
+      <button
+        type="submit"
+        css={[w(13), h(13), center, bg.white]}
+        style={{
+          border: "none",
+          background: "transparent",
+        }}
+        onClick={onClick}
+      >
         <TrashIcon />
-      </Box>
+      </button>
     </Clickable>
   </div>
 );
