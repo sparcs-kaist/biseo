@@ -295,17 +295,9 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
       {children}
     </p>
     <Clickable>
-      <button
-        type="submit"
-        css={[w(13), h(13), center, bg.white]}
-        style={{
-          border: "none",
-          background: "transparent",
-        }}
-        onClick={onClick}
-      >
+      <Button css={[w(13), h(13)]} onClick={onClick}>
         <TrashIcon />
-      </button>
+      </Button>
     </Clickable>
   </div>
 );
