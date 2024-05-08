@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useRef } from "react";
 
 import type { TerminatedAgenda } from "@biseo/interface/agenda";
 
@@ -36,7 +36,8 @@ type Voter = {
 
 export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   const [enabled, setEnabled] = useState<boolean>(false);
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  // const [isDragging, setIsDragging] = useRef<boolean>(false);
+  const isDragging = useRef<boolean>(false);
   const [revealChoice, setRevealChoice] = useState<boolean>(agenda.type.named);
   const [detectDrag, setDetectDrag] = useState<NodeJS.Timeout>();
 
@@ -47,6 +48,13 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
     () => agenda.choices.reduce((acc, c) => acc + c.count, 0),
     [agenda.choices],
   );
+  const checkDrag = useCallback(() => {
+    if (!isDragging.current) {
+      setEnabled(value => !value);
+      clearTimeout(detectDrag);
+    }
+    window.removeEventListener("mouseup", checkDrag);
+  }, []);
 
   const optionVoteResult = useCallback(() => {
     if (agenda.type.public) {
@@ -81,15 +89,13 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       bold={enabled}
       clickable
       onMouseDown={e => {
-        setDetectDrag(setTimeout(() => setIsDragging(true), 200));
-        e.stopPropagation();
-      }}
-      onMouseUp={e => {
-        if (!isDragging) {
-          clearTimeout(detectDrag);
-          setEnabled(value => !value);
-        }
-        setIsDragging(false);
+        isDragging.current = false;
+        window.addEventListener("mouseup", checkDrag);
+        setDetectDrag(
+          setTimeout(() => {
+            isDragging.current = true;
+          }, 200),
+        );
         e.stopPropagation();
       }}
     >
@@ -121,17 +127,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
           />
-          <div css={[column, gap(12), w("fill")]}>
-            {optionVoteResult()}
-            {/* {agenda.choices.map(choice => (
-              <OptionVoteResult
-                name={choice.name}
-                count={choice.count}
-                totalCount={totalCount}
-                userChoice={revealChoice && agenda.user.voted === choice.id}
-              />
-            ))} */}
-          </div>
+          <div css={[column, gap(12), w("fill")]}>{optionVoteResult()}</div>
           <Divider />
           <VoteDetail named={agenda.type.named} />
           {agenda.type.named ? (
