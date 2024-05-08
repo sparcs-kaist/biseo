@@ -46,7 +46,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             <div css={[row, justify.between, align.center]}>
               <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
               <p css={[text.subtitle, text.gray400]}>
-                {formatDateSimple(agenda.startAt)}
+                {formatDateSimple(agenda.endAt)}
               </p>
             </div>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
@@ -89,7 +89,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
               }}
             />
             <p css={[text.subtitle, text.gray400]}>
-              {formatDateSimple(agenda.startAt)}
+              {formatDateSimple(agenda.endAt)}
             </p>
           </div>
 
