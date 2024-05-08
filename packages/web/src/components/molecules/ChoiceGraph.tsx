@@ -1,6 +1,16 @@
 import React from "react";
-import { Box, Text } from "@biseo/web/components/atoms";
 import type { Color } from "@biseo/web/theme";
+import {
+  bg,
+  w,
+  h,
+  text,
+  justify,
+  row,
+  round,
+  column,
+  gap,
+} from "@biseo/web/styles";
 
 interface Props {
   choices: { name: string; count: number }[];
@@ -26,22 +36,18 @@ const graph = (choices: { name: string; count: number }[], colors: Color[]) => {
   }
 
   return graphLength.map((rodLength, index) => (
-    <Box bg={colors[index]} h={20} w={rodLength} />
+    <div css={[bg[colors[index]], h(20), w(rodLength)]} />
   ));
 };
 
 export const ChoiceGraph: React.FC<Props> = ({ choices, colors }) => (
-  <Box h={46} dir="column" gap={10}>
-    <Box w={260} justify="space-between" dir="row">
-      <Text variant="subtitle" color="black">
-        투표결과
-      </Text>
-      <Text variant="option1" color="gray500">
+  <div css={[h(46), column, gap(10)]}>
+    <div css={[w(260), justify.between, row]}>
+      <h4 css={[text.subtitle, text.black]}>투표결과</h4>
+      <p css={[text.option1, text.gray500]}>
         재석 {choices.map(choice => choice.count).reduce((a, b) => a + b)}명
-      </Text>
-    </Box>
-    <Box round={5} dir="row" h={20} w={260}>
-      {graph(choices, colors)}
-    </Box>
-  </Box>
+      </p>
+    </div>
+    <div css={[w(260), h(20), row, round.md]}>{graph(choices, colors)}</div>
+  </div>
 );
