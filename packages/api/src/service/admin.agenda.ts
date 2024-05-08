@@ -28,6 +28,7 @@ const selectAgendaDefaultFields = {
     title: true,
     resolution: true,
     content: true,
+    startAt: true,
   },
 };
 
@@ -109,6 +110,7 @@ export const createAgenda = async ({
       voted: [],
       total: createdVoters.map(voter => voter.user),
     },
+    startAt: "", // startAt is not displayed yet
   };
 
   return {
@@ -168,6 +170,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
   const {
     voters: updatedVoters,
     choices: updatedChoices,
+    startAt: agendaStartAt,
     ...updatedAgenda
   } = await prisma.agenda.update({
     data: {
@@ -228,6 +231,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
       voted: userVoted,
       votable: userVotable,
     },
+    startAt: agendaStartAt?.toISOString() || "", // startAt is not null with terminatedAgenda
   };
 
   return terminatedAgenda;
@@ -338,6 +342,7 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
       voted: [],
       total: voters.map(voter => voter.user),
     },
+    startAt: "",
   };
   return {
     voters: voters.map(voter => `user/${voter.user.username}`),
@@ -426,6 +431,7 @@ export const retrieveAll = async (): Promise<schema.AdminAgenda[]> => {
         total: agenda.voters.map(user => user.user),
         voted,
       },
+      startAt: agenda.startAt?.toISOString() || "",
     };
   });
 
