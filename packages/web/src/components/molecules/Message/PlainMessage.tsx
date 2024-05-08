@@ -3,6 +3,7 @@ import React from "react";
 import type { Message } from "@biseo/interface/chat";
 import { formatTime } from "@biseo/web/utils/format";
 import { text, row, column, gap, padding, align } from "@biseo/web/styles";
+import { css } from "@emotion/react";
 
 interface Props {
   message: Message;
@@ -37,12 +38,22 @@ const parseURL: React.FC<string> = (content: string) => {
   );
 };
 
-export const PlainMessage: React.FC<Props> = ({ message }) => (
-  <div css={[column, gap(4), padding.horizontal(20), padding.vertical(10)]}>
-    <div css={[row, gap(4), align.center]}>
-      <h3 css={[text.boldtitle3, text.black]}>{message.user.displayName}</h3>
-      <p css={[text.option2, text.gray500]}>{formatTime(message.createdAt)}</p>
+export const PlainMessage: React.FC<Props> = ({ message }) => {
+  const overflowWordBreak = css`
+    overflow-wrap: break-word;
+  `;
+
+  return (
+    <div css={[column, gap(4), padding.horizontal(20), padding.vertical(10)]}>
+      <div css={[row, gap(4), align.center]}>
+        <h3 css={[text.boldtitle3, text.black]}>{message.user.displayName}</h3>
+        <p css={[text.option2, text.gray500]}>
+          {formatTime(message.createdAt)}
+        </p>
+      </div>
+      <p css={[text.body, text.black, overflowWordBreak]}>
+        {parseURL(message.message)}
+      </p>
     </div>
-    <p css={[text.body, text.black]}>{parseURL(message.message)}</p>
-  </div>
-);
+  );
+};
