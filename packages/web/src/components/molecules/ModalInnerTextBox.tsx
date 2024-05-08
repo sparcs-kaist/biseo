@@ -273,7 +273,7 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
       w("fill"),
       h("hug"),
       bg.white,
-      justify.start,
+      justify.between,
       border.gray200,
       round.md,
       padding.vertical(8),
