@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
-import { Text } from "@biseo/web/components/atoms";
+import { text } from "@biseo/web/styles";
 
 interface Props {
   name: string;
@@ -43,9 +43,7 @@ export const HeaderItem: React.FC<Props> = ({
 }) => (
   <Container selected={selected}>
     <Link href={`/${path}`}>
-      <Text variant="title3" color={selected ? "black" : "gray500"}>
-        {name}
-      </Text>
+      <h3 css={[text.title3, text[selected ? "black" : "gray500"]]}>{name}</h3>
     </Link>
     {selected ? <SelectIndicator /> : null}
   </Container>
