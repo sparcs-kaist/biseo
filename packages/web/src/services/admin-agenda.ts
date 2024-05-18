@@ -11,7 +11,7 @@ interface AdminAgendaState {
   adminAgendas: AdminAgenda[];
   createAgenda: (agenda: AdminAgendaCreate) => void;
   retrieveAll: () => void;
-  statusUpdate: (id: number, status: AgendaStatus) => void;
+  statusUpdate: (id: number, status: AgendaStatus, endAt?: string) => void;
   updateAgenda: (agenda: AdminAgendaUpdate) => void;
   deleteAgenda: (id: number) => void;
   remindAgenda: (id: number) => void;
@@ -39,11 +39,12 @@ export const useAdminAgenda = create<AdminAgendaState>(set => ({
       // TODO: handle error
     }
   },
-  statusUpdate: async (id, status) => {
+  statusUpdate: async (id, status, endAt) => {
     try {
       await socket.emitAsync("admin.agenda.statusUpdate", {
         id,
         status,
+        endAt,
       });
     } catch {
       // TODO: handle error
@@ -81,11 +82,11 @@ socket.on("admin.agenda.created", adminAgenda => {
   }));
 });
 
-socket.on("admin.agenda.statusUpdated", ({ id, status }) => {
+socket.on("admin.agenda.statusUpdated", ({ id, status, endAt }) => {
   useAdminAgenda.setState(state => {
     const newAdminAgendas: AdminAgenda[] = state.adminAgendas.map(agenda => {
       if (agenda.id === id) {
-        return { ...agenda, status };
+        return { ...agenda, status, endAt: endAt || "" };
       }
       return agenda;
     });
