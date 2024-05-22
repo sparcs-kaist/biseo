@@ -51,11 +51,8 @@ export const AgendaSection: React.FC = () => {
     (agendaStatus: AgendaStatus) => {
       if (agendaStatus === "preparing") return preparingAgendas;
       if (agendaStatus === "ongoing")
-        return ongoingAgendas.sort((a, b) => {
-          if (a.voters.voted === 0) return -1;
-          if (b.voters.voted === 0) return 1;
-          return 0;
-        });
+        return ongoingAgendas.sort((a, b) => a.voters.voted - b.voters.voted);
+
       if (agendaStatus === "terminated") {
         const recent24Hours = new Date();
         recent24Hours.setDate(new Date().getDate() - 1);
