@@ -75,7 +75,7 @@ export const TerminatedAgenda = AgendaBase.extend({
     voted: z.number().nullable(), // choiceId | null
   }),
   choices: z.array(ChoiceWithResult),
-  startAt: z.string(),
+  endAt: z.string(),
 });
 export type TerminatedAgenda = z.infer<typeof TerminatedAgenda>;
 
