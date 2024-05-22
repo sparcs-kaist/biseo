@@ -28,6 +28,7 @@ export type RetrieveAllCb = z.infer<typeof RetrieveAllCb>;
 export const StatusUpdate = z.object({
   id: z.number(),
   status: AgendaStatus,
+  endAt: z.string().optional(),
 });
 export type StatusUpdate = z.infer<typeof StatusUpdate>;
 export const StatusUpdateCb = z.object({});

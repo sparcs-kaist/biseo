@@ -18,6 +18,7 @@ export type Created = z.infer<typeof Created>;
 export const StatusUpdated = z.object({
   id: z.number(),
   status: AgendaStatus,
+  endAt: z.string().optional(),
 });
 export type StatusUpdated = z.infer<typeof StatusUpdated>;
 
