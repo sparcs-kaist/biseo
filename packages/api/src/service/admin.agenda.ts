@@ -206,7 +206,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
       voted: userVoted,
       votable: userVotable,
     },
-    endAt: agendaEndAt?.toISOString() || "", // startAt is not null with terminatedAgenda
+    endAt: agendaEndAt?.toISOString() || "", // endAt is not null with terminatedAgenda
   };
 
   return terminatedAgenda;
