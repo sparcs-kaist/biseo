@@ -38,7 +38,9 @@ router.on(
 
         const startNotice = await createNotice(ongoingAgenda, user);
         io.emit("chat.received", startNotice);
-        break;
+
+        io.to("admin").emit("admin.agenda.statusUpdated", req);
+        return {};
       }
       case "terminated": {
         const terminatedAgenda = await terminateAgenda(req.id, user);
@@ -46,14 +48,16 @@ router.on(
 
         const terminateNotice = await createNotice(terminatedAgenda, user);
         io.emit("chat.received", terminateNotice);
-        break;
+
+        io.to("admin").emit("admin.agenda.statusUpdated", {
+          ...req,
+          endAt: terminatedAgenda.endAt,
+        });
+        return {};
       }
       default:
         return {};
     }
-
-    io.to("admin").emit("admin.agenda.statusUpdated", req);
-    return {};
   },
 );
 

@@ -29,7 +29,7 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
             }}
           />
           <p css={[text.subtitle, text.gray400]}>
-            {formatDateSimple(agenda.startAt)}
+            {formatDateSimple(agenda.endAt)}
           </p>
         </div>
         <div css={[column, gap(2)]}>
