@@ -58,7 +58,7 @@ export const AgendaSection: React.FC = () => {
         recent24Hours.setDate(new Date().getDate() - 1);
         return showRecentAgendasOnly
           ? terminatedAgendas.filter(
-              agenda => new Date(agenda.startAt) > recent24Hours,
+              agenda => new Date(agenda.endAt) > recent24Hours,
             )
           : terminatedAgendas;
       }
