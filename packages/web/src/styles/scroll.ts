@@ -8,7 +8,9 @@ export const scrollBar = css`
 `;
 
 const applyDirection = (direction: "x" | "y") => css`
-  overflow-${direction}: auto;
+  height: 100%;
+
+  overflow-${direction}: scroll;
 
   ::-webkit-scrollbar {
     width: 14px;
