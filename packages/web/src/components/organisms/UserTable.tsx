@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 
 import {
-  Box,
   Body,
   Header,
   Table,
@@ -10,11 +9,11 @@ import {
   CheckBox,
   UserTag,
   SelectBox,
-  Scroll,
 } from "@biseo/web/components/atoms";
 
 import { useAdminUser } from "@biseo/web/services/admin-user";
 import { useUserTag } from "@biseo/web/services/user-tag";
+import { scroll, scrollBar, w, gap, row, justify } from "@biseo/web/styles";
 
 interface Props {
   userList?: number[];
@@ -93,9 +92,9 @@ export const UserTable: React.FC<Props> = ({
   };
 
   return (
-    <Box w="fill" gap={5}>
+    <div css={[w("fill"), gap(5)]}>
       {filterBy ? (
-        <Box w="fill" dir="row" justify="flex-start">
+        <div css={[w("fill"), row, justify.start]}>
           <SelectBox
             width={92}
             height={26}
@@ -111,7 +110,7 @@ export const UserTable: React.FC<Props> = ({
             })()}
             onChange={setSelectedFilterOption}
           />
-        </Box>
+        </div>
       ) : null}
       <Table w="fill" h={287}>
         <Header>
@@ -131,7 +130,7 @@ export const UserTable: React.FC<Props> = ({
             <Cell scroll>태그</Cell>
           </Row>
         </Header>
-        <Scroll>
+        <div css={[scroll.y, scrollBar]}>
           <Body>
             {filteredUsers.map(user => (
               <Row
@@ -164,8 +163,8 @@ export const UserTable: React.FC<Props> = ({
               </Row>
             ))}
           </Body>
-        </Scroll>
+        </div>
       </Table>
-    </Box>
+    </div>
   );
 };

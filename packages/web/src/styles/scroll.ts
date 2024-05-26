@@ -7,10 +7,33 @@ export const scrollBar = css`
   }
 `;
 
-const applyDirection = (direction: "x" | "y") => css`
+const applyXDirection = css`
+  width: 100%;
+
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  ::-webkit-scrollbar {
+    width: 14px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: 4px solid transparent;
+    background-clip: padding-box;
+
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+`;
+
+const applyYDirection = css`
   height: 100%;
 
-  overflow-${direction}: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 
   ::-webkit-scrollbar {
     width: 14px;
@@ -29,6 +52,6 @@ const applyDirection = (direction: "x" | "y") => css`
 `;
 
 export const scroll = {
-  x: applyDirection("x"),
-  y: applyDirection("y"),
+  x: applyXDirection,
+  y: applyYDirection,
 } as const;
