@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { Box } from "@biseo/web/components/atoms";
 import { AdminSettingSection } from "@biseo/web/components/organisms";
 import { useAgendaTemplate } from "@biseo/web/services/agenda-template";
 import { useUserTag } from "@biseo/web/services/user-tag";
+import { justify, padding, row, w, h, gap } from "@biseo/web/styles";
 
 export const AdminSettingPage: React.FC = () => {
   const { retrieveTemplates } = useAgendaTemplate(state => ({
@@ -19,17 +19,19 @@ export const AdminSettingPage: React.FC = () => {
   }, []);
 
   return (
-    <Box
-      dir="row"
-      w="fill"
-      h="fill"
-      justify="center"
-      padTop={20}
-      padBottom={30}
-      gap={20}
+    <div
+      css={[
+        row,
+        w("fill"),
+        h("fill"),
+        justify.center,
+        padding.top(20),
+        padding.bottom(30),
+        gap(20),
+      ]}
     >
       <AdminSettingSection />
       <Outlet />
-    </Box>
+    </div>
   );
 };
