@@ -54,7 +54,7 @@ export const Group: React.FC<Props> = ({
             : Children.count(children)}
         </div>
       </div>
-      {agendaStatus === "terminated" && (
+      {agendaStatus === "terminated" && !admin && (
         <ToggleSwitch label="최근 투표만" handleToggle={handleRecentOnly} />
       )}
     </div>
