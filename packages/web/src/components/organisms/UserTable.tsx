@@ -13,7 +13,8 @@ import {
 
 import { useAdminUser } from "@biseo/web/services/admin-user";
 import { useUserTag } from "@biseo/web/services/user-tag";
-import { scroll, scrollBar, w, gap, row, justify } from "@biseo/web/styles";
+import { scroll, scrollBar, w, gap, row, justify, h } from "@biseo/web/styles";
+import { css } from "@emotion/react";
 
 interface Props {
   userList?: number[];
@@ -91,6 +92,12 @@ export const UserTable: React.FC<Props> = ({
     }
   };
 
+  const scrollStyle = css`
+    ${scroll.y}
+    ${scrollBar}
+    overflow-x: hidden;
+  `;
+
   return (
     <div css={[w("fill"), gap(5)]}>
       {filterBy ? (
@@ -130,7 +137,7 @@ export const UserTable: React.FC<Props> = ({
             <Cell scroll>태그</Cell>
           </Row>
         </Header>
-        <div css={[scroll.y, scrollBar]}>
+        <div css={[h("fill"), scrollStyle]}>
           <Body>
             {filteredUsers.map(user => (
               <Row
