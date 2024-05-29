@@ -18,6 +18,8 @@ interface Props extends PropsWithChildren {
 
 /**
  * @deprecated use AgendaCard.Group instead
+ * PROBLEM: structure of AgendaCard.Group does not fit well with
+ * non-agenda card components in organisms/AdminSettingSection.tsx
  */
 export const SectionHeader: React.FC<Props> = ({ count, children = null }) => (
   <div
