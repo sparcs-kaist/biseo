@@ -2,10 +2,19 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { LogoIcon } from "@biseo/web/assets";
-import { Box } from "@biseo/web/components/atoms";
 import { HeaderItem, Profile } from "@biseo/web/components/molecules";
 import { useAuth } from "@biseo/web/services/auth";
-import { bg, center, h, w, round, text } from "@biseo/web/styles";
+import {
+  bg,
+  center,
+  h,
+  w,
+  round,
+  text,
+  row,
+  align,
+  justify,
+} from "@biseo/web/styles";
 
 const adminPathList = [
   { name: "유저 모드", path: "" },
@@ -40,10 +49,10 @@ export const Header: React.FC = () => {
   const [hover, setHover] = useState(false);
   return (
     <Container>
-      <Box h="fill" dir="row" align="center">
+      <div css={[h("fill"), row, align.center]}>
         <LogoIcon />
-      </Box>
-      <Box w="fill" h="fill" dir="row" align="center" justify="center">
+      </div>
+      <div css={[w("fill"), h("fill"), row, align.center, justify.center]}>
         {useAuth().userInfo?.isAdmin
           ? adminPathList.map(item => (
               <HeaderItem
@@ -58,7 +67,7 @@ export const Header: React.FC = () => {
               />
             ))
           : null}
-      </Box>
+      </div>
       <div
         css={[{ position: "relative" }]}
         onMouseEnter={() => setHover(true)}

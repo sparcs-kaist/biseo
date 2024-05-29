@@ -2,18 +2,41 @@ import React, { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import type { AdminAgendaStatus } from "@biseo/interface/admin/agenda";
-import { Box } from "@biseo/web/components/atoms";
-import {
-  SectionHeader,
-  AddButtonCard,
-  AgendaCard,
-} from "@biseo/web/components/molecules";
+import { AddButtonCard, AgendaCard } from "@biseo/web/components/molecules";
 import { useAdminAgenda } from "@biseo/web/services/admin-agenda";
 import {
   isOngoingAgenda,
   isPreparingAgenda,
   isTerminatedAgenda,
 } from "@biseo/web/utils/agenda";
+
+import { scroll } from "@biseo/web/styles";
+import { css } from "@emotion/react";
+
+const gridLayout = css`
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
+  grid-template-rows: auto 1fr;
+  grid-gap: 15px 20px;
+
+  // Preparing Agenda
+  *:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  // Ongoing Agenda
+  *:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  // Terminated Agenda
+  *:nth-child(3) {
+    grid-column: 3;
+    grid-row: 1;
+  }
+`;
 
 export const AdminAgendaSection: React.FC = () => {
   const navigate = useNavigate();
@@ -39,45 +62,27 @@ export const AdminAgendaSection: React.FC = () => {
   const getAgendaCards = useCallback(
     (agendaStatus: AdminAgendaStatus) => {
       const agendas = getAgendas(agendaStatus);
-
-      return (
-        <AgendaCard.List>
-          {agendaStatus === "preparing" && (
-            <AddButtonCard content="새로운 투표" onClick={openModal} />
-          )}
-          {agendas.length === 0 ? (
-            <AgendaCard.Empty agendaStatus={agendaStatus} />
-          ) : (
-            agendas.map(agenda => (
-              <AgendaCard.Admin key={agenda.id} agenda={agenda} />
-            ))
-          )}
-        </AgendaCard.List>
-      );
+      return agendas.map(agenda => (
+        <AgendaCard.Admin key={agenda.id} agenda={agenda} />
+      ));
     },
     [preparingAgendas, ongoingAgendas, terminatedAgendas],
   );
 
   return (
-    <Box dir="row" gap={20}>
-      <Box dir="column" w={300}>
-        <SectionHeader count={preparingAgendas.length}>
-          예정된 투표
-        </SectionHeader>
-        {getAgendaCards("preparing")}
-      </Box>
-      <Box dir="column" w={300}>
-        <SectionHeader count={ongoingAgendas.length}>
-          진행 중인 투표
-        </SectionHeader>
-        {getAgendaCards("ongoing")}
-      </Box>
-      <Box dir="column" w={300}>
-        <SectionHeader count={terminatedAgendas.length}>
-          종료된 투표
-        </SectionHeader>
-        {getAgendaCards("terminated")}
-      </Box>
-    </Box>
+    <section css={scroll.y}>
+      <div css={gridLayout}>
+        <AgendaCard.Group agendaStatus="preparing" admin>
+          <AddButtonCard content="새로운 투표" onClick={openModal} />
+          {getAgendaCards("preparing")}
+        </AgendaCard.Group>
+        <AgendaCard.Group agendaStatus="ongoing" admin>
+          {getAgendaCards("ongoing")}
+        </AgendaCard.Group>
+        <AgendaCard.Group agendaStatus="terminated" admin>
+          {getAgendaCards("terminated")}
+        </AgendaCard.Group>
+      </div>
+    </section>
   );
 };

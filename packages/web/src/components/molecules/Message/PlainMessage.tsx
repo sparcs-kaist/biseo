@@ -1,8 +1,9 @@
 import React from "react";
 
 import type { Message } from "@biseo/interface/chat";
-import { Box, HyperText, Text } from "@biseo/web/components/atoms";
 import { formatTime } from "@biseo/web/utils/format";
+import { text, row, column, gap, padding, align } from "@biseo/web/styles";
+import { css } from "@emotion/react";
 
 interface Props {
   message: Message;
@@ -29,31 +30,30 @@ const parseURL: React.FC<string> = (content: string) => {
   return (
     <>
       {content.slice(0, urlIndexStart)}
-      <HyperText
-        color="gray500"
-        href={urlString}
-        target="_blank"
-        rel="noreferrer"
-      >
+      <a css={[text.gray500]} href={urlString} target="_blank" rel="noreferrer">
         {urlString}
-      </HyperText>
+      </a>
       {parseURL(content.slice(urlIndexEnd))}
     </>
   );
 };
 
-export const PlainMessage: React.FC<Props> = ({ message }) => (
-  <Box dir="column" gap={4} padHorizontal={20} padVertical={10}>
-    <Box dir="row" gap={4} align="center">
-      <Text variant="boldtitle3" color="black">
-        {message.user.displayName}
-      </Text>
-      <Text variant="option2" color="gray500">
-        {formatTime(message.createdAt)}
-      </Text>
-    </Box>
-    <Text variant="body" color="black">
-      {parseURL(message.message)}
-    </Text>
-  </Box>
-);
+export const PlainMessage: React.FC<Props> = ({ message }) => {
+  const overflowWordBreak = css`
+    overflow-wrap: break-word;
+  `;
+
+  return (
+    <div css={[column, gap(4), padding.horizontal(20), padding.vertical(10)]}>
+      <div css={[row, gap(4), align.center]}>
+        <h3 css={[text.boldtitle3, text.black]}>{message.user.displayName}</h3>
+        <p css={[text.option2, text.gray500]}>
+          {formatTime(message.createdAt)}
+        </p>
+      </div>
+      <p css={[text.body, text.black, overflowWordBreak]}>
+        {parseURL(message.message)}
+      </p>
+    </div>
+  );
+};

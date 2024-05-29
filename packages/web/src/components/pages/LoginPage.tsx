@@ -9,8 +9,7 @@ import { useAuth } from "@biseo/web/services/auth";
 
 import { useInput } from "@biseo/web/common/hooks";
 import { theme } from "@biseo/web/theme";
-import { Box, Text } from "@biseo/web/components/atoms";
-import { text } from "@biseo/web/styles";
+import { align, column, text, gap } from "@biseo/web/styles";
 
 const Page = styled.div`
   width: 100vw;
@@ -129,7 +128,7 @@ export const LoginPage: React.FC = () => {
 
   return (
     <Page>
-      <Box dir="column" align="center">
+      <div css={[column, align.center]}>
         <LogoLargeIcon width={116} />
         <LoginTitle
           initial={easeMotion.initial}
@@ -138,10 +137,10 @@ export const LoginPage: React.FC = () => {
         >
           쉽고 빠른 의사결정은, Biseo
         </LoginTitle>
-      </Box>
+      </div>
 
       <form onSubmit={handleLogin}>
-        <Box dir="column" gap={12} align="center">
+        <div css={[column, gap(12), align.center]}>
           <InputContainer
             type="text"
             placeholder="아이디를 입력하세요"
@@ -154,20 +153,18 @@ export const LoginPage: React.FC = () => {
             value={password.value}
             onChange={password.onChange}
           />
-          <Box dir="column" gap={8} align="flex-start">
+          <div css={[column, gap(8), align.start]}>
             {error && (
-              <Text variant="subtitle" color="blue600">
+              <h4 css={[text.subtitle, text.blue600]}>
                 아이디 또는 비밀번호가 올바르지 않습니다.
-              </Text>
+              </h4>
             )}
 
             <LoginButton>
-              <Text variant="body" color="blue600">
-                로그인
-              </Text>
+              <p css={[text.body, text.blue600]}>로그인</p>
             </LoginButton>
-          </Box>
-        </Box>
+          </div>
+        </div>
       </form>
       <LoginBackground src={LandingImg} />
     </Page>

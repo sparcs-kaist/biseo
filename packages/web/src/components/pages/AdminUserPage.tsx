@@ -1,6 +1,6 @@
 import React from "react";
-import { Box } from "@biseo/web/components/atoms";
+import { row, padding, gap } from "@biseo/web/styles";
 
 export const AdminUserPage: React.FC = () => (
-  <Box dir="row" padTop={20} padBottom={30} gap={20} />
+  <div css={[row, padding.top(20), padding.bottom(30), gap(20)]} />
 );

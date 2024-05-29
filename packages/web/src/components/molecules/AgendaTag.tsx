@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Tag } from "@biseo/web/components/atoms";
+import { Tag } from "@biseo/web/components/atoms";
+import { row, gap, align } from "@biseo/web/styles";
 
 interface Tags {
   public: boolean;
@@ -13,9 +14,9 @@ interface Props {
 }
 
 export const AgendaTag: React.FC<Props> = ({ admin = false, tags }) => (
-  <Box dir="row" gap={8} align="center">
+  <div css={[row, gap(8), align.center]}>
     <Tag type={tags.public ? "public" : "private"} />
     <Tag type={tags.identified ? "identified" : "anonymous"} />
     {tags.votable && !admin && <Tag type="votable" />}
-  </Box>
+  </div>
 );

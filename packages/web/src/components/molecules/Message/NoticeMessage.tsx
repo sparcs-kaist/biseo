@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Box, Text } from "@biseo/web/components/atoms";
+import { w, padding, text, center } from "@biseo/web/styles";
 
 interface Props {
   message: string; // TODO: introduce Notice type
@@ -18,12 +18,10 @@ const Container = styled.div`
 `;
 
 export const NoticeMessage: React.FC<Props> = ({ message }) => (
-  <Box w="fill" padHorizontal={15} padVertical={10} align="center">
+  <div css={[w("fill"), padding.horizontal(15), padding.vertical(10), center]}>
     <Container>
-      <Text variant="subtitle">📢</Text>
-      <Text variant="boldtitle4" color="blue600">
-        {message}
-      </Text>
+      <h4 css={text.subtitle}>📢</h4>
+      <h4 css={[text.boldtitle4, text.blue600]}>{message}</h4>
     </Container>
-  </Box>
+  </div>
 );

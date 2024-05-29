@@ -1,6 +1,16 @@
 import React from "react";
-import { Box, Text } from "@biseo/web/components/atoms";
 import type { Color } from "@biseo/web/theme";
+import {
+  w,
+  h,
+  round,
+  bg,
+  justify,
+  align,
+  gap,
+  row,
+  text,
+} from "@biseo/web/styles";
 
 interface Choice {
   name: string;
@@ -15,16 +25,14 @@ interface Props {
 
 export const ChoicePercentage: React.FC<Props> = ({ choice, total }) => (
   // bg color of squares needed, according to the rank or taking color as parameter directly
-  <Box w={260} h={14} justify="space-between" dir="row">
-    <Box w={39} align="center" dir="row" gap={8}>
-      <Box w={12} h={12} round={2} bg={choice.color} />
-      <Text variant="option1">{choice.name}</Text>
-    </Box>
-    <Text variant="option1" color="gray500">
+  <div css={[w(260), h(14), justify.between, row]}>
+    <div css={[w(39), align.center, row, gap(8)]}>
+      <div css={[w(12), h(12), round.md, bg[choice.color]]} />
+      <p css={[text.option1, text.black]}>{choice.name}</p>
+    </div>
+    <p css={[text.option1, text.gray500]}>
       {choice.count}/{total}
-    </Text>
-    <Text variant="option1" color="gray500">
-      {(choice.count / total) * 100}%
-    </Text>
-  </Box>
+    </p>
+    <p css={[text.option1, text.gray500]}>{(choice.count / total) * 100}%</p>
+  </div>
 );

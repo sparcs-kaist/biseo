@@ -3,18 +3,18 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
 import type { Choice } from "@biseo/interface/agenda";
-import { Text } from "@biseo/web/components/atoms";
 import { SelectIcon } from "@biseo/web/assets";
 import { type Color, theme } from "@biseo/web/theme";
-import { center, h, w } from "@biseo/web/styles";
+import { center, h, w, text } from "@biseo/web/styles";
 
 const Container = styled.div<{
   color: Color;
+  borderColor: Color;
   clickable?: boolean;
 }>`
   border-radius: 5px;
   background-color: ${props => props.theme.colors[props.color]};
-  border: 1px solid ${props => props.theme.colors.gray200};
+  border: 1px solid ${props => props.theme.colors[props.borderColor]};
   padding: 6px 12px 6px 12px;
   width: 340px;
   height: fit-content;
@@ -34,34 +34,31 @@ interface ChoiceTextProps extends PropsWithChildren {
   color: Color;
 }
 
-const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => (
-  <Text
-    variant="body"
-    color={color}
-    style={{
-      wordBreak: "break-all",
-      overflowWrap: "break-word",
-    }}
-  >
-    {children}
-  </Text>
-);
+const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => {
+  const wordBreakWrap = css`
+    word-break: break-all;
+    overflow-wrap: break-word;
+  `;
+
+  return <p css={[text.body, text[color], wordBreakWrap]}>{children}</p>;
+};
 
 const choiceBaseStyle = (
   containerColor: Color,
+  containerBorderColor: Color,
   selectIconColor: Color,
   textColor: Color,
-) => ({ containerColor, selectIconColor, textColor });
+) => ({ containerColor, containerBorderColor, selectIconColor, textColor });
 
 const choiceStyles = {
-  chosen: choiceBaseStyle("blue600", "blue600", "white"),
-  hover: choiceBaseStyle("blue200", "blue600", "blue600"),
-  notChosen: choiceBaseStyle("white", "gray500", "gray500"),
+  chosen: choiceBaseStyle("blue600", "blue600", "blue600", "white"),
+  hover: choiceBaseStyle("blue200", "blue200", "blue600", "blue600"),
+  notChosen: choiceBaseStyle("white", "gray200", "gray500", "gray500"),
 };
 
 interface ChoiceBaseProps {
   variant: keyof typeof choiceStyles;
-  text: string;
+  choiceText: string;
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
@@ -69,7 +66,7 @@ interface ChoiceBaseProps {
 
 const ChoiceBase: React.FC<ChoiceBaseProps> = ({
   variant,
-  text,
+  choiceText,
   onClick = () => {},
   onMouseEnter = () => {},
   onMouseLeave = () => {},
@@ -79,6 +76,7 @@ const ChoiceBase: React.FC<ChoiceBaseProps> = ({
   return (
     <Container
       color={choiceStyle.containerColor}
+      borderColor={choiceStyle.containerBorderColor}
       onClick={onClick}
       clickable={!!onClick}
       onMouseEnter={onMouseEnter}
@@ -87,7 +85,7 @@ const ChoiceBase: React.FC<ChoiceBaseProps> = ({
       <div css={[w(13), h(13), center]}>
         <SelectIcon stroke={theme.colors[choiceStyle.selectIconColor]} />
       </div>
-      <ChoiceText color={choiceStyle.textColor}>{text}</ChoiceText>
+      <ChoiceText color={choiceStyle.textColor}>{choiceText}</ChoiceText>
     </Container>
   );
 };
@@ -105,7 +103,7 @@ export const ChoiceComponent: React.FC<ChoiceProps> = ({
 }) => (
   <ChoiceBase
     variant={chosen ? "chosen" : "notChosen"}
-    text={choice.name}
+    choiceText={choice.name}
     onClick={onClick}
   />
 );
@@ -122,14 +120,14 @@ export const CompletedChoice: React.FC<CompletedChoiceProps> = ({
   return hover ? (
     <ChoiceBase
       variant="hover"
-      text={choice?.name ?? ""}
+      choiceText={choice?.name ?? ""}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     />
   ) : (
     <ChoiceBase
       variant="chosen"
-      text="투표 완료"
+      choiceText="투표 완료"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     />
@@ -137,5 +135,5 @@ export const CompletedChoice: React.FC<CompletedChoiceProps> = ({
 };
 
 export const NotVotableChoice: React.FC = () => (
-  <ChoiceBase variant="notChosen" text="투표 권한이 없습니다." />
+  <ChoiceBase variant="notChosen" choiceText="투표 권한이 없습니다." />
 );

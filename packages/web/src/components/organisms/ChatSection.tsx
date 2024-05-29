@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useInView } from "react-intersection-observer";
 import { formatDate } from "@biseo/web/utils/format";
-import { Divider, Text } from "@biseo/web/components/atoms";
+import { Divider } from "@biseo/web/components/atoms";
 import {
   ChatHeader,
   ChatInput,
@@ -55,9 +55,9 @@ export const ChatSection: React.FC = () => {
           </>
         ))}
         {hasMore && (
-          <Text ref={ref} variant="body" color="gray400" textAlign="center">
+          <p ref={ref} css={[text.body, text.gray400, center]}>
             로딩 중
-          </Text>
+          </p>
         )}
       </Message.List>
       <ChatInput send={sendMessage} />
