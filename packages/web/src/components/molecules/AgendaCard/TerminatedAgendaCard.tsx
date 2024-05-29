@@ -8,8 +8,21 @@ import { OptionVoteResult } from "@biseo/web/components/molecules/OptionVoteResu
 import { VoteResult } from "@biseo/web/components/molecules/VoteResult";
 import { VoteDetail } from "@biseo/web/components/molecules/VoteDetail";
 import { VoteParticipate } from "@biseo/web/components/molecules/VoteParticipate";
-import { align, column, gap, justify, row, text, w } from "@biseo/web/styles";
-import { formatDateSimple } from "@biseo/web/utils/format";
+import {
+  align,
+  center,
+  column,
+  gap,
+  justify,
+  row,
+  text,
+  w,
+} from "@biseo/web/styles";
+import {
+  formatDate,
+  formatDateSimple,
+  formatTime,
+} from "@biseo/web/utils/format";
 
 const agendaTags = {
   public: true,
@@ -43,18 +56,20 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
       {enabled ? (
         <div css={[column, gap(15), w("fill")]}>
           <div css={[column, gap(2)]}>
-            <div css={[row, justify.between, align.center]}>
-              <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
-              <p css={[text.subtitle, text.gray400]}>
-                {formatDateSimple(agenda.startAt)}
-              </p>
-            </div>
+            <h1 css={[text.title2, text.black]}>{agenda.title}</h1>
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
           <div>
             <p css={[text.body, text.blue600]}>{agenda.resolution}</p>
           </div>
           <Divider />
+          <div css={[row, center, justify.between, text.subtitle, text.black]}>
+            <span>투표 일시</span>
+            <span css={[row, gap(4)]}>
+              <span>{formatDate(agenda.endAt)}</span>
+              <span>{formatTime(agenda.endAt)}</span>
+            </span>
+          </div>
           <VoteParticipate
             voted={agenda.voters.voted}
             total={agenda.voters.total}
@@ -89,7 +104,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
               }}
             />
             <p css={[text.subtitle, text.gray400]}>
-              {formatDateSimple(agenda.startAt)}
+              {formatDateSimple(agenda.endAt)}
             </p>
           </div>
 
