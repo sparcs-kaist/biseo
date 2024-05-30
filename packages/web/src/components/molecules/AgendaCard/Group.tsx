@@ -21,11 +21,13 @@ import { EmptyAgendaCard } from "./EmptyAgendaCard";
 
 interface Props extends PropsWithChildren {
   agendaStatus: AgendaStatus;
+  recentOnly?: boolean;
   handleRecentOnly?: () => void;
 }
 
 export const Group: React.FC<Props> = ({
   agendaStatus,
+  recentOnly = false,
   handleRecentOnly = () => {},
   children = null,
 }) => (
@@ -50,7 +52,11 @@ export const Group: React.FC<Props> = ({
         </div>
       </div>
       {agendaStatus === "terminated" && (
-        <ToggleSwitch label="최근 투표만" handleToggle={handleRecentOnly} />
+        <ToggleSwitch
+          label="최근 투표만"
+          defaultValue={recentOnly}
+          handleToggle={handleRecentOnly}
+        />
       )}
     </div>
     {Children.count(children) ? (

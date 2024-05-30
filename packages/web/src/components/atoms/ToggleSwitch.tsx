@@ -2,11 +2,13 @@ import { bg, colors, h, margin, round, row, text, w } from "@biseo/web/styles";
 import React from "react";
 
 interface ToggleSwitchProps {
+  defaultValue: boolean;
   handleToggle: () => void;
   label: string;
 }
 
 export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
+  defaultValue,
   handleToggle,
   label,
 }) => (
@@ -15,6 +17,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
       type="checkbox"
       id="toggle"
       onChange={handleToggle}
+      checked={defaultValue}
       css={[
         w(0),
         h(0),
