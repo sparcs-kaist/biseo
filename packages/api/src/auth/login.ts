@@ -25,3 +25,27 @@ export const loginHandler = async (req: Request, res: Response) => {
 
   return res.json({ token: getToken(user.username) });
 };
+
+const parseJwt = (token: string) => {
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(c => `%${`00${c.charCodeAt(0).toString(16)}`.slice(-2)}`)
+      .join(""),
+  );
+
+  return JSON.parse(jsonPayload);
+};
+
+export const gLoginHandler = async (req: Request, res: Response) => {
+  const logininfo = parseJwt(req.body.credential);
+  const username = logininfo.email.split("@")[0];
+
+  const user =
+    (await prisma.user.findUnique({ where: { username } })) ||
+    (await prisma.user.create({ data: { username, displayName: username } }));
+
+  return res.json({ token: getToken(user.username) });
+};

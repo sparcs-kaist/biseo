@@ -5,13 +5,15 @@ import type { Init } from "@biseo/interface/init";
 
 import { socket } from "@biseo/web/socket";
 import { initSocket } from "@biseo/web/socket/init";
-import { getToken } from "@biseo/web/common/api/auth";
+import { getToken, getGoogleToken } from "@biseo/web/common/api/auth";
+import type { CredentialResponse } from "@react-oauth/google";
 
 interface AuthState {
   token: string | null;
   userInfo: Init | null;
   init: () => Promise<Init | null>;
   login: (username: string, password: string) => Promise<void>;
+  glogin: (cred: CredentialResponse) => Promise<void>;
   logout: () => void;
 }
 
@@ -36,6 +38,14 @@ const useAuth = create<AuthState>()(
       },
       login: async (username, password) => {
         const token = await getToken(username, password);
+
+        if (!token) throw new Error("incorrect username or password");
+
+        const userInfo = await initSocket(token);
+        set({ token, userInfo });
+      },
+      glogin: async cred => {
+        const token = await getGoogleToken(cred);
 
         if (!token) throw new Error("incorrect username or password");
 

@@ -11,6 +11,7 @@ import { useInput } from "@biseo/web/common/hooks";
 import { theme } from "@biseo/web/theme";
 import { Box, Text } from "@biseo/web/components/atoms";
 import { text } from "@biseo/web/styles";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 
 const Page = styled.div`
   width: 100vw;
@@ -86,6 +87,7 @@ const LoginButton = styled.button`
 const LoginBackground = styled.img`
   width: 100%;
   max-width: 1700px;
+  height: 30%;
 
   position: absolute;
   opacity: 30%;
@@ -95,8 +97,9 @@ const LoginBackground = styled.img`
 `;
 
 export const LoginPage: React.FC = () => {
-  const { login, isLoggedIn } = useAuth(state => ({
+  const { login, glogin, isLoggedIn } = useAuth(state => ({
     login: state.login,
+    glogin: state.glogin,
     isLoggedIn: !!state.userInfo,
   }));
   const [error, setError] = useState<boolean>(false);
@@ -124,52 +127,69 @@ export const LoginPage: React.FC = () => {
     },
     [username.value, password.value],
   );
+  // const handleGLogin = useCallback(() => {
+  //   console.log(cred);
+  //   glogin(cred)
+  //     .then(() => console.log("Login success!"))
+  //     .catch(() => setError(true));
+  // }, []);
 
   if (isLoggedIn) return <Navigate to="/" replace />;
 
   return (
-    <Page>
-      <Box dir="column" align="center">
-        <LogoLargeIcon width={116} />
-        <LoginTitle
-          initial={easeMotion.initial}
-          animate={easeMotion.animate}
-          transition={easeMotion.transition}
-        >
-          쉽고 빠른 의사결정은, Biseo
-        </LoginTitle>
-      </Box>
-
-      <form onSubmit={handleLogin}>
-        <Box dir="column" gap={12} align="center">
-          <InputContainer
-            type="text"
-            placeholder="아이디를 입력하세요"
-            value={username.value}
-            onChange={username.onChange}
-          />
-          <InputContainer
-            type="password"
-            placeholder="비밀번호를 입력하세요"
-            value={password.value}
-            onChange={password.onChange}
-          />
-          <Box dir="column" gap={8} align="flex-start">
-            {error && (
-              <Text variant="subtitle" color="blue600">
-                아이디 또는 비밀번호가 올바르지 않습니다.
-              </Text>
-            )}
-
-            <LoginButton>
-              <Text variant="body" color="blue600">
-                로그인
-              </Text>
-            </LoginButton>
-          </Box>
+    <GoogleOAuthProvider clientId="630761439137-ouv559b1su1h52t0jqau3g41ok2cf3p0.apps.googleusercontent.com">
+      <Page>
+        <Box dir="column" align="center">
+          <LogoLargeIcon width={116} />
+          <LoginTitle
+            initial={easeMotion.initial}
+            animate={easeMotion.animate}
+            transition={easeMotion.transition}
+          >
+            쉽고 빠른 의사결정은, Biseo
+          </LoginTitle>
         </Box>
-      </form>
-      <LoginBackground src={LandingImg} />
-    </Page>
+        <form onSubmit={handleLogin}>
+          <Box dir="column" gap={12} align="center">
+            <InputContainer
+              type="text"
+              placeholder="아이디를 입력하세요"
+              value={username.value}
+              onChange={username.onChange}
+            />
+            <InputContainer
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              value={password.value}
+              onChange={password.onChange}
+            />
+            <Box dir="column" gap={8} align="flex-start">
+              {error && (
+                <Text variant="subtitle" color="blue600">
+                  아이디 또는 비밀번호가 올바르지 않습니다.
+                </Text>
+              )}
+
+              <LoginButton>
+                <Text variant="body" color="blue600">
+                  로그인
+                </Text>
+              </LoginButton>
+            </Box>
+          </Box>
+        </form>
+        <GoogleLogin
+          onSuccess={cred => {
+            glogin(cred)
+              .then(() => console.log("Login success!"))
+              .catch(() => setError(true));
+          }}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+        />
+        <LoginBackground src={LandingImg} />
+      </Page>
+    </GoogleOAuthProvider>
   );
 };
