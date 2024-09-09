@@ -163,7 +163,7 @@ export const LoginPage: React.FC = () => {
 
             <LoginButton>
               <Text variant="body" color="blue600">
-                로그인
+                로그인하기
               </Text>
             </LoginButton>
           </Box>
