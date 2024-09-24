@@ -9,12 +9,6 @@ import { AgendaTag } from "@biseo/web/components/molecules/AgendaTag";
 import { align, column, gap, justify, row, text, w } from "@biseo/web/styles";
 import { formatDateSimple } from "@biseo/web/utils/format";
 
-const agendaTags = {
-  public: true,
-  identified: false,
-  votable: false,
-};
-
 interface Props {
   agenda: AdminAgenda;
 }
@@ -29,9 +23,9 @@ export const AdminTerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
         <div css={[row, justify.between, align.center]}>
           <AgendaTag
             tags={{
-              public: agendaTags.public,
-              identified: agendaTags.identified,
-              votable: agendaTags.votable,
+              public: agenda.type.public,
+              identified: agenda.type.named,
+              votable: true,
             }}
           />
           <p css={[text.subtitle, text.gray400]}>
