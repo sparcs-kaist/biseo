@@ -18,12 +18,6 @@ interface OngoingAgendaProps {
   agenda: OngoingAgenda;
 }
 
-const agendaTags = {
-  public: true,
-  identified: false,
-  votable: true,
-};
-
 export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   const [chosenChoiceId, setChosenChoiceId] = useState(0);
   const { voteAgenda } = useAgenda(state => ({
@@ -75,8 +69,8 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
         <div css={[column, gap(8)]}>
           <AgendaTag
             tags={{
-              public: agendaTags.public,
-              identified: agendaTags.identified,
+              public: agenda.type.public,
+              identified: agenda.type.named,
               votable: agenda.user.votable,
             }}
           />
