@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
-import { Box, Text } from "@biseo/web/components/atoms";
-import { border, h, w, round } from "@biseo/web/styles";
+import { Box } from "@biseo/web/components/atoms";
+import { border, h, w, round, text } from "@biseo/web/styles";
 
 interface Props {
   name: string;
@@ -28,13 +28,13 @@ export const VotedMembers: React.FC<Props> = ({ name, userList }) => {
           gap={6}
         >
           <div css={[w(70), { whiteSpace: "normal", wordWrap: "break-word" }]}>
-            <Text variant="option1">{name}</Text>
+            <div css={[text.gray500, text.option1]}>{name}</div>
           </div>
 
           <div css={[w(160), h("hug")]}>
-            <Text css={{ wordSpacing: "10px" }} variant="option1">
+            <div css={[text.option1, text.gray500, { wordSpacing: "10px" }]}>
               {memberString()}
-            </Text>
+            </div>
           </div>
         </Box>
       </div>
