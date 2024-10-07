@@ -25,7 +25,7 @@ const tagNames: Record<TagTypes, string> = {
   private: "비공개",
   identified: "기명",
   anonymous: "무기명",
-  votable: "투표 가능",
+  votable: "권한있음",
   participant: "",
   user: "태그 대상",
   template: "투표항목",
@@ -37,7 +37,7 @@ const tagStyles: Record<TagTypes, SerializedStyles> = {
   identified: colors("green600", "green200"),
   anonymous: colors("purple600", "purple200"),
   votable: colors("blue600", "blue200"),
-  participant: colors("blue600", "blue200"),
+  participant: colors("blue500", "blue200"),
   user: colors("purple600", "purple200"),
   template: colors("orange600", "orange200"),
 };

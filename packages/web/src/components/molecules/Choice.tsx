@@ -9,12 +9,13 @@ import { type Color, theme } from "@biseo/web/theme";
 import { center, h, w } from "@biseo/web/styles";
 
 const Container = styled.div<{
-  color: Color;
+  containerColor: Color;
+  borderColor: Color;
   clickable?: boolean;
 }>`
   border-radius: 5px;
-  background-color: ${props => props.theme.colors[props.color]};
-  border: 1px solid ${props => props.theme.colors.gray200};
+  background-color: ${props => props.theme.colors[props.containerColor]};
+  border: 1px solid ${props => props.theme.colors[props.borderColor]};
   padding: 6px 12px 6px 12px;
   width: 340px;
   height: fit-content;
@@ -49,14 +50,22 @@ const ChoiceText: React.FC<ChoiceTextProps> = ({ color, children = null }) => (
 
 const choiceBaseStyle = (
   containerColor: Color,
-  selectIconColor: Color,
+  borderColor: Color,
+  selectIconStrokeColor: Color,
+  selectIconFillColor: Color,
   textColor: Color,
-) => ({ containerColor, selectIconColor, textColor });
+) => ({
+  containerColor,
+  borderColor,
+  selectIconStrokeColor,
+  selectIconFillColor,
+  textColor,
+});
 
 const choiceStyles = {
-  chosen: choiceBaseStyle("blue600", "blue600", "white"),
-  hover: choiceBaseStyle("blue200", "blue600", "blue600"),
-  notChosen: choiceBaseStyle("white", "gray500", "gray500"),
+  chosen: choiceBaseStyle("blue600", "blue600", "blue600", "white", "white"),
+  hover: choiceBaseStyle("blue200", "blue200", "blue600", "blue200", "blue600"),
+  notChosen: choiceBaseStyle("white", "gray200", "gray500", "white", "gray500"),
 };
 
 interface ChoiceBaseProps {
@@ -78,14 +87,18 @@ const ChoiceBase: React.FC<ChoiceBaseProps> = ({
 
   return (
     <Container
-      color={choiceStyle.containerColor}
+      containerColor={choiceStyle.containerColor}
+      borderColor={choiceStyle.borderColor}
       onClick={onClick}
       clickable={!!onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
       <div css={[w(13), h(13), center]}>
-        <SelectIcon stroke={theme.colors[choiceStyle.selectIconColor]} />
+        <SelectIcon
+          stroke={theme.colors[choiceStyle.selectIconStrokeColor]}
+          fill={theme.colors[choiceStyle.selectIconFillColor]}
+        />
       </div>
       <ChoiceText color={choiceStyle.textColor}>{text}</ChoiceText>
     </Container>

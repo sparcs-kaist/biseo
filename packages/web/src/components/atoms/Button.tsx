@@ -33,7 +33,7 @@ export const Button = styled.button<{
 
     &:disabled {
       cursor: not-allowed;
-      background-color: ${theme.colors.gray100};
+      // background-color: ${theme.colors.gray100};
     }
   `,
 );

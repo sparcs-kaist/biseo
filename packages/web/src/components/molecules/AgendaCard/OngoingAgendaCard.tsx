@@ -70,7 +70,7 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   }
 
   return (
-    <Card primary bold>
+    <Card primary bold={agenda.user.votable && !agenda.user.voted}>
       <div css={[column, gap(10)]}>
         <div css={[column, gap(8)]}>
           <AgendaTag
