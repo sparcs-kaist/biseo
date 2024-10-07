@@ -25,7 +25,7 @@ export const Card = styled.div<{
     background-color: ${primary ? theme.colors.blue100 : theme.colors.white};
     border: 1px solid
       ${(() => {
-        if (bold) return primary ? theme.colors.blue600 : theme.colors.gray400;
+        if (bold) return primary ? theme.colors.blue600 : theme.colors.gray500;
         return primary ? theme.colors.blue300 : theme.colors.gray300;
       })()};
     padding: ${small ? `12px 15px` : `18px 20px`};

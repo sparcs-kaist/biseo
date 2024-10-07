@@ -90,7 +90,7 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
               />
             ))}
           </div>
-          <Divider />
+          <Divider color="gray200" />
           <VoteDetail type={agendaTags.identified} />
         </div>
       ) : (
