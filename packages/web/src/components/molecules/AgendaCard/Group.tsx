@@ -39,7 +39,7 @@ export const Group: React.FC<Props> = ({
         </h2>
         <div
           css={[
-            text.body,
+            text.boldtitle4,
             text.blue600,
             bg.blue200,
             w(20),
@@ -53,7 +53,7 @@ export const Group: React.FC<Props> = ({
       </div>
       {agendaStatus === "terminated" && (
         <ToggleSwitch
-          label="최근 투표만"
+          label="최근 24시간만 보기"
           defaultValue={recentOnly}
           handleToggle={handleRecentOnly}
         />

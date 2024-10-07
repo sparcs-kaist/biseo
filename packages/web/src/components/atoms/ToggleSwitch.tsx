@@ -1,4 +1,14 @@
-import { bg, colors, h, margin, round, row, text, w } from "@biseo/web/styles";
+import {
+  align,
+  bg,
+  colors,
+  h,
+  margin,
+  round,
+  row,
+  text,
+  w,
+} from "@biseo/web/styles";
 import React from "react";
 
 interface ToggleSwitchProps {
@@ -26,7 +36,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
         :checked + label div span { transform: translateX(10px) }`,
       ]}
     />
-    <label htmlFor="toggle" css={[row, `cursor: pointer`]}>
+    <label htmlFor="toggle" css={[row, align.center, `cursor: pointer`]}>
       <div
         css={[
           bg.gray300,
