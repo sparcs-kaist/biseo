@@ -3,10 +3,19 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 
 import type { Choice } from "@biseo/interface/agenda";
-import { Text } from "@biseo/web/components/atoms";
+import { Text, Button } from "@biseo/web/components/atoms";
 import { SelectIcon } from "@biseo/web/assets";
 import { type Color, theme } from "@biseo/web/theme";
-import { center, h, w } from "@biseo/web/styles";
+import {
+  gap,
+  column,
+  center,
+  row,
+  justify,
+  text,
+  h,
+  w,
+} from "@biseo/web/styles";
 
 const Container = styled.div<{
   color: Color;
@@ -69,6 +78,7 @@ interface ChoiceBaseProps {
 
 const ChoiceBase: React.FC<ChoiceBaseProps> = ({
   variant,
+  // eslint-disable-next-line @typescript-eslint/no-shadow
   text,
   onClick = () => {},
   onMouseEnter = () => {},
@@ -112,27 +122,38 @@ export const ChoiceComponent: React.FC<ChoiceProps> = ({
 
 interface CompletedChoiceProps {
   choice?: Choice;
+  onEdit: () => void;
 }
 
 export const CompletedChoice: React.FC<CompletedChoiceProps> = ({
   choice = undefined,
+  onEdit,
 }) => {
   const [hover, setHover] = useState(false);
 
-  return hover ? (
-    <ChoiceBase
-      variant="hover"
-      text={choice?.name ?? ""}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    />
-  ) : (
-    <ChoiceBase
-      variant="chosen"
-      text="투표 완료"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    />
+  return (
+    <div css={[column, gap(10)]}>
+      {hover ? (
+        <ChoiceBase
+          variant="hover"
+          text={choice?.name ?? ""}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        />
+      ) : (
+        <ChoiceBase
+          variant="chosen"
+          text="투표 완료"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        />
+      )}
+      <div css={[row, justify.end, w("fill")]}>
+        <Button w={90} onClick={onEdit}>
+          <p css={[text.option1, text.blue600]}>수정하기</p>
+        </Button>
+      </div>
+    </div>
   );
 };
 

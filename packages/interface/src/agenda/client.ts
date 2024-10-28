@@ -12,6 +12,18 @@ export const RetrieveAllCb = z.array(Agenda);
 export type RetrieveAllCb = z.infer<typeof RetrieveAllCb>;
 
 /**
+ * Edit Vote
+ * description
+ */
+export const EditVote = z.object({
+  choiceId: z.number(),
+  agendaId: z.number(),
+});
+export type EditVote = z.infer<typeof EditVote>;
+export const EditVoteCb = z.object({});
+export type EditVoteCb = z.infer<typeof EditVoteCb>;
+
+/**
  * Vote
  * description
  */

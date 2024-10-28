@@ -92,6 +92,54 @@ export const retrieveAll = async (
   return res;
 };
 
+export const editVote = async (
+  { choiceId, agendaId }: schema.Vote,
+  io: BiseoServer,
+  user: User,
+) => {
+  const existingVote = await prisma.userChoice.findFirst({
+    where: {
+      userId: user.id,
+      choice: {
+        agendaId,
+      },
+    },
+  });
+
+  if (!existingVote) throw new BiseoError("No previous vote found");
+
+  await prisma.userChoice.delete({
+    where: {
+      userId_choiceId: {
+        userId: user.id,
+        choiceId: existingVote.choiceId,
+      },
+    },
+  });
+
+  await prisma.userChoice.create({
+    data: {
+      userId: user.id,
+      choiceId,
+    },
+  });
+
+  io.to(`user/${user.username}`).emit("agenda.voted", {
+    id: agendaId,
+    user: { voted: choiceId },
+    voters: {
+      voted: await prisma.userChoice.count({
+        where: {
+          choice: { agendaId },
+        },
+      }),
+      total: await prisma.userAgendaVotable.count({
+        where: { agendaId },
+      }),
+    },
+  });
+};
+
 export const vote = async (
   { choiceId, agendaId }: schema.Vote,
   io: BiseoServer,
