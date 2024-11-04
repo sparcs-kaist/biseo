@@ -160,7 +160,6 @@ const InputBox: React.FC<InputProps> = ({ value = undefined, onChange }) => (
     borderStyle="solid"
     dir="row"
     align="center"
-    color="gray600"
   >
     <TextInput
       placeholder="내용을 입력하세요"
@@ -184,7 +183,6 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
     borderSize={1}
     round={5}
     borderStyle="solid"
-    color="gray600"
   >
     <TextAreaFixedsize
       placeholder="내용을 입력하세요"
@@ -288,7 +286,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
       css={[
         bg.white,
         w("fill"),
-        h(152),
+        h(151),
         padding(10),
         column,
         align.stretch,

@@ -11,7 +11,7 @@ export const TextAreaFixedsize = styled.textarea`
   border: none;
   background: transparent;
   ${text.subtitle}
-  ${text.black}
+  ${text.gray600}
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
     ${text.gray300}
@@ -26,7 +26,7 @@ export const TextAreaAutosize = styled(TextareaAutosize)`
   border: none;
   background: transparent;
   ${text.body}
-  ${text.black}
+  ${text.gray600}
   ::placeholder {
     font-family: "Noto Sans KR", sans-serif;
     ${text.gray300}

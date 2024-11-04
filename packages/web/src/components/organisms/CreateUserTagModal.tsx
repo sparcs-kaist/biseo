@@ -64,7 +64,7 @@ export const CreateUserTagModal: React.FC = () => {
             />
           </ModalInner>
 
-          <Box w={300} h={101} dir="column" justify="space-between">
+          <Box w={300} h={89} dir="column" justify="space-between">
             <ModalInner title="태그 대상 보기" count={taggers.length}>
               <ModalInner.TaggerBox>
                 {filteredUsers.map(user => (
@@ -82,7 +82,13 @@ export const CreateUserTagModal: React.FC = () => {
               replace
               style={{ textDecoration: "none" }}
             >
-              <Button w={300} h={42} onClick={onSubmit} disabled={!validated}>
+              <Button
+                w={300}
+                h={42}
+                onClick={onSubmit}
+                color={validated ? "blue200" : "blue100"}
+                disabled={!validated}
+              >
                 <Text
                   variant="boldtitle3"
                   color={validated ? "blue600" : "gray300"}

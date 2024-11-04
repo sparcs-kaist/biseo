@@ -78,7 +78,7 @@ export const CreateTemplateModal: React.FC = () => {
           </ModalInner>
         </Box>
 
-        <Box w={300} h={313} dir="column" justify="space-between">
+        <Box w={300} h={342} dir="column" justify="space-between">
           <ModalInner title="투표 항목" count={agendaChoice.length}>
             <ModalInner.AddVoteOptionArea
               onClick={onNewChoiceState}
@@ -105,9 +105,13 @@ export const CreateTemplateModal: React.FC = () => {
               w={300}
               h={40}
               onClick={onTemplateUpdate}
+              color={validated ? "blue200" : "blue100"}
               disabled={!validated}
             >
-              <Text variant="boldtitle3" color="blue600">
+              <Text
+                variant="boldtitle3"
+                color={validated ? "blue600" : "gray300"}
+              >
                 템플릿 생성하기
               </Text>
             </Button>

@@ -74,7 +74,7 @@ export const EditUserTagModal: React.FC = () => {
             />
           </ModalInner>
 
-          <Box w={300} h={101} dir="column" justify="space-between">
+          <Box w={300} h={91} dir="column" justify="space-between">
             <ModalInner title="태그 대상 보기" count={taggers.length}>
               <ModalInner.TaggerBox>
                 {filteredUsers
