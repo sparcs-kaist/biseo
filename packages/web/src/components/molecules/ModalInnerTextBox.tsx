@@ -1,8 +1,5 @@
 import React, { type PropsWithChildren } from "react";
 import {
-  BorderedBox,
-  Box,
-  Text,
   GrayTextButton,
   Scroll,
   TextInput,
@@ -29,6 +26,9 @@ import {
   gap,
   border,
   round,
+  row,
+  center,
+  justify,
 } from "@biseo/web/styles";
 
 interface ModalInnerProps extends PropsWithChildren {
@@ -80,92 +80,66 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
   children,
   required = false,
 }: ModalInnerProps) => (
-  <Box dir="column" w="fill" gap={8}>
-    <Box w="fill" dir="row" align="flex-end" justify="space-between">
-      <Box dir="row" align="center" gap={8}>
-        <Box dir="row" gap={2}>
-          <Text variant="body" color="black">
-            {title}
-          </Text>
-          {required && (
-            <Text variant="body" color="blue600">
-              *
-            </Text>
-          )}
-        </Box>
+  <div css={[column, w("fill"), gap(8)]}>
+    <div css={[w("fill"), row, align.end, justify.between]}>
+      <div css={[row, align.center, gap(8)]}>
+        <div css={[row, gap(2)]}>
+          <p css={[text.body, text.black]}>{title}</p>
+          {required && <p css={[text.body, text.blue600]}>*</p>}
+        </div>
         {count !== undefined && (
-          <Box
-            bg="blue200"
-            round={5}
-            align="center"
-            justify="center"
-            w={20}
-            h={20}
-          >
-            <Text color="blue600">{count}</Text>
-          </Box>
+          <div css={[center, bg.blue200, round.md, w(20), h(20)]}>
+            <p css={[text.blue600, text.body]}>{count}</p>
+          </div>
         )}
-      </Box>
+      </div>
       <GrayTextButton onClick={buttonOnClick}>{buttonText}</GrayTextButton>
-    </Box>
+    </div>
     {children}
-  </Box>
+  </div>
 );
 
 const TextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="gray100"
-    w={300}
-    borderSize={1}
-    padVertical={10}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
-    gap={10}
+  <div
+    css={[
+      border.gray200,
+      round.md,
+      bg.gray100,
+      w(300),
+      padding.vertical(10),
+      padding.horizontal(15),
+      gap(10),
+    ]}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
-  </BorderedBox>
+    <p css={[colors.gray600, text.subtitle]}>{children}</p>
+  </div>
 );
 ModalInner.TextBox = TextBox;
 const WhiteTextBox: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="white"
-    w={300}
-    borderSize={1}
-    padVertical={10}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
-    gap={10}
+  <div
+    css={[
+      border.gray200,
+      round.md,
+      bg.white,
+      w(300),
+      padding.vertical(10),
+      padding.horizontal(15),
+      gap(10),
+    ]}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
-  </BorderedBox>
+    <p css={[colors.gray600, text.subtitle]}>{children}</p>
+  </div>
 );
 ModalInner.WhiteTextBox = WhiteTextBox;
 const InputBox: React.FC<InputProps> = ({ value = undefined, onChange }) => (
-  <BorderedBox
-    w={300}
-    borderColor="gray200"
-    bg="gray100"
-    borderSize={1}
-    round={5}
-    borderStyle="solid"
-    dir="row"
-    align="center"
-  >
+  <div css={[border.gray200, round.md, bg.gray100, w(300), row, align.center]}>
     <TextInput
       placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
       maxLength={maxTextLength}
     />
-  </BorderedBox>
+  </div>
 );
 ModalInner.InputBox = InputBox;
 
@@ -173,22 +147,14 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
   value = undefined,
   onChange,
 }) => (
-  <BorderedBox
-    w={300}
-    h={68}
-    borderColor="gray200"
-    bg="gray100"
-    borderSize={1}
-    round={5}
-    borderStyle="solid"
-  >
+  <div css={[w(300), h(68), border.gray200, round.md, bg.gray100]}>
     <TextAreaFixedsize
       placeholder="내용을 입력하세요"
       value={value}
       onChange={onChange}
       maxLength={maxTextLength}
     />
-  </BorderedBox>
+  </div>
 );
 ModalInner.TextAreaInputBox = TextAreaInputBox;
 
@@ -198,15 +164,7 @@ const TextButton: React.FC<SubmitProps> = ({
   onClick,
   onSubmit,
 }) => (
-  <BorderedBox
-    w={300}
-    bg="gray100"
-    borderSize={1}
-    borderStyle="solid"
-    dir="row"
-    align="center"
-    padRight={15}
-  >
+  <div css={[w(300), bg.gray100, row, align.center, padding.right(15), border]}>
     <TextInput
       value={value}
       placeholder={children?.toString()}
@@ -220,9 +178,9 @@ const TextButton: React.FC<SubmitProps> = ({
       }}
     />
     <Button w={20} h={20} onClick={onSubmit}>
-      <Text css={[colors.blue600, text.boldtitle2, "line-height: 1"]}>+</Text>
+      <p css={[colors.blue600, text.boldtitle2, "line-height: 1"]}>+</p>
     </Button>
-  </BorderedBox>
+  </div>
 );
 ModalInner.TextButton = TextButton;
 
@@ -232,44 +190,46 @@ const VoteOptions: React.FC<PropsWithChildren> = ({ children = null }) => {
     ${scrollBar}
   overflow-y: scroll;
   `;
+  const flexWrap = css`
+    flex-wrap: wrap;
+  `;
   return (
-    <Box
-      dir="row"
-      gap={8}
-      w="fill"
-      h={150}
-      wrap="wrap"
-      justify="flex-start"
-      css={scrollTyle}
+    <div
+      css={[
+        row,
+        justify.start,
+        w("fill"),
+        h(150),
+        scrollTyle,
+        gap(8),
+        flexWrap,
+      ]}
     >
       {children}
-    </Box>
+    </div>
   );
 };
 ModalInner.VoteOptions = VoteOptions;
 
 const VoteOption: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="white"
-    w="hug"
-    h="hug"
-    justify="center"
-    borderSize={1}
-    padVertical={7}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
+  <div
+    css={[
+      w("hug"),
+      h("hug"),
+      justify.center,
+      border.gray200,
+      round.md,
+      padding.vertical(7),
+      padding.horizontal(15),
+    ]}
     style={{
       maxWidth: "100%",
       wordBreak: "break-all",
       overflowWrap: "break-word",
     }}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
-  </BorderedBox>
+    <p css={[colors.gray600, text.subtitle]}>{children}</p>
+  </div>
 );
 ModalInner.VoteOption = VoteOption;
 
@@ -307,61 +267,60 @@ const VoteChoice: React.FC<PropsWithChildren & { onClick?: () => void }> = ({
   children = null,
   onClick = () => {},
 }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="white"
-    w="fill"
-    h="hug"
-    borderSize={1}
-    padVertical={8}
-    padHorizontal={12}
-    round={5}
-    borderStyle="solid"
-    justify="space-between"
-    gap={5}
-    dir="row"
-    align="flex-start"
+  <div
+    css={[
+      w("fill"),
+      h("hug"),
+      bg.white,
+      justify.between,
+      align.start,
+      border.gray200,
+      round.md,
+      padding.vertical(8),
+      padding.horizontal(12),
+      row,
+      gap(5),
+    ]}
     style={{
       minHeight: 32,
     }}
   >
-    <Text
-      color="gray500"
-      variant="subtitle"
+    <p
+      css={[colors.gray600, text.subtitle]}
       style={{
         wordBreak: "break-all",
         overflowWrap: "break-word",
       }}
     >
       {children}
-    </Text>
+    </p>
     <Clickable>
-      <Box w={13} h={13} justify="center" align="center" onClick={onClick}>
+      <Button
+        css={[w(13), h(13)]}
+        style={{ background: "transparent" }}
+        onClick={onClick}
+      >
         <TrashIcon />
-      </Box>
+      </Button>
     </Clickable>
-  </BorderedBox>
+  </div>
 );
 ModalInner.VoteChoice = VoteChoice;
 
 const TagChoice: React.FC<PropsWithChildren> = ({ children = null }) => (
-  <BorderedBox
-    borderColor="gray200"
-    bg="white"
-    h={30}
-    borderSize={1}
-    padVertical={0}
-    padHorizontal={15}
-    round={5}
-    borderStyle="solid"
-    gap={8}
-    justify="center"
-    align="center"
+  <div
+    css={[
+      h(30),
+      bg.white,
+      border.gray200,
+      padding.horizontal(15),
+      round.md,
+      gap(8),
+      center,
+    ]}
   >
-    <Text color="gray600" variant="subtitle">
-      {children}
-    </Text>
-  </BorderedBox>
+    <p css={[colors.gray600, text.subtitle]}>{children}</p>
+  </div>
 );
 ModalInner.TagChoice = TagChoice;
 
