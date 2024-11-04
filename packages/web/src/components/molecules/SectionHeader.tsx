@@ -14,7 +14,9 @@ export const SectionHeader: React.FC<Props> = ({ count, children = null }) => (
       {children}
     </Text>
     <Box bg="blue200" round={5} align="center" justify="center" w={20} h={20}>
-      <Text color="blue600">{count}</Text>
+      <Text color="blue600" variant="boldtitle4">
+        {count}
+      </Text>
     </Box>
   </Box>
 );

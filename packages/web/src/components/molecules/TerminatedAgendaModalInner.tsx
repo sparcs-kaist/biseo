@@ -80,7 +80,9 @@ const OptionResultsBox: React.FC<BoxWithCountProps> = ({
           w={20}
           h={20}
         >
-          <Text color="blue600">{count}</Text>
+          <Text color="blue600" variant="boldtitle4">
+            {count}
+          </Text>
         </Box>
       )}
     </Box>

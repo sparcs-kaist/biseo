@@ -12,6 +12,7 @@ export const AdminAgendaTags: React.FC = () => (
         bg="white"
         w={65}
         h={28}
+        align="center"
         justify="center"
         borderSize={1}
         padHorizontal={15}
@@ -33,6 +34,7 @@ export const AdminAgendaTags: React.FC = () => (
         bg="white"
         w={65}
         h={28}
+        align="center"
         justify="center"
         borderSize={1}
         padHorizontal={15}

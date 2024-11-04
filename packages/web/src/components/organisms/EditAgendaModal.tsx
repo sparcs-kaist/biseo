@@ -134,7 +134,7 @@ export const EditAgendaModal: React.FC = () => {
             <ModalInner
               title="템플릿 선택"
               buttonOnClick={() => applyTemplate(template)}
-              buttonText="템플릿 적용"
+              buttonText="선택된 템플릿 적용하기"
             >
               <SelectTemplateBox
                 width={300}

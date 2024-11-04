@@ -102,7 +102,9 @@ export const ModalInner: React.FC<ModalInnerProps> & SubComponents = ({
             w={20}
             h={20}
           >
-            <Text color="blue600">{count}</Text>
+            <Text color="blue600" variant="boldtitle4">
+              {count}
+            </Text>
           </Box>
         )}
       </Box>
@@ -158,6 +160,7 @@ const InputBox: React.FC<InputProps> = ({ value = undefined, onChange }) => (
     borderStyle="solid"
     dir="row"
     align="center"
+    color="gray600"
   >
     <TextInput
       placeholder="내용을 입력하세요"
@@ -181,6 +184,7 @@ const TextAreaInputBox: React.FC<TextAreaProps> = ({
     borderSize={1}
     round={5}
     borderStyle="solid"
+    color="gray600"
   >
     <TextAreaFixedsize
       placeholder="내용을 입력하세요"
@@ -220,7 +224,7 @@ const TextButton: React.FC<SubmitProps> = ({
       }}
     />
     <Button w={20} h={20} onClick={onSubmit}>
-      <Text css={[colors.blue600, text.boldtitle2, "line-height: 1"]}>+</Text>
+      <Text css={[text.blue600, text.boldtitle2, "line-height: 1"]}>+</Text>
     </Button>
   </BorderedBox>
 );
@@ -291,6 +295,7 @@ const AddVoteOptionArea: React.FC<SubmitProps> = ({
         scroll.y,
         scrollBar,
         gap(10),
+        colors.gray600,
       ]}
     >
       {children}

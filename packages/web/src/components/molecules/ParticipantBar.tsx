@@ -45,7 +45,7 @@ export const ParticipantBar: React.FC<Props> = ({
       <Background
         percent={total ? (participant / total) * 100 : 0}
         color="blue300"
-        borderColor="gray200"
+        borderColor="blue200"
       >
         <Box
           w="fill"

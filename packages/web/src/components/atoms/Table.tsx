@@ -27,9 +27,7 @@ export const Header = styled.thead`
   text-align: left;
   background-color: ${props => props.theme.colors.gray100};
 
-  > * tr {
-    color: ${props => props.theme.colors.gray500};
-  }
+  color: ${props => props.theme.colors.gray500};
 `;
 
 export const Body = styled.tbody`
@@ -38,9 +36,7 @@ export const Body = styled.tbody`
   height: 100%;
   background-color: ${props => props.theme.colors.white};
 
-  > * tr {
-    color: ${props => props.theme.colors.gray600};
-  }
+  color: ${props => props.theme.colors.gray600};
 `;
 
 export const Row = styled.tr<{ selected?: boolean }>`
