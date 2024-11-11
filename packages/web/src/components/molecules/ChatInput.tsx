@@ -1,8 +1,8 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { useCallback, useMemo } from "react";
 import { css } from "@emotion/react";
 
-/* TODO:  */
+/* eslint-disable import/no-extraneous-dependencies */
+/* TODO: Solve package installation issue */
 import { SendHorizontal, Ghost, Megaphone } from "lucide-react";
 import { TextAreaAutosize } from "@biseo/web/components/atoms";
 import { useInput } from "@biseo/web/common/hooks";
@@ -22,6 +22,8 @@ import {
   center,
   colors,
 } from "@biseo/web/styles";
+import { useAuth } from "@biseo/web/services/auth";
+import { BubbleItem } from "./BubbleItem";
 
 const inputBoxStyle = css`
   ${w("fill")}
@@ -107,16 +109,23 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
         {/* TODO: Add EmoticonIcon */}
         <div css={[center, w("hug"), h("hug"), gap(8)]}>
           <div css={[center, w("hug"), h("hug"), gap(4)]}>
-            <Ghost
-              size={18}
-              color={colors.gray300}
-              style={{ cursor: "pointer" }}
-            />
-            <Megaphone
-              size={18}
-              color={colors.gray300}
-              style={{ cursor: "pointer" }}
-            />
+            <BubbleItem label="익명으로 설정" position="top">
+              <Ghost
+                size={20}
+                color={colors.gray300}
+                style={{ cursor: "pointer" }}
+              />
+            </BubbleItem>
+
+            {useAuth().userInfo?.isAdmin && (
+              <BubbleItem label="공지 메세지로 설정" position="top">
+                <Megaphone
+                  size={20}
+                  color={colors.gray300}
+                  style={{ cursor: "pointer" }}
+                />
+              </BubbleItem>
+            )}
           </div>
           <div css={sendIconStyle}>
             <SendHorizontal size={18} color={colors.white} />
