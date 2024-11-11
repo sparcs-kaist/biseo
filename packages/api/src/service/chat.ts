@@ -1,15 +1,21 @@
 import type { Prisma, User } from "@prisma/client";
 import type * as schema from "@biseo/interface/chat";
 import type { Agenda } from "@biseo/interface/agenda";
-
 import { prisma } from "@biseo/api/db/prisma";
 
 export const createMessage = async (
   { message }: schema.Send,
-  user: User,
+  user: User | undefined,
 ): Promise<schema.Message> => {
+  const anonUser: User = {
+    id: 0,
+    username: "익명",
+    displayName: "익명",
+    isAdmin: false,
+  };
+  const displayAccount = user || anonUser;
   const sendQuery: Prisma.ChatCreateInput = {
-    user: { connect: user },
+    user: { connect: displayAccount },
     type: "message",
     message,
     createdAt: new Date(),
