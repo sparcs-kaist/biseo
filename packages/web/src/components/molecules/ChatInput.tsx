@@ -1,8 +1,10 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useCallback, useMemo } from "react";
 import { css } from "@emotion/react";
 
-import { SendIcon } from "@biseo/web/assets";
-import { Divider, TextAreaAutosize } from "@biseo/web/components/atoms";
+/* TODO:  */
+import { SendHorizontal, Ghost, Megaphone } from "lucide-react";
+import { TextAreaAutosize } from "@biseo/web/components/atoms";
 import { useInput } from "@biseo/web/common/hooks";
 import {
   w,
@@ -17,6 +19,8 @@ import {
   gap,
   border,
   round,
+  center,
+  colors,
 } from "@biseo/web/styles";
 
 const inputBoxStyle = css`
@@ -38,7 +42,7 @@ const formStyle = css`
   ${bg.white}
   ${border.gray300}
   ${round.md}
-  ${align.center}
+  ${align.end}
 `;
 
 const textAreaScrollStyle = css`
@@ -65,10 +69,23 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
     setValue("");
   }, [input.value, validated]);
 
+  const sendIconStyle = css`
+    ${center}
+    ${w(28)}
+    ${h(28)}
+
+    ${validated ? bg.blue600 : bg.gray300}
+    ${round.md}
+
+    flex: 0 0 auto;
+    cursor: pointer;
+    transition: all 0.2s;
+  `;
+
   return (
     <div css={inputBoxStyle}>
       <form css={formStyle}>
-        <div css={[row, w("fill"), h("fill")]}>
+        <div css={[center, w("fill"), h("fill")]}>
           <TextAreaAutosize
             css={textAreaScrollStyle}
             onKeyDown={e => {
@@ -85,10 +102,27 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
             maxLength={maxMessageLength}
             onChange={input.onChange}
           />
-          <Divider dir="vertical" />
+          {/* <Divider dir="vertical" /> */}
         </div>
         {/* TODO: Add EmoticonIcon */}
-        <SendIcon onClick={sendCurrent} />
+        <div css={[center, w("hug"), h("hug"), gap(8)]}>
+          <div css={[center, w("hug"), h("hug"), gap(4)]}>
+            <Ghost
+              size={18}
+              color={colors.gray300}
+              style={{ cursor: "pointer" }}
+            />
+            <Megaphone
+              size={18}
+              color={colors.gray300}
+              style={{ cursor: "pointer" }}
+            />
+          </div>
+          <div css={sendIconStyle}>
+            <SendHorizontal size={18} color={colors.white} />
+          </div>
+        </div>
+
         {/* TODO: Replace with button / add hover, actove effect */}
       </form>
     </div>
