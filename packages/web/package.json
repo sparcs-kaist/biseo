@@ -15,9 +15,11 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@react-oauth/google": "^0.12.1",
     "axios": "^1.4.0",
     "framer-motion": "^10.16.1",
     "immer": "^10.0.2",
+    "lucide-react": "^0.456.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.5.2",
@@ -25,8 +27,6 @@
     "react-select": "^5.7.4",
     "react-textarea-autosize": "^8.5.2",
     "socket.io-client": "^4.5.4",
-    "lucide-react": "^0.456.0",
-    "@react-oauth/google": "^0.12.1",
     "zustand": "^4.3.2"
   },
   "devDependencies": {
