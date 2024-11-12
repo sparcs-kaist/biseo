@@ -11,7 +11,7 @@ import { useInput } from "@biseo/web/common/hooks";
 import { theme } from "@biseo/web/theme";
 import { Box, Text } from "@biseo/web/components/atoms";
 import { text } from "@biseo/web/styles";
-import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const Page = styled.div`
   width: 100vw;
@@ -127,12 +127,12 @@ export const LoginPage: React.FC = () => {
     },
     [username.value, password.value],
   );
-  // const handleGLogin = useCallback(() => {
-  //   console.log(cred);
-  //   glogin(cred)
-  //     .then(() => console.log("Login success!"))
-  //     .catch(() => setError(true));
-  // }, []);
+  const handleGLogin = useCallback(() => {
+    // console.log(cred);
+    glogin()
+      .then(() => console.log("Login success!"))
+      .catch(() => setError(true));
+  }, []);
 
   if (isLoggedIn) return <Navigate to="/" replace />;
 
@@ -178,7 +178,12 @@ export const LoginPage: React.FC = () => {
             </Box>
           </Box>
         </form>
-        <GoogleLogin
+        <LoginButton onClick={handleGLogin}>
+          <Text variant="body" color="blue600">
+            로그인
+          </Text>
+        </LoginButton>
+        {/* <GoogleLogin
           onSuccess={cred => {
             glogin(cred)
               .then(() => console.log("Login success!"))
@@ -187,7 +192,7 @@ export const LoginPage: React.FC = () => {
           onError={() => {
             console.log("Login Failed");
           }}
-        />
+        /> */}
         <LoginBackground src={LandingImg} />
       </Page>
     </GoogleOAuthProvider>
