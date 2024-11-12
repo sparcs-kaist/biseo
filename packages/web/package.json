@@ -25,6 +25,8 @@
     "react-select": "^5.7.4",
     "react-textarea-autosize": "^8.5.2",
     "socket.io-client": "^4.5.4",
+    "lucide-react":"^0.456.0",
+    "@react-oauth/google":"^0.12.1",
     "zustand": "^4.3.2"
   },
   "devDependencies": {
