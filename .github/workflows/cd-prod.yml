@@ -18,9 +18,9 @@ jobs:
       matrix:
         include:
           - dockerfile: ./.docker/web.Dockerfile
-            image: ghcr.io/sparcs/biseo-web
+            image: ghcr.io/sparcs-kaist/biseo-web
           - dockerfile: ./.docker/api.Dockerfile
-            image: ghcr.io/sparcs/biseo-api
+            image: ghcr.io/sparcs-kaist/biseo-api
 
     steps:
       - name: Checkout
