@@ -13,7 +13,7 @@ import "./index.css";
 enableMapSet();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT!}>
+  <GoogleOAuthProvider clientId="630761439137-ouv559b1su1h52t0jqau3g41ok2cf3p0.apps.googleusercontent.com">
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <RouterProvider router={router} />

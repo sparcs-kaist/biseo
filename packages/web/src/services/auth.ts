@@ -12,7 +12,7 @@ interface AuthState {
   userInfo: Init | null;
   init: () => Promise<Init | null>;
   login: (username: string, password: string) => Promise<void>;
-  glogin: () => Promise<void>;
+  glogin: (code: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -43,10 +43,10 @@ const useAuth = create<AuthState>()(
         const userInfo = await initSocket(token);
         set({ token, userInfo });
       },
-      glogin: async () => {
-        const token = await getGoogleToken();
+      glogin: async code => {
+        const token = await getGoogleToken(code);
 
-        if (!token) throw new Error("incorrect username or password");
+        if (!token) throw new Error("incorrect username");
 
         const userInfo = await initSocket(token);
         set({ token, userInfo });
