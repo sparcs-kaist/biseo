@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
-import type { Message } from "@biseo/interface/chat";
+import type { Message, MessageType } from "@biseo/interface/chat";
 import type { ChatUser } from "@biseo/interface/user";
 
 import { socket } from "@biseo/web/socket";
@@ -37,7 +37,7 @@ interface ChatState {
    * Sends a message to the server and appends to the store
    * Use optimistic update using draft message
    */
-  send: (message: string, user: ChatUser) => Promise<void>;
+  send: (message: string, type: MessageType, user: ChatUser) => Promise<void>;
 }
 
 const useChatStore = create(
@@ -71,16 +71,21 @@ const useChatStore = create(
         state.loading = false;
       });
     },
-    send: async (message, user) => {
+    send: async (message, type, user) => {
       // Creates a local draft message
-      const draft = createDraftMessage(message, user, get().messages.keys());
+      const draft = createDraftMessage(
+        message,
+        type,
+        user,
+        get().messages.keys(),
+      );
 
       set(state => {
         state.messages.set(draft.id, draft);
       });
 
       try {
-        const created = await socket.emitAsync("chat.send", { message });
+        const created = await socket.emitAsync("chat.send", { message, type });
         set(state => {
           // Removes the draft message and replaces with the created message
           state.messages.delete(draft.id);
