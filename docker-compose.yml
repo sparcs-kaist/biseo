@@ -1,5 +1,5 @@
 version: "3.9"
-name: "biseo-test"
+name: "biseo"
 
 services:
   web:
