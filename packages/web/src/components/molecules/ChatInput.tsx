@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { css } from "@emotion/react";
 
 /* eslint-disable import/no-extraneous-dependencies */
@@ -23,6 +23,7 @@ import {
   colors,
 } from "@biseo/web/styles";
 import { useAuth } from "@biseo/web/services/auth";
+import type { MessageType } from "@biseo/interface/chat/common";
 import { BubbleItem } from "./BubbleItem";
 
 const inputBoxStyle = css`
@@ -54,11 +55,18 @@ const textAreaScrollStyle = css`
 `;
 
 interface Props {
-  send: (message: string) => void;
+  send: (message: string, type: MessageType) => void;
 }
 
 export const ChatInput: React.FC<Props> = ({ send }) => {
   const { input, setValue } = useInput();
+  const [type, setType] = useState<MessageType>("message");
+
+  const onTypeChange = (newType: MessageType) =>
+    setType(prev => {
+      if (prev === newType) return "message";
+      return newType;
+    });
 
   const validated = useMemo(() => input.value.trim().length > 0, [input.value]);
 
@@ -67,7 +75,7 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
 
   const sendCurrent = useCallback(() => {
     if (!validated) return;
-    send(input.value.trim());
+    send(input.value.trim(), type);
     setValue("");
   }, [input.value, validated]);
 
@@ -112,8 +120,9 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
             <BubbleItem label="익명으로 설정" position="top">
               <Ghost
                 size={20}
-                color={colors.gray300}
+                color={type === "anonymous" ? colors.blue600 : colors.gray300}
                 style={{ cursor: "pointer" }}
+                onClick={() => onTypeChange("anonymous")}
               />
             </BubbleItem>
 
@@ -121,8 +130,11 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
               <BubbleItem label="공지 메세지로 설정" position="top">
                 <Megaphone
                   size={20}
-                  color={colors.gray300}
+                  color={
+                    type === "adminnotice" ? colors.blue600 : colors.gray300
+                  }
                   style={{ cursor: "pointer" }}
+                  onClick={() => onTypeChange("adminnotice")}
                 />
               </BubbleItem>
             )}

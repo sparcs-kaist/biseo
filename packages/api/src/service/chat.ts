@@ -5,16 +5,26 @@ import type { Agenda } from "@biseo/interface/agenda";
 import { prisma } from "@biseo/api/db/prisma";
 
 export const createMessage = async (
-  { message }: schema.Send,
-  user: User,
+  { message, type }: schema.Send,
+  user: User | undefined,
 ): Promise<schema.Message> => {
-  const sendQuery: Prisma.ChatCreateInput = {
-    user: { connect: user },
-    type: "message",
-    message,
-    createdAt: new Date(),
-  };
+  // if anonymous set user undefined
+  const sendQuery: Prisma.ChatCreateInput =
+    type === "anonymous"
+      ? {
+          user: undefined,
+          type: "message",
+          message,
+          createdAt: new Date(),
+        }
+      : {
+          user: { connect: user },
+          type,
+          message,
+          createdAt: new Date(),
+        };
 
+  // TODO-feat/anony
   const { createdAt, ...createdMessage } = await prisma.chat.create({
     data: sendQuery,
     select: {

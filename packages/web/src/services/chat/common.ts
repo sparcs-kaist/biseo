@@ -1,15 +1,16 @@
-import type { ChatUser } from "@biseo/interface/user";
-import type { Message } from "@biseo/interface/chat";
+import type { Message, MessageType } from "@biseo/interface/chat";
+import type { ChatUser } from "@biseo/interface/user/common";
 
 export const RETRIEVE_CHAT_OFFSET = 20;
 
 export const createDraftMessage = (
   message: string,
+  type: MessageType,
   user: ChatUser,
   preExistingKeys: IterableIterator<number>,
 ): Message => ({
   id: Math.max(...preExistingKeys, 0) + 1,
-  type: "message",
+  type,
   user,
   message,
   createdAt: new Date().toISOString(),
