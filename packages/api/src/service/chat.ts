@@ -5,25 +5,25 @@ import { prisma } from "@biseo/api/db/prisma";
 
 export const createMessage = async (
   { message, type }: schema.Send,
-  user: User | undefined,
+  user: User,
 ): Promise<schema.Message> => {
+  const isAnon = type === "anonymous";
   const anonUser: User = {
     id: 0,
-    username: "익명",
-    displayName: "익명",
     isAdmin: false,
+    displayName: "익명",
+    username: "익명",
   };
-  const displayAccount = type === "anonymous" ? anonUser : user;
   const sendQuery: Prisma.ChatCreateInput = {
-    user: { connect: displayAccount },
+    user: { connect: user },
     type: "message",
     message,
+    isAnon,
     createdAt: new Date(),
   };
 
   console.log("query", sendQuery);
 
-  // TODO-feat/anony
   const { createdAt, ...createdMessage } = await prisma.chat.create({
     data: sendQuery,
     select: {
@@ -37,8 +37,13 @@ export const createMessage = async (
       type: true,
       message: true,
       createdAt: true,
+      isAnon: true,
     },
   });
+
+  if (isAnon) {
+    createdMessage.user = anonUser;
+  }
 
   return {
     ...createdMessage,
@@ -98,11 +103,23 @@ export const retrieve = async ({
       type: true,
       message: true,
       createdAt: true,
+      isAnon: true,
     },
   });
 
-  return messages.map(({ createdAt, ...message }) => ({
-    ...message,
-    createdAt: createdAt.toISOString(),
-  }));
+  const anonUser: User = {
+    id: 0,
+    isAdmin: false,
+    displayName: "익명",
+    username: "익명",
+  };
+
+  return messages.map(({ createdAt, isAnon, ...message }) => {
+    const displayMessage = message;
+    if (isAnon) displayMessage.user = anonUser;
+    return {
+      ...displayMessage,
+      createdAt: createdAt.toISOString(),
+    };
+  });
 };
