@@ -11,7 +11,7 @@ export const createDraftMessage = (
 ): Message => ({
   id: Math.max(...preExistingKeys, 0) + 1,
   type,
-  user,
+  user: type === "anonymous" ? { id: 0, displayName: "익명" } : user,
   message,
   createdAt: new Date().toISOString(),
 });

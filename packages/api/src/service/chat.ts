@@ -22,8 +22,6 @@ export const createMessage = async (
     createdAt: new Date(),
   };
 
-  console.log("query", sendQuery);
-
   const { createdAt, ...createdMessage } = await prisma.chat.create({
     data: sendQuery,
     select: {
