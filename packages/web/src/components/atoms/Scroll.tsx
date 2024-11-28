@@ -24,7 +24,7 @@ export const Scroll = styled.div<{ hide?: boolean }>`
     ${props =>
       !props.hide &&
       css`
-        background-color: ${props.theme.colors.gray400};
+        background-color: ${props.theme.colors.gray300};
       `}
     border-radius: 100px;
   }
