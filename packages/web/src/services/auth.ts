@@ -5,13 +5,14 @@ import type { Init } from "@biseo/interface/init";
 
 import { socket } from "@biseo/web/socket";
 import { initSocket } from "@biseo/web/socket/init";
-import { getToken } from "@biseo/web/common/api/auth";
+import { getToken, getGoogleToken } from "@biseo/web/common/api/auth";
 
 interface AuthState {
   token: string | null;
   userInfo: Init | null;
   init: () => Promise<Init | null>;
   login: (username: string, password: string) => Promise<void>;
+  glogin: (code: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -38,6 +39,14 @@ const useAuth = create<AuthState>()(
         const token = await getToken(username, password);
 
         if (!token) throw new Error("incorrect username or password");
+
+        const userInfo = await initSocket(token);
+        set({ token, userInfo });
+      },
+      glogin: async code => {
+        const token = await getGoogleToken(code);
+
+        if (!token) throw new Error("incorrect username");
 
         const userInfo = await initSocket(token);
         set({ token, userInfo });
