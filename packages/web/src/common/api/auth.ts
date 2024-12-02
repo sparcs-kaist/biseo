@@ -15,3 +15,17 @@ export const getToken = async (username: string, password: string) => {
     return null;
   }
 };
+
+export const getGoogleToken = async (code: string) => {
+  try {
+    const res = await axios.post<{ token: string }>(
+      `${API_BASE}/api/auth/glogin`,
+      {
+        code,
+      },
+    );
+    return res.data.token;
+  } catch {
+    return null;
+  }
+};

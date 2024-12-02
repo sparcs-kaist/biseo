@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 
 import { LogoLargeIcon } from "@biseo/web/assets";
 import LandingImg from "@biseo/web/assets/landing.png";
+import GoogleLogo from "@biseo/web/assets/google.png";
 import { useAuth } from "@biseo/web/services/auth";
 
 import { useInput } from "@biseo/web/common/hooks";
 import { theme } from "@biseo/web/theme";
 import { Box, Text } from "@biseo/web/components/atoms";
 import { text } from "@biseo/web/styles";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Page = styled.div`
   width: 100vw;
@@ -63,7 +65,7 @@ const InputContainer = styled.input`
 
 const LoginButton = styled.button`
   width: 320px;
-  height: 45px;
+  height: 48px;
 
   background-color: ${theme.colors.blue200};
   border: none;
@@ -78,6 +80,7 @@ const LoginButton = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 6px;
 
   cursor: pointer;
   transition: all 0.2s;
@@ -86,6 +89,9 @@ const LoginButton = styled.button`
 const LoginBackground = styled.img`
   width: 100%;
   max-width: 1700px;
+  height: 30%;
+
+  object-fit: cover;
 
   position: absolute;
   opacity: 30%;
@@ -95,8 +101,9 @@ const LoginBackground = styled.img`
 `;
 
 export const LoginPage: React.FC = () => {
-  const { login, isLoggedIn } = useAuth(state => ({
+  const { login, glogin, isLoggedIn } = useAuth(state => ({
     login: state.login,
+    glogin: state.glogin,
     isLoggedIn: !!state.userInfo,
   }));
   const [error, setError] = useState<boolean>(false);
@@ -124,6 +131,21 @@ export const LoginPage: React.FC = () => {
     },
     [username.value, password.value],
   );
+  const handleGLogin = useCallback((code: string) => {
+    glogin(code)
+      .then(() => console.log("Login success!"))
+      .catch(() => setError(true));
+  }, []);
+  const googleLogin = useGoogleLogin({
+    scope: "email",
+    onSuccess: async ({ code }) => {
+      handleGLogin(code);
+    },
+    onError: errorResponse => {
+      console.error(errorResponse);
+    },
+    flow: "auth-code",
+  });
 
   if (isLoggedIn) return <Navigate to="/" replace />;
 
@@ -139,7 +161,6 @@ export const LoginPage: React.FC = () => {
           쉽고 빠른 의사결정은, Biseo
         </LoginTitle>
       </Box>
-
       <form onSubmit={handleLogin}>
         <Box dir="column" gap={12} align="center">
           <InputContainer
@@ -162,13 +183,19 @@ export const LoginPage: React.FC = () => {
             )}
 
             <LoginButton>
-              <Text variant="body" color="blue600">
+              <Text variant="boldtitle2" color="blue600">
                 로그인
               </Text>
             </LoginButton>
           </Box>
         </Box>
       </form>
+      <LoginButton onClick={googleLogin}>
+        <img alt="google-logo" style={{ width: "20px" }} src={GoogleLogo} />
+        <Text variant="boldtitle2" color="blue600">
+          구글 로그인
+        </Text>
+      </LoginButton>
       <LoginBackground src={LandingImg} />
     </Page>
   );
