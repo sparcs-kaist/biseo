@@ -22,6 +22,7 @@ export const createMessage = async (
         select: {
           id: true,
           displayName: true,
+          username: true,
         },
       },
       type: true,
@@ -33,9 +34,8 @@ export const createMessage = async (
   if (type === "anonymous") {
     createdMessage.user.id = 0;
     createdMessage.user.displayName = "익명";
+    createdMessage.user.username = "익명";
   }
-
-  console.log(createdMessage);
 
   return {
     ...createdMessage,
@@ -103,6 +103,7 @@ export const retrieve = async ({
     if (message.type === "anonymous") {
       displayMessage.user.id = 0;
       displayMessage.user.displayName = "익명";
+      displayMessage.user.username = "익명";
     }
     return {
       ...displayMessage,
