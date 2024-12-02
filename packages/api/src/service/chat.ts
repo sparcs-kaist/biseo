@@ -7,18 +7,10 @@ export const createMessage = async (
   { message, type }: schema.Send,
   user: User,
 ): Promise<schema.Message> => {
-  const isAnon = type === "anonymous";
-  const anonUser: User = {
-    id: 0,
-    isAdmin: false,
-    displayName: "익명",
-    username: "익명",
-  };
   const sendQuery: Prisma.ChatCreateInput = {
     user: { connect: user },
-    type: "message",
+    type,
     message,
-    isAnon,
     createdAt: new Date(),
   };
 
@@ -35,13 +27,15 @@ export const createMessage = async (
       type: true,
       message: true,
       createdAt: true,
-      isAnon: true,
     },
   });
 
-  if (isAnon) {
-    createdMessage.user = anonUser;
+  if (type === "anonymous") {
+    createdMessage.user.id = 0;
+    createdMessage.user.displayName = "익명";
   }
+
+  console.log(createdMessage);
 
   return {
     ...createdMessage,
@@ -101,20 +95,15 @@ export const retrieve = async ({
       type: true,
       message: true,
       createdAt: true,
-      isAnon: true,
     },
   });
 
-  const anonUser: User = {
-    id: 0,
-    isAdmin: false,
-    displayName: "익명",
-    username: "익명",
-  };
-
-  return messages.map(({ createdAt, isAnon, ...message }) => {
+  return messages.map(({ createdAt, ...message }) => {
     const displayMessage = message;
-    if (isAnon) displayMessage.user = anonUser;
+    if (message.type === "anonymous") {
+      displayMessage.user.id = 0;
+      displayMessage.user.displayName = "익명";
+    }
     return {
       ...displayMessage,
       createdAt: createdAt.toISOString(),

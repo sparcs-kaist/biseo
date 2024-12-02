@@ -55,7 +55,6 @@ model Chat {
   message   String   @db.VarChar(500)
   createdAt DateTime @default(now()) @map("created_at")
   user      User     @relation(fields: [userId], references: [id])
-  isAnon    Boolean  @default(false) @map("is_anon")
 
   @@index([userId], map: "chat_user_id_fkey")
   @@map("chat")
@@ -127,6 +126,7 @@ model UserTag {
 enum ChatType {
   message
   notice
-
+  anonymous
+  adminnotice
   @@map("chat_type")
 }
