@@ -15,9 +15,9 @@ export const gauthenticate = async (code: string): Promise<string | null> => {
       "postmessage",
     );
     const token = await logininfo.getToken(code);
-    const username = Token.parse(
-      jwt.decode(token.tokens.id_token!),
-    ).email.split("@")[0];
+    const mail = Token.parse(jwt.decode(token.tokens.id_token!)).email;
+    const username =
+      mail.split("@")[1] === "sparcs.org" ? mail.split("@")[0] : null;
     return username;
   } catch {
     return null;
