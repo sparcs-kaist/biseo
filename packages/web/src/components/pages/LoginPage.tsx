@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 import { LogoLargeIcon } from "@biseo/web/assets";
 import LandingImg from "@biseo/web/assets/landing.png";
+import GoogleLogo from "@biseo/web/assets/google.png";
 import { useAuth } from "@biseo/web/services/auth";
 
 import { useInput } from "@biseo/web/common/hooks";
@@ -64,7 +65,7 @@ const InputContainer = styled.input`
 
 const LoginButton = styled.button`
   width: 320px;
-  height: 45px;
+  height: 48px;
 
   background-color: ${theme.colors.blue200};
   border: none;
@@ -79,6 +80,7 @@ const LoginButton = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 6px;
 
   cursor: pointer;
   transition: all 0.2s;
@@ -88,6 +90,8 @@ const LoginBackground = styled.img`
   width: 100%;
   max-width: 1700px;
   height: 30%;
+
+  object-fit: cover;
 
   position: absolute;
   opacity: 30%;
@@ -179,7 +183,7 @@ export const LoginPage: React.FC = () => {
             )}
 
             <LoginButton>
-              <Text variant="body" color="blue600">
+              <Text variant="boldtitle2" color="blue600">
                 로그인
               </Text>
             </LoginButton>
@@ -187,7 +191,8 @@ export const LoginPage: React.FC = () => {
         </Box>
       </form>
       <LoginButton onClick={googleLogin}>
-        <Text variant="body" color="blue600">
+        <img alt="google-logo" style={{ width: "20px" }} src={GoogleLogo} />
+        <Text variant="boldtitle2" color="blue600">
           구글 로그인
         </Text>
       </LoginButton>
