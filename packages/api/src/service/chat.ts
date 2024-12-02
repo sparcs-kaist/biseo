@@ -1,16 +1,15 @@
 import type { Prisma, User } from "@prisma/client";
 import type * as schema from "@biseo/interface/chat";
 import type { Agenda } from "@biseo/interface/agenda";
-
 import { prisma } from "@biseo/api/db/prisma";
 
 export const createMessage = async (
-  { message }: schema.Send,
+  { message, type }: schema.Send,
   user: User,
 ): Promise<schema.Message> => {
   const sendQuery: Prisma.ChatCreateInput = {
     user: { connect: user },
-    type: "message",
+    type,
     message,
     createdAt: new Date(),
   };
@@ -30,6 +29,13 @@ export const createMessage = async (
       createdAt: true,
     },
   });
+
+  if (type === "anonymous") {
+    createdMessage.user.id = 0;
+    createdMessage.user.displayName = "익명";
+  }
+
+  console.log(createdMessage);
 
   return {
     ...createdMessage,
@@ -92,8 +98,15 @@ export const retrieve = async ({
     },
   });
 
-  return messages.map(({ createdAt, ...message }) => ({
-    ...message,
-    createdAt: createdAt.toISOString(),
-  }));
+  return messages.map(({ createdAt, ...message }) => {
+    const displayMessage = message;
+    if (message.type === "anonymous") {
+      displayMessage.user.id = 0;
+      displayMessage.user.displayName = "익명";
+    }
+    return {
+      ...displayMessage,
+      createdAt: createdAt.toISOString(),
+    };
+  });
 };

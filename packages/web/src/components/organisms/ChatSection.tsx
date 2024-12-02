@@ -8,8 +8,9 @@ import {
   ChatInput,
   Message,
 } from "@biseo/web/components/molecules";
-import { margin, round, padding, center, text } from "@biseo/web/styles";
+import { round, padding, center, text, bg } from "@biseo/web/styles";
 import { useChat } from "@biseo/web/services";
+import { css } from "@emotion/react";
 
 const Container = styled.div`
   display: flex;
@@ -18,6 +19,16 @@ const Container = styled.div`
   border: solid 1px ${props => props.theme.colors.gray300};
   border-radius: 5px;
   overflow: hidden;
+`;
+
+const dateDividerStyle = css`
+  ${bg.gray100}
+  ${round.lg}
+  ${padding.vertical(4)}
+  ${padding.horizontal(10)}
+
+  ${text.option1}
+  white-space: nowrap;
 `;
 
 export const ChatSection: React.FC = () => {
@@ -45,11 +56,11 @@ export const ChatSection: React.FC = () => {
               <div
                 css={[round.xl, padding(8), center, text.body, text.gray500]}
               >
-                <Divider />
-                <span css={[margin(8), `white-space: nowrap`]}>
+                <Divider color="gray200" />
+                <span css={dateDividerStyle}>
                   {formatDate(message.createdAt)}
                 </span>
-                <Divider />
+                <Divider color="gray200" />
               </div>
             )}
           </>

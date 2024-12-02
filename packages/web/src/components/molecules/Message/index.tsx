@@ -10,10 +10,10 @@ interface Props {
 }
 
 const Component: React.FC<Props> = ({ message }) =>
-  message.type === "message" ? (
-    <PlainMessage message={message} />
-  ) : (
+  message.type === "notice" ? (
     <NoticeMessage message={message.message} />
+  ) : (
+    <PlainMessage message={message} />
   );
 
 export const Message = Object.assign(Component, { List });
