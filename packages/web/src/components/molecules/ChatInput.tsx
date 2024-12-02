@@ -140,7 +140,11 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
             )}
           </div>
           <div css={sendIconStyle}>
-            <SendHorizontal size={18} color={colors.white} />
+            <SendHorizontal
+              size={18}
+              color={colors.white}
+              onClick={sendCurrent}
+            />
           </div>
         </div>
 
