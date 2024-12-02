@@ -28,6 +28,8 @@ services:
       - SERVER_PORT=8000
       - DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/${DB_NAME}
       - SECRET_KEY=${SECRET_KEY}
+      - GOOGLE_CLIENT=${GOOGLE_CLIENT}
+      - GOOGLE_SECRET=${GOOGLE_SECRET}
     depends_on:
       - db
     networks:
