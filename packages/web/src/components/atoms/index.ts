@@ -21,3 +21,4 @@ export * from "./TaggersBox";
 export * from "./HyperText";
 export * from "./PresetOption";
 export * from "./TagSelect";
+export * from "./Toggle";
