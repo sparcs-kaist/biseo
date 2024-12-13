@@ -11,6 +11,8 @@ import {
 import { scroll } from "@biseo/web/styles";
 import { css } from "@emotion/react";
 
+// for test
+
 const gridLayout = css`
   display: grid;
   grid-template-columns: 380px 300px;
@@ -52,8 +54,9 @@ export const AgendaSection: React.FC = () => {
   const getAgendas = useCallback(
     (agendaStatus: AgendaStatus) => {
       if (agendaStatus === "preparing") return preparingAgendas;
-      if (agendaStatus === "ongoing")
-        return ongoingAgendas.sort((a, b) => a.voters.voted - b.voters.voted);
+      if (agendaStatus === "ongoing") {
+        return ongoingAgendas.sort((a, b) => +a.voters.voted - +b.voters.voted);
+      }
 
       if (agendaStatus === "terminated") {
         const recent24Hours = new Date();

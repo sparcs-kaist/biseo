@@ -4,6 +4,7 @@ import { Box, Text } from "@biseo/web/components/atoms";
 import type { Color } from "@biseo/web/theme";
 
 interface Props {
+  ispublic: boolean;
   name: string;
   count: number;
   totalCount: number;
@@ -29,6 +30,7 @@ const Background = styled.div<{
 `;
 
 export const OptionVoteResult: React.FC<Props> = ({
+  ispublic,
   name,
   count,
   totalCount,
@@ -53,7 +55,7 @@ export const OptionVoteResult: React.FC<Props> = ({
           {name}
         </Text>
         <Text color={userChoice ? "blue500" : "gray500"} variant="option1">
-          {count}
+          {ispublic && count}
         </Text>
       </Box>
     </Background>
