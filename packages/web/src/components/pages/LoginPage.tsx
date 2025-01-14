@@ -98,8 +98,6 @@ const LoginBackground = styled.img`
   bottom: 20px;
 
   overflow: hidden;
-
-  z-index: -1;
 `;
 
 export const LoginPage: React.FC = () => {
