@@ -26,6 +26,8 @@ RUN pnpm --filter @biseo/api... build
 
 EXPOSE 8000
 
+RUN apk add --no-cache openssl
+
 CMD ["pnpm", "--filter", "@biseo/api", "prod"]
 
 
