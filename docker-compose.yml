@@ -41,7 +41,7 @@ services:
     environment:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_LABEL_ENABLE=true
-      
+
 networks:
   frontend:
   backend:
