@@ -41,11 +41,7 @@ services:
     environment:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_LABEL_ENABLE=true
-
-volumes:
-  biseo-data:
-    external: true
-
+      
 networks:
   frontend:
   backend:
