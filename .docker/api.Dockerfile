@@ -1,5 +1,8 @@
 FROM node:18-alpine as builder
 
+RUN apk update && apk upgrade && \
+    apk add --no-cache openssl
+
 WORKDIR /app
 
 RUN npm install -g pnpm@8.6.12
