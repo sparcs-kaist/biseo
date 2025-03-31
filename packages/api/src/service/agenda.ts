@@ -151,6 +151,7 @@ export const vote = async (
         select: {
           agenda: {
             select: {
+              isNamed: true,
               choices: {
                 select: {
                   id: true,
@@ -185,16 +186,28 @@ export const vote = async (
       },
     },
   });
+
   io.to(`user/${user.username}`).emit("agenda.voted", {
     id: agendaId,
     user: {
       voted: choiceId,
     },
     voters: {
-      voted: res.choice.agenda.choices.reduce(
-        (acc, choice) => acc + choice.users.length,
-        0,
-      ),
+      voted: res.choice.agenda.isNamed
+        ? res.choice.agenda.choices.reduce(
+            (acc, choice) => [
+              ...acc,
+              ...choice.users.map(u => ({
+                displayName: u.user.displayName,
+                choiceId: choice.id,
+              })),
+            ],
+            [] as { displayName: string; choiceId: number }[],
+          )
+        : res.choice.agenda.choices.reduce(
+            (acc, choice) => acc + choice.users.length,
+            0,
+          ),
       total: res.choice.agenda.voters.length,
     },
   });

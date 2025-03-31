@@ -84,7 +84,7 @@ export const createAgenda = async ({
     status: "preparing",
     choices: createdChoices,
     voters: {
-      voted: 0,
+      voted: createdAgenda.isNamed ? [] : 0,
       total: createdVoters.length,
     },
     user: {
@@ -154,7 +154,7 @@ export const startAgenda = async (agendaId: number, user: User) => {
       public: updatedAgenda.isPublic,
     },
     voters: {
-      voted: 0,
+      voted: updatedAgenda.isNamed ? [] : 0,
       total: updatedVoters.length,
     },
     user: {
@@ -188,11 +188,18 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
       ...selectAgendaDefaultFields.select,
       ...selectAgendaTypeFields.select,
       choices: {
-        include: {
-          users: true,
-          _count: {
+        select: {
+          id: true,
+          name: true,
+          users: {
             select: {
-              users: true,
+              user: {
+                select: {
+                  id: true,
+                  username: true,
+                  displayName: true,
+                },
+              },
             },
           },
         },
@@ -203,7 +210,7 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
 
   const userVotable = updatedVoters.some(v => v.user.id === user.id);
   const userVoted = userVotable
-    ? updatedChoices.find(c => c.users.some(u => u.userId === user.id))?.id ||
+    ? updatedChoices.find(c => c.users.some(u => u.user.id === user.id))?.id ||
       null
     : null;
 
@@ -214,17 +221,25 @@ export const terminateAgenda = async (agendaId: number, user: User) => {
       id: choice.id,
       name: choice.name,
       // eslint-disable-next-line no-underscore-dangle
-      count: choice._count.users,
+      count: choice.users.length,
     })),
     type: {
       named: updatedAgenda.isNamed,
       public: updatedAgenda.isPublic,
     },
     voters: {
-      voted: updatedChoices.reduce(
-        (acc, choice) => acc + choice.users.length,
-        0,
-      ),
+      voted: updatedAgenda.isNamed
+        ? updatedChoices.reduce(
+            (acc, choice) => [
+              ...acc,
+              ...choice.users.map(u => ({
+                displayName: u.user.displayName,
+                choiceId: choice.id,
+              })),
+            ],
+            [] as { displayName: string; choiceId: number }[],
+          )
+        : updatedChoices.reduce((acc, choice) => acc + choice.users.length, 0),
       total: updatedVoters.length,
     },
     user: {
@@ -311,7 +326,7 @@ export const updateAgenda = async (agendaUpdate: schema.AdminAgendaUpdate) => {
       public: updatedAgenda.isPublic,
     },
     voters: {
-      voted: 0,
+      voted: updatedAgenda.isNamed ? [] : 0,
       total: voters.length,
     },
     user: {
