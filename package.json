@@ -12,7 +12,7 @@
     "interface": "pnpm -F @biseo/interface",
     "dev": "dotenv -- pnpm -r --stream --parallel dev",
     "db": "dotenv -- pnpm -F @biseo/api db",
-    "migrate": "dotenv -- pnpm -F @biseo/api migrate",
+    "migrate": "dotenv -- pnpm -F @biseo/api migrate:dev",
     "typegen": "pnpm -F @biseo/api typegen",
     "studio": "dotenv -- pnpm -F @biseo/api studio",
     "typecheck": "pnpm -r typecheck",

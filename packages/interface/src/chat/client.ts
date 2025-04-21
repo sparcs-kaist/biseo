@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-redeclare -- A Zod schema name and type should have the same names */
 import { z } from "zod";
-import { Message } from "./common";
+import { Message, MessageType } from "./common";
 
 /**
  * Send
@@ -8,6 +8,7 @@ import { Message } from "./common";
  */
 export const Send = z.object({
   message: z.string().min(1).max(500),
+  type: MessageType,
 });
 export type Send = z.infer<typeof Send>;
 export const SendCb = Message;

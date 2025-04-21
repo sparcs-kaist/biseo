@@ -17,6 +17,7 @@ export type ClientToServerEvents = Events<{
   agenda: {
     retrieveAll: Ev<agenda.RetrieveAll, agenda.RetrieveAllCb>;
     vote: Ev<agenda.Vote, agenda.VoteCb>;
+    edit: Ev<agenda.EditVote, agenda.EditVoteCb>;
     template: {
       create: Ev<agendaTemplate.Create, agendaTemplate.CreateCb>;
       retrieveAll: Ev<agendaTemplate.RetrieveAll, agendaTemplate.RetrieveAllCb>;
@@ -59,6 +60,7 @@ export type ServerToClientEvents = Events<{
     updated: Ev<agenda.Updated>;
     started: Ev<agenda.Started>;
     voted: Ev<agenda.Voted>;
+    voteEdited: Ev<agenda.Voted>;
     terminated: Ev<agenda.Terminated>;
     deleted: Ev<agenda.Deleted>;
     reminded: Ev<agenda.Reminded>;

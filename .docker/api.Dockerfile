@@ -1,5 +1,8 @@
 FROM node:18-alpine as builder
 
+RUN apk update && apk upgrade && \
+    apk add --no-cache openssl
+
 WORKDIR /app
 
 RUN npm install -g pnpm@8.6.12
@@ -25,6 +28,8 @@ RUN pnpm --filter @biseo/api... build
 #CMD ["npm", "run", "prod"]
 
 EXPOSE 8000
+
+RUN apk add --no-cache openssl
 
 CMD ["pnpm", "--filter", "@biseo/api", "prod"]
 

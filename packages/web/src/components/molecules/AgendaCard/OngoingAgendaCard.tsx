@@ -20,8 +20,10 @@ interface OngoingAgendaProps {
 
 export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
   const [chosenChoiceId, setChosenChoiceId] = useState(0);
-  const { voteAgenda } = useAgenda(state => ({
+  const [isEditing, setIsEditing] = useState(false);
+  const { voteAgenda, editVote } = useAgenda(state => ({
     voteAgenda: state.voteAgenda,
+    editVote: state.editVote,
   }));
 
   const vote = useCallback(() => {
@@ -41,14 +43,20 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
     [chosenChoiceId],
   );
 
+  const submitEdit = useCallback(() => {
+    editVote(chosenChoiceId, agenda.id);
+    setIsEditing(false);
+  }, [chosenChoiceId, agenda.id]);
+
   let choices: JSX.Element | JSX.Element[] = <NotVotableChoice />;
   if (agenda.user.votable) {
-    if (agenda.user.voted) {
+    if (agenda.user.voted && !isEditing) {
       choices = (
         <CompletedChoice
           choice={agenda.choices.find(
             choice => choice.id === agenda.user.voted,
           )}
+          onEdit={() => setIsEditing(true)}
         />
       );
     } else {
@@ -79,9 +87,20 @@ export const OngoingAgendaCard: React.FC<OngoingAgendaProps> = ({ agenda }) => {
             <p css={[text.subtitle, text.gray500]}>{agenda.content}</p>
           </div>
         </div>
-        <div css={[column, gap(6)]}>
-          <p css={[text.body, text.blue600]}>{agenda.resolution}</p>
-          {choices}
+        <div css={[column, gap(10)]}>
+          <div css={[column, gap(6)]}>
+            <p css={[text.body, text.blue600]}>{agenda.resolution}</p>
+            {choices}
+          </div>
+          {isEditing && (
+            <div css={[row, justify.end, w("fill")]}>
+              <Button w={90} disabled={!chosen} onClick={submitEdit}>
+                <p css={[text.option1, chosen ? text.blue600 : text.blue300]}>
+                  제출하기
+                </p>
+              </Button>
+            </div>
+          )}
         </div>
         {agenda.user.votable && !agenda.user.voted && (
           <div css={[row, justify.end, w("fill")]}>

@@ -13,9 +13,17 @@ export const Button = styled.button<{
   w?: Size;
   h?: Size;
   color?: Color;
+  textColor?: Color;
   padHorizontal?: number;
 }>(
-  ({ w = "fill", h = 28, color = "blue200", padHorizontal = 0, theme }) => css`
+  ({
+    w = "fill",
+    h = 28,
+    color = "blue200",
+    textColor = "black",
+    padHorizontal = 0,
+    theme,
+  }) => css`
     display: flex;
     width: ${calcSize(w)};
     height: ${calcSize(h)};
@@ -26,6 +34,7 @@ export const Button = styled.button<{
     align-items: center;
     line-height: 28px;
     background-color: ${theme.colors[color]};
+    color: ${theme.colors[textColor]};
 
     &:hover {
       cursor: pointer;

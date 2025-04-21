@@ -44,11 +44,11 @@ const parseURL: React.FC<string> = (content: string) => {
 
 export const PlainMessage: React.FC<Props> = ({ message }) => (
   <Box dir="column" gap={4} padHorizontal={20} padVertical={10}>
-    <Box dir="row" gap={4} align="center">
-      <Text variant="boldtitle3" color="black">
+    <Box dir="row" gap={6} align="center">
+      <Text variant="body" color="gray600">
         {message.user.displayName}
       </Text>
-      <Text variant="option2" color="gray500">
+      <Text variant="option1" color="gray400">
         {formatTime(message.createdAt)}
       </Text>
     </Box>
