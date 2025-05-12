@@ -3,7 +3,7 @@ name: "biseo"
 services:
   web:
     container_name: biseo-web
-    image: ghcr.io/sparcs-kaist/biseo-web:latest
+    image: ghcr.io/sparcs-kaist/biseo-web:dev
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: always
@@ -18,7 +18,7 @@ services:
 
   api:
     container_name: biseo-api
-    image: ghcr.io/sparcs-kaist/biseo-api:latest
+    image: ghcr.io/sparcs-kaist/biseo-api:dev
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: always
