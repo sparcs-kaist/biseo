@@ -7,10 +7,12 @@ on:
   push:
     branches: 
       - main
+  workflow_dispatch:
+    name: Deploy to Production
 
 jobs:
   publish-docker-image:
-    name: Build and Push
+    name: Build and Push ${{ github.event_name == 'workflow_dispatch' && 'prod' || 'dev' }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -50,7 +52,7 @@ jobs:
         with:
           images: ${{ matrix.image }}
           tags: |
-            type=raw,value=latest
+            type=raw,value=${{ github.event_name == 'workflow_dispatch' && 'prod' || 'dev' }}
             type=sha,format=long
 
       - name: Build and push Docker image
