@@ -30,10 +30,26 @@ export type Started = z.infer<typeof Started>;
 export const Voted = z.object({
   id: z.number(),
   user: z.object({
-    voted: z.number(),
+    voted: z.union([
+      z.number(),
+      z.array(
+        z.object({
+          displayName: z.string(),
+          choiceId: z.number(),
+        }),
+      ),
+    ]),
   }),
   voters: z.object({
-    voted: z.number(),
+    voted: z.union([
+      z.number(),
+      z.array(
+        z.object({
+          displayName: z.string(),
+          choiceId: z.number(),
+        }),
+      ),
+    ]),
     total: z.number(),
   }),
 });
