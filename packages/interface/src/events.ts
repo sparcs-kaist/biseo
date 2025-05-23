@@ -9,10 +9,14 @@ import type * as chat from "./chat";
 import type * as user from "./user";
 import type * as userTag from "./user/tag";
 
+// TODO notice.retrieve, admin.chat.send/update 집어넣기
+
 export type ClientToServerEvents = Events<{
   chat: {
     send: Ev<chat.Send, chat.SendCb>;
+    update: Ev<chat.Update, chat.UpdateCb>;
     retrieve: Ev<chat.Retrieve, chat.RetrieveCb>;
+    retrieveAdminNotice: Ev<chat.Retrieve, chat.RetrieveCb>;
   };
   agenda: {
     retrieveAll: Ev<agenda.RetrieveAll, agenda.RetrieveAllCb>;
@@ -54,6 +58,7 @@ export type ServerToClientEvents = Events<{
   init: Ev<init.Init>;
   chat: {
     received: Ev<chat.Received>;
+    updated: Ev<chat.Received>;
   };
   agenda: {
     created: Ev<agenda.Created>;

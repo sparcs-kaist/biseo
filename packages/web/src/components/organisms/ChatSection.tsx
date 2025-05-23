@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useInView } from "react-intersection-observer";
 import { formatDate } from "@biseo/web/utils/format";
@@ -32,26 +32,70 @@ const dateDividerStyle = css`
 `;
 
 export const ChatSection: React.FC = () => {
-  const { messages, loading, hasMore, sendMessage, loadMore } = useChat();
+  const {
+    messages,
+    notices,
+    loading,
+    hasMore,
+    hasMoreNotices,
+    sendMessage,
+    loadMore,
+    loadNotices,
+  } = useChat();
   const { ref, inView } = useInView();
   const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [isNotice, setIsNotice] = useState(false);
+  const toRender = isNotice ? notices : messages;
 
   useEffect(() => {
-    if (!inView || loading || !hasMore || !scrollRef.current) return;
-    const prevScrollPosition = scrollRef.current.scrollTop;
-    loadMore()
-      .then(() => scrollRef.current?.scrollTo(0, prevScrollPosition))
-      .catch(console.error);
-  }, [loadMore, inView, loading, hasMore]);
+    scrollRef.current?.scrollTo(0, 0);
+    if (isNotice) {
+      loadNotices().catch(console.error);
+    } else {
+      loadMore().catch(console.error);
+    }
+  }, [isNotice, loadMore, loadNotices]);
+
+  useEffect(() => {
+    if (!inView || loading) return;
+
+    const prevScroll = scrollRef.current?.scrollTop ?? 0;
+
+    if (isNotice) {
+      if (!hasMoreNotices) return;
+      loadNotices()
+        .then(() => scrollRef.current?.scrollTo(0, prevScroll))
+        .catch(console.error);
+    } else {
+      if (!hasMore) return;
+      loadMore()
+        .then(() => scrollRef.current?.scrollTo(0, prevScroll))
+        .catch(console.error);
+    }
+  }, [
+    inView,
+    loading,
+    hasMore,
+    hasMoreNotices,
+    isNotice,
+    loadMore,
+    loadNotices,
+  ]);
 
   return (
     <Container>
-      <ChatHeader title="스레드" />
+      <ChatHeader
+        title={isNotice ? "공지" : "스레드"}
+        onToggle={() => {
+          setIsNotice(prev => !prev);
+        }}
+        isNotice={isNotice}
+      />
       <Message.List ref={scrollRef}>
-        {messages.map((message, index) => (
+        {toRender.map((message, index) => (
           <>
             <Message key={message.id} message={message} />
-            {formatDate(messages[index + 1]?.createdAt) !==
+            {formatDate(toRender[index + 1]?.createdAt) !==
               formatDate(message.createdAt) && (
               <div
                 css={[round.xl, padding(8), center, text.body, text.gray500]}

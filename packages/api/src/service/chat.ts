@@ -7,6 +7,12 @@ export const createMessage = async (
   { message, type }: schema.Send,
   user: User,
 ): Promise<schema.Message> => {
+  const anonUser: User = {
+    id: 0,
+    isAdmin: false,
+    username: "익명",
+    displayName: "익명",
+  };
   const sendQuery: Prisma.ChatCreateInput = {
     user: { connect: user },
     type,
@@ -30,16 +36,42 @@ export const createMessage = async (
     },
   });
 
-  if (type === "anonymous") {
-    createdMessage.user.id = 0;
-    createdMessage.user.displayName = "익명";
-  }
+  if (type === "anonymous") createdMessage.user = anonUser;
 
   console.log(createdMessage);
 
   return {
     ...createdMessage,
     createdAt: createdAt.toISOString(),
+  };
+};
+
+export const modifyMessage = async ({
+  id,
+  type,
+}: schema.Update): Promise<schema.Message> => {
+  const updated = await prisma.chat.update({
+    where: { id },
+    data: { type },
+    include: {
+      user: {
+        select: {
+          id: true,
+          displayName: true,
+        },
+      },
+    },
+  });
+
+  return {
+    id: updated.id,
+    message: updated.message,
+    type: updated.type,
+    createdAt: updated.createdAt.toISOString(),
+    user: {
+      id: updated.user.id,
+      displayName: updated.user.displayName,
+    },
   };
 };
 
@@ -77,6 +109,12 @@ export const retrieve = async ({
   lastChatId,
   limit,
 }: schema.Retrieve): Promise<schema.Message[]> => {
+  const anonUser: User = {
+    id: 0,
+    isAdmin: false,
+    username: "익명",
+    displayName: "익명",
+  };
   const messages = await prisma.chat.findMany({
     orderBy: {
       id: "desc",
@@ -100,10 +138,49 @@ export const retrieve = async ({
 
   return messages.map(({ createdAt, ...message }) => {
     const displayMessage = message;
-    if (message.type === "anonymous") {
-      displayMessage.user.id = 0;
-      displayMessage.user.displayName = "익명";
-    }
+    if (message.type === "anonymous") displayMessage.user = anonUser;
+    return {
+      ...displayMessage,
+      createdAt: createdAt.toISOString(),
+    };
+  });
+};
+
+export const retrieveAdminNotice = async ({
+  lastChatId,
+  limit,
+}: schema.Retrieve): Promise<schema.Message[]> => {
+  const anonUser: User = {
+    id: 0,
+    isAdmin: false,
+    username: "익명",
+    displayName: "익명",
+  };
+  const messages = await prisma.chat.findMany({
+    orderBy: {
+      id: "desc",
+    },
+    where: {
+      type: "adminnotice", // ─ always 필터
+      ...(lastChatId != null
+        ? { id: { lt: lastChatId } } // ─ lastChatId 있을 때만 추가 필터
+        : {}),
+    },
+    take: limit,
+    select: {
+      id: true,
+      user: true,
+      type: true,
+      message: true,
+      createdAt: true,
+    },
+  });
+
+  // console.log(messages);
+
+  return messages.map(({ createdAt, ...message }) => {
+    const displayMessage = message;
+    if (message.type === "anonymous") displayMessage.user = anonUser;
     return {
       ...displayMessage,
       createdAt: createdAt.toISOString(),
