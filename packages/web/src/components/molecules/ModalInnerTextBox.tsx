@@ -220,7 +220,11 @@ const TextButton: React.FC<SubmitProps> = ({
       }}
     />
     <Button w={20} h={20} onClick={onSubmit}>
-      <Text css={[colors.blue600, text.boldtitle2, "line-height: 1"]}>+</Text>
+      <Text
+        css={[`color: ${colors.blue600}`, text.boldtitle2, "line-height: 1"]}
+      >
+        +
+      </Text>
     </Button>
   </BorderedBox>
 );
