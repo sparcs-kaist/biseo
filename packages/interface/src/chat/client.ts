@@ -15,6 +15,19 @@ export const SendCb = Message;
 export type SendCb = z.infer<typeof SendCb>;
 
 /**
+ * Modify(or Update)
+ * description
+ */
+
+export const Update = z.object({
+  id: z.number(),
+  type: MessageType,
+});
+export type Update = z.infer<typeof Update>;
+export const UpdateCb = Message;
+export type UpdateCb = z.infer<typeof UpdateCb>;
+
+/**
  * Retrieve
  * description
  */

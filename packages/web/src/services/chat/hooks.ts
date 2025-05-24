@@ -9,15 +9,27 @@ import { byReverseCreatedTime } from "./common";
 export const useChat = () => {
   const { userInfo } = useAuth();
 
-  const { messages, sendWithUser, loadMore, loading, hasMore } = useChatStore(
-    state => ({
-      messages: [...state.messages.values()].sort(byReverseCreatedTime),
-      loading: state.loading,
-      hasMore: state.hasMore,
-      sendWithUser: state.send,
-      loadMore: state.load,
-    }),
-  );
+  const {
+    messages,
+    notices,
+    sendWithUser,
+    loadMore,
+    loadNotices,
+    loading,
+    hasMore,
+    hasMoreNotices,
+    updateMessageType,
+  } = useChatStore(state => ({
+    messages: [...state.messages.values()].sort(byReverseCreatedTime),
+    notices: [...state.notices.values()].sort(byReverseCreatedTime),
+    loading: state.loading,
+    hasMore: state.hasMore,
+    hasMoreNotices: state.hasMoreNotices,
+    sendWithUser: state.send,
+    loadMore: state.load,
+    loadNotices: state.loadNotices,
+    updateMessageType: state.updateMessageType,
+  }));
 
   const sendMessage = useCallback(
     async (message: string, type: MessageType) =>
@@ -25,5 +37,21 @@ export const useChat = () => {
     [userInfo, sendWithUser],
   );
 
-  return { messages, loading, hasMore, sendMessage, loadMore };
+  const fetchLatestNotice = useCallback(
+    () => Promise.resolve(notices[0] ?? null),
+    [notices],
+  );
+
+  return {
+    messages,
+    notices,
+    loading,
+    hasMore,
+    hasMoreNotices,
+    sendMessage,
+    loadMore,
+    loadNotices,
+    updateMessageType,
+    fetchLatestNotice,
+  };
 };
