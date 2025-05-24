@@ -28,6 +28,7 @@ export const createMessage = async (
         select: {
           id: true,
           displayName: true,
+          username: true,
         },
       },
       type: true,
@@ -37,8 +38,6 @@ export const createMessage = async (
   });
 
   if (type === "anonymous") createdMessage.user = anonUser;
-
-  console.log(createdMessage);
 
   return {
     ...createdMessage,
@@ -181,6 +180,7 @@ export const retrieveAdminNotice = async ({
   return messages.map(({ createdAt, ...message }) => {
     const displayMessage = message;
     if (message.type === "anonymous") displayMessage.user = anonUser;
+
     return {
       ...displayMessage,
       createdAt: createdAt.toISOString(),

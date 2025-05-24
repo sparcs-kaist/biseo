@@ -3,7 +3,7 @@ name: "biseo"
 services:
   web:
     container_name: biseo-web
-    image: ghcr.io/sparcs-kaist/biseo-web:prod
+    image: ghcr.io/sparcs-kaist/biseo-web:dev
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: always
@@ -18,20 +18,40 @@ services:
 
   api:
     container_name: biseo-api
-    image: ghcr.io/sparcs-kaist/biseo-api:prod
+    image: ghcr.io/sparcs-kaist/biseo-api:dev
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
     restart: always
     environment:
       - NODE_ENV=production
       - SERVER_PORT=8000
-      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL=mysql://root:${DB_PASSWORD}@db:3306/${DB_NAME}
       - SECRET_KEY=${SECRET_KEY}
       - GOOGLE_CLIENT=${GOOGLE_CLIENT}
       - GOOGLE_SECRET=${GOOGLE_SECRET}
+    depends_on:
+      - db
     networks:
       - frontend
       - backend
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+    volumes:
+      - biseo-data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    networks:
+      - backend
+    healthcheck:
+      test: "mysql -uroot -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE -e 'select 1'"
+      interval: 1s
+      retries: 3
 
   watchtower:
     image: containrrr/watchtower
@@ -41,6 +61,10 @@ services:
     environment:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_LABEL_ENABLE=true
+
+volumes:
+  biseo-data:
+    external: true
 
 networks:
   frontend:
