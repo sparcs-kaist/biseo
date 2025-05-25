@@ -17,6 +17,6 @@ export type User = z.infer<typeof User>;
  * some description about chat user schema goes here
  */
 export const ChatUser = User.omit({
-  username: true,
+  // username: true,
 });
 export type ChatUser = z.infer<typeof ChatUser>;
