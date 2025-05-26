@@ -126,38 +126,113 @@ export const editVote = async (
         agendaId,
       },
     },
+    select: {
+      userId: true,
+      choiceId: true,
+      choice: {
+        select: {
+          agenda: {
+            select: {
+              isNamed: true,
+              choices: {
+                select: {
+                  id: true,
+                  name: true,
+                  users: {
+                    select: {
+                      user: {
+                        select: {
+                          id: true,
+                          username: true,
+                          displayName: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+              voters: {
+                select: {
+                  user: {
+                    select: {
+                      id: true,
+                      username: true,
+                      displayName: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   if (!existingVote) throw new BiseoError("No previous vote found");
 
-  await prisma.userChoice.delete({
+  await prisma.userChoice.update({
     where: {
       userId_choiceId: {
         userId: user.id,
         choiceId: existingVote.choiceId,
       },
     },
-  });
-
-  await prisma.userChoice.create({
     data: {
-      userId: user.id,
       choiceId,
     },
   });
+
+  // await prisma.userChoice.delete({
+  //   where: {
+  //     userId_choiceId: {
+  //       userId: user.id,
+  //       choiceId: existingVote.choiceId,
+  //     },
+  //   },
+  // });
+
+  // await prisma.userChoice.create({
+  //   data: {
+  //     userId: user.id,
+  //     choiceId,
+  //   },
+  // });
 
   io.to(`user/${user.username}`).emit("agenda.voted", {
     id: agendaId,
     user: { voted: choiceId },
     voters: {
-      voted: await prisma.userChoice.count({
-        where: {
-          choice: { agendaId },
-        },
-      }),
-      total: await prisma.userAgendaVotable.count({
-        where: { agendaId },
-      }),
+      voted: existingVote.choice.agenda.isNamed
+        ? existingVote.choice.agenda.choices.reduce(
+            (acc, choice) => [
+              ...acc,
+              ...choice.users.map(u => ({
+                displayName: u.user.displayName,
+                choiceId: choice.id,
+              })),
+            ],
+            [] as { displayName: string; choiceId: number }[],
+          )
+        : existingVote.choice.agenda.choices.reduce(
+            (acc, choice) => acc + choice.users.length,
+            0,
+          ),
+      total: existingVote.choice.agenda.voters.length,
+    },
+  });
+  io.to("admin").emit("admin.agenda.voted", {
+    id: agendaId,
+    choices: existingVote.choice.agenda.choices.map(choice => ({
+      id: choice.id,
+      name: choice.name,
+      count: choice.users.length,
+    })),
+    voters: {
+      voted: existingVote.choice.agenda.choices.flatMap(c =>
+        c.users.map(u => u.user),
+      ),
+      total: existingVote.choice.agenda.voters.flatMap(v => v.user),
     },
   });
 };
