@@ -171,7 +171,7 @@ const useChatStore = create(
       try {
         await socket.emitAsync("chat.update", { id, type });
       } catch {
-        console.log(Error);
+        console.log(console.error);
       }
     },
   })),

@@ -20,7 +20,7 @@ import {
   round,
   center,
 } from "@biseo/web/styles";
-import { Megaphone, ChevronDown } from "lucide-react";
+import { Megaphone, ChevronUp } from "lucide-react";
 
 const Container = styled.div`
   position: relative;
@@ -60,7 +60,6 @@ export const ChatSection: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setShowLatest(false);
     scrollRef.current?.scrollTo(0, 0);
     if (isNotice) loadNotices().catch(console.error);
     else loadMore().catch(console.error);
@@ -89,14 +88,13 @@ export const ChatSection: React.FC = () => {
   const moreFlag = isNotice ? hasMoreNotices : hasMore;
 
   const handleRecentToggle = () => {
-    if (!showLatest && notices.length === 0) {
-      loadNotices()
-        .then(() => {
-          if (notices.length > 0) setShowLatest(true);
-        })
-        .catch(console.error);
+    if (!showLatest) {
+      setShowLatest(true);
+      if (notices.length === 0) {
+        loadNotices().catch(console.error);
+      }
     } else {
-      setShowLatest(v => !v);
+      setShowLatest(false);
     }
   };
 
@@ -186,7 +184,7 @@ export const ChatSection: React.FC = () => {
               {notices[0].message}
             </p>
           </div>
-          <ChevronDown
+          <ChevronUp
             size={20}
             color={colors.gray500}
             style={{ cursor: "pointer" }}
