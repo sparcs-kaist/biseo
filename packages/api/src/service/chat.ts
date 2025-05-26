@@ -56,6 +56,7 @@ export const modifyMessage = async ({
       user: {
         select: {
           id: true,
+          username: true,
           displayName: true,
         },
       },
@@ -69,7 +70,8 @@ export const modifyMessage = async ({
     createdAt: updated.createdAt.toISOString(),
     user: {
       id: updated.user.id,
-      displayName: updated.user.displayName,
+      username: updated.user.username,
+      displayName: updated.user.username,
     },
   };
 };
