@@ -36,6 +36,10 @@ export const TerminatedAgendaModal: React.FC = () => {
     targetAgenda?.voters.total.length === undefined
       ? 0
       : targetAgenda?.voters.total.length;
+  const isPublic =
+    targetAgenda?.type.public === undefined ? false : targetAgenda?.type.public;
+  const isNamed =
+    targetAgenda?.type.named === undefined ? false : targetAgenda?.type.named;
 
   return (
     <Modal title="종료된 투표">
@@ -69,6 +73,7 @@ export const TerminatedAgendaModal: React.FC = () => {
               >
                 {targetAgenda?.choices.map(choice => (
                   <OptionVoteResult
+                    ispublic={targetAgenda.type.public}
                     key={choice.id}
                     name={choice.name}
                     count={choice.count}
@@ -102,7 +107,7 @@ export const TerminatedAgendaModal: React.FC = () => {
             bg="blue100"
             round={5}
           >
-            <AdminAgendaTags />
+            <AdminAgendaTags ispublic={isPublic} isnamed={isNamed} />
           </Box>
         </Box>
       </Box>

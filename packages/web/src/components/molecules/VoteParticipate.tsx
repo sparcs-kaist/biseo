@@ -1,18 +1,25 @@
 import React, { useMemo, useState } from "react";
 import { Box, Text, Tag } from "@biseo/web/components/atoms";
 
+type Voter = {
+  displayName: string;
+  choiceId: number;
+};
+
 interface Props {
-  voted: number;
+  named: boolean;
+  voted: number | Voter[];
   total: number;
 }
 
-export const VoteParticipate: React.FC<Props> = ({ voted, total }) => {
+export const VoteParticipate: React.FC<Props> = ({ named, voted, total }) => {
+  const votedLength = named ? (voted as Array<Voter>).length : voted;
   const [hover, setHover] = useState(false);
   const participantInfo = useMemo(
     () =>
       hover
-        ? `투표 참여자 ${voted}명 / 투표 대상자 ${total}명`
-        : `${voted}/${total}`,
+        ? `투표 참여자 ${votedLength}명 /투표 대상자 ${total}명`
+        : `${votedLength}/${total}`,
     [hover],
   );
 

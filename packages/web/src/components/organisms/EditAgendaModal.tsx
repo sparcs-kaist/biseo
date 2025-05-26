@@ -42,6 +42,10 @@ export const EditAgendaModal: React.FC = () => {
 
   const [title, setTitle] = useState(targetAgenda?.title || "");
   const [content, setContent] = useState(targetAgenda?.content || "");
+  const [isNamed, setIsnamed] = useState(targetAgenda?.type.named || Boolean);
+  const [isPublic, setIspublic] = useState(
+    targetAgenda?.type.public || Boolean,
+  );
   const [resolution, setResolution] = useState(targetAgenda?.resolution || "");
   const [template, setTemplate] = useState(0);
   const [choices, setChoices] = useState(
@@ -53,11 +57,17 @@ export const EditAgendaModal: React.FC = () => {
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const onChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeContent = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
   };
   const onChangeResolution = (e: React.ChangeEvent<HTMLInputElement>) => {
     setResolution(e.target.value);
+  };
+  const onChangeIspublic = (e: boolean) => {
+    setIspublic(e);
+  };
+  const onChangeIsnamed = (e: boolean) => {
+    setIsnamed(e);
   };
 
   const [newchoice, setNewchoice] = useState("");
@@ -119,6 +129,7 @@ export const EditAgendaModal: React.FC = () => {
       title,
       content,
       resolution,
+      type: { named: isNamed, public: isPublic },
       voters: {
         total: voters,
       },
@@ -150,10 +161,7 @@ export const EditAgendaModal: React.FC = () => {
               <ModalInner.InputBox value={title} onChange={onChangeTitle} />
             </ModalInner>
             <ModalInner title="투표 설명" required>
-              <ModalInner.TextAreaInputBox
-                value={content}
-                onChange={onChangeContent}
-              />
+              <ModalInner.InputBox value={content} onChange={onChangeContent} />
             </ModalInner>
             <ModalInner title="의결 문안" required>
               <ModalInner.InputBox
@@ -204,7 +212,12 @@ export const EditAgendaModal: React.FC = () => {
             padHorizontal={15}
             round={5}
           >
-            <AdminAgendaTagsSelect />
+            <AdminAgendaTagsSelect
+              switchPublic={onChangeIspublic}
+              switchNamed={onChangeIsnamed}
+              ispublic={isPublic}
+              isnamed={isNamed}
+            />
             <Box dir="row" w="fill" gap={10} justify="space-between">
               <Link
                 to={validated ? ".." : `?agendaId=${agendaId}`}

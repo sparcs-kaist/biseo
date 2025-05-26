@@ -7,22 +7,19 @@ import { User } from "@/user";
  * AdminAgendaStatus
  * some description about admin agenda status type goes here
  */
-export const AdminAgendaStatus = z.enum([...AgendaStatus.options, "preparing"]);
+export const AdminAgendaStatus = z.enum(AgendaStatus.options);
 export type AdminAgendaStatus = z.infer<typeof AdminAgendaStatus>;
 
 /**
  * AdminAgenda
  * some description about admin agenda schema goes here
  */
-export const AdminAgenda = AgendaBase.omit({
-  voters: true,
-  status: true,
-}).extend({
+export const AdminAgenda = AgendaBase.extend({
+  status: AdminAgendaStatus,
   voters: z.object({
     voted: z.array(User),
     total: z.array(User),
   }),
-  status: AdminAgendaStatus,
   choices: z.array(ChoiceWithResult),
   endAt: z.string(), // currently used only on terminated admin agendas
 });
@@ -36,6 +33,10 @@ export const AdminAgendaCreate = z.object({
   title: z.string().min(1).max(255),
   content: z.string().min(1).max(255),
   resolution: z.string().min(1).max(255),
+  type: z.object({
+    named: z.boolean(),
+    public: z.boolean(),
+  }),
   choices: z.array(z.string().min(1).max(255)).min(1),
   voters: z.object({
     total: z.array(z.number()),
