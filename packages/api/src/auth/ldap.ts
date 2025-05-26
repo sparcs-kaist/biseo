@@ -18,6 +18,9 @@ const sanitize = (str: string) =>
 /**
  * Authenticate a user with LDAP
  */
+/**
+ * @deprecated Use google authentication instead
+ */
 export const authenticate = async (data: {
   username: string;
   password: string;

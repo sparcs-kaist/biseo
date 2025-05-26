@@ -1,4 +1,4 @@
-import React, { type FormEvent, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Navigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
@@ -8,10 +8,10 @@ import LandingImg from "@biseo/web/assets/landing.png";
 import GoogleLogo from "@biseo/web/assets/google.png";
 import { useAuth } from "@biseo/web/services/auth";
 
-import { useInput } from "@biseo/web/common/hooks";
+// import { useInput } from "@biseo/web/common/hooks";
 import { theme } from "@biseo/web/theme";
 import { Box, Text } from "@biseo/web/components/atoms";
-import { text } from "@biseo/web/styles";
+// import { text } from "@biseo/web/styles";
 import { useGoogleLogin } from "@react-oauth/google";
 
 const Page = styled.div`
@@ -36,32 +36,32 @@ const LoginTitle = styled(motion.div)`
   color: ${theme.colors.black};
 `;
 
-const InputContainer = styled.input`
-  width: 320px;
-  height: 45px;
+// const InputContainer = styled.input`
+//   width: 320px;
+//   height: 45px;
 
-  box-sizing: border-box;
-  padding: 9px 14px;
+//   box-sizing: border-box;
+//   padding: 9px 14px;
 
-  border: 1px solid ${theme.colors.gray300};
-  border-radius: 5px;
-  outline: none;
+//   border: 1px solid ${theme.colors.gray300};
+//   border-radius: 5px;
+//   outline: none;
 
-  ${text.subtitle}
+//   ${text.subtitle}
 
-  &:hover {
-    border: 1px solid ${theme.colors.gray400};
-  }
+//   &:hover {
+//     border: 1px solid ${theme.colors.gray400};
+//   }
 
-  &:focus {
-    border: 1px solid ${theme.colors.blue300};
-    box-shadow: 0px 0px 0px 3px ${theme.colors.blue200};
-  }
-  &::placeholder {
-    font-size: 13px;
-    color: ${theme.colors.gray300};
-  }
-`;
+//   &:focus {
+//     border: 1px solid ${theme.colors.blue300};
+//     box-shadow: 0px 0px 0px 3px ${theme.colors.blue200};
+//   }
+//   &::placeholder {
+//     font-size: 13px;
+//     color: ${theme.colors.gray300};
+//   }
+// `;
 
 const LoginButton = styled.button`
   width: 320px;
@@ -103,15 +103,15 @@ const LoginBackground = styled.img`
 `;
 
 export const LoginPage: React.FC = () => {
-  const { login, glogin, isLoggedIn } = useAuth(state => ({
-    login: state.login,
+  const { glogin, isLoggedIn } = useAuth(state => ({
+    // login: state.login,
     glogin: state.glogin,
     isLoggedIn: !!state.userInfo,
   }));
   const [error, setError] = useState<boolean>(false);
 
-  const { input: username } = useInput();
-  const { input: password } = useInput();
+  // const { input: username } = useInput();
+  // const { input: password } = useInput();
 
   const easeMotion = {
     initial: { opacity: 0, scale: 0.5 },
@@ -123,16 +123,16 @@ export const LoginPage: React.FC = () => {
     },
   };
 
-  const handleLogin = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  // const handleLogin = useCallback(
+  //   (e: FormEvent<HTMLFormElement>) => {
+  //     e.preventDefault();
 
-      login(username.value, password.value)
-        .then(() => console.log("Login success!"))
-        .catch(() => setError(true));
-    },
-    [username.value, password.value],
-  );
+  //     login(username.value, password.value)
+  //       .then(() => console.log("Login success!"))
+  //       .catch(() => setError(true));
+  //   },
+  //   [username.value, password.value],
+  // );
   const handleGLogin = useCallback((code: string) => {
     glogin(code)
       .then(() => console.log("Login success!"))
@@ -163,7 +163,7 @@ export const LoginPage: React.FC = () => {
           쉽고 빠른 의사결정은, Biseo
         </LoginTitle>
       </Box>
-      <form onSubmit={handleLogin}>
+      {/* <form onSubmit={handleLogin}>
         <Box dir="column" gap={12} align="center">
           <InputContainer
             type="text"
@@ -191,13 +191,20 @@ export const LoginPage: React.FC = () => {
             </LoginButton>
           </Box>
         </Box>
-      </form>
-      <LoginButton onClick={googleLogin}>
-        <img alt="google-logo" style={{ width: "20px" }} src={GoogleLogo} />
-        <Text variant="boldtitle2" color="blue600">
-          구글 로그인
-        </Text>
-      </LoginButton>
+      </form> */}
+      <Box dir="column" gap={8} align="flex-start">
+        <LoginButton onClick={googleLogin}>
+          <img alt="google-logo" style={{ width: "20px" }} src={GoogleLogo} />
+          <Text variant="boldtitle2" color="blue600">
+            구글 로그인
+          </Text>
+        </LoginButton>
+        {error && (
+          <Text variant="subtitle" color="blue600">
+            아이디 또는 비밀번호가 올바르지 않습니다.
+          </Text>
+        )}
+      </Box>
       <LoginBackground src={LandingImg} />
     </Page>
   );
