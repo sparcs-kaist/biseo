@@ -4,6 +4,7 @@ import { Box, Text, Tag } from "@biseo/web/components/atoms";
 interface Props {
   type?: boolean;
   clickHandler: (prev: boolean) => void;
+  buttonClick: () => void;
   revealChoice: boolean;
   voted: boolean;
 }
@@ -11,6 +12,7 @@ interface Props {
 export const VoteResult: React.FC<Props> = ({
   type = false,
   clickHandler,
+  buttonClick,
   revealChoice,
   voted,
 }) => (
@@ -23,6 +25,10 @@ export const VoteResult: React.FC<Props> = ({
         <Text
           variant="option2"
           color="gray400"
+          onMouseDown={e => {
+            buttonClick();
+            e.stopPropagation();
+          }}
           onClick={e => {
             clickHandler(revealChoice);
             e.stopPropagation();

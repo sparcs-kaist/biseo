@@ -36,9 +36,8 @@ type Voter = {
 
 export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
   const [enabled, setEnabled] = useState<boolean>(false);
-  // const [isDragging, setIsDragging] = useRef<boolean>(false);
   const isDragging = useRef<boolean>(false);
-  const [revealChoice, setRevealChoice] = useState<boolean>(agenda.type.named);
+  const [revealChoice, setRevealChoice] = useState<boolean>(false);
   const [detectDrag, setDetectDrag] = useState<NodeJS.Timeout>();
 
   const switchRevealChoice = (prev: boolean) => {
@@ -124,6 +123,9 @@ export const TerminatedAgendaCard: React.FC<Props> = ({ agenda }) => {
           <VoteResult
             type={agenda.type.public}
             clickHandler={switchRevealChoice}
+            buttonClick={() => {
+              isDragging.current = true;
+            }}
             revealChoice={revealChoice}
             voted={agenda.user.voted != null}
           />
