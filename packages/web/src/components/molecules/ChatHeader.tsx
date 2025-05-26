@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from "react";
 import { Text } from "@biseo/web/components/atoms";
 import { css } from "@emotion/react";
@@ -11,10 +13,12 @@ import {
   row,
   w,
 } from "@biseo/web/styles";
-import { Megaphone } from "lucide-react";
+import { Megaphone, ArrowLeft } from "lucide-react";
 
 interface Props {
   title: string;
+  onToggle?: () => void;
+  isNotice?: boolean;
 }
 
 const containerStyle = css`
@@ -44,11 +48,21 @@ const iconStyle = css`
   }
 `;
 
-export const ChatHeader: React.FC<Props> = ({ title }) => (
+// eslint-disable-next-line react/require-default-props
+export const ChatHeader: React.FC<Props> = ({
+  title,
+  onToggle,
+  isNotice = false,
+}) => (
   <div css={containerStyle}>
     <Text variant="title2">{title}</Text>
-    <div css={iconStyle}>
-      <Megaphone size={20} color={colors.gray400} />
+    {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+    <div css={iconStyle} onClick={onToggle}>
+      {isNotice ? (
+        <ArrowLeft size={20} color={colors.gray600} />
+      ) : (
+        <Megaphone size={20} color={colors.gray600} />
+      )}
     </div>
   </div>
 );

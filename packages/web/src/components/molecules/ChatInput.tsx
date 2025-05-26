@@ -134,7 +134,7 @@ export const ChatInput: React.FC<Props> = ({ send }) => {
                     type === "adminnotice" ? colors.blue600 : colors.gray300
                   }
                   style={{ cursor: "pointer" }}
-                  // onClick={() => onTypeChange("adminnotice")}
+                  onClick={() => onTypeChange("adminnotice")}
                 />
               </BubbleItem>
             )}
